@@ -1,0 +1,134 @@
+{% extends "shop/base.html" %}
+{% block content %}
+{% if cart %}
+
+    <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout">
+        {% csrf_token %}
+        <div class="col-1 checkoutform">
+            <h3 class="checkout-title">Податоци за испорака</h3>
+            
+                <ul id="FieldList">
+                    <li><label for="name">Име и Презиме <abbr title="required" class="required">*</abbr></label>
+                    <input type="text" required name="name"></li>
+
+                    <li><label for="country">Држава/Регион <abbr title="required" class="required">*</abbr></label>
+                    <input type="text" required name="country" value="Р. Северна Македонијај"></li>
+
+                    <li><label for="address">Адреса <abbr title="required" class="required">*</abbr></label>
+                    <input type="text" required name="address"></li>
+
+                    <li><label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
+                    <input type="text" required name="city"></li>
+
+                    <li><label for="number">Телефонски број <abbr title="required" class="required">*</abbr></label>
+                        <input type="tel" placeholder="формат: 072-256-393"required name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"></li>
+                </ul>
+            
+        </div>
+        <div class="col-2">
+            <h5 class="checkout-title">Коментар за достава</h5>
+            <textarea name="order_comments" id="order_comments" cols="5" rows="2" placeholder="Внесете коментар за достава доколку имате специфични барања за испорака на вашата пратка"></textarea>
+        </div>
+    
+        <h3 id="order_review_heading">Вашата Нарачка</h3>
+        <div id="order_review">
+            <table class="order-review-table cart-data">
+                <thead>
+                    <tr>
+                        <td>Продукт</td>
+                        <td>Цена</td>
+                </thead>
+                <tbody >
+                {% for item in cart %}
+                <tr class="cart-item-row">
+                    <td class="cart-item product_data">
+                        <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                        {% csrf_token %}
+                        <div class="checkout-row-inline name">
+                        <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
+                        <p class="item-name" style="display:inline-block;">{{ item.product.title }}</p></div>
+                        <div class="quantity checkout-row-inline">
+                            <button class="changeQuantity decrement-btn">-</button>
+                            <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
+                            <button class="changeQuantity increment-btn">+</button>
+                            
+                        </div>
+                        <div>
+                        <strong class="product-quantity">x {{ item.product_qty }}</strong>
+                        <span class="remove-item">ОТСТРАНИ</span>
+                        </div>
+                        
+                    </td>
+                    
+                        
+                    
+                    <td class="cart-item-total-row">
+                        <p class="item-total">{{ item.product.sale_price }} ден</p>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="cart-subtotal"> 
+                        <td>
+                            <p>Цена</p>
+                        </td>
+                        <td>
+                            <p>790 ден</p>
+                        </td>
+                    </tr>
+                    <tr class="cart-shipping">
+                        <td>
+                            <p>Достава</p>
+                        </td>
+                        <td>
+                            <p class="cart-shipping-method">Бесплатна достава</p>
+                        </td>
+                    </tr>
+                    <tr class="cart-provision">
+                        <td>
+                            <p>Провизија</p>
+                        </td>
+                        <td>
+                            <p class="cart-provision-sum">20 ден</p>
+                        </td>
+                    </tr>
+                    <tr class="cart-total">
+                        <td>
+                            <p>Вкупно</p>
+                        </td>
+                        <td>
+                            <p>{{ order.get_cart_total }} ден</p>
+                        </td>
+                    </tr>
+                </tfoot>
+                
+            </table>
+        </div>
+        <div id="payment">
+            <div class="payment-text">
+                <p class="payment-info">Плаќање при достава (+20 ден. провизија)</p>
+                <p class="payment-method">Плати на врата при подигање на нарачката</p>
+            </div>
+            <div class="place_order-section">
+                <span class="order-tabs">
+                <p class="checkout-dostava">ПОЛИТИКА НА ДОСТАВА</p>
+                <p class="checkout-garancija">ГАРАНЦИЈА ЗА ЗАМЕНА</p>
+                </span>
+                <button type="submit" id="place_order">НАРАЧАЈ</button>
+            </div>
+        </div>
+        <p class="checkout-dostava-content">1.1. Вашата нарачка ќе биде доставена за 2-4 работни денови на вашата адреса.<br />1.2. Доставувачот е задолжен да ве побара 1 час порано пред да ја достави Вашата пратка.<br />1.3. Во случај производот да биде оштетен, пријавете на нашиот телефонски број во рок од 10 дена од денот на подигање.</p>
+        <p class="checkout-garancija-content">Производот е различен од сликата? Контактирајте не на нашиот телефонски број или на нашата е-маил адреса најкасно 10 дена од денот на подигање на нарачката. Нашиот тим веднаш ќе реагира!</p>
+    </form>
+
+{% else %}
+<div class="content-container checkout">
+    <div class="no-cart">
+        <h2 class="no-cart-title">Немате производи во кошничка</h2>
+        <a href="{% url 'shop-home' %}" class="no-cartBtn">Врати ме на почетна</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

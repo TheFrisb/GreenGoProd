@@ -1,0 +1,75 @@
+{% extends 'shop/shopmanager/shopmanager_base.html' %}
+{% block content %}
+
+    <p class="country-title">{{heading}} - <span class="strong"> МАКЕДОНИЈА</span></p>
+    
+    <div class="orders-table">
+        {% csrf_token %}
+        <table class="manager-table">
+            <thead>
+                <td class="table-heading">{{ heading }}</td>
+            </thead>
+            <tbody>
+                <tr class="manager-table-detail">
+                    <td>Порачка</td>
+                    <td>Кошничка</td>
+                    <td>Статус на порачка</td>
+                    <td>Детали за порачка</td>
+                </tr>
+                {% for order in orders %}
+                {% if heading == 'НЕПОТВРДЕНИ НАРАЧКИ'%}
+                <tr class="table-row order-row">
+                {% endif %}
+                {% if heading == 'ПОТВРДЕНИ НАРАЧКИ'%}
+                <tr class="table-row order-row confirmed-row">
+                {% endif %}
+                {% if heading == 'ИЗБРИШЕНИ НАРАЧКИ'%}
+                <tr class="table-row order-row removed-row">
+                {% endif %}
+                    <td>
+                    
+                        <p class="table-content date">{{ order.created_at }}</p>
+                        <p class="table-content"><span class="table-strong">Име:</span> {{ order.name }} </p>
+                        <p class="table-content"><span class="table-strong">Адреса:</span> {{ order.address }} </p>
+                        <p class="table-content"><span class="table-strong">Град:</span> {{ order.city }} </p>
+                        <p class="table-content"><span class="table-strong">Телефон:</span> {{ order.number }} </p>
+                        <p class="table-content"><span class="table-strong">Држава:</span> МК </p>
+                    </td>
+                    
+                    <td>
+                        {% for order in orderItems %}
+                        
+                        <p class="table-content"><span class="table-strong">{{ order.product.title }}</span>
+                        x <span class="table-strong">{{ order.quantity }}</span> - {{order.price}} ден</p>
+                        {% endfor %}
+                        <p class="table-content"><span class="table-strong">Цена без достава: </span>{{ order.total_price }} ден</p>
+                        <p class="table-content"><span class="table-strong">Достава: </span>{{ order.get_shipping }}</p>
+                        <p class="table-content"image.png><span class="table-strong">Вкупно: </span>{{ order.total_price }} ден</p>
+                    </td>
+                    <td class="order-td">
+                        <input type="hidden" value="{{ order.id }}" class="order_id">
+                        <p class="table-content"><span class="table-strong">Статус: {{ order_status }}</span></p>
+                        {% if heading == 'НЕПОТВРДЕНИ НАРАЧКИ' %}
+                        <button class="table-button confirm-orderBtn">Потврди</button>
+                        <button class="table-button delete-orderBtn">Избриши</button>
+                        {% endif %}
+                        {% if heading != 'НЕПОТВРДЕНИ НАРАЧКИ' %}
+                        <button class="table-button return-orderBtn">Врати</button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.message %}
+                        <p class="table-content"><span class="table-strong">Коментар од муштерија:</span>{{order.message}}</p>
+                        {% else %}
+                        <p class="table-content"><span class="table-strong">Коментар од муштерија:</span> нема коментар </p>
+                        {% endif %}
+
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

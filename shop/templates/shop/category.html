@@ -1,0 +1,36 @@
+{% extends "shop/base.html" %}
+{% block content %}
+    <div class="content-container">
+        {% for product in category %}
+            <div class="product">
+                <a href="{% url 'product-page' product.slug  %}" class="product-link">
+                <img src="{{ product.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail">
+                <h2 class="product-feed-title">{{ product.title }}</h2>
+                <span class="product-feed-price"><p class="product-feed-regular-price">{{ product.regular_price }} ден</p><p class="product-feed-sale-price">{{ product.sale_price }} ден</p></span>
+                </a>
+                <button data-product={{ product.id }} data-action="add" class="add-to-cart update-cart">ВО КОШНИЧКА</button>
+            </div>
+        {% endfor %}
+        {% if is_paginated %}
+            <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a class="page-numbers" href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-arrow-left-long"></i></a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="page-numbers page-active" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="page-numbers"href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.next %}
+                <a class="page-numbers" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                <a class="page-numbers" href="?page={{ page_obj.next_page_number }}"><i class="fa-solid fa-arrow-right-long"></i></a>
+            {% endif %}
+            </div>
+        {% endif %}
+        </div>
+{% endblock content %}

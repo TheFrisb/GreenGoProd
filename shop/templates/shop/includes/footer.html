@@ -1,0 +1,47 @@
+{% if title != "Кон нарачка" %}
+<footer id="footer">
+    <div class="footer-inner">
+        <div class="footer-item">
+            <i class="fas fa-truck-moving fa-3x footer-icon"></i>
+            <h3 class="footer-item-title">Најбрза достава до врата</h3>
+            <p>За 2-5 работни дена</p>
+        </div>
+        <div class="footer-item">
+            <i class="fas fa-truck-moving fa-3x footer-icon"></i>
+            <h3>Гаранција за замена</h3>
+            <p>Во првите 15 дена</p>
+        </div>
+        <div class="footer-item">
+            <i class="fas fa-truck-moving fa-3x footer-icon"></i>
+            <h3>100% Безбедно плаќање</h3>
+            <p>Плати на врата</p>
+        </div>
+        <div class="footer-item">
+            <h3>Контакт</h3>
+            <a href="tel:071321312"><i class="fas fa-phone fa-rotate-270"></i>+389 71321312 (09:00 – 17:00)</a>
+            <a href="mailto:contact@greengoshop.mk"><i class="fa fa-envelope"></i>contact@greengoshop.mk</a>
+        </div>
+        <div class="footer-item">
+            <h3>Полиси</h3>
+            <a href="{% url 'dostava-page' %}">Достава</a>
+            <a href="{% url 'reklamacija-page' %}">Рекламација</a>
+        </div>
+        <div class="footer-item">
+            <h3>Полиси</h3>
+            <a href="{% url 'rights-of-usage-page' %}">Правила на користење</a>
+            <a href="{% url 'cookies-page' %}">Политика за приватност и колачиња</a>
+        </div>
+    <hr class="horizontal-line">
+    <div class="footer-social-icons">
+        <a href="https://www.facebook.com/greengoshop.mk"><i class="fa-brands fa-facebook fa-xl"></i></a>
+        <a href="https://www.instagram.com/greengoshop.mk/"><i class="fa-brands fa-instagram fa-xl"></i></a>
+    </div> 
+</div>
+</footer>
+<section class="footer-section">
+    <div class="footer-inner">
+        <p>*Сликите се симболични и не ги гарантираат карактеристиките на предметите. Цените може да подлежат на промена без претходна најава. Сите прикажани цени се со пресметан ДДВ.</p>
+        <h4>Copyright 2022 © Сите права припаѓаат на GreenGoShop</h4>
+    </div>
+</section>
+{% endif %}

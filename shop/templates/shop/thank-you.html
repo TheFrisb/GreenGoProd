@@ -1,0 +1,100 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="content-container thank-you">
+    <div class="thank-you-icon">
+    <i class="fas fa-check-circle"></i>
+    <h2 class="thank-you-heading">Ви благодариме за нарачката</h2>
+    <p class="thank-you-message">Очекувајте телефонски повик од страна на нашите оператори за потврда на вашата нарачка</p>
+    </div>
+   
+    <div class="order-info">
+        <div class="order-info-item">
+            <p class="order-info-title">ДАТА:</p>
+            <p class="order-info-content">{{ order.created_at }}</p>
+        </div>
+        <div class="order-info-item">
+            <p class="order-info-title">ВКУПНО:</p>
+            <p class="order-info-content">{{ order.total_price }}</p>
+        </div>
+        <div class="order-info-item">
+            <p class="order-info-title">ПЛАЌАЊЕ:</p>
+            <p class="order-info-content">Плаќање при достава (+20 ден. провизија)</p>
+        </div>
+    </div>
+    <p class="thank-you-info">ТВОЈАТА НАРАЧКА</p>
+    <div id="thank-you-order-review">
+        <table class="order-review-table cart-data thank-you-table">
+            <thead>
+                <tr>
+                    <td>Продукт</td>
+                    <td>Цена</td>
+            </thead>
+            <tbody >
+            {% for item in orderItems %}
+            <tr class="cart-item-row">
+                <td class="cart-item product_data">
+                    <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                    {% csrf_token %}
+                    <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
+                    <p class="item-name">{{ item.product.title }}</p>
+                    <strong class="product-quantity">x {{ item.quantity }}</strong>
+                </td>
+                
+                    
+                
+                <td class="cart-item-total-row">
+                    <p class="item-total">{{ item.price }} ден</p>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="cart-subtotal"> 
+                    <td>
+                        <p>Цена</p>
+                    </td>
+                    <td>
+                        <p>790 ден</p>
+                    </td>
+                </tr>
+                <tr class="cart-shipping">
+                    <td>
+                        <p>Достава</p>
+                    </td>
+                    <td>
+                        <p class="cart-shipping-method">Бесплатна достава</p>
+                    </td>
+                </tr>
+                <tr class="cart-provision">
+                    <td>
+                        <p>Провизија</p>
+                    </td>
+                    <td>
+                        <p class="cart-provision-sum">20 ден</p>
+                    </td>
+                </tr>
+                <tr class="cart-total">
+                    <td>
+                        <p>Вкупно</p>
+                    </td>
+                    <td>
+                        <p>{{ order.total_price }} ден</p>
+                    </td>
+                </tr>
+            </tfoot>
+            
+        </table>
+    </div>
+
+
+
+
+    <p class="thank-you-info">ОСТАВЕНИ ПОДАТОЦИ ЗА ДОСТАВА</p>
+    <p class="thank-you-message">{{ order.name }}</p>
+    <p class="thank-you-message">{{ order.address }}</p>
+    <p class="thank-you-message">{{ order.city }}</p>
+    <p class="thank-you-message">{{ order.number }}</p>
+    <p class="thank-you-message">(доколку сакате да ја измените вашата нарачка или сакате да промените некои од вашите податоци за достава ве молиме контактирајте не на 071/321-314)</p>
+
+</div>
+{% endblock content %}

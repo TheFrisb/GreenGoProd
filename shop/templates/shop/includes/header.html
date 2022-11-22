@@ -1,0 +1,95 @@
+{% if title != "Кон нарачка" %}
+<section id="header-banner">
+    <div class="banner-inner-header">
+        <a href="tel:071321312" class="banner-text">071321312 (09:00 - 00:00)</a>
+        <a href="mailto:contact@greengoshop.mk" class="banner-text">contact@greengoshop.mk</a>
+        <a href="https://www.facebook.com/greengoshop.mk"><i class="fa-brands fa-facebook banner-icon"></i>
+        <a href="https://www.instagram.com/greengoshop.mk"></a><i class="fa-brands fa-instagram banner-icon"></i></a>
+        </div>
+</section>
+
+<header id="header">
+    <div class="inner-header">
+
+        <div class="header-logo-container">
+        <a href="{% url 'shop-home' %}" class="header-logo-link">
+            <img src="https://greengoshop.mk/wp-content/uploads/2022/05/logo_web-1-1.jpg" alt="default.jpg" class="header-logo-img" >
+        </a>
+        </div>
+
+        <div class="header-search">
+            <form action="{% url 'search_results' %}" method="get">
+            <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи">
+            <button class="search_button">
+            <i class="fa-solid fa-magnifying-glass header-icon fa-xl"></i>
+            </button>
+            <i class="fa-solid fa-magnifying-glass header-icon mobile fa-xl"></i>
+            </form>
+        </div>
+
+        <div class="header-cart header-icon">
+            <i class="fa-solid fa-basket-shopping header-icon fa-xl sidecart-icon"></i>
+            <div id="sidecart">
+                <div class="cart-close">
+                    <span id="close-cart">&#10006</span>
+                </div>
+                <div class="sidecart-inner product_data">
+                    {% csrf_token %}
+                    {% for item in cart %}
+                    <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                    <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item">
+                        <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+                        <span class="sidecart-item-content">
+                            <p class="sidecart-item-name">{{ item.product.title }}</p>
+                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
+                            <span class="sidecart-remove-item remove-item">&#10006;</span>
+                        </span>
+                    </a>
+                    
+                
+                    {% endfor %}
+                    {% if cart %}
+                    <div class="sidecart-item sidecart-total">
+                    <p class="sidecart-total"><span class="strong">Цена:</span> {{cart_total}} ден</p>
+                    </div>
+                    <div class="sidecart-item sidecart-Button">
+                            <a href="{% url 'checkout' %}" class="button-link"><button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button></a>
+                    </div>
+                    
+                    
+
+                    {% else %}
+                    <div class="sidecart-item notice">
+                        <p class="cart-notice">Немате продукти во кошничка</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                
+            </div>
+        </div>
+        <div class="header-menu header-icon">
+            <i class="fa-solid fa-bars header-icon header-search-icon fa-xl"></i>
+            <nav id="navigation">
+                <ul>
+                    <li class="navigation-item"><a href="{% url 'shop-home' %}" class="navigation-title">ПОЧЕТНА</a></li>
+                    {% for category in categories %}
+                    <li class="navigation-item"><a href="{% url 'category-page' category.slug %}" class="navigation-title">{{ category.name }}</a></li>
+                    <!-- <li class="navigation-item"><a href="" class="navigation-title">НАЈПРОДАВАНИ</a></li>
+                    <li class="navigation-item"><a href="" class="navigation-title">ДОМАЌИНСТВО</a></li>
+                    <li class="navigation-item"><a href="" class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
+                    <li class="navigation-item"><a href="" class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
+                    <li class="navigation-item"><a href="" class="navigation-title">ГРАДИНА</a></li> -->
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+{% else %}
+    <header id="header">
+        <div class="inner-header checkout">
+            <div class="header-logo-container checkout"><img src="https://greengoshop.mk/wp-content/uploads/2022/05/logo_web-1-1.jpg" alt="default.jpg" class="header-logo-img"></div>
+        </div>
+    </header>
+{% endif %} 

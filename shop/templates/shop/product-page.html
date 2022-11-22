@@ -1,0 +1,215 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block customhead %}
+    <link rel="stylesheet" href="{% static 'shop/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/owl.theme.default.css' %}">
+{% endblock customhead %}
+{% block content %}
+<div class="content-container product-page">
+<div class="col-1 product-page">
+<img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
+</div>
+<div class="col-2 product-page product_data">
+    <h3 class="product-title product-page">{{ product.title }}</h3>
+    {% if reviews %}
+    <div class="rating rating{{ ratingaverage}}">
+        <span class="star1"></span>
+        <span class="star2"></span>
+        <span class="star3"></span>
+        <span class="star4"></span>
+        <span class="star5"></span>
+        <a href="#reviews" class="review-count">({{reviewcount}} коментари)</a>
+    </div>
+    {% endif %}
+    <div class="product-page-price main-price">  
+        <p class="product-regular-price">{{ product.regular_price }} ден</p>
+        <p class="product-sale-price">{{ product.sale_price }} ден</p>
+        <p class="free-shipping">бесплатна достава</p>
+    </div>
+    {% if attributes %}
+    <div class="product-attributes">
+        {% if product.attributes_type == 'COLOR' %}
+            <p class="attribute-title">Одбери боја</p>
+            {% for attribute in attributes %}
+            
+            <div class="attribute-item">
+                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if product.attributes_type == 'SIZE' %}
+            <p class="attribute-title">Одбери големина</p>
+            {% for attribute in attributes %}
+            <div class="attribute-item">
+                <div class="attribute-inner size">{{ attribute.size.title }}</div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if product.attributes_type == 'OFFER' %}
+            <p class="attribute-title">Одбери понуда</p>
+            {% for attribute in attributes %}
+            <div class="attribute-item offer">
+                <p class="offer-title">{{ attribute.offer.title }}</p>
+                <p class="offer-price">{{ attribute.offer.price }} ден</p>
+                <p class="offer-text">{{ attribute.offer.incentive }}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+        {% csrf_token %}
+        <input type="hidden" value="{{ product.id }}" class="prod_id">
+        <div class="quantity">
+            <button class="decrement-btn">-</button>
+            <input type="text" name="quantity" class="qty-input" value="1">
+            <button class="increment-btn">+</button>
+        </div>
+        <button class="add-to-cartBtn">ВО КОШНИЧКА</button>
+        <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
+    
+    <div class="toggle">
+        <div class="toggle-item">
+            <p>ДЕТАЛЕН ОПИС</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
+            <div class="toggle-content main-toggle">
+                <p>{{ product.content }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="toggle">
+        <div class="toggle-item">
+            <p>ПОЛИТИКА НА ДОСТАВА</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
+            <div class="toggle-content">
+                <a href="{% url 'dostava-page' %}" class="toggle-static-link">Погледни ја нашата поликита на достава</a>
+            </div>
+        </div>
+    </div>
+    <div class="toggle">
+        <div class="toggle-item">
+            <p>ПОЛИТИКА НА РЕКЛАМАЦИЈА</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
+            <div class="toggle-content">
+                <a href="{% url 'reklamacija-page' %}" class="toggle-static-link">Погледни ја нашата поликита на рекламација</a>
+            </div>
+        </div>
+    </div>
+    <div class="toggle">
+        <div class="toggle-item">
+            <p>ПОЛИТИКА НА РЕКЛАМАЦИЈА</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
+            <div class="toggle-content">
+                <a href="{% url 'reklamacija-page' %}" class="toggle-static-link">{{  product.desc2| safe }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% if reviews %}
+
+<div id="reviews">
+    <div class="reviews-inner">
+        {% for review in reviews %}
+        <div class="reviews-item">
+            
+                <img src="{{ review.product.thumbnail.url }}" alt="">
+            
+            <div class="top-row">
+                <p class="reviewer-name">{{ review.name }}</p>
+            </div>
+            <div class="rating-row">
+                <div class="rating{{ review.rating }}">
+                    <span class="star1"></span>
+                    <span class="star2"></span>
+                    <span class="star3"></span>
+                    <span class="star4"></span>
+                    <span class="star5"></span>
+
+                </div>
+                <div class="rating-label">
+                    {{ review.rating }}/5
+                </div>
+            </div>
+            <div class="middle-row">
+                <div class="review-content">
+                    <p>{{ review.content }}</p>
+                </div>
+                <div class="review-date">
+                    {{ review.date_created }}
+                </div>
+            </div>
+            <div class="review-product">
+                <a href="{% url 'product-page' review.product.slug %}"></a>
+            </div>
+        </div>
+        {% endfor %}
+            
+        
+    </div>
+</div>
+{% endif %}
+
+    
+    <section class="slider-wrapper slider-wrapper1">
+        <h3 class="slide-title">ПОСЛЕДНИ КОЛИЧИНИ</h3>
+        <button class="slide-arrow slide-arrow-prev slide-arrow-prev1">&#8249;</button>
+        <button class="slide-arrow slide-arrow-next slide-arrow-next1">&#8250;</button>
+        <ul class="slides-container slides-container1">
+        {% for item in slider1 %}
+          <li class="slide product_data">
+            <input type="hidden" class="prod_id" value="{{ item.id }}">
+            <a href="{% url 'product-page' item.slug %}" class="product-link">
+            <div class="last-stocks-sub-container">
+              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
+              </a>
+              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
+            </div>
+            
+            
+          </li>
+          <li class="slide product_data">
+            <input type="hidden" class="prod_id" value="{{ item.id }}">
+            <a href="{% url 'product-page' item.slug %}" class="product-link">
+            <div class="last-stocks-sub-container">
+              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
+              </a>
+              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
+            </div>
+            
+            
+          </li>
+        {% endfor %}  
+        </ul>
+    </section>
+    <section class="slider-wrapper slider-wrapper2">
+        <h3 class="slide-title">ПОСЛЕДНИ КОЛИЧИНИ</h3>
+        <button class="slide-arrow slide-arrow-prev slide-arrow-prev2">&#8249;</button>
+        <button class="slide-arrow slide-arrow-next slide-arrow-next2">&#8250;</button>
+        <ul class="slides-container slides-container2">
+        {% for item in slider2 %}
+          <li class="slide product_data">
+            <input type="hidden" class="prod_id" value="{{ item.id }}">
+            <a href="{% url 'product-page' item.slug %}" class="product-link">
+            <div class="last-stocks-sub-container">
+              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
+              </a>
+              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
+            </div>
+            
+          </li>
+        {% endfor %}  
+        </ul>
+    </section>
+    {% for photo in gallery %}
+    <div>
+    <img src="{{ photo.galleryimg.url }}" alt="" width="300">
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+{% endblock content %}
