@@ -1,15 +1,14 @@
 4. Add product gallery
-6. Add cart offer 3x products
-10. Add checkout offers
-11. Add progress bar
-13. add Checkout order fees
-3. Add thumbnail resized image za loop products i slider
+
+
 17. Lazy load images
 18. Replace icons with img
-
+19. paginate
 
 14. Export xlsx po data poracki
 15. Fix cart with session
 
 
 # fix ckeditor autoplay responsivewidth i loop
+# povrzi fees so backend i cart offers i checkout-offers
+# add progress bar logic

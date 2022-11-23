@@ -71,7 +71,7 @@
         <div class="toggle-item">
             <p>ДЕТАЛЕН ОПИС</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
             <div class="toggle-content main-toggle">
-                <p>{{ product.content }}</p>
+                <p>{{  product.desc2| safe }}</p>
             </div>
         </div>
     </div>
@@ -91,23 +91,15 @@
             </div>
         </div>
     </div>
-    <div class="toggle">
-        <div class="toggle-item">
-            <p>ПОЛИТИКА НА РЕКЛАМАЦИЈА</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
-            <div class="toggle-content">
-                <a href="{% url 'reklamacija-page' %}" class="toggle-static-link">{{  product.desc2| safe }}</a>
-            </div>
-        </div>
-    </div>
 </div>
 {% if reviews %}
 
 <div id="reviews">
     <div class="reviews-inner">
         {% for review in reviews %}
-        <div class="reviews-item">
+        <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
             
-                <img src="{{ review.product.thumbnail.url }}" alt="">
+                <img src="{{ review.image.url }}" alt="">
             
             <div class="top-row">
                 <p class="reviewer-name">{{ review.name }}</p>
@@ -155,27 +147,12 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link">
             <div class="last-stocks-sub-container">
-              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
-            </div>
-            
-            
-          </li>
-          <li class="slide product_data">
-            <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link">
-            <div class="last-stocks-sub-container">
-              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
-              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
-              </a>
-              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
-            </div>
-            
-            
+            </div>          
           </li>
         {% endfor %}  
         </ul>
@@ -190,7 +167,7 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link">
             <div class="last-stocks-sub-container">
-              <img src="{{ item.thumbnail.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
               </a>
@@ -201,11 +178,6 @@
         {% endfor %}  
         </ul>
     </section>
-    {% for photo in gallery %}
-    <div>
-    <img src="{{ photo.galleryimg.url }}" alt="" width="300">
-    </div>
-    {% endfor %}
 </div>
 
 

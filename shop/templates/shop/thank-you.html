@@ -21,6 +21,20 @@
             <p class="order-info-content">Плаќање при достава (+20 ден. провизија)</p>
         </div>
     </div>
+    <div class="thank-you-offer">
+        <h3>СПЕЦИЈАЛНА ПОНУДА</h3>
+        <h5>Нарачај го истиот производ и заштеди дополнителни 21%</h5>
+        <div class="offer-box">
+        <img src="{{ offerproduct.product.thumbnail.url }}" alt="" width="250" height="250">
+        <p class="offer-ttl">{{ offerproduct.product.title }}</p>
+        <p class="rgl_price">{{ offerproduct.product.regular_price }} ден</p>
+        <p class="sl_price">{{ offerproduct.product.sale_price }} ден</p>
+        <p class="offer-save">ДОПОЛНИТЕЛНИ 250 ДЕН ЗАШТЕДА</p>
+        <button class="offer-button">НАРАЧАЈ</button>
+        </div class="offer-box">
+        <p class="notice">Горенаведениот производ доколку нарачате ќе ви биде доставен со истата нарачка</p>
+    </div>
+    
     <p class="thank-you-info">ТВОЈАТА НАРАЧКА</p>
     <div id="thank-you-order-review">
         <table class="order-review-table cart-data thank-you-table">
@@ -35,7 +49,7 @@
                 <td class="cart-item product_data">
                     <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                     {% csrf_token %}
-                    <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
+                    <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="45" height="45">
                     <p class="item-name">{{ item.product.title }}</p>
                     <strong class="product-quantity">x {{ item.quantity }}</strong>
                 </td>

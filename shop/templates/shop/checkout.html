@@ -1,10 +1,31 @@
 {% extends "shop/base.html" %}
 {% block content %}
 {% if cart %}
-
+    
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout">
         {% csrf_token %}
+        {% if cartOffers %}
+            <div class="checkout-offers mobile">
+                <p class="checkoutOffers-title">Често купувани заедно</p>
+            {% for item in cartOffers %}
+                <div class="sidecart-item checkout-offerItem mobile">
+                    <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+                    <span class="sidecart-item-content checkoutItem-content">
+                        <p class="sidecart-item-name">{{ item.product.title }}</p>
+                        <div class="checkout-offer-qty-holder">
+                        <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
+                        <span class="green">{{ item.product.sale_price }} ден</span>
+                        </div>
+                        <p class="checkoutOffer-text">{{ item.offer_text }}</p>
+                        
+                    </span>
+                    <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         <div class="col-1 checkoutform">
+            
             <h3 class="checkout-title">Податоци за испорака</h3>
             
                 <ul id="FieldList">
@@ -25,10 +46,66 @@
                 </ul>
             
         </div>
-        <div class="col-2">
-            <h5 class="checkout-title">Коментар за достава</h5>
-            <textarea name="order_comments" id="order_comments" cols="5" rows="2" placeholder="Внесете коментар за достава доколку имате специфични барања за испорака на вашата пратка"></textarea>
+        <div class="col-2 offer-col">
+            <div class="">
+                <h5 class="checkout-title">Коментар за достава</h5>
+                <textarea name="order_comments" id="order_comments" cols="5" rows="2" placeholder="Внесете коментар за достава доколку имате специфични барања за испорака на вашата пратка"></textarea>
+            </div>
+            {% if cartOffers %}
+            <div class="checkout-offers desktop">
+                <p class="checkoutOffers-title">Често купувани заедно</p>
+                {% for item in cartOffers %}
+                
+                    <div class="sidecart-item checkout-offerItem desktop">
+                        
+                        <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+                        <span class="sidecart-item-content checkoutItem-content">
+                            <p class="sidecart-item-name">{{ item.product.title }}</p>
+                            <div class="checkout-offer-qty-holder">
+                            <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
+                            <span class="green">{{ item.product.sale_price }} ден</span>
+                            </div>
+                            <p class="checkoutOffer-text">{{ item.offer_text }}</p>
+                            
+                        </span>
+                        <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
+
+    <div class="col-1 checkoutform checkout-fees-container">
+        <div class="checkout-fees">
+            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Приоритетна достава</p></span>
+            <p class="fee-price"><span class="fee-span">59</span>ден.</p>
+            <button class="fee-add">ДОДАЈ</button>
+            <p class="fee-description">Приоритетна достава овозможува вашиот производ да биде испратен прв!</p>    
+        </div>
+        
+        <div class="checkout-fees">
+            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Поклон изненадување</p></span>     
+            <span class="fee-rightside"><p class="fee-price"><span class="fee-span">299</span>ден.</p>
+            <button class="fee-add">ДОДАЈ</button></span>
+            <p class="fee-description">Добијте поклон изненадување од минимална вредност 450 денари по неверојатна цена - 299 денари
+            </p> 
+        </div>
+
+        <div class="checkout-fees">
+            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>1 Година гаранција</p></span>
+            <span class="fee-rightside"><p class="fee-price"><span class="fee-span">199</span>ден.</p>
+            <button class="fee-add">ДОДАЈ</button></span>
+            <p class="fee-description">Продолжете ја гаранцијата на нарачаниот производ за 1 година</p>
+        </div>
+
+        <div class="checkout-fees">
+            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Осигурување на пакет</p></span>
+               <p class="fee-price"><span class="fee-span">49</span>ден.
+            <button class="fee-add">ДОДАЈ</button>
+            <p class="fee-description">Во случај на оштетување на вашиот продукт при транспорт, ќе извршиме замена без дополнителни
+            прашања!</p>            
+        </div>
+    </div>
     
         <h3 id="order_review_heading">Вашата Нарачка</h3>
         <div id="order_review">
@@ -105,6 +182,7 @@
                 
             </table>
         </div>
+        
         <div id="payment">
             <div class="payment-text">
                 <p class="payment-info">Плаќање при достава (+20 ден. провизија)</p>

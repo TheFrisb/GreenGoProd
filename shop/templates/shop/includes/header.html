@@ -34,11 +34,17 @@
                     <span id="close-cart">&#10006</span>
                 </div>
                 <div class="sidecart-inner product_data">
+                    
+                    {% if cart %}
                     {% csrf_token %}
+                    <p class="progress-bar-text">Додади уште 1 производ за бесплатна достава</p>
+                    <div class="progress">
+                        <div class="progress__bar"></div>
+                    </div>
                     {% for item in cart %}
                     <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-                    <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item">
-                        <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+                    <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item basic-sidecart-item">
+                        <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                         <span class="sidecart-item-content">
                             <p class="sidecart-item-name">{{ item.product.title }}</p>
                             <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
@@ -48,7 +54,23 @@
                     
                 
                     {% endfor %}
-                    {% if cart %}
+                    
+                    
+                    <div class="cart-offers">
+                    <p class="cart-offers-text">Може да ви се допадне</p>
+                    {% for item in cartOffers %}
+                    <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item">
+                        <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                        <span class="sidecart-item-content sidecart-offer-content">
+                            <p class="sidecart-item-name">{{ item.product.title }}</p>
+                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="red">{{ item.product.sale_price }} ден</span></p>
+                            <p class="sidecartOffer-text">{{ item.offer_text }}</p>
+                            
+                        </span>
+                        <button class="add-to-cartBtn sidecartOfferBtn">ДОДАДИ</button>
+                    </a>
+                    {% endfor %}
+                    </div>
                     <div class="sidecart-item sidecart-total">
                     <p class="sidecart-total"><span class="strong">Цена:</span> {{cart_total}} ден</p>
                     </div>

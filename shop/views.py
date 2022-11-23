@@ -63,6 +63,7 @@ def ProductView(request, slug):
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.filter(slug=slug).first
+        cartOffers = CartOffers.objects.all()
         if(Review.objects.filter(product__slug=slug)):
             reviews = Review.objects.filter(product__slug=slug)
 
@@ -92,6 +93,7 @@ def ProductView(request, slug):
                 'slider2': Product.objects.all()[:8],
                 'attributes' : attributes,
                 'gallery': gallery,
+                'cartOffers': cartOffers
             }
 
 
@@ -103,9 +105,11 @@ def ProductView(request, slug):
 
 def CheckoutView(request):
     cart = Cart.objects.filter(user=request.user)
+    cartOffers = CartOffers.objects.all()
     context = {
         'cart': cart,
         'title': 'Кон Нарачка',
+        'cartOffers': cartOffers,
         }
 
     return render(request, 'shop/checkout.html', context)
@@ -115,9 +119,12 @@ def ThankYouView(request, slug):
     if(Order.objects.filter(tracking_no=slug)):
         order = Order.objects.filter(tracking_no=slug).first
         orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
+        offerproduct = orderItems.reverse()[0]
+
     context = {
         'order': order,
         'orderItems': orderItems,
+        'offerproduct': offerproduct,
     }
 
     return render(request, 'shop/thank-you.html', context)

@@ -8,6 +8,8 @@ from django_resized import ResizedImageField
 from PIL import Image
 import datetime, os
 from ckeditor_uploader.fields import RichTextUploadingField
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill, ResizeToFit
 # Create your models here.
 
 def get_file_path(request, filename):
@@ -39,9 +41,12 @@ class Dobavuvac(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, verbose_name='Категорија')
-    thumbnail = models.ImageField(default='default.jpg', upload_to='products/')
+    #thumbnail = models.ImageField(default='default.jpg', upload_to='products/')
+    thumbnail = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
+    thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':60})
+    
     title = models.CharField(max_length = 100, verbose_name='Име')
-    content = models.TextField(verbose_name='Детален опис')
+    content = RichTextUploadingField(blank=True, null=True);
     regular_price = models.IntegerField(verbose_name='Стара цена')
     sale_price = models.IntegerField(verbose_name='Цена')
     date_posted = models.DateTimeField(default=timezone.now, verbose_name='Дата на креирање')
@@ -58,7 +63,6 @@ class Product(models.Model):
         ('SIZE', 'SIZE'),
         ('OFFER', 'OFFER')
     )
-    desc2 = RichTextUploadingField(blank=True, null=True);
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True)
     status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
     #Product Data
@@ -71,6 +75,7 @@ class Product(models.Model):
         self.slug = slugify(self.title_slug)
         
         super(Product, self).save(*args, **kwargs)
+        self.thumbnail2 = self.thumbnail
         
         
     #Kak da kreiram variabilni produkti ( po golemina, boja? )
@@ -93,7 +98,7 @@ class Product(models.Model):
 
 class ProductGallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    galleryimg = models.ImageField(default='default.jpg', upload_to='products/product-gallery/')
+    galleryimg = ProcessedImageField(upload_to='products/product-gallery', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
 
 
 class Color(models.Model):
@@ -132,7 +137,7 @@ class ProductAttribute(models.Model):
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, verbose_name='Продукт')
-    image = models.ImageField(upload_to='reviews/', verbose_name='Слика')
+    image = ProcessedImageField(upload_to='review/', processors=[ResizeToFit(width=250, upscale=False)], format='WEBP', options={'quality':75}, null=True)
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
     content = models.TextField(verbose_name='Содржина')
     rating_choices = (
@@ -166,7 +171,16 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class CartOffers(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Одбери продукт')
+    offer_text = models.CharField(max_length=40, blank=True, verbose_name='Текст на понуда')
+
+    def __str__(self):
+        return 'Понуда во кошничка за продукт {} со текст {}'.format(self.product.title, self.offer_text)
     
+    class Meta:
+        verbose_name = "Понуди за кошничка"
+        verbose_name_plural = "Понуди за кошничка"
 
 
 class Order(models.Model):

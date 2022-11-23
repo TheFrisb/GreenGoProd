@@ -36,6 +36,7 @@ class ColorAdmin(admin.ModelAdmin):
 
 
 
+
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'color', 'price')
 
@@ -50,6 +51,7 @@ admin.site.register(Size)
 admin.site.register(Offer)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Cart)
+admin.site.register(CartOffers)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
 

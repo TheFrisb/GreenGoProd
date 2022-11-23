@@ -30,11 +30,13 @@ a img {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
+    appearance: none;
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 input[type=number] {
+    appearance: textfield;
     -moz-appearance:textfield; /* Firefox */
 }
 
@@ -145,7 +147,7 @@ input[type=number] {
     justify-content: center;
 }
 #sidecart{
-    width: 330px;
+    width: 400px;
     height: 100%;
     position: fixed;
     right:0;
@@ -159,6 +161,31 @@ input[type=number] {
     overflow-y: auto;
     cursor: default;
 }
+.progress-bar-text{
+    font-size:12px;
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 5px;
+}
+.progress {
+    padding: 2px;
+    max-width: 500px;
+    border: 3px solid var(--green);
+    height: 20px;
+    margin: 0px 20px;
+  }
+  
+  .progress .progress__bar {
+    height: 100%;
+    width: 50%;
+    background-color: var(--green);
+    animation: fill-bar 1s;
+  }
+  
+  @keyframes fill-bar {
+    from {width: 0%;}
+    to {width: 50%;}
+  }
 .sidecart-active{
     transform: ScaleX(1)!important;
     transition: 100ms linear!important;
@@ -210,6 +237,12 @@ input[type=number] {
     padding: 20px 0px;
     margin: 0px 20px;
 }
+.sidecart-inner a:nth-last-child(1){
+    border: none;
+}
+.sidecart-inner a:nth-last-child(4){
+    border: none!important;
+}
 .sidecart-item-name{
     font-size: 14px;
     font-weight: 600;
@@ -224,6 +257,116 @@ input[type=number] {
     text-align: center;
     font-size: 20px;
     font-weight: 600;   
+}
+.cart-offers{
+    padding: 15px 0px;
+    background: var(--green);
+}
+
+.cart-offers-text{
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0px 20px;
+
+}
+.sidecart-offer-item{
+    padding: 8px 0px;
+    border-color: #abaeb4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.sidecart-offer-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.sidecart-offer-item .sidecart-item-quantity{
+    font-size: 12px;
+    display: inline;
+    padding-right: 5px;
+}
+.sidecartOffer-text{
+    display: inline;
+    font-size: 12px;
+    padding: 3px 5px;
+    font-weight: 600;
+    background-color: white;
+    border-radius: 5px;
+}
+.sidecartOfferBtn{
+    padding: 5px!important;
+    display: block!important;
+    height: auto!important;
+    margin: 0!important;
+    font-size: 12px!important;
+    width: auto!important;
+    margin-left: auto!important;
+    margin-top: auto!important;
+
+}
+.checkout-offers{
+    padding-top: 20px;
+}
+.checkoutOffers-title{
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+}
+.checkout-offerItem{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    margin: 0px 5px!important
+}
+.checkoutItem-content{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.checkout-item-before-price{
+    text-decoration: line-through;
+    font-size: 12px;
+    display: inline-block;
+    color: #abaeb4;
+}
+.checkout-offerItem .green{
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none!important;
+    padding-left: 5px;
+}
+.checkout-offer-qty-holder{
+    flex-basis: 100%;
+}
+.checkoutOffer-text{
+    font-size: 12px;
+    padding: 3px 5px;
+    font-weight: 600;
+    background-color: var(--red);
+    border-radius: 5px;
+    color: white;
+   display:block;
+}
+.checkout-offerBtn{
+    padding: 10px!important;
+    display: block!important;
+    height: auto!important;
+    margin: 0!important;
+    font-size: 12px!important;
+    width: auto!important;
+    margin-left: auto!important;
+    margin-top: auto!important;
+    background-color: var(--red)!important;
+    border: 0!important;
+    color: white!important;
+    font-weight: 600!important;
+}
+.red{
+    color: var(--red);
 }
 .strong{
     font-weight: 900;
@@ -569,6 +712,9 @@ input[type=number] {
     flex-basis: 48%;
     padding-bottom: 20px;
 }
+.col-2.offer-col{
+    height: 0;
+}
 .col-2{
     flex-basis: 48%;
 }
@@ -595,9 +741,78 @@ input[type=number] {
     font-weight: 500; 
     padding-bottom: 6px;
 }
+.col-1.checkoutform{
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.col-1.checkout-fees-container{
+    padding-top: 20px;
+}
+.checkout-fees{
+    border:1px solid #abaeb4;
+    padding:10px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.checkout-fees.active{
+    border: 1px solid #0f0f0f;
+}
+.fee-toggle{
+    flex: 1;
+}
+.fee-description{
+    font-size: 12px;
+    font-weight: 400;
+    padding-top: 10px;
+    flex-basis: 100%;
+    display: none;
+}
+.fee-add{
+    display: inline-block;
+    padding:10px;
+    border: 0;
+    border-radius: 30px;
+    background:#FA3B3B!important;
+    color:white;
+    font-weight:600;
+	margin-left:10px;
+}
+.fee-add:hover{
+    background-color: var(--black);
+}
+.fee-icon{
+    display: inline-block;
+    font-size: 22px;
+    padding-right: 10px;
+    font-weight: 800;
+    text-orientation: sideways-right;  
+    transition: 300ms linear;
+}
+.fee-icon.active{
+    transform: rotate(90deg);
+    transition : 300ms transform ease-in; 
+   
+    
+}
+.fee-title{
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0;
+}
+.fee-price{
+    color: var(--green);
+    font-size: 16px;
+    margin: 0;
+    display: inline-block;
+    font-weight: 500;
+}
+
 #order_comments{
     width: 100%;
-    height: 30%;
+    height: 100px;
     border-radius: 30px;
     border: 1px solid #abaeb4;
     padding: 15px;
@@ -612,6 +827,7 @@ input[type=number] {
 #order_review_heading{
     font-size: 28px;
     font-weight: 500;
+    width: 100%;
 }
 #order_review{
     flex-basis: 100%;
@@ -950,6 +1166,64 @@ input[type=number] {
     .order-info{
         display: flex;
     }
+    .thank-you-offer{
+        
+        padding: 0px 10px 20px 10px;
+    }
+    .thank-you-offer .notice{
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .thank-you-offer h3{
+        color: var(--red);
+    }
+    .thank-you-offer h5{
+        text-decoration: underline;
+    }
+    .offer-ttl{
+        font-weight: 600;
+        font-size: 18px;
+    }
+    .offer-box{
+        border-radius: 10px;
+        border: 1px solid #abaeb4;
+        padding: 20px;
+        margin: 20px;
+        display: inline-block;
+    }
+    .offer-box .rgl_price{
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: line-through;
+        color: var(--regular-price);
+        display: inline-block;
+    }
+    .offer-box .sl_price{
+        font-size: 24px;
+        font-weight: 600;
+        display: inline-block;
+        color: var(--green);
+        display: inline-block;
+    }
+    .offer-box .offer-save{
+        font-weight: 600;
+        font-size: 12px;
+        background-color: var(--green);
+        padding: 10px 5px;
+        border-radius: 5px;
+        color: white;
+        margin-bottom: 10px;
+    }
+    .offer-button{
+        border-radius: 30px;
+        padding: 10px 20px;
+        background: var(--red);
+        font-weight: 600;
+        color: white;
+        border: 0;
+        cursor: pointer;
+    }
     .thank-you-info{
         font-size: 20px;
         font-weight: 500;
@@ -1111,11 +1385,14 @@ input[type=number] {
 }
 
 @media (max-width: 767px){
+    .desktop{
+        display: none!important;
+    }
     #header-banner .banner-text{
         font-size: 0.7em;
     }
     #sidecart{
-        width: 80%;
+        width: 100%;
     }
     #header{
         justify-content: flex-start;
@@ -1199,9 +1476,13 @@ input[type=number] {
         flex-basis: 100%;
         text-align: center;
     }
+    
     .col-2{
         flex-basis: 100%;
         text-align: center;
+    }
+    .col-2.offer-col{
+        height: auto;
     }
     .slider-wrapper{
         margin: 10px;
@@ -1216,6 +1497,10 @@ input[type=number] {
     .slide .slider-title{
         height: 70px;
     }
+    
+    .col-1 .toggle-col{
+        margin: 0!important;
+    }
     #FieldList input{
         text-align: center;
     }
@@ -1224,6 +1509,9 @@ input[type=number] {
     }
     #order_review_heading{
         text-align: center;
+    }
+    .fee-title{
+        text-align: left;
     }
     .place_order-section{
         flex-wrap: wrap;
@@ -1398,22 +1686,6 @@ input[type=number] {
     object-fit: contain;
     height: 250px;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

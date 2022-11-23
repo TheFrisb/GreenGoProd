@@ -1,22 +1,6 @@
- console.log("WOO")
-
-
-//  const slidesContainer = document.getElementById("slides-container");
-//  const slide = document.querySelector(".slide");
-//  const prevButton = document.getElementById("slide-arrow-prev");
-//  const nextButton = document.getElementById("slide-arrow-next");
-
-//  nextButton.addEventListener("click", () => {
-//    const slideWidth = slide.clientWidth;
-//    slidesContainer.scrollLeft += slideWidth;
-//  });
-
-//  prevButton.addEventListener("click", () => {
-//    const slideWidth = slide.clientWidth;
-//    slidesContainer.scrollLeft -= slideWidth;
-//  });
 
  $(document).ready(function() {
+    console.log("Jquery loaded")
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
 
     $("div#container").on('click', 'button.alert', function() {
@@ -213,6 +197,17 @@
             }
         })
     })
+    $(".checkout-fees").on('click', '.fee-toggle', function(e){
+        e.preventDefault();
+        $(this).find('.fee-icon').toggleClass('active');
+        $(this).closest('.checkout-fees').find('.fee-description').slideToggle('next');
+    })
+
+    $(".checkout-fees").on('click', '.fee-add', function(e){
+        e.preventDefault();
+        $(this).closest('.checkout-fees').toggleClass('active');
+    })
+    
 
     $(".toggle").click(function (e){
         console.log("Toggle click!")
