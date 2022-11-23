@@ -7,7 +7,7 @@
         alert(1);
     });
 
-    $(".header-search-icon").click(function (e){
+    $(".header-menu").click(function (e){
         $(this).toggleClass("active");
         $("#navigation").toggleClass("active");
     })
@@ -19,7 +19,7 @@
         console.log("was is das")
     }
 
-    $('.sidecart-icon').click(function (e){
+    $('.header-cart').click(function (e){
         toggleCart();
     })
 

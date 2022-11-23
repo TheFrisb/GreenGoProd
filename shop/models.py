@@ -41,34 +41,36 @@ class Dobavuvac(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, verbose_name='Категорија')
-    #thumbnail = models.ImageField(default='default.jpg', upload_to='products/')
-    thumbnail = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
-    thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':60})
-    
-    title = models.CharField(max_length = 100, verbose_name='Име')
-    content = RichTextUploadingField(blank=True, null=True);
-    regular_price = models.IntegerField(verbose_name='Стара цена')
-    sale_price = models.IntegerField(verbose_name='Цена')
-    date_posted = models.DateTimeField(default=timezone.now, verbose_name='Дата на креирање')
-    title_slug = models.CharField(max_length = 100,verbose_name='Име на продукт во латиница')
-    slug =  models.SlugField(unique=True, max_length=250, blank = True)
-    quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
     status_choices = (
         ('PRIVATE', 'PRIVATE'),
         ('PUBLISHED', 'PUBLISHED'),
         ('VARIABLE', 'VARIABLE'),       
     )
+    status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
+    thumbnail = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
+    thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':60})
+    
+    title = models.CharField(max_length = 100, verbose_name='Име')
+    content = RichTextUploadingField(blank=True, null=True, verbose_name='Содржина');
+    regular_price = models.IntegerField(verbose_name='Стара цена')
+    sale_price = models.IntegerField(verbose_name='Цена')
+    free_shipping = models.BooleanField(default=False, blank=True, verbose_name='Бесплатна достава')
+    date_posted = models.DateTimeField(default=timezone.now, verbose_name='Дата на креирање')
+    title_slug = models.CharField(max_length = 100,verbose_name='Име на продукт во латиница')
+    slug =  models.SlugField(unique=True, max_length=250, blank = True)
+    quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
+    
     attributes_choices = (
         ('COLOR', 'COLOR'),
         ('SIZE', 'SIZE'),
         ('OFFER', 'OFFER')
     )
-    attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True)
-    status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
+    attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
+    
     #Product Data
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
     sku = models.CharField(max_length = 100, verbose_name='Лабел')
-    free_shipping = models.BooleanField(default=False, blank=True, verbose_name='Бесплатна достава')
+    
     
 
     def save(self, *args, **kwargs):

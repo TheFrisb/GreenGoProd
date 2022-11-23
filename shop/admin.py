@@ -22,6 +22,19 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'sku', 'supplier']
     exclude = ("slug",)
     list_display = ("title", "sale_price",  "date_posted")
+    fieldsets = (
+        ('Задолжителни:', {
+            'fields': ('status', 'category', 'title', 'title_slug', 'thumbnail',  'content', 'regular_price', 'sale_price',
+            'free_shipping', 'supplier', 'sku', 'date_posted',),
+        }),
+        ('Количина:', {
+            'fields': ('quantity',),
+           'description': 'Внеси доколку сакаш да контролираш количина',
+        }),
+        ('Атрибути и Понуди:',{
+            'fields': ('attributes_type',),
+        }),
+        )
     inlines = [ProductAttributesInLine]
     # list_editable 
     

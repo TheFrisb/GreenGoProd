@@ -62,6 +62,8 @@ CKEDITOR.plugins.add( 'html5video', {
 
                     if ( autoplay ) {
                         this.setData( 'autoplay', 'yes' );
+                    }   else{
+                        this.setData('autoplay', 'yes' );
                     }
 
                     if ( allowdownload ) {
@@ -70,7 +72,10 @@ CKEDITOR.plugins.add( 'html5video', {
 
                     if ( loop ) {
                         this.setData( 'loop', 'yes' );
+                    }   else{
+                        this.setData('loop', 'yes');
                     }
+                    
 								
                     if ( advisorytitle ) {
                         this.setData( 'advisorytitle', advisorytitle );
@@ -96,6 +101,7 @@ CKEDITOR.plugins.add( 'html5video', {
                     if ( !this.element.getChild( 0 ) ) {
                         // Create a new <video> element.
                         var videoElement = new CKEDITOR.dom.element( 'video' );
+                        
                         // Set the controls attribute.
                         if (this.data.controls) {
                             videoElement.setAttribute('controls', 'controls');
@@ -112,9 +118,9 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
                             this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     } else {
-			    this.element.removeAttribute("data-responsive");
-                            this.element.getChild( 0 ).removeStyle( 'max-width' );
-                            this.element.getChild( 0 ).removeStyle( 'height' );
+                        this.element.setAttribute("data-responsive", this.data.responsive);
+                        this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
+                        this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     }
 
                     if (this.data.poster) this.element.getChild( 0 ).setAttribute('poster', this.data.poster);								
@@ -142,13 +148,14 @@ CKEDITOR.plugins.add( 'html5video', {
                     if ( this.data.autoplay === 'yes' ) {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
                     } else {
-                        this.element.getChild( 0 ).removeAttribute( 'autoplay' );
+                        this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
+                        
                     }
 
                     if ( this.data.loop === 'yes' ) {
                         this.element.getChild( 0 ).setAttribute( 'loop', 'loop' );
                     } else {
-                        this.element.getChild( 0 ).removeAttribute( 'loop' );
+                        this.element.getChild( 0 ).setAttribute( 'loop', 'loop' );
                     }
 
                     if ( this.data.allowdownload === 'yes' ) {

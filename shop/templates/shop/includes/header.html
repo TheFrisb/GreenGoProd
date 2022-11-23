@@ -1,10 +1,11 @@
 {% if title != "Кон нарачка" %}
+{% load static %}
 <section id="header-banner">
     <div class="banner-inner-header">
         <a href="tel:071321312" class="banner-text">071321312 (09:00 - 00:00)</a>
         <a href="mailto:contact@greengoshop.mk" class="banner-text">contact@greengoshop.mk</a>
-        <a href="https://www.facebook.com/greengoshop.mk"><i class="fa-brands fa-facebook banner-icon"></i>
-        <a href="https://www.instagram.com/greengoshop.mk"></a><i class="fa-brands fa-instagram banner-icon"></i></a>
+        <a href="https://www.facebook.com/greengoshop.mk"><img src="{% static 'icons/facebook.webp' %}"  class="image-icon"  alt="" width="16" height="16"></a>
+        <a href="https://www.instagram.com/greengoshop.mk"><img src="{% static 'icons/instagram.webp' %}" class="image-icon" alt="" width="16" height="16"></a>
         </div>
 </section>
 
@@ -13,7 +14,7 @@
 
         <div class="header-logo-container">
         <a href="{% url 'shop-home' %}" class="header-logo-link">
-            <img src="https://greengoshop.mk/wp-content/uploads/2022/05/logo_web-1-1.jpg" alt="default.jpg" class="header-logo-img" >
+            <img src="{% static 'icons/header-logo.webp' %}" alt="default.jpg" class="header-logo-img" width="280" height="80" >
         </a>
         </div>
 
@@ -21,14 +22,16 @@
             <form action="{% url 'search_results' %}" method="get">
             <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи">
             <button class="search_button">
-            <i class="fa-solid fa-magnifying-glass header-icon fa-xl"></i>
+            <img src="{% static 'icons/search-solid-white.webp' %}" alt="" class="image-icon desktop" width="16" height="16">
             </button>
-            <i class="fa-solid fa-magnifying-glass header-icon mobile fa-xl"></i>
+            <div class="header-icon mobile">
+            <img src="{% static 'icons/search-solid-black.webp' %}" alt="" class="image-icon mobile" width="24" height="24">
+        </div>
             </form>
         </div>
 
         <div class="header-cart header-icon">
-            <i class="fa-solid fa-basket-shopping header-icon fa-xl sidecart-icon"></i>
+            <img src="{% static 'icons/cart.webp' %}" alt="" class="image-icon" width="24" height="24">
             <div id="sidecart">
                 <div class="cart-close">
                     <span id="close-cart">&#10006</span>
@@ -91,7 +94,7 @@
             </div>
         </div>
         <div class="header-menu header-icon">
-            <i class="fa-solid fa-bars header-icon header-search-icon fa-xl"></i>
+            <img src="{% static 'icons/menu-bars.webp' %}" alt="" class="image-icon" width="24" height="24">
             <nav id="navigation">
                 <ul>
                     <li class="navigation-item"><a href="{% url 'shop-home' %}" class="navigation-title">ПОЧЕТНА</a></li>

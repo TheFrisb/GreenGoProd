@@ -26,6 +26,7 @@ a img {
     padding: 0;
     margin: 0;
     display: block;
+    font-family: 'Montserrat', sans-serif;
   }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -73,6 +74,16 @@ input[type=number] {
 }
 #header-banner a{
     text-decoration: none;
+}
+.image-icon{
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: auto;
+    margin-right: auto;
+}
+.top-icon{
+    vertical-align: middle;
+    margin-right: 10px;
 }
 .banner-icon{
     color: white;
@@ -656,20 +667,34 @@ input[type=number] {
 
 
 
-
+.ckeditor-html5-video video{
+    max-width: 100%;
+    height: auto;
+}
 
 
 .pagination{
     display:flex;
     flex-basis: 100%;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .page-numbers {
     text-decoration: none;
     color: var(--black);
     font-size: 16px;
-    padding: 10px 8px;
+    padding: 10px 10px;
+}
+.page-numbers.paginator-end{
+    font-size: 26px;
+    font-weight: 600;
+
+}
+.page-numbers.paginator-arrow{
+    font-size: 24px;
+    
 }
 
 .page-numbers:hover{
@@ -1394,9 +1419,10 @@ input[type=number] {
     #sidecart{
         width: 100%;
     }
+    
     #header{
         justify-content: flex-start;
-        height: 22vh;
+        height: 20vh;
     }
     .inner-header{
         width:100%;
@@ -1413,9 +1439,9 @@ input[type=number] {
     }
     .header-logo-img{
         width: 150px;
+        height: auto;
     }
     .header-icon{
-        padding:5px;
         flex-grow: 0;
         margin-right: 4px;
     }

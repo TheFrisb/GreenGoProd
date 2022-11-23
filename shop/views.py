@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from .models import *
+from django.core.paginator import Paginator
 
 import datetime
 
@@ -13,23 +14,24 @@ import datetime
 
 
 def ProductListView(request):
-    if request.user.is_authenticated:
-        print("Logged in")
-    else:
-        print("WA")
-    
+    products = Product.objects.all()
     cart = Cart.objects.filter(user=request.user)
+    paginator = Paginator(products, 1)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
     total = 0
     if cart:
         for item in cart:
             total = total + (item.product.sale_price * item.product_qty)
     context = {
-        'products': Product.objects.all,
+        'products': products,
         'title': 'Почетна',
         'categories': Category.objects.all,
         'cart': cart,
         'cart_total': total,
         }
+    
+    
     return render(request, 'shop/home.html', context)
 
 
@@ -41,11 +43,15 @@ def Categories(request):
 def CategoryView(request, slug):
     if(Category.objects.filter(slug=slug)):
         products = Product.objects.filter(category__slug=slug)
+        paginator = Paginator(products, 2)
+        page = request.GET.get('page')
+        products = paginator.get_page(page)
         
         context = {
             'products': products, 
             'categories': Category.objects.all
             }
+        
         return render(request, "shop/home.html", context)
     else:
         messages.warning(request, "Линкот што го следевте не постои")
