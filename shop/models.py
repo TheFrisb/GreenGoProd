@@ -61,7 +61,7 @@ class Product(models.Model):
     title_slug = models.CharField(max_length = 100,verbose_name='Име на продукт во латиница')
     slug =  models.SlugField(unique=True, max_length=250, blank = True)
     quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
-    
+
     attributes_choices = (
         ('COLOR', 'COLOR'),
         ('SIZE', 'SIZE'),
@@ -213,6 +213,7 @@ class Order(models.Model):
     number = models.CharField(max_length=150, null=False, verbose_name='Број')
     total_price = models.IntegerField(null=False, verbose_name='Вкупна цена')
     shipping = models.BooleanField(default=True, verbose_name='Достава')
+    shipping_price = models.IntegerField(default=130, blank=True)
     orderstatuses = (
         ('Pending', 'Pending'),
         ('Confirmed', 'Confirmed'),
@@ -271,10 +272,29 @@ class OrderItem(models.Model):
 
 
 
+class CheckoutFees(models.Model):
+    title = models.CharField(max_length=100, verbose_name='Име', null=False)
+    content = models.TextField(verbose_name='Содржина', null=False)
+    price = models.IntegerField(verbose_name='Цена', null = False)
 
 
 
+    def __str__(self):
+        return 'Order fee: {} ({} ден)'.format(self.title, self.price)
 
+
+class CartFees(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
+    fee = models.ForeignKey(CheckoutFees, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, verbose_name='Име')
+    price = models.IntegerField(verbose_name='Цена')
+
+
+class OrderFeesItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    fee = models.ForeignKey(CheckoutFees, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, verbose_name='Име')
+    price = models.IntegerField(verbose_name='Цена')
 
 
 

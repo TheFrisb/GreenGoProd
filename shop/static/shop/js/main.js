@@ -14,16 +14,19 @@
     $("")
     
     function toggleCart(){
+        console.log("Cart Toggled")
         $('#sidecart').toggleClass('sidecart-active');
         $('.lightbox').toggleClass('lightbox-active')
-        console.log("was is das")
+        
     }
 
     $('.header-cart').click(function (e){
+        console.log("Cart Icon Clicked")
         toggleCart();
     })
 
     $('.cart-close').click(function (e){
+        console.log("Cart Closed")
         toggleCart();
     })
 
@@ -104,16 +107,18 @@
             $(this).closest('.product_data').find('.qty-input').val(value);
         }
     })
-    $('.add-to-cartBtn').click(function (e){
+    $(document).on('click', '.add-to-cartBtn',function (e){
         button = $(this);
-
+        e.stopPropagation();
+        e.preventDefault();
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
-        print(product_id)
         var product_qty = $(this).closest('.product_data').find('.qty-input').val();
         var token = $('input[name=csrfmiddlewaretoken]').val()
         if (product_qty == null){
             product_qty = 1;
         }
+        console.log($(button).hasClass("checkout-offerBtn"))
+        
         $.ajax({
             method: "POST",
             url: "/add-to-cart",
@@ -124,7 +129,15 @@
             },
             
             success: function (response){
-                if($(button).hasClass("proceed-to-checkout")){
+                if($(button).hasClass("sidecartOfferBtn")){
+                    $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                }
+                else if($(button).hasClass("checkout-offerBtn")){
+                    $('.cart-data').load(location.href + " .cart-data")
+                    console.log('yeqas')
+                    console.log('ADDED OFFER ITEM')
+                }
+                else if($(button).hasClass("proceed-to-checkout")){
                     window.location.href = "http://127.0.0.1:8000/checkout";
                 }
                 else {
@@ -133,6 +146,41 @@
                 }
             }
         })
+    })
+
+    $(".offer-box").on('click', '.offer-button',function (e){
+        button = $(this);
+        e.stopPropagation();
+        e.preventDefault();
+        console.log('Thank you page order button clicked')
+        var order_id = $(this).closest('.offer-box').find('.order_id').val();
+        var product_id = $(this).closest('.offer-box').find('.prod_id').val();
+        var product_qty = 1;
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        console.log('Order id:', order_id, 'Product id: ', product_id, 'product_qty', product_qty)
+        
+        $.ajax({
+            method: "POST",
+            url: "/add-to-order",
+            data: {
+                'order_id': order_id,
+                'product_id': product_id,
+                'product_qty': product_qty,
+                csrfmiddlewaretoken: token,
+            },
+            
+            success: function (response){
+                    $('.cart-data').load(location.href + " .cart-data");
+                
+            }
+        })
+    })
+
+
+
+    $('.sidecart-offer-item').on('click', 'sidecart-offer-item', function (e){
+        console.log('offer clicked')
+        e.preventDefault();
     })
     $('.product-attributes').on('click', '.attribute-item', function(){
         if($(this).hasClass('offer')){
@@ -150,7 +198,6 @@
         e.preventDefault();
         console.log('click');
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
-        print(product_id)
         var product_qty = $(this).closest('.product_data').find('.qty-input').val();
         var token = $('input[name=csrfmiddlewaretoken]').val()
         $.ajax({
@@ -197,6 +244,7 @@
             }
         })
     })
+    
     $(".checkout-fees").on('click', '.fee-toggle', function(e){
         e.preventDefault();
         $(this).find('.fee-icon').toggleClass('active');
@@ -205,6 +253,29 @@
 
     $(".checkout-fees").on('click', '.fee-add', function(e){
         e.preventDefault();
+        button = $(this);
+        fee_action = 'add';
+        if($(this).closest('.checkout-fees').hasClass('active')){
+            fee_action = 'remove';
+        }
+        console.log('Fee action:', fee_action)
+        var fee_id = $(this).closest('.fee_data').find('.fee_id').val();
+        console.log('Fee id:', fee_id)
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        $.ajax({
+            method: "POST",
+            url: "/add-or-delete-fee",
+            data: {
+                'fee_id': fee_id,
+                'action': fee_action,
+                csrfmiddlewaretoken: token,
+            },
+            
+            success: function (response){
+                console.log('Fee status changed to: ', fee_action)
+                $('.cart-data').load(location.href + " .cart-data")    
+            }
+        })
         $(this).closest('.checkout-fees').toggleClass('active');
     })
     

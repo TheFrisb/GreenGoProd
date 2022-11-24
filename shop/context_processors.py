@@ -1,4 +1,4 @@
-from .models import Cart, Category, CartItems
+from .models import Cart, Category, CartItems, CartOffers
 import uuid
 
 def cart_renderer(request):
@@ -17,9 +17,12 @@ def cart_renderer(request):
 def extras(request):
     categories = Category.objects.all()
     cartItems = CartItems.objects.filter(cart__session = request.session['nonuser'])
+    itemscount = 0
+    if cartItems.count() > 0:
+        itemscount = cartItems.count()
+    cartOffers = CartOffers.objects.all()
     total = 0
     if cartItems:
         for item in cartItems:
             total = total + (item.product.sale_price * item.product_qty)
-
-    return {'categories': categories, 'cart': cartItems, 'cart_total': total}
+    return {'categories': categories, 'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount}

@@ -804,6 +804,7 @@ input[type=number] {
     color:white;
     font-weight:600;
 	margin-left:10px;
+    cursor: pointer;
 }
 .fee-add:hover{
     background-color: var(--black);
@@ -871,6 +872,9 @@ input[type=number] {
 .order-review-table td{
     padding: 9px 12px;
    
+}
+.cart-fees td:nth-child(2){
+    font-weight: 500;
 }
 .checkout-row-inline{
     display: inline-block;
@@ -1569,6 +1573,7 @@ input[type=number] {
         max-width: 42%;
         min-width: 41%;
     }
+
     .cart-shipping td:nth-child(2){
         padding-right: 5px;
     }

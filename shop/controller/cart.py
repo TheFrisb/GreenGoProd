@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from shop.models import Product, CartItems, Cart
+from shop.models import Product, CartItems, Cart, CheckoutFees, CartFees
 from django.http import HttpResponse, JsonResponse
 
 def addtocart(request):
@@ -59,3 +59,33 @@ def deletecartitem(request):
             cartItem.delete()
         return JsonResponse({'status': "Updated Successfully!"})
     return redirect('/')
+
+
+def addordeletefee(request):
+    if request.method == 'POST':
+        print('Fee initiated')
+        if Cart.objects.filter(session = request.session['nonuser']):
+            CartHolder = Cart.objects.get(session = request.session['nonuser'])
+            print('Cart fee Found')
+            fee_id = int(request.POST.get('fee_id'))
+            action = str(request.POST.get('action'))        
+            if(CheckoutFees.objects.filter(id=fee_id)):
+                print('Check for fee')
+                FeeHolder = CheckoutFees.objects.get(id=fee_id)
+                print('FeeHolder found: ', FeeHolder)
+                if(CartFees.objects.filter(cart=CartHolder, fee=FeeHolder)):
+                    CartFee = CartFees.objects.get(cart=CartHolder, fee=FeeHolder)
+                    CartFee.delete()
+                    print('Fee deleted from cart!')
+                else:
+                    CartFee = CartFees.objects.create(cart = CartHolder, fee = FeeHolder, title = FeeHolder.title, price = FeeHolder.price)
+                    print('Fee: ', CartFee, ' added to cart!')
+                    return JsonResponse({'status': "Fee added successfuly"})
+            else:
+                return JsonResponse({'status': "No such fee found"})
+
+
+
+
+    return redirect('/')
+

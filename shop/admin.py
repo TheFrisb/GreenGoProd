@@ -8,6 +8,11 @@ class InformationInline(admin.StackedInline):
     list_display = ("Product_Title", "name",  "rating", "date_created")
 
 
+class InformationInline2(admin.StackedInline):
+    model = OrderFeesItem
+    list_display = ("title", "price")
+
+
 class ProductAttributesInLine(admin.TabularInline):
     model = ProductAttribute
     list_display=("product", "color", "size", "price")
@@ -15,7 +20,7 @@ class ProductAttributesInLine(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     search_fields = ['name', 'address', 'city','number', 'tracking_no']
     list_display = ("tracking_no", "name", "created_at", "get_status", "total_price", "get_shipping")
-    inlines = [InformationInline]
+    inlines = [InformationInline, InformationInline2]
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -66,9 +71,11 @@ admin.site.register(Color, ColorAdmin)
 admin.site.register(Size)
 admin.site.register(Offer)
 admin.site.register(Review, ReviewAdmin)
-
 admin.site.register(CartOffers)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
+admin.site.register(CartFees)
+admin.site.register(CheckoutFees)
+admin.site.register(OrderFeesItem)
 
 

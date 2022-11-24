@@ -16,7 +16,11 @@ urlpatterns = [
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
     path('checkout', CheckoutView, name='checkout'),
+
+    path('add-or-delete-fee', cart.addordeletefee, name="addordeletefee"),
+
     path('place-order', checkout.placeorder, name="placeorder"),
+    path('add-to-order', checkout.addtoorder, name="addtoorder"),
     path('thank-you/<str:slug>/', views.ThankYouView, name='thank-you-view'),
 
     path('shopmanager/login', views.login_shopmanager, name='login'),

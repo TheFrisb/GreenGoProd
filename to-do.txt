@@ -4,10 +4,9 @@
 17. Lazy load images
 
 14. Export xlsx po data poracki
-15. Fix cart with session
 
 
 # fix ckeditor autoplay responsivewidth i loop
-# povrzi fees so backend i cart offers i checkout-offers
+# povrzi thanku offer
 # add progress bar logic
 # fix ckeditor video i fix search

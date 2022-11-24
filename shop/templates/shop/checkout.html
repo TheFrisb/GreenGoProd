@@ -8,7 +8,8 @@
             <div class="checkout-offers mobile">
                 <p class="checkoutOffers-title">Често купувани заедно</p>
             {% for item in cartOffers %}
-                <div class="sidecart-item checkout-offerItem mobile">
+                <div class="sidecart-item checkout-offerItem mobile product_data">
+                    <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                     <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                     <span class="sidecart-item-content checkoutItem-content">
                         <p class="sidecart-item-name">{{ item.product.title }}</p>
@@ -56,8 +57,8 @@
                 <p class="checkoutOffers-title">Често купувани заедно</p>
                 {% for item in cartOffers %}
                 
-                    <div class="sidecart-item checkout-offerItem desktop">
-                        
+                    <div class="sidecart-item checkout-offerItem desktop product_data">
+                        <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                         <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                         <span class="sidecart-item-content checkoutItem-content">
                             <p class="sidecart-item-name">{{ item.product.title }}</p>
@@ -76,35 +77,17 @@
         </div>
 
     <div class="col-1 checkoutform checkout-fees-container">
-        <div class="checkout-fees">
-            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Приоритетна достава</p></span>
-            <p class="fee-price"><span class="fee-span">59</span>ден.</p>
-            <button class="fee-add">ДОДАЈ</button>
-            <p class="fee-description">Приоритетна достава овозможува вашиот производ да биде испратен прв!</p>    
-        </div>
-        
-        <div class="checkout-fees">
-            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Поклон изненадување</p></span>     
-            <span class="fee-rightside"><p class="fee-price"><span class="fee-span">299</span>ден.</p>
-            <button class="fee-add">ДОДАЈ</button></span>
-            <p class="fee-description">Добијте поклон изненадување од минимална вредност 450 денари по неверојатна цена - 299 денари
-            </p> 
-        </div>
-
-        <div class="checkout-fees">
-            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>1 Година гаранција</p></span>
-            <span class="fee-rightside"><p class="fee-price"><span class="fee-span">199</span>ден.</p>
-            <button class="fee-add">ДОДАЈ</button></span>
-            <p class="fee-description">Продолжете ја гаранцијата на нарачаниот производ за 1 година</p>
-        </div>
-
-        <div class="checkout-fees">
-            <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>Осигурување на пакет</p></span>
-               <p class="fee-price"><span class="fee-span">49</span>ден.
-            <button class="fee-add">ДОДАЈ</button>
-            <p class="fee-description">Во случај на оштетување на вашиот продукт при транспорт, ќе извршиме замена без дополнителни
-            прашања!</p>            
-        </div>
+        {% if orderFees %}
+            {% for fee in orderFees %}
+                <div class="checkout-fees fee_data">
+                    <input type="hidden" class="fee_id" value="{{ fee.id }}">
+                    <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>{{ fee.title }}</p></span>
+                    <p class="fee-price"><span class="fee-span">{{ fee.price}}</span>ден.</p>
+                    <button class="fee-add">ДОДАЈ</button>
+                    <p class="fee-description">{{ fee.content }}</p>    
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     
         <h3 id="order_review_heading">Вашата Нарачка</h3>
@@ -146,12 +129,24 @@
                 {% endfor %}
                 </tbody>
                 <tfoot>
+                    {% if cartFees %}
+                        {% for fee in cartFees %}
+                        <tr class="cart-fees"> 
+                            <td>
+                                <p>{{ fee.title }}</p>
+                            </td>
+                            <td>
+                                <p>{{ fee.price }} ден</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                     <tr class="cart-subtotal"> 
                         <td>
                             <p>Цена</p>
                         </td>
                         <td>
-                            <p>790 ден</p>
+                            <p>{{ cart_total|add:feetotal }} ден</p>
                         </td>
                     </tr>
                     <tr class="cart-shipping">
@@ -175,7 +170,7 @@
                             <p>Вкупно</p>
                         </td>
                         <td>
-                            <p>{{ order.get_cart_total }} ден</p>
+                            <p>{{ cart_total|add:feetotal }} ден</p>
                         </td>
                     </tr>
                 </tfoot>

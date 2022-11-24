@@ -91,9 +91,18 @@ def ProductView(request, slug):
 
 def CheckoutView(request):
     cartOffers = CartOffers.objects.all()
+    orderFees = CheckoutFees.objects.all()
+    cartHolder = Cart.objects.get(session = request.session['nonuser'])
+    cartFees = CartFees.objects.filter(cart=cartHolder)
+    feetotal = 0
+    for fee in cartFees:
+        feetotal += fee.price
     context = {
         'title': 'Кон Нарачка',
         'cartOffers': cartOffers,
+        'orderFees': orderFees,
+        'cartFees': cartFees,
+        'feetotal': feetotal,
         }
 
     return render(request, 'shop/checkout.html', context)
@@ -104,11 +113,17 @@ def ThankYouView(request, slug):
         order = Order.objects.filter(tracking_no=slug).first
         orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
         offerproduct = orderItems.reverse()[0]
+        orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
+        feetotal = 0
+        for fee in orderFees:
+            feetotal += fee.price
 
     context = {
         'order': order,
         'orderItems': orderItems,
         'offerproduct': offerproduct,
+        'orderFees': orderFees,
+        'feetotal': feetotal
     }
 
     return render(request, 'shop/thank-you.html', context)
