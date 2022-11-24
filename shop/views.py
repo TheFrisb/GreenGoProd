@@ -6,7 +6,8 @@ from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from .models import *
 from django.core.paginator import Paginator
-
+import uuid
+from uuid import  uuid4
 import datetime
 
 # Create your views here.
@@ -15,30 +16,18 @@ import datetime
 
 def ProductListView(request):
     products = Product.objects.all()
-    cart = Cart.objects.filter(user=request.user)
     paginator = Paginator(products, 1)
     page = request.GET.get('page')
     products = paginator.get_page(page)
     total = 0
-    if cart:
-        for item in cart:
-            total = total + (item.product.sale_price * item.product_qty)
     context = {
         'products': products,
         'title': 'Почетна',
-        'categories': Category.objects.all,
-        'cart': cart,
-        'cart_total': total,
         }
     
     
     return render(request, 'shop/home.html', context)
 
-
-def Categories(request):
-    category = Category.objects.all
-    context = {'category': category}
-    render(request, "shop/category.html", context)
 
 def CategoryView(request, slug):
     if(Category.objects.filter(slug=slug)):
@@ -49,7 +38,7 @@ def CategoryView(request, slug):
         
         context = {
             'products': products, 
-            'categories': Category.objects.all
+            'categories': Category.objects.all,
             }
         
         return render(request, "shop/home.html", context)
@@ -59,11 +48,6 @@ def CategoryView(request, slug):
 
 
 def ProductView(request, slug):
-    cart = Cart.objects.filter(user=request.user)
-    total = 0
-    if cart:
-        for item in cart:
-            total = total + (item.product.sale_price * item.product_qty)
 
     if(Product.objects.filter(slug=slug)):
         attributes = ProductAttribute.objects.filter(product__slug=slug)
@@ -83,8 +67,6 @@ def ProductView(request, slug):
             context = {
                 'product': product,
                 'reviews': reviews,
-                'cart': cart,
-                'cart_total': total,
                 'ratingaverage': reviewsaverage,
                 'reviewcount': count,
                 'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
@@ -93,8 +75,6 @@ def ProductView(request, slug):
         else:
             context = {
                 'product': product,
-                'cart': cart,
-                'cart_total': total,
                 'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
                 'slider2': Product.objects.all()[:8],
                 'attributes' : attributes,
@@ -110,10 +90,8 @@ def ProductView(request, slug):
 
 
 def CheckoutView(request):
-    cart = Cart.objects.filter(user=request.user)
     cartOffers = CartOffers.objects.all()
     context = {
-        'cart': cart,
         'title': 'Кон Нарачка',
         'cartOffers': cartOffers,
         }

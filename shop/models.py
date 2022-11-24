@@ -10,6 +10,8 @@ import datetime, os
 from ckeditor_uploader.fields import RichTextUploadingField
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
+from uuid import uuid4
+
 # Create your models here.
 
 def get_file_path(request, filename):
@@ -165,12 +167,30 @@ class Review(models.Model):
     def Product_Title(self):
         return self.product.title
 
-
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    session = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=100, blank=True)
+
+    @property
+    def session_id(self):
+        return self.session
+
+
+class CartItems(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     product_qty = models.IntegerField(null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+    @property
+    def get_session(self):
+        return self.cart.session
+
+    class Meta:
+        verbose_name = "Cart Items"
+        verbose_name_plural = "Cart Items"
 
 
 class CartOffers(models.Model):
@@ -186,7 +206,7 @@ class CartOffers(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.CharField( max_length=150 )
     name = models.CharField(max_length=150, null=False, verbose_name='Име')
     address = models.CharField(max_length=150, null=False, verbose_name='Адреса')
     city = models.CharField(max_length=150, null=False, verbose_name='Град')

@@ -54,6 +54,9 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'color', 'price')
 
 
+
+admin.site.register(Cart)
+admin.site.register(CartItems)
 admin.site.register(Category)
 admin.site.register(Dobavuvac)
 admin.site.register(Product, ProductAdmin)
@@ -63,7 +66,7 @@ admin.site.register(Color, ColorAdmin)
 admin.site.register(Size)
 admin.site.register(Offer)
 admin.site.register(Review, ReviewAdmin)
-admin.site.register(Cart)
+
 admin.site.register(CartOffers)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)

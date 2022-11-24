@@ -8,8 +8,9 @@ import random
 
 def placeorder(request):
     if request.method == 'POST':
+        CartHolder = Cart.objects.get(session = request.session['nonuser'])
         neworder = Order()
-        neworder.user = request.user
+        neworder.user = request.session['nonuser']
         neworder.name = request.POST.get('name')
         neworder.address = request.POST.get('address')
         neworder.city = request.POST.get('city')
@@ -17,11 +18,11 @@ def placeorder(request):
         neworder.status= 'Pending'
         neworder.message= request.POST.get('order_comments')
         
-        cart = Cart.objects.filter(user=request.user)
+        cartItems = CartItems.objects.filter(cart = CartHolder)
         cart_total_price = 0
         enable_shipping = 1
         count = 0
-        for item in cart:
+        for item in cartItems:
             count = count + 1
             if count >= 2:
                 enable_shipping = 0
@@ -41,7 +42,7 @@ def placeorder(request):
 
         neworder.save()
 
-        neworderitems = Cart.objects.filter(user=request.user)
+        neworderitems = CartItems.objects.filter(cart=CartHolder)
         for item in neworderitems:
             OrderItem.objects.create(
                 order = neworder,
@@ -52,7 +53,9 @@ def placeorder(request):
             )
             # decrease product stock ?
 
-        Cart.objects.filter(user=request.user).delete()
+        CartItems.objects.filter(cart=CartHolder).delete()
+        Cart.objects.filter(session = request.session['nonuser']).delete()
+        del request.session['nonuser']
 
         messages.success(request, "Your order has been placed successfully")
         return redirect('thank-you-view', slug=neworder.tracking_no)

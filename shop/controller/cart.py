@@ -1,26 +1,28 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from shop.models import Product, Cart
+from shop.models import Product, CartItems, Cart
 from django.http import HttpResponse, JsonResponse
 
 def addtocart(request):
     if request.method == 'POST':
-        if request.user.is_authenticated:
+        if Cart.objects.filter(session = request.session['nonuser']):
+            CartHolder = Cart.objects.get(session = request.session['nonuser'])
             prod_id = int(request.POST.get('product_id'))
             product_check = Product.objects.get(id=prod_id)
             if(product_check):
-                if(Cart.objects.filter(user=request.user.id, product_id=prod_id)):
+                if(CartItems.objects.filter(cart = CartHolder, product_id=prod_id)):
+                    print('CART FOUND')
                     prod_qty = int(request.POST.get('product_qty'))
-                    cart = Cart.objects.get(product_id=prod_id, user=request.user)
-                    cart.product_qty = cart.product_qty + prod_qty
-                    cart.save()
+                    cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder)
+                    cartItem.product_qty = cartItem.product_qty + prod_qty
+                    cartItem.save()
                     return JsonResponse({'status': "Product added with quantity saved"})
                 else:
                     prod_qty = int(request.POST.get('product_qty'))
                     # Check Stock
                     # if product.check .quantity >= prod_qty: Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
                     
-                    Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
+                    CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
 
                     return JsonResponse({'status': "Product added successfuly"})
 
@@ -38,11 +40,12 @@ def addtocart(request):
 def updatecart(request):
     if request.method == 'POST':
         prod_id = int(request.POST.get('product_id'))
-        if(Cart.objects.filter(user=request.user, product_id=prod_id)):
+        CartHolder = Cart.objects.get(session = request.session['nonuser'])
+        if(CartItems.objects.filter(cart = CartHolder, product_id=prod_id)):
             prod_qty = int(request.POST.get('product_qty'))
-            cart = Cart.objects.get(product_id=prod_id, user=request.user)
-            cart.product_qty = prod_qty
-            cart.save()
+            cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder)
+            cartItem.product_qty = prod_qty
+            cartItem.save()
             return JsonResponse({'status': "Updated Successfully!"})
     return redirect('/')
 
@@ -50,8 +53,9 @@ def updatecart(request):
 def deletecartitem(request):
     if request.method == 'POST':
         prod_id = int(request.POST.get('product_id'))
-        if(Cart.objects.filter(user=request.user, product_id=prod_id)): # check for inspect element kidz
-            cartItem = Cart.objects.get(product_id=prod_id, user=request.user)
+        CartHolder = Cart.objects.get(session = request.session['nonuser'])
+        if(CartItems.objects.filter(cart = CartHolder, product_id=prod_id)): # check for inspect element kidz
+            cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder)
             cartItem.delete()
         return JsonResponse({'status': "Updated Successfully!"})
     return redirect('/')
