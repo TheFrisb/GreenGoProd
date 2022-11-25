@@ -18,11 +18,24 @@ def extras(request):
     categories = Category.objects.all()
     cartItems = CartItems.objects.filter(cart__session = request.session['nonuser'])
     itemscount = 0
-    if cartItems.count() > 0:
-        itemscount = cartItems.count()
+    free_shipping = False
     cartOffers = CartOffers.objects.all()
+    if cartOffers:
+        for offer in cartOffers:
+            for item in cartItems:
+                if(offer.product == item.product):
+                    offer.is_added = True
     total = 0
     if cartItems:
         for item in cartItems:
-            total = total + (item.product.sale_price * item.product_qty)
-    return {'categories': categories, 'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount}
+            if(item.product.free_shipping == True):
+                free_shipping = True
+            if(item.attributeprice != None):
+                total = total + (item.attributeprice * item.product_qty)
+                itemscount = itemscount + item.product_qty
+            else:
+                total = total + (item.product.sale_price * item.product_qty)
+                itemscount = itemscount + item.product_qty
+    if(itemscount >= 2):
+        free_shipping = True
+    return {'categories': categories, 'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping}

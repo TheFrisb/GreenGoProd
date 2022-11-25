@@ -24,7 +24,9 @@
     <div class="product-page-price main-price">  
         <p class="product-regular-price">{{ product.regular_price }} ден</p>
         <p class="product-sale-price">{{ product.sale_price }} ден</p>
+        {% if product.free_shipping == True %}
         <p class="free-shipping">бесплатна достава</p>
+        {% endif %}
     </div>
     {% if attributes %}
     <div class="product-attributes">
@@ -33,6 +35,7 @@
             {% for attribute in attributes %}
             
             <div class="attribute-item">
+                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
             </div>
             {% endfor %}
@@ -41,6 +44,7 @@
             <p class="attribute-title">Одбери големина</p>
             {% for attribute in attributes %}
             <div class="attribute-item">
+                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <div class="attribute-inner size">{{ attribute.size.title }}</div>
             </div>
             {% endfor %}
@@ -49,6 +53,7 @@
             <p class="attribute-title">Одбери понуда</p>
             {% for attribute in attributes %}
             <div class="attribute-item offer">
+                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <p class="offer-title">{{ attribute.offer.title }}</p>
                 <p class="offer-price">{{ attribute.offer.price }} ден</p>
                 <p class="offer-text">{{ attribute.offer.incentive }}</p>
@@ -64,8 +69,14 @@
             <input type="text" name="quantity" class="qty-input" value="1">
             <button class="increment-btn">+</button>
         </div>
+        {% if attributes %}
+        <button class="variable-add-to-cartBtn">ВО КОШНИЧКА</button>
+        <button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
+        {% else %}
         <button class="add-to-cartBtn">ВО КОШНИЧКА</button>
         <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
+        {% endif %}
+        
     
     <div class="toggle">
         <div class="toggle-item">
@@ -178,13 +189,13 @@
         {% endfor %}  
         </ul>
     </section>
-    <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
+    <!-- <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
 <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
 <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
 <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
 <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
 <img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
-<img src="{{ product.thumbnail.url }}" alt="" height="600" width="600">
+<img src="{{ product.thumbnail.url }}" alt="" height="600" width="600"> -->
 </div>
 
 

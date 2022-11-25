@@ -22,7 +22,14 @@
     {% include "shop/includes/header.html" %} 
     <div class="page-container">
     {% block content %}{% endblock content %}
-    <div class="lightbox"></div>
+    <div class="lightbox">
+        <form action="{% url 'search_results' %}" method="get" class="mobile disabled">
+        <span class="close-search">&#10006;</span>
+        <input type="text" name="q"  placeholder="Пребарај ги сите производи" class="mobile-search">
+        </form>
+    </div>
+        
+    </div>
     </div>
     {% include "shop/includes/footer.html" %}
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

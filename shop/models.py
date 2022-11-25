@@ -42,7 +42,7 @@ class Dobavuvac(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, verbose_name='Категорија')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, verbose_name='Категорија', null=True)
     status_choices = (
         ('PRIVATE', 'PRIVATE'),
         ('PUBLISHED', 'PUBLISHED'),
@@ -106,36 +106,54 @@ class ProductGallery(models.Model):
 
 
 class Color(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, null=True)
     color_code = models.CharField(max_length=100)
 
     def __str__(self):
-        return '{}  -  {}'.format(self.title, self.color_code)
+        return '{}'.format(self.title)
 
 
 class Size(models.Model):
-    title = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
     #color_code = models.CharField(max_length=100, null=True)
 
     def __str__(self):
-        return self.title
+        return ' - {}'.format(self.title)
 
 
 class Offer(models.Model):
-    title = models.CharField(max_length=100)
-    price = models.IntegerField()
+    title = models.CharField(max_length=100, null=True)
     incentive = models.CharField(max_length=100, blank=True)
 
+    def __str__(self):
+        return ' - {}'.format(self.title)
+
 class ProductAttribute(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color , on_delete=models.CASCADE, null=True, blank=True)
-    size = models.ForeignKey(Size, on_delete = models.CASCADE, null = True, blank= True)
-    offer = models.ForeignKey(Offer, on_delete=models.CASCADE, blank=True, null=True)
-    price = models.IntegerField(blank=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    color = models.ForeignKey(Color , on_delete=models.SET_NULL,  null = True, blank=True)
+    size = models.ForeignKey(Size, on_delete = models.SET_NULL,  null = True, blank=True)
+    offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True)
+    price = models.IntegerField(blank=True, null=True)
+    label = models.CharField(max_length=50, null=True)
+
+    @property
+    def checkattribute(self):
+        if(self.color is not None):
+            return self.color.title
+
+        if(self.size is not None):
+            return self.size.title
+## FIIIIIIIX
+        if(self.offer is not None):
+            return self.offer.title
+
+        return 1
 
     def __str__(self):
-        return 'Атрибут за {} - {} - {}'.format(self.product, self.color, self.price)
-    
+        return 'Атрибут за {} - {} - {}'.format(self.product, self.checkattribute, self.price)
+
+
+
 
 
 
@@ -176,17 +194,24 @@ class Cart(models.Model):
     def session_id(self):
         return self.session
 
-
 class CartItems(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attributename = models.CharField(max_length=100, null = True, default='')
     product_qty = models.IntegerField(null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
-
+    attribute = models.ForeignKey(ProductAttribute, on_delete=models.CASCADE, null = True)
+    attributeprice = models.IntegerField(null=True)
     @property
     def get_session(self):
         return self.cart.session
+
+    @property
+    def has_attributes(self):
+        if(self.attribute is not None):
+            return True
+        else:
+            return False
 
     class Meta:
         verbose_name = "Cart Items"
@@ -196,13 +221,14 @@ class CartItems(models.Model):
 class CartOffers(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Одбери продукт')
     offer_text = models.CharField(max_length=40, blank=True, verbose_name='Текст на понуда')
-
+    is_added = models.BooleanField(default=True)
     def __str__(self):
-        return 'Понуда во кошничка за продукт {} со текст {}'.format(self.product.title, self.offer_text)
-    
+        return 'Понуда во кошничка за продукт {} со текст {} IS ADDED {}'.format(self.product.title, self.offer_text, self.is_added)
+
     class Meta:
         verbose_name = "Понуди за кошничка"
         verbose_name_plural = "Понуди за кошничка"
+
 
 
 class Order(models.Model):
@@ -211,6 +237,7 @@ class Order(models.Model):
     address = models.CharField(max_length=150, null=False, verbose_name='Адреса')
     city = models.CharField(max_length=150, null=False, verbose_name='Град')
     number = models.CharField(max_length=150, null=False, verbose_name='Број')
+    subtotal_price = models.IntegerField(null=False, verbose_name='Вкупна цена без достава')
     total_price = models.IntegerField(null=False, verbose_name='Вкупна цена')
     shipping = models.BooleanField(default=True, verbose_name='Достава')
     shipping_price = models.IntegerField(default=130, blank=True)
@@ -258,17 +285,20 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    price = models.FloatField(null=False, verbose_name='Цена')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, verbose_name='Продукт', null=True)
+    price = models.IntegerField(null=False, verbose_name='Цена')
     quantity = models.IntegerField(null=False, verbose_name='Количина')
-
+    label = models.CharField(max_length=150, null= True)
+    supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, null=True)
+    attribute_name = models.CharField(max_length=150, null= True)
+    attribute_price = models.IntegerField(null = True)
 
     @property
     def get_product_total(self):
         return self.price*self.quantity
 
     def __str__(self):
-        return '--- {}({} ден) х {} - Вкупно {} ден'.format(self.product, self.price, self.quantity, self.get_product_total)
+        return '{}({} ден) х {} - Вкупно {} ден'.format(self.product, self.price, self.quantity, self.get_product_total)
 
 
 
@@ -276,7 +306,7 @@ class CheckoutFees(models.Model):
     title = models.CharField(max_length=100, verbose_name='Име', null=False)
     content = models.TextField(verbose_name='Содржина', null=False)
     price = models.IntegerField(verbose_name='Цена', null = False)
-
+    is_added = models.BooleanField(default = False)
 
 
     def __str__(self):
@@ -292,9 +322,12 @@ class CartFees(models.Model):
 
 class OrderFeesItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    fee = models.ForeignKey(CheckoutFees, on_delete=models.CASCADE, null=True)
+    fee = models.ForeignKey(CheckoutFees, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100, verbose_name='Име')
     price = models.IntegerField(verbose_name='Цена')
+    def __str__(self):
+        return '{} ({} ден)'.format(self.title, self.price)
+
 
 
 

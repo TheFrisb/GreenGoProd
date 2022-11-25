@@ -16,7 +16,7 @@ import datetime
 
 def ProductListView(request):
     products = Product.objects.all()
-    paginator = Paginator(products, 1)
+    paginator = Paginator(products, 16)
     page = request.GET.get('page')
     products = paginator.get_page(page)
     total = 0
@@ -32,7 +32,7 @@ def ProductListView(request):
 def CategoryView(request, slug):
     if(Category.objects.filter(slug=slug)):
         products = Product.objects.filter(category__slug=slug)
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 16)
         page = request.GET.get('page')
         products = paginator.get_page(page)
         
@@ -78,8 +78,7 @@ def ProductView(request, slug):
                 'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
                 'slider2': Product.objects.all()[:8],
                 'attributes' : attributes,
-                'gallery': gallery,
-                'cartOffers': cartOffers
+                'gallery': gallery,           
             }
 
 
@@ -90,16 +89,18 @@ def ProductView(request, slug):
 
 
 def CheckoutView(request):
-    cartOffers = CartOffers.objects.all()
     orderFees = CheckoutFees.objects.all()
     cartHolder = Cart.objects.get(session = request.session['nonuser'])
     cartFees = CartFees.objects.filter(cart=cartHolder)
     feetotal = 0
-    for fee in cartFees:
-        feetotal += fee.price
+    for orderfee in orderFees:
+        for cartfee in cartFees:
+            if(orderfee == cartfee.fee):
+                orderfee.is_added = True
+                feetotal += cartfee.price
+    
     context = {
         'title': 'Кон Нарачка',
-        'cartOffers': cartOffers,
         'orderFees': orderFees,
         'cartFees': cartFees,
         'feetotal': feetotal,

@@ -24,7 +24,7 @@
             <button class="search_button">
             <img src="{% static 'icons/search-solid-white.webp' %}" alt="" class="image-icon desktop" width="16" height="16">
             </button>
-            <div class="header-icon mobile">
+            <div class="header-icon mobile" id="search-mobile">
             <img src="{% static 'icons/search-solid-black.webp' %}" alt="" class="image-icon mobile" width="24" height="24">
         </div>
             </form>
@@ -32,67 +32,7 @@
 
         <div class="header-cart header-icon">
             <img src="{% static 'icons/cart.webp' %}" alt="" class="image-icon" width="24" height="24">
-            <div id="sidecart">
-                <div class="cart-close">
-                    <span id="close-cart">&#10006</span>
-                </div>
-                <div class="sidecart-inner product_data">
-                    
-                    {% if cart %}
-                    {% csrf_token %}
-                    <p class="progress-bar-text">Додади уште 1 производ за бесплатна достава</p>
-                    <div class="progress">
-                        <div class="progress__bar"></div>
-                    </div>
-                    {% for item in cart %}
-                    <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-                    <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item basic-sidecart-item">
-                        <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
-                        <span class="sidecart-item-content">
-                            <p class="sidecart-item-name">{{ item.product.title }}</p>
-                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
-                            <span class="sidecart-remove-item remove-item">&#10006;</span>
-                        </span>
-                    </a>
-                    
-                
-                    {% endfor %}
-                    
-                    
-                    <div class="cart-offers product_data">
-                        <p class="cart-offers-text">Може да ви се допадне</p>
-                        {% for item in cartOffers %}
-                        <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-                        <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item">
-                            <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
-                            <span class="sidecart-item-content sidecart-offer-content">
-                                <p class="sidecart-item-name">{{ item.product.title }}</p>
-                                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="red">{{ item.product.sale_price }} ден</span></p>
-                                <p class="sidecartOffer-text">{{ item.offer_text }}</p>
-                                
-                            </span>
-                            <button class="add-to-cartBtn sidecartOfferBtn">ДОДАДИ</button>
-                        </a>
-                        {% endfor %}
-                        </div>
-                        <div class="sidecart-item sidecart-total">
-                        <p class="sidecart-total"><span class="strong">Цена:</span> {{cart_total}} ден</p>
-                        </div>
-                        <div class="sidecart-item sidecart-Button">
-                                <a href="{% url 'checkout' %}" class="button-link"><button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button></a>
-                        </div>
-                    
-                    
-
-                    {% else %}
-                    <div class="sidecart-item notice">
-                        <p class="cart-notice">Немате продукти во кошничка</p>
-                    </div>
-                    {% endif %}
-                </div>
-                
-                
-            </div>
+            
         </div>
         <div class="header-menu header-icon">
             <img src="{% static 'icons/menu-bars.webp' %}" alt="" class="image-icon" width="24" height="24">
@@ -112,6 +52,83 @@
         </div>
     </div>
 </header>
+<div id="sidecart">
+    <div class="cart-close">
+        <span id="close-cart">&#10006</span>
+    </div>
+    <div class="sidecart-inner">
+        
+        {% if cart %}
+        {% csrf_token %}
+        <p class="progress-bar-text">Додади уште 1 производ за бесплатна достава</p>
+        <div class="progress">
+            <div class="progress__bar"></div>
+        </div>
+        {% for item in cart %}
+       
+        <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item basic-sidecart-item  product_data" style="padding: 20px 0px; margin:0px 20px;">
+            <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+            <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute.id }}">
+            <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+            <span class="sidecart-item-content">
+                {% if item.has_attributes %}
+                <p class="sidecart-item-name">{{ item.product.title }}{{ item.attributename }}</p>
+                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.attributeprice }} ден</span></p>
+                {% else %}
+                <p class="sidecart-item-name">{{ item.product.title }}</p>
+                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
+                {% endif %}
+                <span class="sidecart-remove-item remove-item">&#10006;</span>
+            </span>
+        </a>
+        
+    
+        {% endfor %}
+        
+        
+        <div class="cart-offers">
+            <p class="cart-offers-text">Може да ви се допадне</p>
+            {% for item in cartOffers %}
+            
+            <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data">
+                <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                <span class="sidecart-item-content sidecart-offer-content">
+                    <p class="sidecart-item-name">{{ item.product.title }}</p>
+                    <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="red">{{ item.product.sale_price }} ден</span></p>
+                    <p class="sidecartOffer-text">{{ item.offer_text }}</p>
+                    
+                </span>
+                {% if item.is_added == True %}
+                    <button class="add-to-cartBtn sidecartOfferBtn addedBtn">ДОДАДЕН</button>
+                {% else %}
+                    <button class="add-to-cartBtn sidecartOfferBtn">ДОДАДИ</button>
+                {% endif %}
+                
+                
+               
+                
+            </a>
+            {% endfor %}
+            </div>
+            <div class="sidecart-item sidecart-total">
+            <p class="sidecart-total"><span class="strong">Цена:</span> {{cart_total}} ден</p>
+            </div>
+            <div class="sidecart-item sidecart-Button">
+                    <a href="{% url 'checkout' %}" class="button-link"><button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button></a>
+            </div>
+        
+        
+
+        {% else %}
+        <div class="sidecart-item notice">
+            <p class="cart-notice">Немате продукти во кошничка</p>
+        </div>
+        {% endif %}
+    </div>
+    
+    
+</div>
 {% else %}
     <header id="header">
         <div class="inner-header checkout">

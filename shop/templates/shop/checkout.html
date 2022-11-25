@@ -20,7 +20,11 @@
                         <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                         
                     </span>
-                    <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                    {% if item.is_added == True %}
+                        <button class="add-to-cartBtn checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                    {% else %}
+                        <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -43,7 +47,7 @@
                     <input type="text" required name="city"></li>
 
                     <li><label for="number">Телефонски број <abbr title="required" class="required">*</abbr></label>
-                        <input type="tel" placeholder="формат: 072-256-393"required name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"></li>
+                        <input type="tel" placeholder="формат: 072-256-393"required name="number"></li>
                 </ul>
             
         </div>
@@ -69,7 +73,11 @@
                             <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                             
                         </span>
-                        <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                        {% if item.is_added == True %}
+                         <button class="add-to-cartBtn checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                        {% else %}
+                            <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -79,11 +87,19 @@
     <div class="col-1 checkoutform checkout-fees-container">
         {% if orderFees %}
             {% for fee in orderFees %}
-                <div class="checkout-fees fee_data">
+                {% if fee.is_added == True %}
+                <div class="checkout-fees fee_data active">
+                    {% else %}
+                    <div class="checkout-fees fee_data">
+                {% endif %}
                     <input type="hidden" class="fee_id" value="{{ fee.id }}">
                     <span class="fee-toggle"><p class="fee-title"><span class="fee-icon">&#8250;</span>{{ fee.title }}</p></span>
                     <p class="fee-price"><span class="fee-span">{{ fee.price}}</span>ден.</p>
+                    {% if fee.is_added == True %}
+                    <button class="fee-add addedBtn">ДОДАДЕН</button>
+                    {% else %}
                     <button class="fee-add">ДОДАЈ</button>
+                    {% endif %}
                     <p class="fee-description">{{ fee.content }}</p>    
                 </div>
             {% endfor %}
@@ -100,13 +116,19 @@
                 </thead>
                 <tbody >
                 {% for item in cart %}
-                <tr class="cart-item-row">
-                    <td class="cart-item product_data">
+                <tr class="cart-item-row product-row">
+                    <td class="cart-item product_data" style="padding: 9px 12px;">
                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                        
                         {% csrf_token %}
                         <div class="checkout-row-inline name">
                         <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
+                        {% if item.has_attributes %}
+                            <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
+                            <p class="item-name" style="display:inline-block;">{{ item.product.title }}{{ item.attributename }}</p></div>
+                        {% else %}
                         <p class="item-name" style="display:inline-block;">{{ item.product.title }}</p></div>
+                        {% endif %}
                         <div class="quantity checkout-row-inline">
                             <button class="changeQuantity decrement-btn">-</button>
                             <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
@@ -121,10 +143,15 @@
                     </td>
                     
                         
-                    
+                    {% if item.has_attributes %}
+                    <td class="cart-item-total-row">
+                        <p class="item-total">{{ item.attributeprice }} ден</p>
+                    </td>
+                    {% else %}
                     <td class="cart-item-total-row">
                         <p class="item-total">{{ item.product.sale_price }} ден</p>
                     </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -154,7 +181,11 @@
                             <p>Достава</p>
                         </td>
                         <td>
+                            {% if free_shipping %}
                             <p class="cart-shipping-method">Бесплатна достава</p>
+                            {% else %}
+                            <p class="cart-shipping-method">До врата - 130ден</p>
+                            {% endif %}
                         </td>
                     </tr>
                     <tr class="cart-provision">
@@ -170,7 +201,11 @@
                             <p>Вкупно</p>
                         </td>
                         <td>
-                            <p>{{ cart_total|add:feetotal }} ден</p>
+                            {% if itemscount > 1 %}
+                            <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                            {% else %}
+                            <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                            {% endif %}
                         </td>
                     </tr>
                 </tfoot>

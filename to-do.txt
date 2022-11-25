@@ -1,12 +1,15 @@
-4. Add product gallery
+
+17. Fix progress bar logic
 
 
-17. Lazy load images
 
-14. Export xlsx po data poracki
+13. Add product gallery
+14. Lazy load images
+16. fix ckeditor autoplay responsivewidth i loop
 
 
-# fix ckeditor autoplay responsivewidth i loop
-# povrzi thanku offer
-# add progress bar logic
-# fix ckeditor video i fix search
+
+15. Export xlsx po data poracki
+
+
+

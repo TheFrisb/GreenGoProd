@@ -21,45 +21,64 @@ def placeorder(request):
         neworderitems = CartItems.objects.filter(cart=CartHolder)
         neworderfees = CartFees.objects.filter(cart=CartHolder)
         cart_total_price = 0
-        enable_shipping = 1
         countProducts = 0
-        neworder.shipping = enable_shipping
         
         trackno = 'id-'+str(random.randint(1111111,9999999))
         while Order.objects.filter(tracking_no=trackno) is None:
             trackno = 'id-'+str(random.randint(1111111,9999999))
 
         for item in neworderitems:
-            cart_total_price = cart_total_price + item.product.sale_price * item.product_qty
-            if(item.product.free_shipping == True):
-                countProducts = countProducts + 5
+            if item.has_attributes == True:
+                cart_total_price = cart_total_price + item.attributeprice * item.product_qty
             else:
-                countProducts = countProducts + 1
+                cart_total_price = cart_total_price + item.product.sale_price * item.product_qty
+            if(item.product.free_shipping == True):
+                countProducts = countProducts + 5 + item.product_qty
+            else:
+                countProducts = countProducts + item.product_qty
 
 
 
         for fee in neworderfees:
                 cart_total_price = cart_total_price + fee.price
 
+        neworder.subtotal_price = cart_total_price
         if countProducts >= 2:
-            enable_shipping = 0
+            neworder.shipping = False
 
-        if(enable_shipping == 1):
-            neworder.total_price = cart_total_price + neworder.shipping_price
+        if(countProducts == 1):
+            neworder.total_price = cart_total_price + neworder.shipping_price + 20 #provizija
+            neworder.shipping = True
         else:
-            neworder.total_price = cart_total_price
+            neworder.total_price = cart_total_price + 20 #provizija
         neworder.tracking_no = trackno
+        
         neworder.save()
 
         for item in neworderitems:
-            OrderItem.objects.create(
+            if (item.has_attributes==True):
+                item_label = item.product.sku + ' ' + item.attribute.label
+                OrderItem.objects.create(
                 order = neworder,
                 product = item.product,
-                price = item.product.sale_price,
+                attribute_name = item.attribute.checkattribute,
+                price = item.attributeprice,
                 quantity = item.product_qty,
+                label = item_label,
+                supplier = item.product.supplier,
+                attribute_price = item.attributeprice,
 
             )
-            
+            else:
+                OrderItem.objects.create(
+                    order = neworder,
+                    product = item.product,
+                    price = item.product.sale_price,
+                    quantity = item.product_qty,
+                    label = item.product.sku,
+                    supplier = item.product.supplier,
+
+                )
 
         
         for fee in neworderfees:
@@ -88,22 +107,35 @@ def placeorder(request):
 
 def addtoorder(request):
     if request.method == 'POST':
-        order_id = request.POST.get('order_id')
         product = Product.objects.get(id=request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
         order = Order.objects.get(id = request.POST.get('order_id'))
         if order:
             orderItem = OrderItem.objects.get(order = order, product = product)
             if(orderItem):
-                orderItem.quantity = orderItem.quantity + product_qty
-                orderItem.price = orderItem.price + product.sale_price
-                orderItem.save()
-                if(order.shipping == True):
-                    order.shipping = False
-                    order.total_price = order.total_price + (product.sale_price * product_qty) - order.shipping_price
+                if orderItem.attribute_price is not None:
+                    orderItem.quantity = orderItem.quantity + product_qty
+                    orderItem.save()
+                    if(order.shipping == True):
+                        order.shipping = False
+                        order.subtotal_price = order.subtotal_price + (orderItem.attribute_price * product_qty)
+                        order.total_price = order.total_price + (orderItem.attribute_price * product_qty) - order.shipping_price
+                    else:
+                        order.shipping = False
+                        order.subtotal_price = order.subtotal_price + (orderItem.attribute_price * product_qty)
+                        order.total_price = order.total_price + (orderItem.attribute_price * product_qty)
+
                 else:
-                    order.shipping = False
-                    order.total_price = order.total_price + (product.sale_price * product_qty)
+                    orderItem.quantity = orderItem.quantity + product_qty
+                    orderItem.save()
+                    if(order.shipping == True):
+                        order.shipping = False
+                        order.subtotal_price = order.total_price + (product.sale_price * product_qty)
+                        order.total_price = order.total_price + (product.sale_price * product_qty) - order.shipping_price
+                    else:
+                        order.shipping = False
+                        order.subtotal_price = order.total_price + (product.sale_price * product_qty)
+                        order.total_price = order.total_price + (product.sale_price * product_qty)
 
                 order.save()
             return JsonResponse({'status': "Product added successfully"})

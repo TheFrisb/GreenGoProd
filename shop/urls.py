@@ -12,6 +12,7 @@ urlpatterns = [
     path('product/<str:slug>', views.ProductView, name='product-page'),
 
     path('add-to-cart', cart.addtocart, name="addtocart" ),
+    path('variable-add-to-cart', cart.variableaddtocart, name="variableaddtocart"),
     path('update-cart', cart.updatecart, name="updatecart"),
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
@@ -21,6 +22,7 @@ urlpatterns = [
 
     path('place-order', checkout.placeorder, name="placeorder"),
     path('add-to-order', checkout.addtoorder, name="addtoorder"),
+    
     path('thank-you/<str:slug>/', views.ThankYouView, name='thank-you-view'),
 
     path('shopmanager/login', views.login_shopmanager, name='login'),

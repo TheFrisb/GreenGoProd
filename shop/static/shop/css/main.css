@@ -219,6 +219,20 @@ input[type=number] {
     transform: ScaleX(1)!important;
     transition: 100ms linear!important;
 }
+.lightbox-search{
+    background-color: rgb(0 0 0 / 85%);
+    overflow-y: hidden;
+}
+.close-search{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+}
+.lightbox .disabled{
+    display:none;
+}
 .sidecart-inner{
     display: flex;
     justify-content: flex-start;
@@ -258,6 +272,7 @@ input[type=number] {
     font-size: 14px;
     font-weight: 600;
 }
+
 .sidecart-item-quantity{
     font-weight: 600;
     font-size: 14px;
@@ -307,7 +322,7 @@ input[type=number] {
     border-radius: 5px;
 }
 .sidecartOfferBtn{
-    padding: 5px!important;
+    padding: 8px!important;
     display: block!important;
     height: auto!important;
     margin: 0!important;
@@ -318,7 +333,7 @@ input[type=number] {
 
 }
 .checkout-offers{
-    padding-top: 20px;
+    margin-top: 20px;
 }
 .checkoutOffers-title{
     font-weight: 600;
@@ -391,6 +406,7 @@ input[type=number] {
 .sidecart-item.notice{
     border:0;
 }
+
 .cart-notice{
     font-size: 14px;
     font-weight: 600;
@@ -864,6 +880,7 @@ input[type=number] {
     border-collapse: collapse;
     font-size: 0.9em;
     font-weight: 600;
+    overflow: hidden;
 }
 
 .order-review-table tr:not(.cart-total){
@@ -901,8 +918,8 @@ input[type=number] {
     font-size: 8px;
     color: #abaeb4;
     padding: 5px 8px;
-    position: absolute;
-    right: 5%;
+    left:90%;;
+    position: relative;
     transition: color  0.2s ease;
     transition: border 0.2s ease;
     text-decoration: none;
@@ -1110,7 +1127,7 @@ input[type=number] {
 .button-link{
     width: 100%;
 }
-.add-to-cartBtn{
+.add-to-cartBtn, .variable-add-to-cartBtn{
     width: 100%;
     padding: 0px 16px;
     height: 43px;
@@ -1122,6 +1139,11 @@ input[type=number] {
     background-color: white;
     cursor: pointer;
 
+}
+.addedBtn{
+    background-color: var(--black)!important;
+    border: 0;
+    color: white;
 }
 .proceed-to-checkout{
     width: 100%;
@@ -1423,7 +1445,9 @@ input[type=number] {
     #sidecart{
         width: 100%;
     }
-    
+    .sidecart-inner{
+        width: 100vw;
+    }
     #header{
         justify-content: flex-start;
         height: 20vh;
@@ -1561,6 +1585,7 @@ input[type=number] {
     .order-review-table td:nth-child(2){
         width: 20%;
         padding: 9px 0px;
+        
     }
     .checkout-row-inline{
         max-width: 50%;
@@ -1718,15 +1743,34 @@ input[type=number] {
     height: 250px;
   }
 
+.mobile-search{
+    position: fixed;
+    top: 50%;
+    background: transparent;  
+    z-index: 100000;
+    padding: 10px 5px;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid white;
+    text-align: center;
+    box-shadow: inset 3px;
+    color: white;
+    font-weight: 600;
+}
+.mobile-search:focus{
+    outline: 0!important;
+}
+.mobile-search::placeholder{
+    color: white;
+    font-weight: 600;
+}
+.mobile-search.disabled{
+    display:none;
+}
 
 
 
 
-
-
-
-
-
-
+  
 
 
