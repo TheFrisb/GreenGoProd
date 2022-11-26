@@ -31,7 +31,7 @@ urlpatterns = [
     path('shopmanager/confirmed', views.shopmanager_confirmed, name='shconfirmed'),
     path('shopmanager/deleted', views.shopmanager_deleted, name='shdeleted'),
     path('update-order', shopmanager.updateOrderStatus, name="updateorder" ),
-
+    path('export-excel', views.export_excel, name="export_excel"),
 
 
     path('dostava/', views.Dostava, name='dostava-page'),

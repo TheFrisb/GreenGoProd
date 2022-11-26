@@ -83,6 +83,8 @@ CKEDITOR.plugins.add( 'html5video', {
 		
                     if ( responsive ) {
                         this.setData( 'responsive', responsive );	
+                    } else{
+                        this.setData( 'responsive', responsive );
                     }
 
                     if (controls) {
@@ -119,8 +121,8 @@ CKEDITOR.plugins.add( 'html5video', {
                             this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     } else {
                         this.element.setAttribute("data-responsive", this.data.responsive);
-                        this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
-                        this.element.getChild( 0 ).setStyle( 'height', 'auto' );
+                            this.element.getChild( 0 ).setStyle( 'max-width', '100%' );
+                            this.element.getChild( 0 ).setStyle( 'height', 'auto' );
                     }
 
                     if (this.data.poster) this.element.getChild( 0 ).setAttribute('poster', this.data.poster);								
@@ -149,6 +151,8 @@ CKEDITOR.plugins.add( 'html5video', {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
                     } else {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
+                        this.element.getChild( 0 ).setAttribute( 'muted', 'true' );
+                        this.element.getChild( 0 ).setAttribute( 'playsinline', 'true' );
                         
                     }
 

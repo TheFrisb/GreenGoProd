@@ -1,11 +1,10 @@
 
-17. Fix progress bar logic
 
 
 
 13. Add product gallery
 14. Lazy load images
-16. fix ckeditor autoplay responsivewidth i loop
+
 
 
 

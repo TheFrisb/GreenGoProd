@@ -13,7 +13,7 @@ $(document).ready(function() {
         e.preventDefault();
         var confirmBtn = $(this);
         var order_id = $(this).closest('.order-td').find('.order_id').val();
-        print(order_id)
+
         var token = $('input[name=csrfmiddlewaretoken]').val()
         console.log(token)
         $.ajax({
@@ -35,7 +35,7 @@ $(document).ready(function() {
         e.preventDefault();
         var deleteBtn = $(this);
         var order_id = $(this).closest('.order-td').find('.order_id').val();
-        print(order_id);
+
         var token = $('input[name=csrfmiddlewaretoken]').val();
         
         console.log($(this))
@@ -59,7 +59,6 @@ $(document).ready(function() {
         e.preventDefault();
         var returnBtn = $(this);
         var order_id = $(this).closest('.order-td').find('.order_id').val();
-        print(order_id);
         var token = $('input[name=csrfmiddlewaretoken]').val();
         console.log($(this))
         console.log(token);
@@ -79,6 +78,11 @@ $(document).ready(function() {
         })
     })
 
+    $(document).on('click', '#export-button', function(e){
+        var date_from = $('#date-from').val();
+        var date_to = $('#date-to').val();
+        console.log(date_from, date_to)
+    })
     
  })
  

@@ -53,10 +53,9 @@ class ColorAdmin(admin.ModelAdmin):
     form = ColorForm
 
 
-
-
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'color', 'price')
+
 
 
 

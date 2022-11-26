@@ -1,10 +1,17 @@
 {% extends 'shop/shopmanager/shopmanager_base.html' %}
 {% block content %}
-
+{% csrf_token %}
+    <div class="export-orders">
+    <label for="date-from">Одбери почетна дата</label>
+    <input type="text" id="date-from" name="date-from">
+    <label for="date-to">Одбери крајна дата</label>
+    <input type="text" id="date-to" name="date-to">
+    <a href="#" id="export-button">Export Excel</a>
+    </div>
     <p class="country-title">{{heading}} - <span class="strong"> МАКЕДОНИЈА</span></p>
     
     <div class="orders-table">
-        {% csrf_token %}
+        
         <table class="manager-table">
             <thead>
                 <td class="table-heading">{{ heading }}</td>

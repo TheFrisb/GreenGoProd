@@ -3,12 +3,18 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import ListView, DetailView
+from django.db.models import CharField, Value, Case, Value, When, Q, Func, F
 from django.db.models import Q
 from .models import *
 from django.core.paginator import Paginator
+from django.db.models.functions import Cast
 import uuid
 from uuid import  uuid4
 import datetime
+import xlwt
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
+from django.db.models.functions import Concat
 
 # Create your views here.
 
@@ -253,3 +259,91 @@ def Cookies_Page(request):
         'title': 'Политика за приватност и колачиња'
     }
     return render(request, 'shop/policies/politika_na_privatnost_i_kolacinja.html', context)
+
+
+def export_excel(request):
+
+    # response = HttpResponse(content_type='application/ms-excel')
+    # response['Content-Disposition'] = 'attachment; filename=Expenses.xls'#+  str(datetime.datetime.now())+ '.xls'
+
+    # wb= xlwt.Workbook(encoding='utf-8')
+    # ws= wb.add_sheet('Expenses')
+    # row_num = 0
+    # font_style=xlwt.XFStyle()
+    # font_style.font.bold=True
+
+    ## columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT']
+
+    # for col_num in range(len(columns)):
+    #     ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # font_style=xlwt.XFStyle()
+
+    # rows = OrderItem.objects.all().values_list(
+    #     'product__thumbnail', 'label')
+    
+    # for row in rows:
+    #     row_num+=1
+
+    #     for col_num in range(len(row)):
+    #         ws.write(row_num, col_num, str(row[col_num]), font_style)
+
+    # wb.save(response)
+
+    #rows = OrderItem.objects.all().values_list(
+      #      'product__thumbnail', 'label')
+    #return response
+
+# orderitem order product  price  quantity  label  supplier attribute_name  attribute_price
+ #order user name address city  number  subtotal_price total_price shipping shipping_price 
+    # orderstatuses = (
+    #     ('Pending', 'Pending'),
+    #     ('Confirmed', 'Confirmed'),
+    #     ('Refunded', 'Refunded'),
+    #     ('Deleted', 'Deleted')
+    # )
+#status message tracking_no created_at updated_at
+#Cast('order__created_at', CharField()) )
+    workbook = Workbook()
+    worksheet = workbook.active
+    row_num = 1
+    worksheet.column_dimensions['A'].width = 20
+    worksheet.column_dimensions['B'].width = 35
+    worksheet.column_dimensions['C'].width = 35
+    worksheet.column_dimensions['D'].width = 20
+    worksheet.column_dimensions['E'].width = 20
+    worksheet.column_dimensions['F'].width = 20
+    worksheet.column_dimensions['G'].width = 20
+    worksheet.column_dimensions['H'].width = 20
+    worksheet.column_dimensions['I'].width = 10
+    worksheet.column_dimensions['J'].width = 55
+    worksheet.column_dimensions['K'].width = 55
+    worksheet.column_dimensions['L'].width = 20
+    worksheet.column_dimensions['L'].width = 20
+    worksheet.column_dimensions['M'].width = 100
+    columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT']
+    for col_num in range(1, len(columns)+1):
+        
+        cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
+# ... worksheet.append(...) all of your data ...
+    rows = OrderItem.objects.filter(Q(order__status = 'Confirmed') | Q(order__status = 'Pending')).annotate(
+        shipping = Case(
+            When(order__shipping = True, then=Value('do vrata 130 den')),
+            When(order__shipping = False, then=Value('besplatna dostava'))
+        ),
+        full_product_title = Concat('product__title', Value(' '), 'attribute_name' )).order_by('-order__created_at').values_list( 'order__created_at', 'order__name', 'order__address', 'order__city', 'order__number', 'order__number', 'order__total_price', 'shipping', 'quantity',
+    'full_product_title', 'label', 'price', 'order__message')
+    print(rows)
+   
+    for row in rows:
+        row_num += 1
+        for col_num in range(1, len(row)+1):
+            if(col_num == 1):
+                cell =  worksheet.cell(row=row_num, column=col_num).value = (row[col_num-1].strftime("%d.%y.%Y, %H:%M"))
+            else:
+                cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
+
+
+    response = HttpResponse(content=save_virtual_workbook(workbook))
+    response['Content-Disposition'] = 'attachment; filename=eksport_' + str(datetime.datetime.now()) + '.xlsx'
+    return response

@@ -297,6 +297,14 @@ class OrderItem(models.Model):
     def get_product_total(self):
         return self.price*self.quantity
 
+    @property
+    def get_orderItem_title(self):
+        if(self.attribute_name is not None):
+            return '{} - {}'.format(self.product__title, self.attribute_name)
+        else:
+            return self.product__title
+        
+
     def __str__(self):
         return '{}({} ден) х {} - Вкупно {} ден'.format(self.product, self.price, self.quantity, self.get_product_total)
 
@@ -325,6 +333,8 @@ class OrderFeesItem(models.Model):
     fee = models.ForeignKey(CheckoutFees, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100, verbose_name='Име')
     price = models.IntegerField(verbose_name='Цена')
+
+   
     def __str__(self):
         return '{} ({} ден)'.format(self.title, self.price)
 

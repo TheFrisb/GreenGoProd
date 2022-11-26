@@ -188,15 +188,50 @@ input[type=number] {
   
   .progress .progress__bar {
     height: 100%;
-    width: 50%;
     background-color: var(--green);
-    animation: fill-bar 1s;
+    
+  }
+  .progress .progress_bar-half{
+    width: 50%;
+  }
+  .progress .progress_bar-full{
+    /* animation: fill-bar-full 1s; */
+    width: 100%;
+  }
+  .progress .progress_bar-empty{
+    width: 0%;
   }
   
-  @keyframes fill-bar {
+  @keyframes fill-bar-zero-to-half {
     from {width: 0%;}
     to {width: 50%;}
   }
+  @keyframes fill-bar-full {
+    from {width: 50%;}
+    to {width: 100%;}
+  }
+  @keyframes fill-bar-full-to-half {
+    from {width: 100%;}
+    to {width: 50%;}
+  }
+  @keyframes fill-bar-half-to-zero {
+    from {width: 50%;}
+    to {width: 100%;}
+  }
+#cart-count{
+    position:absolute;
+    min-width: 1.6em;
+    height: 1.6em;
+    border-radius: 100%;
+    background-color: #d9534f;
+    color: white;
+    font-size: 10px;
+    text-align:center;
+    font-weight: 600;
+    margin-left: -1em;
+    margin-top: -0.7em;
+    
+}
 .sidecart-active{
     transform: ScaleX(1)!important;
     transition: 100ms linear!important;

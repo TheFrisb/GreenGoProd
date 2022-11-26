@@ -101,12 +101,30 @@ a img {
     border: 1px solid black;
 }
 .page-container{
-    padding: 30px 0px;
+    padding: 30px 50px;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     row-gap: 30px;
+}
+.export-orders{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: baseline;
+}
+.date-label{
+    display: block;
+}
+
+#export-button{
+    padding: 5px;
+    border: 1px solid #2b2b2b;
+    color: white;
+    font-weight: 600;
+    background-color: var(--red);
+    border-radius: 5px;
 }
 .country-title{
     font-size: 20px;
