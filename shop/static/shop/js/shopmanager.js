@@ -77,12 +77,9 @@ $(document).ready(function() {
             }
         })
     })
-
-    $(document).on('click', '#export-button', function(e){
-        var date_from = $('#date-from').val();
-        var date_to = $('#date-to').val();
-        console.log(date_from, date_to)
-    })
+    
+    
+    
     
  })
  

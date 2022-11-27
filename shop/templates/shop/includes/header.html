@@ -1,14 +1,14 @@
-{% if title != "Кон нарачка" %}
+{% if title != "Кон Нарачка" %}
 {% load static %}
+
 <section id="header-banner">
     <div class="banner-inner-header">
         <a href="tel:071321312" class="banner-text">071321312 (09:00 - 00:00)</a>
         <a href="mailto:contact@greengoshop.mk" class="banner-text">contact@greengoshop.mk</a>
-        <a href="https://www.facebook.com/greengoshop.mk"><img src="{% static 'icons/facebook.webp' %}"  class="image-icon"  alt="" width="16" height="16"></a>
-        <a href="https://www.instagram.com/greengoshop.mk"><img src="{% static 'icons/instagram.webp' %}" class="image-icon" alt="" width="16" height="16"></a>
+        <a href="https://www.facebook.com/greengoshop.mk"><img src="{% static 'icons/facebook.svg' %}"  class="image-icon filter-white"  alt="" width="16" height="16"></a>
+        <a href="https://www.instagram.com/greengoshop.mk"><img src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16" height="16"></a>
         </div>
 </section>
-
 <header id="header">
     <div class="inner-header">
 
@@ -22,10 +22,10 @@
             <form action="{% url 'search_results' %}" method="get">
             <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи">
             <button class="search_button">
-            <img src="{% static 'icons/search-solid-white.webp' %}" alt="" class="image-icon desktop" width="16" height="16">
+            <img src="{% static 'icons/magnifying-glass.svg' %}" alt="" class="image-icon desktop filter-white" width="16" height="16">
             </button>
             <div class="header-icon mobile" id="search-mobile">
-            <img src="{% static 'icons/search-solid-black.webp' %}" alt="" class="image-icon mobile" width="24" height="24">
+            <img src="{% static 'icons/magnifying-glass.svg' %}" alt="" class="image-icon mobile" width="24" height="24">
         </div>
             </form>
         </div>
@@ -36,20 +36,7 @@
             
         </div>
         <div class="header-menu header-icon">
-            <img src="{% static 'icons/menu-bars.webp' %}" alt="" class="image-icon" width="24" height="24">
-            <nav id="navigation">
-                <ul>
-                    <li class="navigation-item"><a href="{% url 'shop-home' %}" class="navigation-title">ПОЧЕТНА</a></li>
-                    {% for category in categories %}
-                    <li class="navigation-item"><a href="{% url 'category-page' category.slug %}" class="navigation-title">{{ category.name }}</a></li>
-                    <!-- <li class="navigation-item"><a href="" class="navigation-title">НАЈПРОДАВАНИ</a></li>
-                    <li class="navigation-item"><a href="" class="navigation-title">ДОМАЌИНСТВО</a></li>
-                    <li class="navigation-item"><a href="" class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
-                    <li class="navigation-item"><a href="" class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
-                    <li class="navigation-item"><a href="" class="navigation-title">ГРАДИНА</a></li> -->
-                    {% endfor %}
-                </ul>
-            </nav>
+            <img src="{% static 'icons/bars.svg' %}" alt="" class="image-icon" width="24" height="24">
         </div>
     </div>
 </header>

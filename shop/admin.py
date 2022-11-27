@@ -13,6 +13,10 @@ class InformationInline2(admin.StackedInline):
     list_display = ("title", "price")
 
 
+class GalleryInline(admin.StackedInline):
+    model = ProductGallery
+    
+
 class ProductAttributesInLine(admin.TabularInline):
     model = ProductAttribute
     list_display=("product", "color", "size", "price")
@@ -40,7 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('attributes_type',),
         }),
         )
-    inlines = [ProductAttributesInLine]
+    inlines = [ProductAttributesInLine, GalleryInline]
     # list_editable 
     
   

@@ -15,13 +15,15 @@ import xlwt
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 from django.db.models.functions import Concat
+from .forms import ExportOrder
+from django.utils.timezone import get_current_timezone, make_aware
 
 # Create your views here.
 
 
 
 def ProductListView(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(status__in=['PUBLISHED','VARIABLE'])
     paginator = Paginator(products, 16)
     page = request.GET.get('page')
     products = paginator.get_page(page)
@@ -59,10 +61,8 @@ def ProductView(request, slug):
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.filter(slug=slug).first
-        cartOffers = CartOffers.objects.all()
-        if(Review.objects.filter(product__slug=slug)):
-            reviews = Review.objects.filter(product__slug=slug)
-
+        reviews = Review.objects.filter(product__slug=slug)
+        if(reviews):
             reviewsaverage = 0
             count = 0
             for i in reviews:
@@ -77,6 +77,8 @@ def ProductView(request, slug):
                 'reviewcount': count,
                 'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
                 'slider2': Product.objects.all()[:8],
+                'gallery': gallery,
+                'attributes' : attributes,
             }
         else:
             context = {
@@ -84,7 +86,8 @@ def ProductView(request, slug):
                 'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
                 'slider2': Product.objects.all()[:8],
                 'attributes' : attributes,
-                'gallery': gallery,           
+                'gallery': gallery,
+
             }
 
 
@@ -116,8 +119,8 @@ def CheckoutView(request):
 
 
 def ThankYouView(request, slug):
-    if(Order.objects.filter(tracking_no=slug)):
-        order = Order.objects.filter(tracking_no=slug).first
+    order = Order.objects.filter(tracking_no=slug).first
+    if(order):   
         orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
         offerproduct = orderItems.reverse()[0]
         orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
@@ -148,7 +151,7 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Product.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
+            Q(title__icontains=query, status__in=['PUBLISHED','VARIABLE']) | Q(content__icontains=query, status__in=['PUBLISHED','VARIABLE'])
         ) 
         return object_list
     
@@ -192,18 +195,20 @@ def shopmanager_dashboard(request):
     orders = Order.objects.filter(status='Pending').order_by('-id')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Pending')
     title = 'НЕПОТВРДЕНИ НАРАЧКИ'
+    form = ExportOrder()
     context = {
         'orders' : orders,
         'orderItems': orderItems,
         'heading' : title,
         'order_status': 'Непотврдена',
+        'form': form,
     }
     return render(request, "shop/shopmanager/dashboard.html", context)
 
 
 def shopmanager_confirmed(request):
-    orders = Order.objects.filter(status='Confirmed')
-    orderItems = OrderItem.objects.filter(order__status = 'Confirmed')
+    orders = Order.objects.filter(status='Confirmed').order_by('-id')
+    orderItems = OrderItem.objects.filter(order__status = 'Confirmed').order_by('-id')
     title = 'ПОТВРДЕНИ НАРАЧКИ'
     context = {
         'orders' : orders,
@@ -215,8 +220,8 @@ def shopmanager_confirmed(request):
 
 
 def shopmanager_deleted(request):
-    orders = Order.objects.filter(status='Deleted').order_by('-updated_at')[:50]
-    orderItems = OrderItem.objects.filter(order__status = 'Deleted')
+    orders = Order.objects.filter(status='Deleted').order_by('-updated_at').order_by('-id')
+    orderItems = OrderItem.objects.filter(order__status = 'Deleted').order_by('-id')
     title = 'ИЗБРИШЕНИ НАРАЧКИ'
     context = {
         'orders' : orders,
@@ -262,88 +267,58 @@ def Cookies_Page(request):
 
 
 def export_excel(request):
-
-    # response = HttpResponse(content_type='application/ms-excel')
-    # response['Content-Disposition'] = 'attachment; filename=Expenses.xls'#+  str(datetime.datetime.now())+ '.xls'
-
-    # wb= xlwt.Workbook(encoding='utf-8')
-    # ws= wb.add_sheet('Expenses')
-    # row_num = 0
-    # font_style=xlwt.XFStyle()
-    # font_style.font.bold=True
-
-    ## columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT']
-
-    # for col_num in range(len(columns)):
-    #     ws.write(row_num, col_num, columns[col_num], font_style)
-
-    # font_style=xlwt.XFStyle()
-
-    # rows = OrderItem.objects.all().values_list(
-    #     'product__thumbnail', 'label')
-    
-    # for row in rows:
-    #     row_num+=1
-
-    #     for col_num in range(len(row)):
-    #         ws.write(row_num, col_num, str(row[col_num]), font_style)
-
-    # wb.save(response)
-
-    #rows = OrderItem.objects.all().values_list(
-      #      'product__thumbnail', 'label')
-    #return response
-
-# orderitem order product  price  quantity  label  supplier attribute_name  attribute_price
- #order user name address city  number  subtotal_price total_price shipping shipping_price 
-    # orderstatuses = (
-    #     ('Pending', 'Pending'),
-    #     ('Confirmed', 'Confirmed'),
-    #     ('Refunded', 'Refunded'),
-    #     ('Deleted', 'Deleted')
-    # )
-#status message tracking_no created_at updated_at
-#Cast('order__created_at', CharField()) )
-    workbook = Workbook()
-    worksheet = workbook.active
-    row_num = 1
-    worksheet.column_dimensions['A'].width = 20
-    worksheet.column_dimensions['B'].width = 35
-    worksheet.column_dimensions['C'].width = 35
-    worksheet.column_dimensions['D'].width = 20
-    worksheet.column_dimensions['E'].width = 20
-    worksheet.column_dimensions['F'].width = 20
-    worksheet.column_dimensions['G'].width = 20
-    worksheet.column_dimensions['H'].width = 20
-    worksheet.column_dimensions['I'].width = 10
-    worksheet.column_dimensions['J'].width = 55
-    worksheet.column_dimensions['K'].width = 55
-    worksheet.column_dimensions['L'].width = 20
-    worksheet.column_dimensions['L'].width = 20
-    worksheet.column_dimensions['M'].width = 100
-    columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT']
-    for col_num in range(1, len(columns)+1):
+    if request.method == 'POST':
+        form = ExportOrder(request.POST)
+        if form.is_valid():
+            timezone = get_current_timezone()
+            date_from = form.cleaned_data["date_from"]
+            date_to = form.cleaned_data["date_to"]
+            print(date_from, date_to)
+            workbook = Workbook()
+            worksheet = workbook.active
+            row_num = 1
+            worksheet.column_dimensions['A'].width = 20
+            worksheet.column_dimensions['B'].width = 35
+            worksheet.column_dimensions['C'].width = 35
+            worksheet.column_dimensions['D'].width = 20
+            worksheet.column_dimensions['E'].width = 20
+            worksheet.column_dimensions['F'].width = 20
+            worksheet.column_dimensions['G'].width = 20
+            worksheet.column_dimensions['H'].width = 20
+            worksheet.column_dimensions['I'].width = 10
+            worksheet.column_dimensions['J'].width = 55
+            worksheet.column_dimensions['K'].width = 55
+            worksheet.column_dimensions['L'].width = 20
+            worksheet.column_dimensions['L'].width = 20
+            worksheet.column_dimensions['M'].width = 100
+            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT', 'КОМЕНТАР']
+            for col_num in range(1, len(columns)+1):
+                
+                cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
+        # ... worksheet.append(...) all of your data ...
+            rows = OrderItem.objects.filter(Q(order__created_at__range = [date_from, date_to], order__status = 'Confirmed',) | Q(order__created_at__range = [date_from, date_to], order__status = 'Pending')).annotate(
+                shipping = Case(
+                    When(order__shipping = True, then=Value('do vrata 130 den')),
+                    When(order__shipping = False, then=Value('besplatna dostava'))
+                ),
+                full_product_title = Concat('product__title', Value(' '), 'attribute_name' )).order_by('-order__created_at').values_list( 'order__created_at', 'order__name', 'order__address', 'order__city', 'order__number', 'order__number', 'order__total_price', 'shipping', 'quantity',
+            'full_product_title', 'label', 'price', 'order__message')
+            print(rows)
         
-        cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
-# ... worksheet.append(...) all of your data ...
-    rows = OrderItem.objects.filter(Q(order__status = 'Confirmed') | Q(order__status = 'Pending')).annotate(
-        shipping = Case(
-            When(order__shipping = True, then=Value('do vrata 130 den')),
-            When(order__shipping = False, then=Value('besplatna dostava'))
-        ),
-        full_product_title = Concat('product__title', Value(' '), 'attribute_name' )).order_by('-order__created_at').values_list( 'order__created_at', 'order__name', 'order__address', 'order__city', 'order__number', 'order__number', 'order__total_price', 'shipping', 'quantity',
-    'full_product_title', 'label', 'price', 'order__message')
-    print(rows)
+            for row in rows:
+                row_num += 1
+                for col_num in range(1, len(row)+1):
+                    if(col_num == 1):
+                        date = row[col_num-1].astimezone(timezone)
+                        
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
+                    else:
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
+
+
+            response = HttpResponse(content=save_virtual_workbook(workbook))
+            response['Content-Disposition'] = 'attachment; filename=eksport_' + str(date_from) + ' - ' + str(date_to) + '.xlsx'
+            return response
+    
+    return redirect('/')
    
-    for row in rows:
-        row_num += 1
-        for col_num in range(1, len(row)+1):
-            if(col_num == 1):
-                cell =  worksheet.cell(row=row_num, column=col_num).value = (row[col_num-1].strftime("%d.%y.%Y, %H:%M"))
-            else:
-                cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
-
-
-    response = HttpResponse(content=save_virtual_workbook(workbook))
-    response['Content-Disposition'] = 'attachment; filename=eksport_' + str(datetime.datetime.now()) + '.xlsx'
-    return response

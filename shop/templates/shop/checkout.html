@@ -117,29 +117,30 @@
                 <tbody >
                 {% for item in cart %}
                 <tr class="cart-item-row product-row">
-                    <td class="cart-item product_data" style="padding: 9px 12px;">
+                    <td class="cart-item product_data" style="padding: 9px 12px;display:flex;justify-content:flex-start;align-items: center;">
                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                         
                         {% csrf_token %}
                         <div class="checkout-row-inline name">
-                        <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
-                        {% if item.has_attributes %}
-                            <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
-                            <p class="item-name" style="display:inline-block;">{{ item.product.title }}{{ item.attributename }}</p></div>
-                        {% else %}
-                        <p class="item-name" style="display:inline-block;">{{ item.product.title }}</p></div>
-                        {% endif %}
+                            <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
+                            {% if item.has_attributes %}
+                                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
+                                <p class="item-name" style="display:inline-block;">{{ item.product.title }}{{ item.attributename }}</p>
+                            {% else %}
+                            <p class="item-name" style="display:inline-block;">{{ item.product.title }}</p>
+                            {% endif %}
+                            <div>
+                                <strong class="product-quantity">x {{ item.product_qty }}</strong>
+                                <span class="remove-item">ОТСТРАНИ</span>
+                            </div>   
+                        </div>
                         <div class="quantity checkout-row-inline">
                             <button class="changeQuantity decrement-btn">-</button>
                             <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
                             <button class="changeQuantity increment-btn">+</button>
                             
                         </div>
-                        <div>
-                        <strong class="product-quantity">x {{ item.product_qty }}</strong>
-                        <span class="remove-item">ОТСТРАНИ</span>
-                        </div>
-                        
+                                 
                     </td>
                     
                         
@@ -161,6 +162,7 @@
                         <tr class="cart-fees"> 
                             <td>
                                 <p>{{ fee.title }}</p>
+                                
                             </td>
                             <td>
                                 <p>{{ fee.price }} ден</p>

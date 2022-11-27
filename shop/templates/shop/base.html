@@ -5,7 +5,7 @@
     
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     {% if title %}
         <title>{{ title }} - GreenGoShop</title>
     {% else %}
@@ -19,9 +19,24 @@
     
 </head>
 <body>
+    
     {% include "shop/includes/header.html" %} 
+    <nav id="navigation">
+        <ul>
+            <li class="navigation-item"><a href="{% url 'shop-home' %}" class="navigation-title">ПОЧЕТНА</a></li>
+            {% for category in categories %}
+            <li class="navigation-item"><a href="{% url 'category-page' category.slug %}" class="navigation-title">{{ category.name }}</a></li>
+            <!-- <li class="navigation-item"><a href="" class="navigation-title">НАЈПРОДАВАНИ</a></li>
+            <li class="navigation-item"><a href="" class="navigation-title">ДОМАЌИНСТВО</a></li>
+            <li class="navigation-item"><a href="" class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
+            <li class="navigation-item"><a href="" class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
+            <li class="navigation-item"><a href="" class="navigation-title">ГРАДИНА</a></li> -->
+            {% endfor %}
+        </ul>
+    </nav>
     <div class="page-container">
     {% block content %}{% endblock content %}
+    
     <div class="lightbox">
         <form action="{% url 'search_results' %}" method="get" class="mobile disabled">
         <span class="close-search">&#10006;</span>

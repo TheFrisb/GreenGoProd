@@ -1,13 +1,12 @@
 {% extends 'shop/shopmanager/shopmanager_base.html' %}
 {% block content %}
 {% csrf_token %}
-    <div class="export-orders">
-    <label for="date-from">Одбери почетна дата</label>
-    <input type="text" id="date-from" name="date-from">
-    <label for="date-to">Одбери крајна дата</label>
-    <input type="text" id="date-to" name="date-to">
-    <a href="#" id="export-button">Export Excel</a>
-    </div>
+    <form class="export-orders" action="{% url 'export_excel' %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    
+    <button id="export-button" type="submit" >Export Excel</button>
+    </form>
     <p class="country-title">{{heading}} - <span class="strong"> МАКЕДОНИЈА</span></p>
     
     <div class="orders-table">
@@ -45,11 +44,15 @@
                     
                     <td>
                         {% for order in orderItems %}
-                        
+                        {% if order.attribute_name %}
+                        <p class="table-content"><span class="table-strong">{{ order.product.title }} - {{ order.attribute_name }}</span>
+                        {% else %}
                         <p class="table-content"><span class="table-strong">{{ order.product.title }}</span>
+                        {% endif %}
                         x <span class="table-strong">{{ order.quantity }}</span> - {{order.price}} ден</p>
+
                         {% endfor %}
-                        <p class="table-content"><span class="table-strong">Цена без достава: </span>{{ order.total_price }} ден</p>
+                        <p class="table-content"><span class="table-strong">Цена без достава: </span>{{ order.subtotal_price }} ден</p>
                         <p class="table-content"><span class="table-strong">Достава: </span>{{ order.get_shipping }}</p>
                         <p class="table-content"image.png><span class="table-strong">Вкупно: </span>{{ order.total_price }} ден</p>
                     </td>

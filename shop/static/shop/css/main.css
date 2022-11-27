@@ -28,6 +28,21 @@ a img {
     display: block;
     font-family: 'Montserrat', sans-serif;
   }
+button{
+    touch-action: manipulation;
+}
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+input[type]{
+    -webkit-appearance: none;
+    border-radius: 0;
+    appearance: none;
+    -webkit-border-radius:0px;
+    touch-action: manipulation;
+
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -40,7 +55,9 @@ input[type=number] {
     appearance: textfield;
     -moz-appearance:textfield; /* Firefox */
 }
-
+.filter-white{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+   }
 #header{
     height: 110px;
     width: 100%;
@@ -264,6 +281,7 @@ input[type=number] {
     right: 30px;
     font-size: 30px;
     color: white;
+    z-index:100000;
 }
 .lightbox .disabled{
     display:none;
@@ -456,7 +474,6 @@ input[type=number] {
     font-size: 13px;
     font-weight: 600;
     position:absolute;
-    top:143px;
     background: white;
     transform: scaleY(0);   
     transform-origin: top;
@@ -464,10 +481,17 @@ input[type=number] {
     transition: 200ms linear;
     left: 0;
 }
+#navigation ol{
+    list-style-type: none;
+    list-style: none
+}
+#navigation li{
+    list-style: none;
+    list-style: none;
+}
 #navigation.active{
     color: var(--green);
     display:block;
-    height: 216px;
     transform: scaleY(1);
     transition : 150ms transform ease-in; 
     z-index: 500;
@@ -585,6 +609,9 @@ input[type=number] {
     margin-bottom: 16px;
     border-radius: 5px;
 }
+.product-link{
+    margin-bottom: 0.5em;
+}
 .product-feed-title{
     font-size: 1em;
     padding: 8px 0px;
@@ -646,7 +673,7 @@ input[type=number] {
     padding: 0;
     cursor: pointer;
     opacity: 0.5;
-
+    touch-action: manipulation;
     transition: opacity 200ms;
     border-radius: 5px;
   }
@@ -1022,6 +1049,8 @@ input[type=number] {
     display:center;
     justify-content: center;
     flex-direction: column;
+
+    text-align: center;
     
     
 }
@@ -1045,6 +1074,75 @@ input[type=number] {
 .col-1.product-page{
     padding: 10px;
     flex-basis: 46%;
+}
+.slider-holder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+}
+.wrapper{
+    max-width: 600px;
+    position: relative;
+   }
+.wrapper button{
+    font-size: 52px;
+    text-align: center;
+    line-height: 46px;
+    background: transparent;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    color: #0f0f0f;
+    border: 0;
+    cursor: pointer;
+}
+
+.wrapper button:first-child{
+    left: 5px
+}
+.wrapper button:last-child{
+    right: 5px;
+}
+.wrapper .carousel{
+    font-size: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+   }
+.carousel.dragging{
+    cursor: grab;
+    scroll-behavior: auto;
+}
+.carousel.dragging img{
+    pointer-events: none;
+}
+.carousel img{
+    height: 600px;
+    object-fit: cover;
+    margin-left: 14px;
+    width: 100%;
+   } 
+.carousel img:first-child{
+    margin-left: 0px;
+   }
+.slick{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: -10px;
+    position:relative;
+    bottom: 15px;
+}
+.slick-item{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--black);
+    padding-right: 5px;
+    opacity: 0.4;
 }
 .col-2.product-page{
     padding: 10px;
@@ -1146,8 +1244,11 @@ input[type=number] {
 .quantity button{
     background-color: white;
     border: 1px solid #cac9c9;
-    padding: 8.5px 6.5px;
+    /* padding: 8.5px 6.5px; */
     cursor: pointer;
+    height: 35px;
+    width: 25px;
+
 }
 .quantity button:hover{
     background-color: gray;
@@ -1474,6 +1575,15 @@ input[type=number] {
     .desktop{
         display: none!important;
     }
+    .slider-holder{
+        width: 100%;
+    }
+    .wrapper{
+        width: 100%;
+    }
+    .carousel img{
+        width: 100%;
+    }
     #header-banner .banner-text{
         font-size: 0.7em;
     }
@@ -1485,7 +1595,7 @@ input[type=number] {
     }
     #header{
         justify-content: flex-start;
-        height: 20vh;
+        height: 12vh;
     }
     .inner-header{
         width:100%;
@@ -1515,9 +1625,7 @@ input[type=number] {
     .header-search button{
         display:none;
     }
-    #navigation{
-        top: 115px;
-    }
+   
     .footer-inner{
         flex-direction: column;
     }
@@ -1584,7 +1692,7 @@ input[type=number] {
         height: auto;
     }
     .slide .slider-title{
-        height: 70px;
+        height: 15vh;
     }
     
     .col-1 .toggle-col{
@@ -1630,14 +1738,17 @@ input[type=number] {
         margin-right: 0px;
     }
     .quantity.checkout-row-inline{
-        max-width: 42%;
-        min-width: 41%;
+        max-width: 50%;
+        min-width: 44%;
     }
 
     .cart-shipping td:nth-child(2){
         padding-right: 5px;
     }
-
+    .no-cart{
+        margin-left: auto;
+        margin-right: auto;
+    }
    
     #place_order{
         order: 1;
@@ -1678,6 +1789,9 @@ input[type=number] {
 @media (max-width: 320px){
     #header-banner .banner-text{
         font-size: 0.6em;
+    }
+    slide .slider-title{
+        height: 20vh;
     }
 }
 
@@ -1791,6 +1905,7 @@ input[type=number] {
     box-shadow: inset 3px;
     color: white;
     font-weight: 600;
+    font-size: 16px;
 }
 .mobile-search:focus{
     outline: 0!important;
@@ -1802,10 +1917,5 @@ input[type=number] {
 .mobile-search.disabled{
     display:none;
 }
-
-
-
-
-  
 
 
