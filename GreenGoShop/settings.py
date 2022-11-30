@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-66ho40ah-b_0@_o1j0sj7(#u+_@5q8_vozsbq28hu8n@p^5ru3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # change to ['*'] for mobile, port 9595 runserver to 0.0.0.0:9595 ne zabravi da si izgasas porto pos xd
+ALLOWED_HOSTS = ['165.227.136.59'] 
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'django.contrib.admin',
