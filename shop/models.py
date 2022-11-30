@@ -95,20 +95,35 @@ class Product(models.Model):
 
 
 class ProductGallery(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    galleryimg = ProcessedImageField(upload_to='products/product-gallery', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
+    class Meta:
+        verbose_name = "Галерија"
+        verbose_name_plural = "Галерии"
+
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    galleryimg = ProcessedImageField(upload_to='products/product-gallery', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True, verbose_name='Слика за галерија')
 
 
 class Color(models.Model):
-    title = models.CharField(max_length=100, null=True)
-    color_code = models.CharField(max_length=100)
+    class Meta:
+        verbose_name = "Боја"
+        verbose_name_plural = "Бои"
+
+
+    title = models.CharField(max_length=100, null=True, verbose_name='Име')
+    color_code = models.CharField(max_length=100,verbose_name='Одбери боја')
 
     def __str__(self):
         return '{}'.format(self.title)
 
 
 class Size(models.Model):
-    title = models.CharField(max_length=100, blank=True, null=True)
+    class Meta:
+        verbose_name = "Големина"
+        verbose_name_plural = "Големини"
+
+
+    title = models.CharField(max_length=100, blank=True, null=True, verbose_name='Име')
 
 
     def __str__(self):
@@ -116,8 +131,13 @@ class Size(models.Model):
 
 
 class Offer(models.Model):
-    title = models.CharField(max_length=100, null=True)
-    incentive = models.CharField(max_length=100, blank=True)
+    class Meta:
+        verbose_name = "Понуда"
+        verbose_name_plural = "Понуди"
+
+
+    title = models.CharField(max_length=100, null=True, verbose_name='Име')
+    incentive = models.CharField(max_length=100, blank=True, verbose_name='Додатен текст')
 
 
     def __str__(self):
@@ -125,12 +145,17 @@ class Offer(models.Model):
 
 
 class ProductAttribute(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    color = models.ForeignKey(Color , on_delete=models.SET_NULL,  null = True, blank=True)
-    size = models.ForeignKey(Size, on_delete = models.SET_NULL,  null = True, blank=True)
-    offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True)
-    price = models.IntegerField(blank=True, null=True)
-    label = models.CharField(max_length=50, null=True)
+    class Meta:
+        verbose_name = "Атрибут"
+        verbose_name_plural = "Атрибути"
+
+        
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, verbose_name='Одбери продукт')
+    color = models.ForeignKey(Color , on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Боја')
+    size = models.ForeignKey(Size, on_delete = models.SET_NULL,  null = True, blank=True, verbose_name='Големина')
+    offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Понуда')
+    price = models.IntegerField(blank=True, null=True, verbose_name='Цена')
+    label = models.CharField(max_length=50, null=True, verbose_name='Лабел')
 
     @property
     def checkattribute(self):
@@ -215,7 +240,7 @@ class CartOffers(models.Model):
         verbose_name_plural = "Понуди за кошничка"
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Одбери продукт')
     offer_text = models.CharField(max_length=40, blank=True, verbose_name='Текст на понуда')
-    is_added = models.BooleanField(default=False)
+    is_added = models.BooleanField(default=False, verbose_name='Не мени!')
     def __str__(self):
         return 'Понуда во кошничка за продукт {} со текст {} IS ADDED {}'.format(self.product.title, self.offer_text, self.is_added)
 
