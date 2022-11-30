@@ -324,6 +324,7 @@ input[type=number] {
 .sidecart-item-name{
     font-size: 14px;
     font-weight: 600;
+    word-break: break-word
 }
 
 .sidecart-item-quantity{
@@ -383,6 +384,12 @@ input[type=number] {
     width: auto!important;
     margin-left: auto!important;
     margin-top: auto!important;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border-radius: 30px;
+    font-weight: 500;
+    border: 1px solid var(--red);
 
 }
 .checkout-offers{
@@ -980,8 +987,8 @@ input[type=number] {
     font-size: 8px;
     color: #abaeb4;
     padding: 5px 8px;
-    left:90%;;
-    position: relative;
+    margin-left: auto;
+    margin-top: auto;
     transition: color  0.2s ease;
     transition: border 0.2s ease;
     text-decoration: none;
@@ -1489,6 +1496,8 @@ input[type=number] {
 }
 .reviews-item img{
     max-width: 250px;
+    width: 250px;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
 }

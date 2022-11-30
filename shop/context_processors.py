@@ -23,7 +23,7 @@ def extras(request):
     if cartOffers:
         for offer in cartOffers:
             for item in cartItems:
-                if(offer.product == item.product):
+                if(offer.product.title == item.product.title ):
                     offer.is_added = True
     total = 0
     if cartItems:

@@ -193,7 +193,7 @@ def logout_shopmanager(request):
 
 def shopmanager_dashboard(request):
     orders = Order.objects.filter(status='Pending').order_by('-id')[:50]
-    orderItems = OrderItem.objects.filter(order__status = 'Pending')
+    orderItems = OrderItem.objects.filter(order__status = 'Pending').order_by('-id')
     title = 'НЕПОТВРДЕНИ НАРАЧКИ'
     form = ExportOrder()
     context = {

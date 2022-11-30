@@ -1,6 +1,2 @@
-
-
-
-
 13. Add product gallery
 14. Lazy load images

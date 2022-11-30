@@ -15,4 +15,3 @@ class ColorForm(ModelForm):
 class ExportOrder(forms.Form):
     date_from = forms.DateField(label = "Почетна дата", widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     date_to = forms.DateField(label = "Крајна дата", widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-

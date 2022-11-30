@@ -9,13 +9,14 @@
          <div class="wrapper">
             <button id="left" class="main_sliderBtn">&#8249;</button>
             <div class="carousel">
-                
+                    <img src="{{ product.thumbnail.url }}" alt="img" draggable="false" width="600" height="600">
                     {% for img in gallery %}
-                    <img src="{{ img.galleryimg.url }}" alt="img" draggable="false">
+                    <img src="{{ img.galleryimg.url }}" alt="img" draggable="false" width="600" height="600">
                     {% endfor %}
                 
             </div>
             <div class="slick">
+                <div class="slick-item"></div>
                 {% for img in gallery %}
                 <div class="slick-item"></div>
                 {% endfor %}
@@ -128,7 +129,7 @@
         {% for review in reviews %}
         <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
             
-                <img src="{{ review.image.url }}" alt="">
+                <img src="{{ review.image.url }}" alt="" width="250" height="auto">
             
             <div class="top-row">
                 <p class="reviewer-name">{{ review.name }}</p>
