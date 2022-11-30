@@ -94,23 +94,14 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = 'GreenGoShop.wsgi.application'
 DATABASES = {
-
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'postgres',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'password',
-
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'greengoshopmk',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'greengodbusermk123!',
         'HOST': 'localhost',
-
-        'PORT': '5432',
-
+        'PORT': '',
     }
-
 }
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,7 +121,8 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'CET'
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
