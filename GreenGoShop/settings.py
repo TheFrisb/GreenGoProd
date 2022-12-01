@@ -98,11 +98,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'myproject',
         'USER': 'myprojectuser',
-        'PASSWORD': 'greengodbusermk123!',
+        'PASSWORD': 'greengodbusermk123',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
