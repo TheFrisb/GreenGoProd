@@ -149,6 +149,8 @@ CKEDITOR.plugins.add( 'html5video', {
                 if ( this.element.getChild( 0 ) ) {
                     if ( this.data.autoplay === 'yes' ) {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
+			this.element.getChild( 0 ).setAttribute( 'muted', 'true' );
+                        this.element.getChild( 0 ).setAttribute( 'playsinline', 'true' );
                     } else {
                         this.element.getChild( 0 ).setAttribute( 'autoplay', 'autoplay' );
                         this.element.getChild( 0 ).setAttribute( 'muted', 'true' );
