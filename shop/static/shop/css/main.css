@@ -643,7 +643,9 @@ input[type=number] {
     color: var(--green);
 
 }
-
+.toggle-content.main-toggle img {
+    width: 100%;
+}
 
 /* slider */
 .slider-wrapper {
