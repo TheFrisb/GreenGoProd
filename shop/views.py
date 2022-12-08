@@ -13,6 +13,7 @@ from uuid import  uuid4
 import datetime
 import xlwt
 from openpyxl import Workbook
+from openpyxl.styles import Alignment
 from openpyxl.writer.excel import save_virtual_workbook
 from django.db.models.functions import Concat
 from .forms import ExportOrder
@@ -277,42 +278,70 @@ def export_excel(request):
             workbook = Workbook()
             worksheet = workbook.active
             row_num = 1
+            
             worksheet.column_dimensions['A'].width = 20
             worksheet.column_dimensions['B'].width = 35
             worksheet.column_dimensions['C'].width = 35
             worksheet.column_dimensions['D'].width = 20
             worksheet.column_dimensions['E'].width = 20
-            worksheet.column_dimensions['F'].width = 20
-            worksheet.column_dimensions['G'].width = 20
+            worksheet.column_dimensions['F'].width = 25
+            worksheet.column_dimensions['G'].width = 10
             worksheet.column_dimensions['H'].width = 20
-            worksheet.column_dimensions['I'].width = 10
-            worksheet.column_dimensions['J'].width = 55
-            worksheet.column_dimensions['K'].width = 55
-            worksheet.column_dimensions['L'].width = 20
-            worksheet.column_dimensions['L'].width = 20
-            worksheet.column_dimensions['M'].width = 100
-            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'KOLICINA', 'IME NA PRODUKT', 'LABEL', 'CENA NA PRODUKT', 'КОМЕНТАР']
-            for col_num in range(1, len(columns)+1):
-                
+            worksheet.column_dimensions['I'].width = 65
+            worksheet.column_dimensions['J'].width = 65
+            worksheet.column_dimensions['K'].width = 100
+            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'IME NA PRODUKT', 'LABEL', 'КОМЕНТАР']
+            for col_num in range(1, len(columns)+1):             
                 cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
-        # ... worksheet.append(...) all of your data ...
-            rows = OrderItem.objects.filter(Q(order__created_at__range = [date_from, date_to], order__status = 'Confirmed',) | Q(order__created_at__range = [date_from, date_to], order__status = 'Pending')).annotate(
-                shipping = Case(
-                    When(order__shipping = True, then=Value('do vrata 130 den')),
-                    When(order__shipping = False, then=Value('besplatna dostava'))
+
+            rows = Order.objects.filter(Q(created_at__range = [date_from, date_to], status = 'Confirmed',) | Q(created_at__range = [date_from, date_to], status = 'Pending')).annotate(
+                shippingann = Case(
+                    When(shipping = True, then=Value('do vrata 130 den')),
+                    When(shipping = False, then=Value('besplatna dostava'))
                 ),
-                full_product_title = Concat('product__title', Value(' '), 'attribute_name' )).order_by('-order__created_at').values_list( 'order__created_at', 'order__name', 'order__address', 'order__city', 'order__number', 'order__number', 'order__total_price', 'shipping', 'quantity',
-            'full_product_title', 'label', 'price', 'order__message')
+            ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'message')
             print(rows)
-        
+
             for row in rows:
                 row_num += 1
+                height = 10
+                height2 = 10
+                order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                order_fees = OrderFeesItem.objects.filter(order__tracking_no = row[5])
+                order_items_total_name = ''
+                order_items_total_label = ''
+                order_fees_total = ''
+                
+                for item in order_items:
+                    order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity) + '\n'
+                    order_items_total_label += str(item.label) + ' x ' + str(item.quantity) + '\n'
+                    height += 10
+
+                for fee in order_fees:
+                    order_fees_total += str(fee.title) + '\n'
+                    height2 +=10
+
+                if(height2 > height):
+                    height = height2
+
+                worksheet.row_dimensions[row_num].height = height
                 for col_num in range(1, len(row)+1):
                     if(col_num == 1):
-                        date = row[col_num-1].astimezone(timezone)
-                        
+                        date = row[col_num-1].astimezone(timezone)      
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
+                    elif(col_num == 6):
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True, vertical='top')
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = order_fees_total
+                    elif(col_num == 9):
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_name
+                    elif(col_num == 10):
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_label
+                            
                     else:
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
 
 
