@@ -43,14 +43,15 @@
                     </td>
                     
                     <td>
-                        {% for order in orderItems %}
-                        {% if order.attribute_name %}
-                        <p class="table-content"><span class="table-strong">{{ order.product.title }} - {{ order.attribute_name }}</span>
+                        {% for item in orderItems %}
+                        {% if order == item.order %}  
+                        {% if item.attribute_name %}
+                        <p class="table-content"><span class="table-strong">{{ item.product.title }} - {{ item.attribute_name }}</span>
                         {% else %}
-                        <p class="table-content"><span class="table-strong">{{ order.product.title }}</span>
+                        <p class="table-content"><span class="table-strong">{{ item.product.title }}</span>
                         {% endif %}
-                        x <span class="table-strong">{{ order.quantity }}</span> - {{order.price}} ден</p>
-
+                        x <span class="table-strong">{{ item.quantity }}</span> - {{item.price}} ден</p>
+                        {% endif %}
                         {% endfor %}
                         <p class="table-content"><span class="table-strong">Цена без достава: </span>{{ order.subtotal_price }} ден</p>
                         <p class="table-content"><span class="table-strong">Достава: </span>{{ order.get_shipping }}</p>
