@@ -646,7 +646,9 @@ input[type=number] {
 .toggle-content.main-toggle img {
     width: 100%;
 }
-
+.toggle-content ul {
+    padding: 0px 15px;
+}
 /* slider */
 .slider-wrapper {
     margin: 1rem;
