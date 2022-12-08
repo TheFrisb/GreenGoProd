@@ -951,7 +951,7 @@ input[type=number] {
 .order-review-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9em;
+    font-size: 15px;
     font-weight: 600;
     overflow: hidden;
 }
