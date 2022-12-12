@@ -32,14 +32,14 @@
         {% if offerproduct.attribute_name  %}
         <p class="offer-ttl">{{ offerproduct.product.title }} - {{offerproduct.attribute_name}}</p>
         <p class="rgl_price">{{ offerproduct.product.regular_price }} ден</p>
-        <p class="sl_price">{{ offerproduct.price }} ден</p>
-        <p class="offer-save">ДОПОЛНИТЕЛНИ 250 ДЕН ЗАШТЕДА</p>
+        <p class="sl_price">{{ offerproduct.attribute_price }} ден</p>
+        <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
         <button class="offer-button">НАРАЧАЈ</button>
         {% else %}
         <p class="offer-ttl">{{ offerproduct.product.title }}</p>
         <p class="rgl_price">{{ offerproduct.product.regular_price }} ден</p>
-        <p class="sl_price">{{ offerproduct.product.sale_price }} ден</p>
-        <p class="offer-save">ДОПОЛНИТЕЛНИ 250 ДЕН ЗАШТЕДА</p>
+        <p class="sl_price">{{ offerproduct.price }} ден</p>
+        <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
         <button class="offer-button">НАРАЧАЈ</button>
         {% endif %}
         </div class="offer-box">
