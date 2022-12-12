@@ -216,7 +216,7 @@ def shopmanager_dashboard(request):
 def shopmanager_confirmed(request):
     orders = Order.objects.filter(status='Confirmed').order_by('-updated_at')
     orderItems = OrderItem.objects.filter(order__status = 'Confirmed').order_by('-id')
-    orderfees = OrderFeesItem.objects.filter(order__status = 'Pending').order_by('-id')
+    orderfees = OrderFeesItem.objects.filter(order__status = 'Confirmed').order_by('-id')
     title = 'ПОТВРДЕНИ НАРАЧКИ'
     context = {
         'orders' : orders,
@@ -231,7 +231,7 @@ def shopmanager_confirmed(request):
 def shopmanager_deleted(request):
     orders = Order.objects.filter(status='Deleted').order_by('-updated_at')
     orderItems = OrderItem.objects.filter(order__status = 'Deleted').order_by('-id')
-    orderfees = OrderFeesItem.objects.filter(order__status = 'Pending').order_by('-id')
+    orderfees = OrderFeesItem.objects.filter(order__status = 'Deleted').order_by('-id')
     title = 'ИЗБРИШЕНИ НАРАЧКИ'
     context = {
         'orders' : orders,
