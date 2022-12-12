@@ -124,6 +124,10 @@ def ThankYouView(request, slug):
     if(order):   
         orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
         offerproduct = orderItems.reverse()[0]
+        if offerproduct.attribute_price is not None:
+            offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
+        else:
+            offerproduct.price = offerproduct.price - offerproduct.price * 20 // 100 
         orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
         feetotal = 0
         for fee in orderFees:
