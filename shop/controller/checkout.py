@@ -106,12 +106,12 @@ def addtoorder(request):
                 )
                 if(order.shipping == True):
                     order.shipping = False
-                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price * product_qty)
-                    order.total_price = order.total_price + (orderItem.attribute_price * product_qty) - order.shipping_price
+                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
+                    order.total_price = order.total_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100) - order.shipping_price
                 else:
                     order.shipping = False
-                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price * product_qty)
-                    order.total_price = order.total_price + (orderItem.attribute_price * product_qty)
+                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
+                    order.total_price = order.total_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
 
             else:
                 OrderItem.objects.create(
@@ -124,12 +124,12 @@ def addtoorder(request):
                 )
                 if(order.shipping == True):
                     order.shipping = False
-                    order.subtotal_price = order.total_price + (product.sale_price * product_qty)
-                    order.total_price = order.total_price + (product.sale_price * product_qty) - order.shipping_price
+                    order.subtotal_price = order.subtotal_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
+                    order.total_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) - order.shipping_price
                 else:
                     order.shipping = False
-                    order.subtotal_price = order.total_price + (product.sale_price * product_qty)
-                    order.total_price = order.total_price + (product.sale_price * product_qty)
+                    order.subtotal_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
+                    order.total_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
 
             order.save()
         return JsonResponse({'status': "Product added successfully"})
