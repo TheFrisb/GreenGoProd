@@ -128,9 +128,9 @@
     <div class="reviews-inner">
         {% for review in reviews %}
         <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
-            
+                {% if review.image %}
                 <img src="{{ review.image.url }}" alt="" width="250" height="auto">
-            
+                {% endif %}
             <div class="top-row">
                 <p class="reviewer-name">{{ review.name }}</p>
             </div>
