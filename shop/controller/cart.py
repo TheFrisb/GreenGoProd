@@ -101,7 +101,10 @@ def addordeletefee(request):
             action = str(request.POST.get('action'))   
             FeeHolder = CheckoutFees.objects.get(id=fee_id)     
             if FeeHolder:
-                CartFee = CartFees.objects.get(cart=CartHolder, fee=FeeHolder)
+                try:
+                    CartFee = CartFees.objects.get(cart=CartHolder, fee=FeeHolder)
+                except:
+                    CartFee = None
                 if CartFee:             
                     CartFee.delete()
                 else:
