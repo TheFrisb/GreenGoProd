@@ -91,11 +91,19 @@ def addtoorder(request):
     product_qty = int(request.POST.get('product_qty'))
     order = Order.objects.get(id = request.POST.get('order_id'))
     if order:
-        orderItem = OrderItem.objects.get(order = order, product = product)
+        orderItem = OrderItem.objects.filter(order = order, product = product).first();
         if(orderItem):
             if orderItem.attribute_price is not None:
-                orderItem.quantity = orderItem.quantity + product_qty
-                orderItem.save()
+                
+                OrderItem.objects.create(
+                    order = orderItem.order,
+                    product = orderItem.product,
+                    price = orderItem.attribute_price - orderItem.attribute_price * 20 // 100,
+                    quantity = 1,
+                    label = orderItem.label,
+                    supplier = orderItem.product.supplier,
+                    attribute_name = orderItem.attribute_name,
+                )
                 if(order.shipping == True):
                     order.shipping = False
                     order.subtotal_price = order.subtotal_price + (orderItem.attribute_price * product_qty)
@@ -106,8 +114,14 @@ def addtoorder(request):
                     order.total_price = order.total_price + (orderItem.attribute_price * product_qty)
 
             else:
-                orderItem.quantity = orderItem.quantity + product_qty
-                orderItem.save()
+                OrderItem.objects.create(
+                    order = orderItem.order,
+                    product = orderItem.product,
+                    price = orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100,
+                    quantity = 1,
+                    label = orderItem.product.sku,
+                    supplier = orderItem.product.supplier,
+                )
                 if(order.shipping == True):
                     order.shipping = False
                     order.subtotal_price = order.total_price + (product.sale_price * product_qty)
