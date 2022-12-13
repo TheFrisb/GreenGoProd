@@ -657,6 +657,9 @@ input[type=number] {
 .toggle-content ul {
     padding: 0px 15px;
 }
+.toggle-content ol {
+    padding: 0px 15px;
+}
 /* slider */
 .slider-wrapper {
     margin: 1rem;
@@ -1344,7 +1347,6 @@ input[type=number] {
     transition: 0.3s ease;
 }
 .toggle-item{
-    padding: 12px 15px;
     text-align: center;
     border: 1px solid #abaeb4;
     border-radius: 30px;
@@ -1353,14 +1355,16 @@ input[type=number] {
     cursor: pointer;
     overflow: hidden;
 }
-
+.toggle-title{
+    padding: 12px 15px;
+}
 .toggle-item p{
     font-weight: 600;
     display: inline-block;
 }
 .toggle-content {
     display:none; 
-    padding-top: 15px;
+    padding: 12px 15px;
 }
 .toggle-content p{
     font-weight: 400;
