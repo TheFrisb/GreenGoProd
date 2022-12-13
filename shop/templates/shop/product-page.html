@@ -42,7 +42,7 @@
     {% endif %}
     <div class="product-page-price main-price">  
         <p class="product-regular-price">{{ product.regular_price }} ден</p>
-        <p class="product-sale-price">{{ product.sale_price }} ден</p>
+        <p class="product-sale-price"><span>{{ product.sale_price }}</span> ден</p>
         {% if product.free_shipping == True %}
         <p class="free-shipping">бесплатна достава</p>
         {% endif %}
@@ -179,7 +179,7 @@
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span>{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
             </div>          
@@ -199,7 +199,7 @@
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price">{{ item.sale_price }} ден</p></span>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span>{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
             </div>
