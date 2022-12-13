@@ -1,5 +1,6 @@
 {% extends "shop/base.html" %}
 {% block content %}
+<style>#footer{display:none!important;}.footer-section{display:none!important;}</style>
 {% if cart %}
     
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout">
