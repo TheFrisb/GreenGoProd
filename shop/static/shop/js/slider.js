@@ -64,8 +64,8 @@ const carousel = document.querySelector(".carousel"),
         let firstImgWidth = firstImg.clientWidth;
         // getting difference value that needs to add or reduce from carousel left to take middle img center
         let valDifference = firstImgWidth - positionDiff;
-        if(carousel.scrollLeft > prevScrollLeft && positionDiff > firstImgWidth / 4) { // if user is scrolling to the right
-            if(active_slick < slick_limit - 1){
+        if(carousel.scrollLeft > prevScrollLeft) { // if user is scrolling to the right
+            if(active_slick < slick_limit - 1  && positionDiff > firstImgWidth / 4){
                 slick[active_slick].classList.remove('active');
                 slick[active_slick+1].classList.add('active');    
             }
