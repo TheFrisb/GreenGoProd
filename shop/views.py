@@ -44,10 +44,11 @@ def CategoryView(request, slug):
         paginator = Paginator(products, 16)
         page = request.GET.get('page')
         products = paginator.get_page(page)
+        title = Category.objects.get(slug = slug).name
         
         context = {
             'products': products, 
-            'categories': Category.objects.all,
+            'title': title,
             }
         
         return render(request, "shop/home.html", context)
@@ -58,11 +59,14 @@ def CategoryView(request, slug):
 
 def ProductView(request, slug):
 
-    if(Product.objects.filter(slug=slug)):
+    try:
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
-        product = Product.objects.filter(slug=slug).first
+        product = Product.objects.get(slug=slug)
         reviews = Review.objects.filter(product__slug=slug)
+
+        title = product.title
+        print(product.title)
         if(reviews):
             reviewsaverage = 0
             count = 0
@@ -80,6 +84,8 @@ def ProductView(request, slug):
                 'slider2': Product.objects.all()[:8],
                 'gallery': gallery,
                 'attributes' : attributes,
+                'title': title,
+                
             }
         else:
             context = {
@@ -88,12 +94,12 @@ def ProductView(request, slug):
                 'slider2': Product.objects.all()[:8],
                 'attributes' : attributes,
                 'gallery': gallery,
-
+                'title': title,
             }
 
 
         return render(request, "shop/product-page.html", context)
-    else:
+    except:
         messages.warning(request, "Линкот што го следевте не постои")
         return redirect('shop-home')
 
@@ -132,13 +138,14 @@ def ThankYouView(request, slug):
         feetotal = 0
         for fee in orderFees:
             feetotal += fee.price
-
+    title = 'Ви благодариме!'
     context = {
         'order': order,
         'orderItems': orderItems,
         'offerproduct': offerproduct,
         'orderFees': orderFees,
-        'feetotal': feetotal
+        'feetotal': feetotal,
+        'title': title,
     }
 
     return render(request, 'shop/thank-you.html', context)
@@ -150,7 +157,7 @@ class SearchResultsView(ListView):
     model = Product
     template_name = 'shop/home.html'
     extra_context = {
-        'title' : "Почетна"
+        'title' : "Барање"
     }
     context_object_name = 'products'
     def get_queryset(self):
