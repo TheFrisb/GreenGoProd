@@ -660,6 +660,9 @@ input[type=number] {
 .toggle-content ol {
     padding: 0px 15px;
 }
+.toggle-content img {
+    max-width: 100%;
+}
 /* slider */
 .slider-wrapper {
     margin: 1rem;
