@@ -15,7 +15,7 @@
                         <p class="sidecart-item-name">{{ item.product.title }}</p>
                         <div class="checkout-offer-qty-holder">
                         <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
-                        <span class="green">{{ item.product.sale_price }} ден</span>
+                        <span class="green"><span>{{ item.product.sale_price }}</span> ден</span>
                         </div>
                         <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                         
@@ -38,7 +38,7 @@
                     <input type="text" required name="name"></li>
 
                     <li><label for="country">Држава/Регион <abbr title="required" class="required">*</abbr></label>
-                    <input type="text" required name="country" value="Р. Северна Македонијај"></li>
+                    <input type="text" required name="country" value="Р. Северна Македонија"></li>
 
                     <li><label for="address">Адреса <abbr title="required" class="required">*</abbr></label>
                     <input type="text" required name="address"></li>
@@ -68,7 +68,7 @@
                             <p class="sidecart-item-name">{{ item.product.title }}</p>
                             <div class="checkout-offer-qty-holder">
                             <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
-                            <span class="green">{{ item.product.sale_price }} ден</span>
+                            <span class="green"><span>{{ item.product.sale_price }}</span> ден</span>
                             </div>
                             <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                             
@@ -146,11 +146,11 @@
                         
                     {% if item.has_attributes %}
                     <td class="cart-item-total-row">
-                        <p class="item-total">{{ item.attributeprice }} ден</p>
+                        <p class="item-total"><span>{{ item.attributeprice }}</span> ден</p>
                     </td>
                     {% else %}
                     <td class="cart-item-total-row">
-                        <p class="item-total">{{ item.product.sale_price }} ден</p>
+                        <p class="item-total"><span>{{ item.product.sale_price }}</span> ден</p>
                     </td>
                     {% endif %}
                 </tr>
