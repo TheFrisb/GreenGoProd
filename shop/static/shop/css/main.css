@@ -1165,7 +1165,6 @@ input[type=number] {
 .carousel img{
     height: 600px;
     object-fit: cover;
-    margin-left: 14px;
     width: 100%;
    } 
 .carousel img:first-child{
