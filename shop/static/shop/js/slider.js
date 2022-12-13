@@ -15,6 +15,7 @@ const carousel = document.querySelector(".carousel"),
     slick_limit = slick.length;
     var slidesLength = slides.length;
     let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
+    let dirDetected = false;
     const showHideIcons = () => {
         // showing and hiding prev/next icon according to carousel scroll left value
         let scrollWidth = carousel.scrollWidth - carousel.clientWidth; // getting max scrollable width
@@ -91,15 +92,25 @@ const carousel = document.querySelector(".carousel"),
         // updatating global variables value on mouse down event
         isDragStart = true;
         prevPageX = e.pageX || e.touches[0].pageX;
+        posY1 = e.touches[0].clientY;
         prevScrollLeft = carousel.scrollLeft;
     }
     const dragging = (e) => {
         // scrolling images/carousel to left according to mouse pointer
         if(!isDragStart) return;
-        e.preventDefault();
+        posY2 = e.touches[0].clientY;
+        dY = posY2 - posY1;
         isDragging = true;
         carousel.classList.add("dragging");
         positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX;
+        if (!dirDetected) {
+           if (Math.abs(dY) > Math.abs(positionDiff)) {
+               carousel.removeEventListener("touchmove", dragging);
+               return;
+               }
+            e.preventDefault();
+        }
+        dirDetected = true;
         carousel.scrollLeft = prevScrollLeft - positionDiff;
         showHideIcons();
     }
@@ -118,7 +129,11 @@ const carousel = document.querySelector(".carousel"),
                 carousel.classList.remove('dragging');
                 active_slick = 0;
             }, 300);    
-        }         
+        }
+        if (!dirDetected) {
+            carousel.addEventListener("touchmove", dragging);
+          }
+       dirDetected = false;
     }  
     carousel.addEventListener("mousedown", dragStart);
     carousel.addEventListener("touchstart", dragStart);
