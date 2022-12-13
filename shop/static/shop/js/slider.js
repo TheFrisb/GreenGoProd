@@ -123,3 +123,15 @@ const carousel = document.querySelector(".carousel"),
     carousel.addEventListener("touchmove", dragging);
     document.addEventListener("mouseup", dragStop);
     carousel.addEventListener("touchend", dragStop);
+
+$(document).ready(function() {
+        var elementPosition = $('.proceed-to-checkout').offset();
+        $(window).scroll(function(){
+                if($(window).scrollTop() > elementPosition.top){
+                    $('.stickyBtn').slideDown();
+                } else {
+                    $('.stickyBtn').slideUp();
+                }    
+        });
+     })
+
