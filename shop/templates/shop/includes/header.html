@@ -47,22 +47,6 @@
     </div>
     <div class="sidecart-inner">
         {% csrf_token %}
-        {% if itemscount == 1 %}
-        <p class="progress-bar-text">Додади уште 1 производ за бесплатна достава</p>
-        <div class="progress">
-            <div class="progress__bar progress_bar-half"></div>
-        </div>
-        {% elif itemscount > 1 %}
-        <p class="progress-bar-text">бесплатна достава</p>
-        <div class="progress">
-            <div class="progress__bar progress_bar-full"></div>
-        </div>
-        {% else %}
-        <p class="progress-bar-text">Додади 2 производи за бесплатна достава</p>
-        <div class="progress">
-            <div class="progress__bar progress_bar-empty"></div>
-        </div>
-        {% endif %}
         {% if cart %}
         
         {% for item in cart %}
