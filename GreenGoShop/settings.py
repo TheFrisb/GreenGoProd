@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-66ho40ah-b_0@_o1j0sj7(#u+_@5q8_vozsbq28hu8n@p^5ru3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['161.35.16.191'] 
+ALLOWED_HOSTS = ['www.greengoshop.mk', 'greengoshop.mk', '161.35.16.191'] 
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'django.contrib.admin',
