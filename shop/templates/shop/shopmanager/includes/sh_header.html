@@ -1,14 +1,14 @@
 {% if title != "Login" %}
 <header id="header">
     <div class="header-content">
-        <a href="{% url 'admin:index'  %}" target="_blank" class="header-item">Креири порачка</a>
+        <a href="#" target="_blank" class="header-item">Креири порачка</a>
         <a href="{% url 'shopmanagerhome' %}" class="header-item">Непотврдени нарачки</a>
         <a href="{% url 'shconfirmed' %}" class="header-item">Потврдени нарачки</a>
         <a href="{% url 'shdeleted' %}" class="header-item">Избришени нарачки</a>
     </div>
     <div class="header-content2">
         <a href="#" class="header-item" target="_blank">ОДИ ВО АДМИН</a>
-        <a href="#" class="header-item">Одлогири се</a>
+        <a href="{% url 'logout' %}" class="header-item">Одлогири се</a>
     </div>
 </header>
 {% endif %}
