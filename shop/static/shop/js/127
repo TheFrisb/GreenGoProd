@@ -177,7 +177,7 @@
                         console.log('ADDED OFFER ITEM')
                     }
                     else if($(button).hasClass("proceed-to-checkout")){
-                        window.location.href = "http://127.0.0.1:8000/checkout";
+                        window.location.href = "https://greengoshop.mk/checkout";
                     }
                     else {
                         if($(button).hasClass("mainaddedBtn") == false){
@@ -220,7 +220,7 @@
             success: function (response){
                 console.log("Attribute item successfully added")
                 if($(button).hasClass("proceed-to-checkout")){
-                    window.location.href = "http://127.0.0.1:8000/checkout";
+                    window.location.href = "https://greengoshop.mk/checkout";
                 }
                 else{
                     cartCount = cartCount + parseInt(product_qty);
