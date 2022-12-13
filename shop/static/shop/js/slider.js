@@ -66,39 +66,39 @@ const carousel = document.querySelector(".carousel"),
         // getting difference value that needs to add or reduce from carousel left to take middle img center
         let valDifference = firstImgWidth - positionDiff;
         if(carousel.scrollLeft > prevScrollLeft) { // if user is scrolling to the right
-            if(active_slick < slick_limit - 1  && positionDiff > firstImgWidth / 4){
+            if(active_slick < slick_limit - 1  && positionDiff > firstImgWidth / 8){
                 slick[active_slick].classList.remove('active');
                 slick[active_slick+1].classList.add('active');    
             }
-            if(positionDiff > firstImgWidth / 4){
+            if(positionDiff > firstImgWidth / 8){
                 active_slick++;
             }
             
             if(active_slick == slick_limit - 2){
                 carousel.lastChild.style.display = 'inline'
             }
-            return carousel.scrollLeft += positionDiff > firstImgWidth / 4 ? valDifference : -positionDiff;
+            return carousel.scrollLeft += positionDiff > firstImgWidth / 8 ? valDifference : -positionDiff;
         }
         // if user is scrolling to the left
-        if(active_slick > 0 && positionDiff > firstImgWidth / 4){
+        if(active_slick > 0 && positionDiff > firstImgWidth / 8){
             slick[active_slick].classList.remove('active');
             slick[active_slick-1].classList.add('active');
             active_slick--;
         }
         
-        carousel.scrollLeft -= positionDiff > firstImgWidth / 4 ? valDifference : -positionDiff;
+        carousel.scrollLeft -= positionDiff > firstImgWidth / 8 ? valDifference : -positionDiff;
     }
     const dragStart = (e) => {
         // updatating global variables value on mouse down event
         isDragStart = true;
         prevPageX = e.pageX || e.touches[0].pageX;
-        posY1 = e.touches[0].clientY;
+        posY1 = e.pageY || e.touches[0].clientY;
         prevScrollLeft = carousel.scrollLeft;
     }
     const dragging = (e) => {
         // scrolling images/carousel to left according to mouse pointer
         if(!isDragStart) return;
-        posY2 = e.touches[0].clientY;
+        posY2 = e.pageY || e.touches[0].clientY;
         dY = posY2 - posY1;
         isDragging = true;
         carousel.classList.add("dragging");
