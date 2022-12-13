@@ -69,7 +69,10 @@ const carousel = document.querySelector(".carousel"),
                 slick[active_slick].classList.remove('active');
                 slick[active_slick+1].classList.add('active');    
             }
-            active_slick++;
+            if(positionDiff > firstImgWidth / 4){
+                active_slick++;
+            }
+            
             if(active_slick == slick_limit - 2){
                 carousel.lastChild.style.display = 'inline'
             }
