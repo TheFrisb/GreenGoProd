@@ -1,7 +1,7 @@
 {% if title != "Login" %}
 <header id="header">
     <div class="header-content">
-        <a href="#" target="_blank" class="header-item">Креири порачка</a>
+        <a href="{% url 'shop-home' %}" target="_blank" class="header-item">Креири порачка</a>
         <a href="{% url 'shopmanagerhome' %}" class="header-item">Непотврдени нарачки</a>
         <a href="{% url 'shconfirmed' %}" class="header-item">Потврдени нарачки</a>
         <a href="{% url 'shdeleted' %}" class="header-item">Избришени нарачки</a>
