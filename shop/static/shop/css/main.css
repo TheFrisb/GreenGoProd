@@ -92,6 +92,14 @@ input[type=number] {
 #header-banner a{
     text-decoration: none;
 }
+.header-info{
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px 0px;
+    background-color: var(--black);
+    color: white;
+}
 .image-icon{
     display: inline-block;
     vertical-align: bottom;
@@ -1101,7 +1109,7 @@ input[type=number] {
     text-align: center;
     padding: 10px 0px;
     margin-bottom: -4vw;
-    z-index: 10000;
+    z-index: 999;
 }
 .stickyBtn{
     position: fixed;
@@ -1109,7 +1117,7 @@ input[type=number] {
     margin: 0!important;
     border-radius: 0!important;
     display: none;
-    z-index: 10000;
+    z-index: 999;
 }
 .slider-holder{
     display: flex;
@@ -1663,6 +1671,10 @@ input[type=number] {
         display: none;
         
     }
+    .header-info{
+	padding: 5px 0px;
+	font-size: 12px;
+    }
     .header-search button{
         display:none;
     }
@@ -1834,6 +1846,9 @@ input[type=number] {
     slide .slider-title{
         height: 20vh;
     }
+    .header-info{
+    	font-size: 10px;
+     }
 }
 
 
