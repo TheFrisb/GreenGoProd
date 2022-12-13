@@ -1,10 +1,8 @@
  $(document).ready(function() {
-    console.log("Jquery loaded")
 
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
     var cartCount = parseInt($("#cart-count").text())
 
-    console.log(cartCount)
     $("div#container").on('click', 'button.alert', function() {
         alert(1);
     });
@@ -15,12 +13,10 @@
     })
     
     function toggleCart(){
-        console.log("Cart Toggled")
         $('#sidecart').toggleClass('sidecart-active');
         $('.lightbox').toggleClass('lightbox-active')
     }
     function toggleSearch(){
-        console.log("Search toggled")
         $('.lightbox').toggleClass('lightbox-active lightbox-search')
         $('.lightbox').find('form').toggleClass("disabled")
     }
@@ -34,7 +30,6 @@
     
 
     $('.header-cart').click(function (e){
-        console.log("Cart Icon Clicked")
         if ($("#sidecart").hasClass('sidecart-active') == false){
             toggleCart();
         }
@@ -42,7 +37,6 @@
     })
 
     $('.cart-close').click(function (e){
-        console.log("Cart Closed", "Cart close icon clicked")
         toggleCart();
     })
 
@@ -50,7 +44,6 @@
     $(".lightbox").click(function(){
         
         if ($("#sidecart").hasClass('sidecart-active')){
-            console.log('yeas')
             toggleCart();
         }
     })
@@ -62,24 +55,19 @@
     var slides_index_2 = 1
     var maxslides1 = $(".slider-wrapper1").find(".slide").length
     var maxslides2 = $(".slider-wrapper2").find(".slide").length
-    console.log(maxslides1, maxslides2)
     $(".slider-wrapper1").on('click', '.slide-arrow', function(){
         slidescontainer = $(".slide-arrow-next1").next("ul");
-        console.log(slide1)
         if($(this).hasClass('slide-arrow-next1')){
            
             slidescontainer.scrollLeft(slide1 * slides_index_1);
             if((slide1>220 && slides_index_1 <( maxslides1 - 3)) || slide1<220 && slides_index_1 <( maxslides1 - 1)){
                 
                 slides_index_1++;
-                console.log(slides_index_1, maxslides1)
             }
-            console.log(slides_index_1);
             
         }
         if($(this).hasClass('slide-arrow-prev1')){
             slideleft = slide1 * (slides_index_1 - 1);         
-            console.log(slideleft);
             slidescontainer.scrollLeft(slideleft - slide1);
             if(slides_index_1 > 1){
                 slides_index_1--;
@@ -91,18 +79,16 @@
         slidescontainer = $(".slide-arrow-next2").next("ul");
         
         if($(this).hasClass('slide-arrow-next2')){
-            console.log(slide2*slides_index_2);
+ 
             
             slidescontainer.scrollLeft(slide2 * slides_index_2);
             if((slide2>220 && slides_index_2 <( maxslides2 - 3)) || slide2<220 && slides_index_2 <( maxslides2 - 1)){
                 slides_index_2++;
                 }
-            console.log(slides_index_2);
             
         }
         if($(this).hasClass('slide-arrow-prev2')){
             slideleft = slide2 * (slides_index_2 - 1);         
-            console.log(slideleft);
             slidescontainer.scrollLeft(slideleft - slide2);
             if(slides_index_2 > 1){
                 slides_index_2--;
@@ -146,7 +132,13 @@
             if (product_qty == null){
                 product_qty = 1;
             }
-            console.log($(button).hasClass("checkout-offerBtn"))
+            if($(button).hasClass("stickyBtn")){
+                var product_id = $('.product_data').find('.prod_id').val();
+                var product_qty = $('.product_data').find('.qty-input').val();
+                if (product_qty == null){
+                    product_qty = 1;
+                }
+            }
             
             $.ajax({
                 method: "POST",
@@ -166,7 +158,6 @@
                             $('.sidecart-inner').load(location.href + " .sidecart-inner");
                         }
                        
-                        console.log(cartCount)
                         
                     }
                     else if($(button).hasClass("checkout-offerBtn")){
@@ -174,7 +165,6 @@
                             $(button).toggleClass('addedBtn').html('ДОДАДЕН');
                         }
                         $('.cart-data').load(location.href + " .cart-data")
-                        console.log('ADDED OFFER ITEM')
                     }
                     else if($(button).hasClass("proceed-to-checkout")){
                         window.location.href = "https://greengoshop.mk/checkout";
@@ -186,7 +176,6 @@
                         }
                         cartCount = cartCount + parseInt(product_qty);
                         $("#cart-count").html(cartCount)
-                        console.log(cartCount , product_qty)
                         $('.sidecart-inner').load(location.href + " .sidecart-inner");
                         toggleCart();
                     }
@@ -201,10 +190,19 @@
       var product_id = $(this).closest('.product_data').find('.prod_id').val();
       var product_qty = $(this).closest('.product_data').find('.qty-input').val();
       var selected_attribute = $(".product-attributes").find(".attribute-item.active");
-      console.log("Attribute add to cart clicked for product id:", product_id, " with attribute id: ", attribute_id)
       var token = $('input[name=csrfmiddlewaretoken]').val()
       var attribute_id = 0;
       var attribute_type = null;
+      if (product_qty == null){
+         product_qty = 1;
+       }
+       if($(button).hasClass("stickyBtn")){
+         var product_id = $('.product_data').find('.prod_id').val();
+         var product_qty = $('.product_data').find('.qty-input').val();
+         if (product_qty == null){
+             product_qty = 1;
+         }
+       }
       if($(selected_attribute).length){
         attribute_id = $(selected_attribute).find(".attrib_id").val();
         attribute_type = $(selected_attribute).find(".attrib_type").val();
@@ -218,14 +216,12 @@
                 csrfmiddlewaretoken: token,
             },
             success: function (response){
-                console.log("Attribute item successfully added")
                 if($(button).hasClass("proceed-to-checkout")){
                     window.location.href = "https://greengoshop.mk/checkout";
                 }
                 else{
                     cartCount = cartCount + parseInt(product_qty);
                     $("#cart-count").html(cartCount)
-                    console.log(cartCount , product_qty)
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
                     $(button).html('ДОДАДЕН')
                     toggleCart();
@@ -246,12 +242,10 @@
         }
         e.stopPropagation();
         e.preventDefault();
-        console.log('Thank you page order button clicked')
         var order_id = $(this).closest('.offer-box').find('.order_id').val();
         var product_id = $(this).closest('.offer-box').find('.prod_id').val();
         var product_qty = 1;
         var token = $('input[name=csrfmiddlewaretoken]').val()
-        console.log('Order id:', order_id, 'Product id: ', product_id, 'product_qty', product_qty)
         
         $.ajax({
             method: "POST",
@@ -275,7 +269,6 @@
 
 
     $('.sidecart-offer-item').on('click', 'sidecart-offer-item', function (e){
-        console.log('offer clicked')
         e.preventDefault();
     })
     $('.product-attributes').on('click', '.attribute-item', function(){
@@ -293,7 +286,6 @@
 
     $(document).on('click', '.changeQuantity', function (e){
         e.preventDefault();
-        console.log('click');
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
         var product_qty = $(this).closest('.product_data').find('.qty-input').val();
         var attribute_id = 0
@@ -312,7 +304,6 @@
             },
             
             success: function (response){
-                console.log('Quantity changed NICE')
                 $('.cart-data').load(location.href + " .cart-data")
             }
         })
@@ -329,7 +320,6 @@
         if($(this).closest('.product_data').find('.attrib_id').val() > 0){
             attribute_id = $(this).closest('.product_data').find('.attrib_id').val();
         }
-        console.log(attribute_id);
         var token = $('input[name=csrfmiddlewaretoken]').val()
 
 
@@ -353,7 +343,6 @@
                     $('.sidecart-inner').load(location.href + " .sidecart-inner")
                     $("#cart-count").html(cartCount)
                 }
-                console.log('Deleted Successfully')
                 
             }
         })
@@ -372,9 +361,7 @@
         if($(this).closest('.checkout-fees').hasClass('active')){
             fee_action = 'remove';
         }
-        console.log('Fee action:', fee_action)
         var fee_id = $(this).closest('.fee_data').find('.fee_id').val();
-        console.log('Fee id:', fee_id)
         var token = $('input[name=csrfmiddlewaretoken]').val()
         $.ajax({
             method: "POST",
@@ -386,7 +373,6 @@
             },
             
             success: function (response){
-                console.log('Fee status changed to: ', fee_action)
                 if($(button).closest('.checkout-fees').hasClass('active')){
                     $(button).toggleClass('addedBtn').html('ДОДАЈ');
                     $(button).closest('.checkout-fees').toggleClass('active');
@@ -404,7 +390,6 @@
     
 
     $(".toggle").click(function (e){
-        console.log("Toggle click!")
         $(this).find(".toggle-content").slideToggle("fast");
     })
     $(".checkout-dostava").click(function (e){
@@ -423,61 +408,5 @@
         $(this).toggleClass("active");
         $(".checkout-garancija-content").slideToggle("fast");
     })
-
-
-
-    // $('#slider').on('touchstart', function(event) {
-    //     const xClick = event.originalEvent.touches[0].pageX;
-      
-    //     $(this).on('touchmove', function(event) {
-    //       const xMove = event.originalEvent.touches[0].pageX;
-    //       const sensitivityInPx = 5;
-      
-    //       if (Math.floor(xClick - xMove) > sensitivityInPx) {
-    //         plusSlides(1);
-    //         $(this).off('touchmove');
-    //       } 
-    //       else if (Math.floor(xClick - xMove) < -sensitivityInPx) {
-    //         plusSlides(-1);
-    //         $(this).off('touchmove');
-    //       }
-    //     });
-    //   });
-      
-    //   let slideIndex = 1;
-    //   showSlides(slideIndex);
-      
-    //   function plusSlides(n) {
-    //     showSlides(slideIndex += n);
-    //   }
-      
-    //   function currentSlide(n) {
-    //     showSlides(slideIndex = n);
-    //   }
-      
-    //   function showSlides(n) {
-    //     let i;
-    //     let slides = document.getElementsByClassName("mySlides");
-    //     let dots = document.getElementsByClassName("dot");
-      
-    //     if (n > slides.length) {
-    //       slideIndex = 1
-    //     }
-    //     if (n < 1) {
-    //       slideIndex = slides.length
-    //     }
-      
-    //     for (i = 0; i < slides.length; i++) {
-    //       slides[i].style.display = "none";
-    //     }
-      
-    //     for (i = 0; i < dots.length; i++) {
-    //       dots[i].className = dots[i].className.replace(" active", "");
-    //     }
-      
-    //     slides[slideIndex - 1].style.display = "block";
-    //     dots[slideIndex - 1].className += " active";
-    //   }
-
 
  })
