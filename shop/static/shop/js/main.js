@@ -389,8 +389,8 @@
     })
     
 
-    $(".toggle").click(function (e){
-        $(this).find(".toggle-content").slideToggle("fast");
+    $(".toggle-title").click(function (e){
+        $(this).next(".toggle-content").slideToggle("fast");
     })
     $(".checkout-dostava").click(function (e){
         if($(".checkout-garancija").hasClass("active")){
