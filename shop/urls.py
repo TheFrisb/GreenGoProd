@@ -7,16 +7,16 @@ urlpatterns = [
      # path('', views.home, name='shop-home'),
     path('', views.ProductListView, name='shop-home'),
     path("search/", SearchResultsView.as_view(), name="search_results"),
-    path('product-category/<str:slug>', views.CategoryView, name='category-page'),
+    path('product-category/<str:slug>/', views.CategoryView, name='category-page'),
     
-    path('product/<str:slug>', views.ProductView, name='product-page'),
+    path('product/<str:slug>/', views.ProductView, name='product-page'),
 
     path('add-to-cart', cart.addtocart, name="addtocart" ),
     path('variable-add-to-cart', cart.variableaddtocart, name="variableaddtocart"),
     path('update-cart', cart.updatecart, name="updatecart"),
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
-    path('checkout', CheckoutView, name='checkout'),
+    path('checkout/', CheckoutView, name='checkout'),
 
     path('add-or-delete-fee', cart.addordeletefee, name="addordeletefee"),
 
