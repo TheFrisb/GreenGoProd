@@ -158,9 +158,10 @@
     
 </div>
 {% else %}
+{% load static %}
     <header id="header">
         <div class="inner-header checkout">
-            <div class="header-logo-container checkout"><img src="https://greengoshop.mk/wp-content/uploads/2022/05/logo_web-1-1.jpg" alt="default.jpg" class="header-logo-img"></div>
+            <div class="header-logo-container checkout"><img src={% static 'icons/header-logo.webp' %} alt="default.jpg" class="header-logo-img"></div>
         </div>
     </header>
 {% endif %} 
