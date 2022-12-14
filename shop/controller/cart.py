@@ -30,6 +30,31 @@ def addtocart(request):
     return redirect('/')
 
 
+def offeraddtocart(request):
+    if request.method == 'POST':
+        cart = Cart.objects.filter(session = request.session['nonuser'])
+        if cart:
+            CartHolder = Cart.objects.get(session = request.session['nonuser'])
+            prod_id = int(request.POST.get('product_id'))
+            offer_price = int(request.POST.get('product_price'))
+            product_check = Product.objects.get(id=prod_id)
+            if(product_check):
+                if(CartItems.objects.filter(cart = CartHolder, product_id=prod_id)):
+                    prod_qty = int(request.POST.get('product_qty'))
+                    cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder, offer_price = offer_price)
+                    cartItem.product_qty = cartItem.product_qty + prod_qty
+                    cartItem.save()
+                    return JsonResponse({'status': "Product added with quantity saved"})
+                else:
+                    prod_qty = int(request.POST.get('product_qty'))
+                    CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty, offer_price=offer_price)
+                    return JsonResponse({'status': "Product added successfuly"})
+            else:
+                return JsonResponse({'status': "No such product found"})
+        else:
+            return JsonResponse({'status': "Login to continue"})
+    return redirect('/')
+
 
 def variableaddtocart(request):
     if request.method == 'POST':
