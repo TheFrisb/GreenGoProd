@@ -134,8 +134,8 @@
                 product_qty = 1;
             }
             if($(button).hasClass("stickyBtn")){
-                var product_id = $('.product_data').find('.prod_id').val();
-                var product_qty = $('.product_data').find('.qty-input').val();
+                var product_id = $('.product-page.product_data').find('.prod_id').val();
+                var product_qty = $('.product-page.product_data').find('.qty-input').val();
                 if (product_qty == null){
                     product_qty = 1;
                 }
@@ -198,8 +198,8 @@
          product_qty = 1;
        }
        if($(button).hasClass("stickyBtn")){
-         var product_id = $('.product_data').find('.prod_id').val();
-         var product_qty = $('.product_data').find('.qty-input').val();
+         var product_id = $('.product-page.product_data').find('.prod_id').val();
+         var product_qty = $('.product-page.product_data').find('.qty-input').val();
          if (product_qty == null){
              product_qty = 1;
          }
