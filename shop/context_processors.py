@@ -15,7 +15,6 @@ def cart_renderer(request):
 
 
 def extras(request):
-    categories = Category.objects.filter(published=True)
     cartItems = CartItems.objects.filter(cart__session=request.session['nonuser'])
     itemscount = 0
     free_shipping = False
@@ -38,5 +37,5 @@ def extras(request):
                 itemscount = itemscount + item.product_qty
     if(itemscount >= 2):
         free_shipping = True
-    return {'categories': categories, 'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping}
+    return {'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping}
     
