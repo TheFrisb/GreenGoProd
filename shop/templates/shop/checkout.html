@@ -11,20 +11,21 @@
             {% for item in cartOffers %}
                 <div class="sidecart-item checkout-offerItem mobile product_data">
                     <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                    <input type="hidden" class="offer_price" value="{{ item.price }}">
                     <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                     <span class="sidecart-item-content checkoutItem-content">
                         <p class="sidecart-item-name">{{ item.product.title }}</p>
                         <div class="checkout-offer-qty-holder">
                         <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
-                        <span class="green"><span>{{ item.product.sale_price }}</span> ден</span>
+                        <span class="green"><span>{{ item.price }}</span> ден</span>
                         </div>
                         <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                         
                     </span>
                     {% if item.is_added == True %}
-                        <button class="add-to-cartBtn checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                        <button class="checkout-offerBtn addedBtn">ДОДАДЕН</button>
                     {% else %}
-                        <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                        <button class="checkout-offerBtn">ДОДАЈ</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -64,20 +65,21 @@
                 
                     <div class="sidecart-item checkout-offerItem desktop product_data">
                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                        <input type="hidden" class="offer_price" value="{{ item.price }}">
                         <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                         <span class="sidecart-item-content checkoutItem-content">
                             <p class="sidecart-item-name">{{ item.product.title }}</p>
                             <div class="checkout-offer-qty-holder">
                             <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
-                            <span class="green"><span>{{ item.product.sale_price }}</span> ден</span>
+                            <span class="green"><span>{{ item.price }}</span> ден</span>
                             </div>
                             <p class="checkoutOffer-text">{{ item.offer_text }}</p>
                             
                         </span>
                         {% if item.is_added == True %}
-                         <button class="add-to-cartBtn checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                         <button class="checkout-offerBtn addedBtn">ДОДАДЕН</button>
                         {% else %}
-                            <button class="add-to-cartBtn checkout-offerBtn">ДОДАЈ</button>
+                            <button class="checkout-offerBtn">ДОДАЈ</button>
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -148,6 +150,10 @@
                     {% if item.has_attributes %}
                     <td class="cart-item-total-row">
                         <p class="item-total"><span>{{ item.attributeprice }}</span> ден</p>
+                    </td>
+                    {% elif item.has_offer %}
+                    <td class="cart-item-total-row">
+                        <p class="item-total">{{ item.offer_price }} ден</p>
                     </td>
                     {% else %}
                     <td class="cart-item-total-row">
