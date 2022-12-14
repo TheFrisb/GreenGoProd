@@ -3,7 +3,7 @@
     <div class="content-container">
         {% for product in category %}
             <div class="product">
-                <a href="{% url 'product-page' product.slug  %}" class="product-link">
+                <a href="{% url 'product-page' product.slug  %}" class="product-link" aria-label="Линк до продукт">
                 <img src="{{ product.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail">
                 <h2 class="product-feed-title">{{ product.title }}</h2>
                 <span class="product-feed-price"><p class="product-feed-regular-price">{{ product.regular_price }} ден</p><p class="product-feed-sale-price">{{ product.sale_price }} ден</p></span>
