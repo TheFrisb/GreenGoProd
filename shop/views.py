@@ -66,39 +66,41 @@ def ProductView(request, slug):
         reviews = Review.objects.filter(product__slug=slug)
 
         title = product.title
-        print(product.title)
-        if(reviews):
-            reviewsaverage = 0
-            count = 0
-            for i in reviews:
-                reviewsaverage += int(i.rating)
-                count += 1
-            reviewsaverage = reviewsaverage // count
+        if(product.status != 'PRIVATE'):
+            if(reviews):
+                reviewsaverage = 0
+                count = 0
+                for i in reviews:
+                    reviewsaverage += int(i.rating)
+                    count += 1
+                reviewsaverage = reviewsaverage // count
 
-            context = {
-                'product': product,
-                'reviews': reviews,
-                'ratingaverage': reviewsaverage,
-                'reviewcount': count,
-                'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                'slider2': Product.objects.all()[:8],
-                'gallery': gallery,
-                'attributes' : attributes,
-                'title': title,
-                
-            }
-        else:
-            context = {
-                'product': product,
-                'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                'slider2': Product.objects.all()[:8],
-                'attributes' : attributes,
-                'gallery': gallery,
-                'title': title,
-            }
+                context = {
+                    'product': product,
+                    'reviews': reviews,
+                    'ratingaverage': reviewsaverage,
+                    'reviewcount': count,
+                    'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
+                    'slider2': Product.objects.all()[:8],
+                    'gallery': gallery,
+                    'attributes' : attributes,
+                    'title': title,
+
+                }
+            else:
+                context = {
+                    'product': product,
+                    'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
+                    'slider2': Product.objects.all()[:8],
+                    'attributes' : attributes,
+                    'gallery': gallery,
+                    'title': title,
+                }
 
 
-        return render(request, "shop/product-page.html", context)
+            return render(request, "shop/product-page.html", context)
+    else:
+            return redirect('shop-home')
     except:
         messages.warning(request, "Линкот што го следевте не постои")
         return redirect('shop-home')
