@@ -368,5 +368,6 @@ def export_excel(request):
     
     return redirect('/')
    
-def handler404(request):
-    return HttpResponseRedirect('/')
+def error_404(request, exception):
+   context = {}
+   return render(request,'shop/home.html', context)
