@@ -24,7 +24,7 @@ from django.utils.timezone import get_current_timezone, make_aware
 
 
 def ProductListView(request):
-    products = Product.objects.filter(status__in=['PUBLISHED','VARIABLE'])
+    products = Product.objects.filter(status__in=['PUBLISHED','VARIABLE']).order_by('-date_posted')
     paginator = Paginator(products, 16)
     page = request.GET.get('page')
     products = paginator.get_page(page)
@@ -40,7 +40,7 @@ def ProductListView(request):
 
 def CategoryView(request, slug):
     if(Category.objects.filter(slug=slug)):
-        products = Product.objects.filter(category__slug=slug)
+        products = Product.objects.filter(category__slug=slug).order_by('-date_posted')
         paginator = Paginator(products, 16)
         page = request.GET.get('page')
         products = paginator.get_page(page)
