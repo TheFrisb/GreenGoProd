@@ -216,7 +216,7 @@ class CartItems(models.Model):
     product_qty = models.IntegerField(null=False, blank=False)
     attribute = models.ForeignKey(ProductAttribute, on_delete=models.CASCADE, null = True)
     attributeprice = models.IntegerField(null=True)
-
+    date_added = models.DateTimeField(auto_now_add=True)
 
     @property
     def get_session(self):
