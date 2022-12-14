@@ -204,7 +204,7 @@
                             <p>Вкупно</p>
                         </td>
                         <td>
-                            {% if itemscount > 1 %}
+                            {% if free_shipping %}
                             <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
                             {% else %}
                             <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
