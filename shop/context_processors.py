@@ -15,7 +15,7 @@ def cart_renderer(request):
 
 
 def extras(request):
-    cartItems = CartItems.objects.filter(cart__session=request.session['nonuser'])
+    cartItems = CartItems.objects.filter(cart__session=request.session['nonuser']).order_by('-date_added')
     itemscount = 0
     free_shipping = False
     cartOffers = CartOffers.objects.all()
