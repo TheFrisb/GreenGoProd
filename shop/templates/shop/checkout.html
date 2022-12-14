@@ -3,7 +3,7 @@
 <style>#footer{display:none!important;}.footer-section{display:none!important;}</style>
 {% if cart %}
     
-    <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout">
+    <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
         {% csrf_token %}
         {% if cartOffers %}
             <div class="checkout-offers mobile">
