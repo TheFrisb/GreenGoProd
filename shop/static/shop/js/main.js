@@ -277,7 +277,13 @@
             offer_price = parseInt($(this).find('.offer-price').text())
             $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
             $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
-        }   
+        }
+        else{
+            offer_regular_price = regular_price * ($(this).index());
+            offer_price = $(this).find('.attrib_price').val();
+            $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
+            $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
+        }
         $('.product-attributes div').removeClass('active');
         $(this).toggleClass('active');
         $(".attribute-title").css("color", "#0f0f0f");
