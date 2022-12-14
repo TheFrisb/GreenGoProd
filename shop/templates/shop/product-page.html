@@ -88,7 +88,7 @@
         <input type="hidden" value="{{ product.id }}" class="prod_id">
         <div class="quantity">
             <button class="decrement-btn">-</button>
-            <input type="text" name="quantity" class="qty-input" value="1">
+            <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
             <button class="increment-btn">+</button>
         </div>
         {% if attributes %}
@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div class="review-product">
-                <a href="{% url 'product-page' review.product.slug %}"></a>
+                <a href="{% url 'product-page' review.product.slug %}" aria-label="Линк до продукт од коментар"></a>
             </div>
         </div>
         {% endfor %}
@@ -178,7 +178,7 @@
         {% for item in slider1 %}
           <li class="slide product_data">
             <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link">
+            <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
@@ -198,7 +198,7 @@
         {% for item in slider2 %}
           <li class="slide product_data">
             <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link">
+            <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
