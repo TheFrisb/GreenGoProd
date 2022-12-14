@@ -299,6 +299,7 @@
 
     $(document).on('click', '.changeQuantity', function (e){
         e.preventDefault();
+        button = $(this);
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
         var product_qty = $(this).closest('.product_data').find('.qty-input').val();
         var attribute_id = 0
@@ -317,7 +318,12 @@
             },
             
             success: function (response){
-                $('.cart-data').load(location.href + " .cart-data")
+                if($(button).hasClass('sidecart-qty')){
+                    $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                }
+                else{
+                    $('.cart-data').load(location.href + " .cart-data")
+                }
             }
         })
     })
