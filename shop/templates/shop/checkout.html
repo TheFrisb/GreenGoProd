@@ -23,9 +23,9 @@
                         
                     </span>
                     {% if item.is_added == True %}
-                        <button class="checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                        <button class="checkout-offerBtn addedBtn offerBtn">ДОДАДЕН</button>
                     {% else %}
-                        <button class="checkout-offerBtn">ДОДАЈ</button>
+                        <button class="checkout-offerBtn offerBtn">ДОДАЈ</button>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -77,9 +77,9 @@
                             
                         </span>
                         {% if item.is_added == True %}
-                         <button class="checkout-offerBtn addedBtn">ДОДАДЕН</button>
+                         <button class="checkout-offerBtn addedBtn offerBtn">ДОДАДЕН</button>
                         {% else %}
-                            <button class="checkout-offerBtn">ДОДАЈ</button>
+                            <button class="checkout-offerBtn offerBtn">ДОДАЈ</button>
                         {% endif %}
                     </div>
                 {% endfor %}
