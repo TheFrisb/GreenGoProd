@@ -22,7 +22,7 @@ def extras(request):
     if cartOffers:
         for offer in cartOffers:
             for item in cartItems:
-                if(offer.product.title == item.product.title ):
+                if(offer.product == item.product ):
                     offer.is_added = True
     total = 0
     if cartItems:
@@ -31,6 +31,9 @@ def extras(request):
                 free_shipping = True
             if(item.attributeprice is not None):
                 total = total + (item.attributeprice * item.product_qty)
+                itemscount = itemscount + item.product_qty
+            if(item.offer_price is not None):
+                total = total + (item.offer_price * item.product_qty)
                 itemscount = itemscount + item.product_qty
             else:
                 total = total + (item.product.sale_price * item.product_qty)
