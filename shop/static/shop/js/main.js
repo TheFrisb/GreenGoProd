@@ -1,6 +1,7 @@
  $(document).ready(function() {
 
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
+    const sale_price = parseInt($('.main-price').find('.product-sale-price').text());
     var cartCount = parseInt($("#cart-count").text())
 
     $("div#container").on('click', 'button.alert', function() {
@@ -279,9 +280,15 @@
             $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
         }
         else{
-            offer_regular_price = regular_price * ($(this).index());
             offer_price = $(this).find('.attrib_price').val();
+            if(sale_price != offer_price){
+            offer_regular_price = regular_price * ($(this).index());
             $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
+            }
+            else{
+                offer_regular_price = regular_price
+                $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
+            }
             $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
         }
         $('.product-attributes div').removeClass('active');
