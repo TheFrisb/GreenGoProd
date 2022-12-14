@@ -990,6 +990,7 @@ input[type=number] {
 }
 .quantity.checkout-row-inline{
     margin-bottom: 0;
+    min-width: 15%;
 }
 
 
