@@ -367,7 +367,4 @@ def export_excel(request):
             return response
     
     return redirect('/')
-   
-def error_404(request, exception):
-   context = {}
-   return render(request,'shop/home.html', context)
+  
