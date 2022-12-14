@@ -25,6 +25,8 @@ def placeorder(request):
         for item in neworderitems:
             if item.has_attributes == True:
                 cart_total_price += item.attributeprice * item.product_qty
+            if item.has_offer == True:
+                cart_total_price += item.offer_price * item.product_qty
             else:
                 cart_total_price += item.product.sale_price * item.product_qty
             if(item.product.free_shipping == True):
@@ -57,6 +59,15 @@ def placeorder(request):
                 supplier = item.product.supplier,
                 attribute_price = item.attributeprice,
             )
+            if(item.has_offer==True):
+                OrderItem.objects.create(
+                    order = neworder,
+                    product = item.product,
+                    price = item.offer_price,
+                    quantity = item.product_qty,
+                    label = item.product.sku,
+                    supplier = item.product.supplier,
+                )
             else:
                 OrderItem.objects.create(
                     order = neworder,
