@@ -40,15 +40,12 @@
     {% include "shop/includes/header.html" %} 
     <nav id="navigation">
         <ul>
-            <li class="navigation-item"><a href="{% url 'shop-home' %}" class="navigation-title">ПОЧЕТНА</a></li>
-            {% for category in categories %}
-            <li class="navigation-item"><a href="{% url 'category-page' category.slug %}" class="navigation-title">{{ category.name }}</a></li>
-            <!-- <li class="navigation-item"><a href="" class="navigation-title">НАЈПРОДАВАНИ</a></li>
-            <li class="navigation-item"><a href="" class="navigation-title">ДОМАЌИНСТВО</a></li>
-            <li class="navigation-item"><a href="" class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
-            <li class="navigation-item"><a href="" class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
-            <li class="navigation-item"><a href="" class="navigation-title">ГРАДИНА</a></li> -->
-            {% endfor %}
+            <li class="navigation-item"><a href="https://greengoshop.mk/" class="navigation-title">ПОЧЕТНА</a></li>
+            <li class="navigation-item"><a href="https://greengoshop.mk/product-category/najprodavani/" class="navigation-title">НАЈПРОДАВАНИ</a></li>
+            <li class="navigation-item"><a href="https://greengoshop.mk/product-category/domakjinstvo/" class="navigation-title">ДОМАЌИНСТВО</a></li>
+            <li class="navigation-item"><a href="https://greengoshop.mk/product-category/gradina/" class="navigation-title">ГРАДИНА</a></li>
+            <li class="navigation-item"><a href="https://greengoshop.mk/product-category/zdravje-i-ubavina/" class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
+            <li class="navigation-item"><a href="https://greengoshop.mk/product-category/kujnski-aparati/" class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
         </ul>
     </nav>
     <div class="page-container">
