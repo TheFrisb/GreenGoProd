@@ -1286,6 +1286,9 @@ input[type=number] {
 .quantity{
     margin-bottom: 15px;
 } 
+.sidecart-qty-box{
+    margin-bottom: 0;
+}
 .qty-input{
     height: 35px;
     width: 40px;
