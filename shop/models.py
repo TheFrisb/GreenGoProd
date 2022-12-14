@@ -216,6 +216,7 @@ class CartItems(models.Model):
     product_qty = models.IntegerField(null=False, blank=False)
     attribute = models.ForeignKey(ProductAttribute, on_delete=models.CASCADE, null = True)
     attributeprice = models.IntegerField(null=True)
+    offer_price = models.IntegerField(null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -225,6 +226,13 @@ class CartItems(models.Model):
     @property
     def has_attributes(self):
         if(self.attribute is not None):
+            return True
+        else:
+            return False
+        
+    @property
+    def has_offer(self):
+        if(self.offer_price is not None):
             return True
         else:
             return False
@@ -240,6 +248,7 @@ class CartOffers(models.Model):
         verbose_name_plural = "Понуди за кошничка"
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Одбери продукт')
     offer_text = models.CharField(max_length=40, blank=True, verbose_name='Текст на понуда')
+    price = models.IntegerField(verbose_name='Цена')
     is_added = models.BooleanField(default=False, verbose_name='Не мени!')
     def __str__(self):
         return 'Понуда во кошничка за продукт {} со текст {} IS ADDED {}'.format(self.product.title, self.offer_text, self.is_added)
