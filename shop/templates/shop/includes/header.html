@@ -60,6 +60,9 @@
                 {% if item.has_attributes %}
                 <p class="sidecart-item-name">{{ item.product.title }}{{ item.attributename }}</p>
                 <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.attributeprice }} ден</span></p>
+                {% elif item.has_offer %}
+                <p class="sidecart-item-name">{{ item.product.title }}</p>
+                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
                 {% else %}
                 <p class="sidecart-item-name">{{ item.product.title }}</p>
                 <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
@@ -83,10 +86,11 @@
             
             <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Понуди за кошничка">
                 <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                <input type="hidden" class="offer_price" value="{{ item.price }}">
                 <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name">{{ item.product.title }}</p>
-                    <p class="sidecart-item-quantity">1 x <span class="red">{{ item.product.sale_price }} ден</span></p>
+                    <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
                     <p class="sidecartOffer-text">{{ item.offer_text }}</p>
                     
                 </span>
@@ -122,10 +126,11 @@
             
             <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Кошничка понуди 2">
                 <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                <input type="hidden" class="offer_price" value="{{ item.price }}">
                 <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name">{{ item.product.title }}</p>
-                    <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="red">{{ item.product.sale_price }} ден</span></p>
+                    <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
                     <p class="sidecartOffer-text">{{ item.offer_text }}</p>
                     
                 </span>
