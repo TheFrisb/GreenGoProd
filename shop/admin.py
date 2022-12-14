@@ -50,6 +50,7 @@ class ProductAdmin(admin.ModelAdmin):
   
 class ReviewAdmin(admin.ModelAdmin):
     search_fields = ['product__title', 'product__sku', 'name', 'rating', ]
+    autocomplete_fields = ["product"]
     list_display = ("Product_Title", "name",  "rating", "date_created")
 
 
@@ -60,12 +61,15 @@ class ColorAdmin(admin.ModelAdmin):
 class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'color', 'price')
 
+    
+class CartOfferAdmin(admin.ModelAdmin):
+    autocomplete_fields = ["product"]
 
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Review, ReviewAdmin)
-admin.site.register(CartOffers)
+admin.site.register(CartOffers, CartOfferAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Offer)
 admin.site.register(Size)
