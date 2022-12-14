@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('add-to-cart', cart.addtocart, name="addtocart" ),
     path('variable-add-to-cart', cart.variableaddtocart, name="variableaddtocart"),
+    path('offer-add-to-cart', cart.offeraddtocart, name="offeraddtocart"),
     path('update-cart', cart.updatecart, name="updatecart"),
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
