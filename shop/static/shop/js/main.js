@@ -185,6 +185,57 @@
         
     })
 
+  
+    $(document).on('click', '.offerBtn',function (e){
+        e.stopPropagation();
+        e.preventDefault();
+            
+        button = $(this);
+        if($(button).hasClass('addedBtn')){
+            return;
+        }
+       
+
+        var product_id = $(this).closest('.product_data').find('.prod_id').val();
+        var product_qty = 1;
+        var product_price = $(this).closest('.product_data').find('.offer_price').val();
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        if (product_qty == null){
+            product_qty = 1;
+        }
+        
+        $.ajax({
+            method: "POST",
+            url: "/offer-add-to-cart",
+            data: {
+                'product_id': product_id,
+                'product_qty': product_qty,
+                'product_price': product_price,
+                csrfmiddlewaretoken: token,
+            },
+            
+            success: function (response){
+                if($(button).hasClass("sidecartOfferBtn")){
+                    if($(button).hasClass("addedBtn") == false){
+                        $(button).toggleClass('addedBtn').html('ДОДАДЕН');
+                        cartCount++;
+                        $("#cart-count").html(cartCount)
+                        $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                    }
+                    
+                }
+                else if($(button).hasClass("checkout-offerBtn")){
+                    if($(button).hasClass("addedBtn") == false){
+                        $(button).toggleClass('addedBtn').html('ДОДАДЕН');
+                    }
+                    $('.cart-data').load(location.href + " .cart-data")
+                    console.log('ADDED OFFER ITEM')
+                }
+            }
+        })
+    
+    })
+  
     $(document).on('click', '.variable-add-to-cartBtn',function (e){
         
       button = $(this)
