@@ -368,3 +368,6 @@ def export_excel(request):
     
     return redirect('/')
    
+def view_404(request, exception=None):
+    
+    return redirect('/')
