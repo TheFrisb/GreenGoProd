@@ -25,14 +25,14 @@ def placeorder(request):
         for item in neworderitems:
             if item.has_attributes == True:
                 cart_total_price += item.attributeprice * item.product_qty
-            if item.has_offer == True:
+            elif item.has_offer == True:
                 cart_total_price += item.offer_price * item.product_qty
             else:
                 cart_total_price += item.product.sale_price * item.product_qty
                 
             if(item.product.free_shipping == True):
                 countProducts += 5 + item.product_qty
-            else:
+            elif(item.product.free_shipping == False):
                 countProducts += item.product_qty
             
                 
