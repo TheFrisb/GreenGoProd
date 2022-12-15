@@ -599,7 +599,7 @@ select {
     outline:none;
   }
   .dropdown-select .dd-searchbox:focus{
-    border-color: #b8eb00;
+    border-color: #b8eb00!important;
   }
   
   .dropdown-select .list ul {
