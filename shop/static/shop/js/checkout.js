@@ -4,6 +4,9 @@ function create_custom_dropdowns() {
         if (!$(this).next().hasClass('dropdown-select')) {
             $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
+            if(window.matchMedia("(max-width: 767px)").matches){
+                $(dropdown).addClass('ismobile')
+            }
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
             dropdown.find('.current').html(selected.data('display-text') || selected.text());
@@ -30,6 +33,11 @@ $(document).on('click', '.dropdown-select', function (event) {
         $(this).find('.option').attr('tabindex', 0);
         $(this).find('.selected').focus();
         $("#txtSearchValue").focus();
+        if($(this).hasClass('ismobile')){
+            $('html, body').animate({
+                scrollTop: $(this).offset().top - 100
+            }, 800);
+        }
     } else {
         $(this).find('.option').removeAttr('tabindex');
         $(this).focus();
