@@ -108,7 +108,10 @@ def ProductView(request, slug):
 
 def CheckoutView(request):
     orderFees = CheckoutFees.objects.all()
-    cartHolder = Cart.objects.get(session = request.session['nonuser'])
+    try:
+        cartHolder = Cart.objects.get(session = request.session['nonuser'])
+    except:
+        return redirect('shop-home')
     cartFees = CartFees.objects.filter(cart=cartHolder)
     feetotal = 0
     for orderfee in orderFees:
@@ -331,9 +334,18 @@ def export_excel(request):
                 order_fees_total = ''
                 
                 for item in order_items:
-                    order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity) + '\n'
-                    order_items_total_label += str(item.label) + ' x ' + str(item.quantity) + '\n'
-                    height += 10
+                    occurence = 0
+                    for item_check in order_items:
+                        if item_check.full_product_title == item.full_product_title:
+                            occurence += 1
+                            if occurence > 1:
+                                item_check.full_product_title = ''
+                                item_check.label = ''
+
+                    if item.full_product_title!='':
+                        order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                        order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                        height += 10
 
                 for fee in order_fees:
                     order_fees_total += str(fee.title) + '\n'
