@@ -59,7 +59,7 @@ def placeorder(request):
                 supplier = item.product.supplier,
                 attribute_price = item.attributeprice,
             )
-            if(item.has_offer==True):
+            elif(item.has_offer==True):
                 OrderItem.objects.create(
                     order = neworder,
                     product = item.product,
