@@ -1,6 +1,202 @@
 {% extends "shop/base.html" %}
+{% load static %}
 {% block content %}
-<style>#footer{display:none!important;}.footer-section{display:none!important;}</style>
+<style>#footer{display:none;}.footer-section{display:none;}.dropdownsearch{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .options{
+    width:100%;  
+  }
+  @media(max-width:34em){
+    .main{
+      min-width:150px;
+      width:auto;
+    }
+  }
+  
+  select {
+      display: none !important;
+  }
+  
+  .dropdown-select {
+      background-color: #fff;
+      border-radius: 30px;
+      border: solid 1px #abaeb4;
+      cursor: pointer;
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      height: 32px;
+      line-height: 30px;
+      outline: none;
+      padding-left: 16px;
+      padding-right: 30px;
+      position: relative;
+      text-align: left !important;
+      transition: all 0.2s ease-in-out;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      white-space: nowrap;
+      width: auto;
+  
+  }
+  
+  .dropdown-select:focus {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:hover {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:active,
+  .dropdown-select.open {
+      background-color: #fff !important;
+      border-color: #abaeb4;;
+  }
+  
+  .dropdown-select:after {
+      height: 0;
+      width: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #abaeb4;
+      -webkit-transform: origin(50% 20%);
+      transform: origin(50% 20%);
+      transition: all 0.125s ease-in-out;
+      content: '';
+      display: block;
+      margin-top: -2px;
+      pointer-events: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+  }
+  
+  .dropdown-select.open:after {
+      -webkit-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+  }
+  
+  .dropdown-select.open .list {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  .dropdown-select.open .option {
+      cursor: pointer;
+  }
+  
+  .dropdown-select.wide {
+      width: 100%;
+  }
+  
+  .dropdown-select.wide .list {
+      left: 0 !important;
+      right: 0 !important;
+  }
+  
+  .dropdown-select .list {
+      box-sizing: border-box;
+      transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75);
+      -webkit-transform-origin: 50% 0;
+      transform-origin: 50% 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09);
+      background-color: #fff;
+      border-radius: 6px;
+      margin-top: 4px;
+      padding: 3px 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 999;
+      max-height: 250px;
+      overflow: auto;
+      border: 1px solid #ddd;
+  }
+  
+  .dropdown-select .list:hover .option:not(:hover) {
+      background-color: transparent !important;
+  }
+  .dropdown-select .dd-search{
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0.5rem;
+  }
+  
+  .dropdown-select .dd-searchbox{
+    width:90%;
+    padding:0.5rem;
+    border:1px solid #abaeb4;
+    border-color:#abaeb4;
+    border-radius:4px;
+    outline:none;
+  }
+  .dropdown-select .dd-searchbox:focus{
+    border-color: #b8eb00;
+  }
+  
+  .dropdown-select .list ul {
+      padding: 0;
+  }
+  
+  .dropdown-select .option {
+      cursor: default;
+      font-weight: 400;
+      line-height: 40px;
+      outline: none;
+      padding-left: 18px;
+      padding-right: 29px;
+      text-align: left;
+      transition: all 0.2s;
+      list-style: none;
+  }
+  
+  .dropdown-select .option:hover,
+  .dropdown-select .option:focus {
+      background-color: #abaeb4 !important;
+  }
+  
+  .dropdown-select .option.selected {
+      font-weight: 600;
+      color: #b8eb00;
+  }
+  
+  .dropdown-select .option.selected:focus {
+        background-color: #f6f6f6 !important;
+  }
+  
+  .dropdown-select a {
+      color: #aaa;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+  }
+  
+  .dropdown-select a:hover {
+      color: #666;
+  }
+  @media (max-width: 767px){
+    .dropdown-select{
+        text-align: center!important;
+    }
+    .dropdown-select .option{
+        text-align: center!important;
+    }
+  }</style>
 {% if cart %}
     
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
@@ -46,7 +242,51 @@
                     <input type="text" required name="address"></li>
 
                     <li><label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
-                    <input type="text" required name="city"></li>
+                    <input type="hidden" required name="city" placeholder="Одберете град" class="checkout-city">
+                    <div class="dropdownsearch">
+                        <div class="options">
+                          <select name="" id="dynamic_select">              
+                              <option value="return" selected>Одбери град</option>
+                              <option value="Скопје">Скопје</option>
+                              <option value="Битола">Битола</option>
+                              <option value="Куманово">Куманово</option>
+                              <option value="Прилеп">Прилеп</option>
+                              <option value="Тетово">Тетово</option>
+                              <option value="Штип">Штип</option>
+                              <option value="Свети Николе">Свети Николе</option>
+                              <option value="Кратово">Кратово</option>
+                              <option value="Пробиштип">Пробиштип</option>
+                              <option value="Кочани">Кочани</option>
+                              <option value="Пехчево">Пехчево</option>
+                              <option value="Делчево">Делчево</option>
+                              <option value="Виница">Виница</option>
+                              <option value="Берово">Берово</option>
+                              <option value="Македонска Каменица">Македонска Каменица</option>
+                              <option value="Велес">Велес</option>
+                              <option value="Кавадарци">Кавадарци</option>
+                              <option value="Демир Капија">Демир Капија</option>
+                              <option value="Неготино">Неготино</option>
+                              <option value="Гевгелија">Гевгелија</option>
+                              <option value="Валандово">Валандово</option>
+                              <option value="Богданци">Богданци</option>
+                              <option value="Дојран">Дојран</option>
+                              <option value="Радовиш">Радовиш</option>
+                              <option value="Струмица">Струмица</option>
+                              <option value="Струга">Струга</option>
+                              <option value="Крушево">Крушево</option>
+                              <option value="Демир Хисар">Демир Хисар</option>
+                              <option value="Охрид">Охрид</option>
+                              <option value="Ресен">Ресен</option>
+                              <option value="Македонски Брод">Македонски Брод</option>
+                              <option value="Кичево">Кичево</option>
+                              <option value="Гостивар">Гостивар</option>
+                              <option value="Дебар">Дебар</option>
+                              <option value="Маврово">Маврово</option>
+                              <option value="Крива Паланка">Крива Паланка</option>
+                        </select>
+                        </div>
+                    </div>
+                    </li>
 
                     <li><label for="number">Телефонски број <abbr title="required" class="required">*</abbr></label>
                         <input type="tel" placeholder="формат: 072-256-393"required name="number"></li>
@@ -249,3 +489,7 @@
 {% endif %}
 
 {% endblock content %}
+{% block scripts %}
+<script src="{%  static 'shop/js/checkout.js' %}"></script>
+{% endblock scripts %}
+ 
