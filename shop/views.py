@@ -165,7 +165,7 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get("q")
         object_list = Product.objects.filter(title__icontains=query, status__in=['PUBLISHED','VARIABLE'])
-        ) 
+        
         return object_list
     
 
