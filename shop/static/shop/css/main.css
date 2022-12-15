@@ -1217,6 +1217,7 @@ input[type=number] {
     font-weight: 700;
     line-height: 35px;
     padding-bottom: 20px;
+    word-break: break-word;
 }
 .product-regular-price{
     color: #7A7A7A;
