@@ -32,7 +32,7 @@ def placeorder(request):
                 
             if(item.product.free_shipping == True):
                 countProducts += 5 + item.product_qty
-            if(item.product.free_shipping != True):
+            else:
                 countProducts += item.product_qty
             
                 
