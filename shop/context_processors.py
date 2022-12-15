@@ -27,17 +27,21 @@ def extras(request):
     total = 0
     if cartItems:
         for item in cartItems:
-            if(item.product.free_shipping == True):
-                free_shipping = True
             if(item.attributeprice is not None):
                 total = total + (item.attributeprice * item.product_qty)
                 itemscount = itemscount + item.product_qty
-            if(item.offer_price is not None):
+                if(item.product.free_shipping == True):
+                    free_shipping = True
+            elif(item.offer_price is not None):
                 total = total + (item.offer_price * item.product_qty)
                 itemscount = itemscount + item.product_qty
+                if(item.product.free_shipping == True):
+                    free_shipping = True
             else:
                 total = total + (item.product.sale_price * item.product_qty)
                 itemscount = itemscount + item.product_qty
+                if(item.product.free_shipping == True):
+                    free_shipping = True
     if(itemscount >= 2):
         free_shipping = True
     return {'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping}
