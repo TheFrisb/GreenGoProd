@@ -29,6 +29,7 @@ $(document).on('click', '.dropdown-select', function (event) {
     if ($(this).hasClass('open')) {
         $(this).find('.option').attr('tabindex', 0);
         $(this).find('.selected').focus();
+        $("#txtSearchValue").focus();
     } else {
         $(this).find('.option').removeAttr('tabindex');
         $(this).focus();
