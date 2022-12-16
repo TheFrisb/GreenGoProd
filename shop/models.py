@@ -60,7 +60,7 @@ class Product(models.Model):
     )
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, verbose_name='Категорија', null=True)
     status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
-    thumbnail = ProcessedImageField(upload_to='products/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
+    thumbnail = ProcessedImageField(upload_to='products/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True)
     thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':60})
     
     title = models.CharField(max_length = 100, verbose_name='Име')
@@ -101,7 +101,7 @@ class ProductGallery(models.Model):
 
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
-    galleryimg = ProcessedImageField(upload_to='products/product-gallery', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True, verbose_name='Слика за галерија')
+    galleryimg = ProcessedImageField(upload_to='products/product-gallery/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':75}, null=True, verbose_name='Слика за галерија')
 
 
 class Color(models.Model):
@@ -183,7 +183,7 @@ class Review(models.Model):
         ('5', '5'),
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, verbose_name='Продукт')
-    image = ProcessedImageField(upload_to='review/', processors=[ResizeToFit(width=250, upscale=False)], format='WEBP', options={'quality':75}, null=True)
+    image = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=250, upscale=False)], format='WEBP', options={'quality':75}, null=True)
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
     content = models.TextField(verbose_name='Содржина') 
     rating = models.CharField(choices=rating_choices, default='5', verbose_name='Оценка', max_length=5)
