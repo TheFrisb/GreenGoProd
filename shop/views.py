@@ -349,6 +349,8 @@ def export_excel(request):
                     occurence = 0
                     quantity += item.quantity
                     if item.label in total_ordered_dict:
+                        if (item.label == ''):
+                            total_ordered_dict[item.label] = item.full_product_title
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         if (item.label == ''):
