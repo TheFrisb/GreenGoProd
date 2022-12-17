@@ -13,7 +13,7 @@ from uuid import  uuid4
 import datetime
 import xlwt
 from openpyxl import Workbook
-from openpyxl.styles import Alignment
+from openpyxl.styles import Alignment, Font
 from openpyxl.writer.excel import save_virtual_workbook
 from django.db.models.functions import Concat
 from .forms import ExportOrder
