@@ -343,15 +343,16 @@ def export_excel(request):
                     if(str(fee.title) == 'Приоритетна достава'):
                         priority = True
                     height2 +=15
-
-
+                    
                 for item in order_items:
-                    occurence = 0
-                    quantity += item.quantity
                     if item.label in total_ordered_dict:
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         total_ordered_dict[item.label] = item.quantity
+
+                for item in order_items:
+                    occurence = 0
+                    quantity += item.quantity
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
                             occurence += 1
