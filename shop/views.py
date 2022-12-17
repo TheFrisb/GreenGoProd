@@ -225,7 +225,7 @@ def shopmanager_dashboard(request):
 
 
 def shopmanager_confirmed(request):
-    orders = Order.objects.filter(status='Confirmed').order_by('-updated_at')
+    orders = Order.objects.filter(status='Confirmed').order_by('-updated_at')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Confirmed').order_by('-id')
     orderfees = OrderFeesItem.objects.filter(order__status = 'Confirmed').order_by('-id')
     title = 'ПОТВРДЕНИ НАРАЧКИ'
@@ -240,7 +240,7 @@ def shopmanager_confirmed(request):
 
 
 def shopmanager_deleted(request):
-    orders = Order.objects.filter(status='Deleted').order_by('-updated_at')
+    orders = Order.objects.filter(status='Deleted').order_by('-updated_at')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Deleted').order_by('-id')
     orderfees = OrderFeesItem.objects.filter(order__status = 'Deleted').order_by('-id')
     title = 'ИЗБРИШЕНИ НАРАЧКИ'
@@ -401,10 +401,11 @@ def export_excel(request):
             for key, value in total_ordered_dict.items():
                 row_num += 1
                 i = 0
-                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
-                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
-                cell = worksheet.cell(row=row_num, column=9).value = str(key)
-                cell = worksheet.cell(row=row_num, column = 10).value = str(value)
+                if(key!='')
+                    worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                    worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                    cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                    cell = worksheet.cell(row=row_num, column = 10).value = str(value)
                 i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
