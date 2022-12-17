@@ -57,6 +57,7 @@
             <div class="attribute-item">
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
+                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
                 <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
             </div>
             {% endfor %}
@@ -67,6 +68,7 @@
             <div class="attribute-item">
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
+                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.size.title }}">
                 <div class="attribute-inner size">{{ attribute.size.title }}</div>
             </div>
             {% endfor %}
@@ -76,6 +78,7 @@
             {% for attribute in attributes %}
             <div class="attribute-item offer">
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
+                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.offer.title }}">
                 <p class="offer-title">{{ attribute.offer.title }}</p>
                 <p class="offer-price">{{ attribute.price }} ден</p>
                 <p class="offer-text">{{ attribute.offer.incentive }}</p>
