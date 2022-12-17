@@ -401,11 +401,11 @@ def export_excel(request):
             for key, value in total_ordered_dict.items():
                 row_num += 1
                 i = 0
-                if(key!='')
-                    worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
-                    worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
-                    cell = worksheet.cell(row=row_num, column=9).value = str(key)
-                    cell = worksheet.cell(row=row_num, column = 10).value = str(value)
+                
+                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = str(value)
                 i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
