@@ -295,6 +295,7 @@ def export_excel(request):
             timezone = get_current_timezone()
             date_from = form.cleaned_data["date_from"]
             date_to = form.cleaned_data["date_to"]
+            total_ordered_dict = {}
             print(date_from, date_to)
             workbook = Workbook()
             worksheet = workbook.active
@@ -310,8 +311,10 @@ def export_excel(request):
             worksheet.column_dimensions['H'].width = 20
             worksheet.column_dimensions['I'].width = 65
             worksheet.column_dimensions['J'].width = 65
-            worksheet.column_dimensions['K'].width = 100
-            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'IME NA PRODUKT', 'LABEL', 'КОМЕНТАР']
+            worksheet.column_dimensions['K'].width = 10
+            worksheet.column_dimensions['L'].width = 10
+            worksheet.column_dimensions['M'].width = 100
+            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'IME NA PRODUKT', 'LABEL', 'KOLICINA', 'KOLICINA' 'KOMENTAR']
             for col_num in range(1, len(columns)+1):             
                 cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
 
@@ -332,9 +335,23 @@ def export_excel(request):
                 order_items_total_name = ''
                 order_items_total_label = ''
                 order_fees_total = ''
+                quantity = 0
+                priority = False
+                
+                for fee in order_fees:
+                    order_fees_total += str(fee.title) + '\n'
+                    if(str(fee.title) == 'Приоритетна достава'):
+                        priority = True
+                    height2 +=15
                 
                 for item in order_items:
                     occurence = 0
+                    quantity += item.quantity
+                    if item.label in total_ordered_dict:
+                        total_ordered_dict[item.label] += item.quantity
+                    else:
+                        total_ordered_dict[item.label] = item.quantity
+                        
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
                             occurence += 1
@@ -343,37 +360,49 @@ def export_excel(request):
                                 item_check.label = ''
 
                     if item.full_product_title!='':
-                        order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
-                        order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
-                        height += 10
+                        if priority is True:
+                            order_items_total_name += 'PRIORITETNA ' + str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                            order_items_total_label += 'PRIORITETNA ' + str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                        else:
+                            order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                            order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                        height += 15
 
-                for fee in order_fees:
-                    order_fees_total += str(fee.title) + '\n'
-                    height2 +=10
-
+                
                 if(height2 > height):
                     height = height2
 
                 worksheet.row_dimensions[row_num].height = height
                 for col_num in range(1, len(row)+1):
+                    worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                     if(col_num == 1):
                         date = row[col_num-1].astimezone(timezone)      
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
                     elif(col_num == 6):
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True, vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = order_fees_total
                     elif(col_num == 9):
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_name
                     elif(col_num == 10):
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_label
-                            
+                    elif(col_num == 11):
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
+                    elif(col_num == 12):
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = str(quantity)       
                     else:
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
                         cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
-
+                
+                row_num += 4
+                worksheet.cell(row=row_num, column=9).font = Font(bold=True)
+                cell = worksheet.cell(row=row_num, column=9).value = 'VKUPNA KOLICINA'
+                row_num += 1
+                for key, value in total_ordered_dict.items():
+                    row_num += 1
+                    i = 0
+                    worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                    worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                    cell = worksheet.cell(row=row_num, column=9).value = key
+                    cell = worksheet.cell(row=row_num, column = 10).value = value
+                    i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
             response['Content-Disposition'] = 'attachment; filename=eksport_' + str(date_from) + ' - ' + str(date_to) + '.xlsx'
