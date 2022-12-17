@@ -2,6 +2,7 @@
 
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
     const sale_price = parseInt($('.main-price').find('.product-sale-price').text());
+    const attrib_heading = $('.product-attributes').find('.attribute-title').text();
     var cartCount = parseInt($("#cart-count").text())
 
     $("div#container").on('click', 'button.alert', function() {
@@ -324,6 +325,7 @@
         e.preventDefault();
     })
     $('.product-attributes').on('click', '.attribute-item', function(){
+        attrib_title = ': ' + $(this).find('.attrib_title').val();
         if($(this).hasClass('offer')){
             offer_regular_price = regular_price * ($(this).index());
             offer_price = parseInt($(this).find('.offer-price').text())
@@ -344,6 +346,7 @@
         }
         $('.product-attributes div').removeClass('active');
         $(this).toggleClass('active');
+        $(".attribute-title").text(attrib_heading + attrib_title);
         $(".attribute-title").css("color", "#0f0f0f");
     })
 
