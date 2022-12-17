@@ -350,11 +350,11 @@ def export_excel(request):
                     quantity += item.quantity
                     if item.label in total_ordered_dict:
                         if (item.label == ''):
-                            total_ordered_dict[item.label] = item.full_product_title
+                            total_ordered_dict[item.label] = str(item.full_product_title)
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         if (item.label == ''):
-                            total_ordered_dict[item.label] = item.full_product_title
+                            total_ordered_dict[item.label] = str(item.full_product_title)
                         total_ordered_dict[item.label] = item.quantity
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
