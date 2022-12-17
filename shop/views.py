@@ -405,7 +405,7 @@ def export_excel(request):
                 worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
                 worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
-                cell = worksheet.cell(row=row_num, column = 10).value = str(value)
+                cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
