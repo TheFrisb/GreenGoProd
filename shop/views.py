@@ -388,7 +388,7 @@ def export_excel(request):
                     elif(col_num == 11):
                         cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
                     elif(col_num == 12):
-                        cell =  worksheet.cell(row=row_num, column=col_num).value = str(quantity)
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = quantity
                             
                     else:
                         cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
