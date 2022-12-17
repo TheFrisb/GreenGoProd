@@ -314,7 +314,7 @@ def export_excel(request):
             worksheet.column_dimensions['K'].width = 10
             worksheet.column_dimensions['L'].width = 10
             worksheet.column_dimensions['M'].width = 100
-            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'IME NA PRODUKT', 'LABEL', 'KOLICINA', 'KOLICINA' 'KOMENTAR']
+            columns = ['DATA NA PORACKA', 'IME I PREZIME', 'ADRESA', 'GRAD', 'TELEFON', 'FEES', 'VKUPNO', 'DOSTAVA', 'IME NA PRODUKT', 'LABEL','KOLICINA', 'KOLICINA', 'КОМЕНТАР']
             for col_num in range(1, len(columns)+1):             
                 cell =  worksheet.cell(row=row_num, column=col_num, value=columns[col_num - 1])
 
@@ -323,9 +323,9 @@ def export_excel(request):
                     When(shipping = True, then=Value('do vrata 130 den')),
                     When(shipping = False, then=Value('besplatna dostava'))
                 ),
-            ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'message')
+            ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'number', 'number', 'message')
             print(rows)
-
+            
             for row in rows:
                 row_num += 1
                 height = 10
@@ -337,13 +337,14 @@ def export_excel(request):
                 order_fees_total = ''
                 quantity = 0
                 priority = False
-                
+
                 for fee in order_fees:
                     order_fees_total += str(fee.title) + '\n'
                     if(str(fee.title) == 'Приоритетна достава'):
                         priority = True
                     height2 +=15
-                
+
+
                 for item in order_items:
                     occurence = 0
                     quantity += item.quantity
@@ -351,7 +352,6 @@ def export_excel(request):
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         total_ordered_dict[item.label] = item.quantity
-                        
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
                             occurence += 1
@@ -368,13 +368,14 @@ def export_excel(request):
                             order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
                         height += 15
 
-                
+
                 if(height2 > height):
                     height = height2
 
                 worksheet.row_dimensions[row_num].height = height
                 for col_num in range(1, len(row)+1):
                     worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
+
                     if(col_num == 1):
                         date = row[col_num-1].astimezone(timezone)      
                         cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
@@ -387,9 +388,12 @@ def export_excel(request):
                     elif(col_num == 11):
                         cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
                     elif(col_num == 12):
-                        cell =  worksheet.cell(row=row_num, column=col_num).value = str(quantity)       
+                        cell =  worksheet.cell(row=row_num, column=col_num).value = str(quantity)
+                            
                     else:
                         cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
+
+            print(total_ordered_dict)
             row_num += 4
             worksheet.cell(row=row_num, column=9).font = Font(bold=True)
             cell = worksheet.cell(row=row_num, column=9).value = 'VKUPNA KOLICINA'
@@ -404,6 +408,7 @@ def export_excel(request):
                 i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
+            
             response['Content-Disposition'] = 'attachment; filename=eksport_' + str(date_from) + ' - ' + str(date_to) + '.xlsx'
             return response
     
