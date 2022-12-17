@@ -349,13 +349,9 @@ def export_excel(request):
                     occurence = 0
                     quantity += item.quantity
                     if item.label in total_ordered_dict:
-                        if (item.label == ''):
-                            total_ordered_dict[item.label] = str(item.full_product_title)
-                        total_ordered_dict[item.label] += str(item.quantity)
+                        total_ordered_dict[item.label] += item.quantity
                     else:
-                        if (item.label == ''):
-                            total_ordered_dict[item.label] = str(item.full_product_title)
-                        total_ordered_dict[item.label] = str(item.quantity)
+                        total_ordered_dict[item.label] = item.quantity
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
                             occurence += 1
@@ -407,8 +403,8 @@ def export_excel(request):
                 i = 0
                 worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
                 worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
-                cell = worksheet.cell(row=row_num, column=9).value = key
-                cell = worksheet.cell(row=row_num, column = 10).value = value
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = str(value)
                 i += 1
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
