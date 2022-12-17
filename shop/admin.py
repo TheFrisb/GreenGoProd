@@ -33,7 +33,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'sku', 'supplier__name']
-    list_filter = ['title', 'sale_price', 'status', 'category', 'date_posted']
+    list_filter = ['category', 'status']
     exclude = ("slug",)
     list_display = ("title", "sale_price",  "date_posted")
     fieldsets = (
