@@ -16,6 +16,10 @@ class InformationInline2(admin.StackedInline):
 class GalleryInline(admin.StackedInline):
     model = ProductGallery
     
+    
+class CartItemInline(admin.StackedInline):
+    model = CartItems
+    
 
 class ProductAttributesInLine(admin.TabularInline):
     model = ProductAttribute
@@ -64,6 +68,12 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     
 class CartOfferAdmin(admin.ModelAdmin):
     autocomplete_fields = ["product"]
+    
+    
+class CartAdmin(admin.ModelAdmin):
+    search_fields = ['session', 'name', 'name', 'phone', ]
+    list_display = ('session', 'name', 'name', 'phone')
+    inlines = [CartItemInline]
 
 
 admin.site.register(Order, OrderAdmin)
@@ -75,5 +85,5 @@ admin.site.register(Offer)
 admin.site.register(Size)
 admin.site.register(Dobavuvac)
 admin.site.register(Category)
-admin.site.register(Cart)
+admin.site.register(Cart, CartAdmin)
 admin.site.register(CheckoutFees)
