@@ -69,6 +69,7 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     
 class CartOfferAdmin(admin.ModelAdmin):
     autocomplete_fields = ["product"]
+    exclude = ['is_added']
     
     
 class CartAdmin(admin.ModelAdmin):
