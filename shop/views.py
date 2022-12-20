@@ -30,12 +30,12 @@ def export_products_csv(request):
     response['Content-Disposition'] = 'attachment; filename="products.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['ID', 'Name', 'Description', 'URL', 'Image URL', 'Availability', 'Price'])
+    writer.writerow(['ID', 'Title', 'Description', 'Link', 'Image Link', 'Availability', 'Price', 'Condition'])
 
     for product in products:
         content = strip_tags(product.content).replace('&nbsp;', '')
         content = os.linesep.join([s for s in content.splitlines() if s])
-        writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', product.sale_price])
+        writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', product.sale_price, 'New'])
 
     return response
 
