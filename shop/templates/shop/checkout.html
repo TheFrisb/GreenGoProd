@@ -256,9 +256,9 @@
                         </td>
                         <td>
                             {% if free_shipping %}
-                            <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'20' }}</span> ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'130'|add:'20' }}</span> ден</p>
                             {% endif %}
                         </td>
                     </tr>
