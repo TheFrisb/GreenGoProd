@@ -2,12 +2,6 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from shop.models import Product, CartItems, Cart, CheckoutFees, CartFees, ProductAttribute
 from django.http import HttpResponse, JsonResponse
-from facebook_business.adobjects.event import Event
-from facebook_business.api import FacebookAdsApi
-import time
-
-FacebookAdsApi.init(access_token='EAAEBgQEZCiHkBAAPhGXJZBgZAYgvk4fUZAzlvkYHhY6mXG2465FwckOyJZCH7CpHG1CPgWYHtCsMl9SIycZBiBn6MlZClOowT8qWWQsDcGL8HZCAc1yKsusOCZCFo8yZARzc3bg6AuJsgEGftU1Ap5Jz1cH3mfuQKwSV1M6vn5atiVvyHb41ZAmCibW')
-account_id = '3944984375629692'
 
 def addtocart(request):
     if request.method == 'POST':
@@ -26,24 +20,6 @@ def addtocart(request):
                 else:
                     # Check Stock
                     # if product.check .quantity >= prod_qty: Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
-                    prod_qty = int(request.POST.get('product_qty'))
-                    CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
-                    event = Event(parent_id=account_id)
-                    event.event_name = 'AddToCart'
-                    event.event_time = int(time.time())
-                    event.event_source_url = 'https://www.greengoshop.mk.com/' + str(product_check.get_absolute_url())
-                    event.user_data = {
-                        'fbc': request.COOKIES.get('_fbc'),
-                        'em': request.user.email,
-                    }
-                    event.custom_data = {
-                        'value': product_check.sale_price,
-                        'currency': 'USD',
-                        'content_name': product_check.title,
-                        'content_ids': [product_check.id],
-                        'content_type': 'product',
-                    }
-                    event.create()
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
                     return JsonResponse({'status': "Product added successfuly"})
