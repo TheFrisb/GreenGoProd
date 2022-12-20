@@ -18,8 +18,24 @@ from openpyxl.writer.excel import save_virtual_workbook
 from django.db.models.functions import Concat
 from .forms import ExportOrder
 from django.utils.timezone import get_current_timezone, make_aware
-
+import csv
+from django.utils.html import strip_tags
 # Create your views here.
+
+
+def export_products_csv(request):
+    products = Product.objects.all()
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="products.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'Name', 'Description', 'URL', 'Image URL', 'Availability', 'Price'])
+
+    for product in products:
+        writer.writerow([product.id, product.title, strip_tags(product.content) , product.get_absolute_url(), product.thumbnail.url, 'in stock', product.sale_price])
+
+    return response
 
 
 
