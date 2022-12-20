@@ -131,7 +131,7 @@ $(document).ready(function () {
           
         });
         orderTotal = $('.cart-total-span').text();
-        if(isValid){
+        
             fbq('track', 'Purchase', {
                 content_ids: contentIds,
                 content_name: contentNames,
@@ -139,7 +139,7 @@ $(document).ready(function () {
                 value: orderTotal,
                 currency: 'USD'
             });
-        }
+    
     })
 });
 
