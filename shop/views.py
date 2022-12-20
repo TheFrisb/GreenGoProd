@@ -33,7 +33,7 @@ def export_products_csv(request):
     writer.writerow(['ID', 'Name', 'Description', 'URL', 'Image URL', 'Availability', 'Price'])
 
     for product in products:
-        writer.writerow([product.id, product.title, strip_tags(product.content) , product.get_absolute_url(), product.thumbnail.url, 'in stock', product.sale_price])
+        writer.writerow([product.id, product.title, strip_tags(product.content) , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', product.sale_price])
 
     return response
 
