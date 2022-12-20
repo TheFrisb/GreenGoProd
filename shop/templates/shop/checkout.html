@@ -15,7 +15,7 @@
                     <input type="hidden" class="offer_price" value="{{ item.price }}">
                     <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                     <span class="sidecart-item-content checkoutItem-content">
-                        <p class="sidecart-item-name">{{ item.product.title }}</p>
+                        <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                         <div class="checkout-offer-qty-holder">
                         <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
                         <span class="green"><span>{{ item.price }}</span> ден</span>
@@ -113,7 +113,7 @@
                         <input type="hidden" class="offer_price" value="{{ item.price }}">
                         <img src="{{ item.product.thumbnail.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
                         <span class="sidecart-item-content checkoutItem-content">
-                            <p class="sidecart-item-name">{{ item.product.title }}</p>
+                            <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                             <div class="checkout-offer-qty-holder">
                             <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
                             <span class="green"><span>{{ item.price }}</span> ден</span>
