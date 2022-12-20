@@ -151,5 +151,15 @@ $(document).ready(function() {
                     $('.stickyBtn').slideUp();
                 }    
         });
+        product_name = $('#main-product-title').text()
+        product_price = $('#main-product-price').text()
+        product_id = $('#main-product-id').val()
+        fbq('track', 'ViewContent', {
+            content_ids: [product_id],
+            content_name: product_name,
+            content_type: 'product',
+            value: product_price,
+            currency: 'USD'
+            });
      })
 
