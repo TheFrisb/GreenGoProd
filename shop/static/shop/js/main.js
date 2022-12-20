@@ -130,6 +130,8 @@
             e.preventDefault();
             var product_id = $(this).closest('.product_data').find('.prod_id').val();
             var product_qty = $(this).closest('.product_data').find('.qty-input').val();
+            var productPrice = $(this).closest('.product_data').find(".product-price-tracker").text()
+            var productName = $(this.closest('.product_data')).find('.prod_title_tracker').text()
             var token = $('input[name=csrfmiddlewaretoken]').val()
             if (product_qty == null){
                 product_qty = 1;
@@ -181,6 +183,13 @@
                         $('.sidecart-inner').load(location.href + " .sidecart-inner");
                         toggleCart();
                     }
+                    fbq('track', 'AddToCart', {
+                        content_ids: [product_id],
+                        content_name: productName,
+                        content_type: 'product',
+                        value: productPrice,
+                        currency: 'USD'
+                      });
                 }
             })
         
@@ -200,6 +209,7 @@
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
         var product_qty = 1;
         var product_price = $(this).closest('.product_data').find('.offer_price').val();
+        var productName = $(this.closest('.product_data')).find('.prod_title_tracker').text()
         var token = $('input[name=csrfmiddlewaretoken]').val()
         if (product_qty == null){
             product_qty = 1;
@@ -230,8 +240,14 @@
                         $(button).toggleClass('addedBtn').html('ДОДАДЕН');
                     }
                     $('.cart-data').load(location.href + " .cart-data")
-                    console.log('ADDED OFFER ITEM')
                 }
+                fbq('track', 'AddToCart', {
+                    content_ids: [product_id],
+                    content_name: productName,
+                    content_type: 'product',
+                    value: product_price,
+                    currency: 'USD'
+                  });
             }
         })
     
@@ -243,6 +259,7 @@
       var product_id = $(this).closest('.product_data').find('.prod_id').val();
       var product_qty = $(this).closest('.product_data').find('.qty-input').val();
       var selected_attribute = $(".product-attributes").find(".attribute-item.active");
+      var productName = $(this.closest('.product_data')).find('.prod_title_tracker').text()
       var token = $('input[name=csrfmiddlewaretoken]').val()
       var attribute_id = 0;
       var attribute_type = null;
@@ -259,6 +276,7 @@
       if($(selected_attribute).length){
         attribute_id = $(selected_attribute).find(".attrib_id").val();
         attribute_type = $(selected_attribute).find(".attrib_type").val();
+        product_price = $('.main-price').find('.product-price-tracker').text()
         $.ajax({
             method: "POST",
             url: "/variable-add-to-cart",
@@ -279,6 +297,13 @@
                     $(button).html('ДОДАДЕН')
                     toggleCart();
                 }
+                fbq('track', 'AddToCart', {
+                    content_ids: [product_id],
+                    content_name: productName,
+                    content_type: 'product',
+                    value: product_price,
+                    currency: 'USD'
+                  });
             }
         })
       }else{
@@ -330,7 +355,7 @@
             offer_regular_price = regular_price * ($(this).index());
             offer_price = parseInt($(this).find('.offer-price').text())
             $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
-            $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
+            $('.main-price').find('.product-price-tracker').text(offer_price);
         }
         else{
             offer_price = $(this).find('.attrib_price').val();
@@ -342,7 +367,7 @@
                 offer_regular_price = regular_price
                 $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
             }
-            $('.main-price').find('.product-sale-price').text(offer_price + ' ден');
+            $('.main-price').find('.product-price-tracker').text(offer_price);
         }
         $('.product-attributes div').removeClass('active');
         $(this).toggleClass('active');
