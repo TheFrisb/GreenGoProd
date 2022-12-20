@@ -30,7 +30,7 @@
 </div>
 <div class="col-2 product-page product_data">
     
-    <h3 class="product-title product-page">{{ product.title }}</h3>
+    <h3 class="product-title product-page prod_title_tracker">{{ product.title }}</h3>
     {% if reviews %}
     <div class="rating rating{{ ratingaverage}}">
         <span class="star1"></span>
@@ -43,7 +43,7 @@
     {% endif %}
     <div class="product-page-price main-price">  
         <p class="product-regular-price">{{ product.regular_price }} ден</p>
-        <p class="product-sale-price"><span>{{ product.sale_price }}</span> ден</p>
+        <p class="product-sale-price"><span class="product-price-tracker">{{ product.sale_price }}</span> ден</p>
         {% if product.free_shipping == True %}
         <p class="free-shipping">бесплатна достава</p>
         {% endif %}
@@ -184,8 +184,8 @@
             <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
-              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span>{{ item.sale_price }}</span> ден</p></span>
+              <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
             </div>          
@@ -204,8 +204,8 @@
             <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
-              <h2 class="product-feed-title slider-title">{{ item.title }}</h2>
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span>{{ item.sale_price }}</span> ден</p></span>
+              <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
             </div>
