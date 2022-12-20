@@ -2,12 +2,6 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from shop.models import Product, CartItems, Cart, CheckoutFees, CartFees, ProductAttribute
 from django.http import HttpResponse, JsonResponse
-from facebook_business.adobjects.event import Event
-from facebook_business.api import FacebookAdsApi
-import time
-
-FacebookAdsApi.init(access_token='EAAEBgQEZCiHkBAAPhGXJZBgZAYgvk4fUZAzlvkYHhY6mXG2465FwckOyJZCH7CpHG1CPgWYHtCsMl9SIycZBiBn6MlZClOowT8qWWQsDcGL8HZCAc1yKsusOCZCFo8yZARzc3bg6AuJsgEGftU1Ap5Jz1cH3mfuQKwSV1M6vn5atiVvyHb41ZAmCibW')
-account_id = '3944984375629692'
 
 
 def addtocart(request):
