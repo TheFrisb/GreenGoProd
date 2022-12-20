@@ -8,7 +8,7 @@ urlpatterns = [
     path('', views.ProductListView, name='shop-home'),
     path("search/", SearchResultsView.as_view(), name="search_results"),
     path('product-category/<str:slug>/', views.CategoryView, name='category-page'),
-    
+    path('export-csv/', views.export_products_csv),
     path('product/<str:slug>/', views.ProductView, name='product-page'),
 
     path('add-to-cart', cart.addtocart, name="addtocart" ),
