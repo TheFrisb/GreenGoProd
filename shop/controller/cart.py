@@ -29,23 +29,7 @@ def addtocart(request):
                     # if product.check .quantity >= prod_qty: Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
-                    
-                    event = Event(parent_id=account_id)
-                    event.event_name = 'AddToCart'
-                    event.event_time = int(time.time())
-                    event.event_source_url = 'https://www.greengoshop.mk.com/' + str(product_check.get_absolute_url())
-                    event.user_data = {
-                        'fbc': request.COOKIES.get('_fbc'),
-                        'em': request.user.email,
-                    }
-                    event.custom_data = {
-                        'value': product_check.sale_price,
-                        'currency': 'USD',
-                        'content_name': product_check.title,
-                        'content_ids': [product_check.id],
-                        'content_type': 'product',
-                    }
-                    event.create()
+                   
                     return JsonResponse({'status': "Product added successfuly"})
             else:
                 return JsonResponse({'status': "No such product found"})
