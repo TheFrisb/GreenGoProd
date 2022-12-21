@@ -1632,6 +1632,14 @@ select {
     .thank-you-offer h5{
         text-decoration: underline;
     }
+    .thankyou-proceed-to-home{
+        font-weight: 600;
+        padding: 10px;
+        color: white;
+        background-color: var(--red);
+        margin: 0 15vw;
+        border-radius: 30px;
+    }
     .offer-ttl{
         font-weight: 600;
         font-size: 18px;
@@ -2092,6 +2100,10 @@ select {
     }
     .header-info{
     	font-size: 10px;
+     }
+    .offer-box img{
+	width: 210px;
+	height: 210px;
      }
 }
 @media(max-width:34em){
