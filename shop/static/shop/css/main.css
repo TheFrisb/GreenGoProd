@@ -1866,6 +1866,10 @@ select {
     .thankyou-proceed-to-home{
 	margin-bottom: 11px;
     }
+    .thankyou-proceed-to-home:hover{
+	background-color: var(--black);
+	color: white;
+    }
     .thankumessage-last{
 	margin-bottom: 30px;
     }
