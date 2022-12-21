@@ -1,6 +1,7 @@
 {% extends 'shop/base.html' %}
 {% block content %}
 <div class="content-container thank-you">
+    <a href="{% url 'shop-home' %}" class="thankyou-proceed-to-home">ПРОДОЛЖИ СО КУПУВАЊЕ</a>
     <div class="thank-you-icon">
     <i class="fas fa-check-circle"></i>
     <h2 class="thank-you-heading">Ви благодариме за нарачката</h2>
@@ -141,6 +142,6 @@
     <p class="thank-you-message">{{ order.city }}</p>
     <p class="thank-you-message">{{ order.number }}</p>
     <p class="thank-you-message">(доколку сакате да ја измените вашата нарачка или сакате да промените некои од вашите податоци за достава ве молиме контактирајте не на 071/321-314)</p>
-
+    <a href="{% url 'shop-home' %}" class="thankyou-proceed-to-home">ПРОДОЛЖИ СО КУПУВАЊЕ</a>
 </div>
 {% endblock content %}
