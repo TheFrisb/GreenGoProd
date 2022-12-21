@@ -314,7 +314,8 @@ def export_excel(request):
             date_from = form.cleaned_data["date_from"]
             date_to = form.cleaned_data["date_to"]
             total_ordered_dict = {}
-            print(date_from, date_to)
+            cart_offers_dict = {}
+            thankyou_offers_dict = {}
             workbook = Workbook()
             worksheet = workbook.active
             row_num = 1
@@ -363,14 +364,29 @@ def export_excel(request):
                     height2 +=15
                     
                 for item in order_items:
+                    quantity += item.quantity
                     if item.label in total_ordered_dict:
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         total_ordered_dict[item.label] = item.quantity
+                        
+                for item in order_items:
+                    if item.is_cart_offer is True:
+                        if item.label in cart_offers_dict:
+                            cart_offers_dict[item.label] += item.quantity
+                        else:
+                            cart_offers_dict[item.label] = item.quantity
+
+                    if item.is_thankyou_offer is True:
+                        if item.label in thankyou_offers_dict:
+                            thankyou_offers_dict[item.label] += item.quantity
+                        else:
+                            thankyou_offers_dict[item.label] = item.quantity
+                            
 
                 for item in order_items:
                     occurence = 0
-                    quantity += item.quantity
+                    
                     for item_check in order_items:
                         if item_check.full_product_title == item.full_product_title:
                             occurence += 1
@@ -418,6 +434,32 @@ def export_excel(request):
             cell = worksheet.cell(row=row_num, column=9).value = 'VKUPNA KOLICINA'
             row_num += 1
             for key, value in total_ordered_dict.items():
+                row_num += 1
+                i = 0
+                
+                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = value
+                i += 1
+            
+            row_num += 2
+            worksheet.cell(row=row_num, column=9).font = Font(bold=True)
+            cell = worksheet.cell(row=row_num, column=9).value = 'PONUDI VO KOSNICKA'
+            for key, value in cart_offers_dict.items():
+                row_num += 1
+                i = 0
+                
+                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = value
+                i += 1
+
+            row_num += 2
+            worksheet.cell(row=row_num, column=9).font = Font(bold=True)
+            cell = worksheet.cell(row=row_num, column=9).value = 'THANKYOU PONUDI'
+            for key, value in thankyou_offers_dict.items():
                 row_num += 1
                 i = 0
                 
