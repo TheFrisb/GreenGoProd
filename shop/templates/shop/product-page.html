@@ -181,7 +181,7 @@
         {% for item in slider1 %}
           <li class="slide product_data">
             <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
+            <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
@@ -201,7 +201,7 @@
         {% for item in slider2 %}
           <li class="slide product_data">
             <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link" aria-label="Линк до продукт">
+            <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
