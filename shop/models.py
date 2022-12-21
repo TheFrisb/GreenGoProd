@@ -312,6 +312,8 @@ class OrderItem(models.Model):
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, null=True)
     attribute_name = models.CharField(max_length=150, null= True)
     attribute_price = models.IntegerField(null = True)
+    is_cart_offer = models.BooleanField(default = False)
+    is_thankyou_offer = models.BooleanField(default = False)
     
     @property
     def get_product_total(self):
