@@ -1870,6 +1870,10 @@ select {
 	background-color: var(--black);
 	color: white;
     }
+    .offer-button:hover{
+	background-color: var(--black);
+	color: white;
+    }	
     .thankumessage-last{
 	margin-bottom: 30px;
     }
