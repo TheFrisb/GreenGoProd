@@ -1863,6 +1863,12 @@ select {
         color: white;
         border: 1px solid var(--black);
     }
+    .thankyou-proceed-to-home{
+	margin-bottom: 11px;
+    }
+    .thankumessage-last{
+	margin-bottom: 30px;
+    }
 	
 }
 
