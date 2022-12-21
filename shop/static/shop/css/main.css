@@ -1853,7 +1853,7 @@ select {
     .offerBtn:hover{
         background-color: var(--black);
         color: white;
-        border:0;
+        border: 1px solid var(--black);
     }
 	
 }
