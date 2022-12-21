@@ -70,6 +70,7 @@ def placeorder(request):
                     quantity = item.product_qty,
                     label = item.product.sku,
                     supplier = item.product.supplier,
+                    is_cart_offer = True,
                 )
             else:
                 OrderItem.objects.create(
@@ -117,6 +118,7 @@ def addtoorder(request):
                     label = orderItem.label,
                     supplier = orderItem.product.supplier,
                     attribute_name = orderItem.attribute_name,
+                    is_thankyou_offer = True,
                 )
                 if(order.shipping == True):
                     order.shipping = False
@@ -135,6 +137,7 @@ def addtoorder(request):
                     quantity = 1,
                     label = orderItem.product.sku,
                     supplier = orderItem.product.supplier,
+                    is_thankyou_offer = True,
                 )
                 if(order.shipping == True):
                     order.shipping = False
