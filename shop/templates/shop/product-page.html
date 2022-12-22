@@ -91,6 +91,7 @@
     {% endif %}
         {% csrf_token %}
         <input type="hidden" value="{{ product.id }}" class="prod_id" id="main-product-id">
+        <p class="stock-notice">Уштe <span class="stock-number">{{ product.fake_quantity }} парчиња</span> на залиха</p>
         <div class="quantity">
             <button class="decrement-btn">-</button>
             <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
