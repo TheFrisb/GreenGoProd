@@ -76,7 +76,18 @@ def CategoryView(request, slug):
 
 
 def ProductView(request, slug):
-
+    now = datetime.datetime.now()
+    current_day = now.weekday()
+    mapped_delivery_days = {
+        0: ['Среда', 'Петок'],
+        1: ['Четврток', 'Сабота'],
+        2: ['Петок', 'Понеделник'],
+        3: ['Сабота', 'Вторник'],
+        4: ['Понеделник', 'Среда'],
+        5: ['Вторник', 'Четврток'],
+        6: ['Вторник', 'Четврток'],
+    }
+    delivery_days = mapped_delivery_days[current_day]
     try:
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
@@ -101,6 +112,7 @@ def ProductView(request, slug):
                     'title': title,
                     'percentage': percentage,
                     'money_saved': money_saved,
+                    'delivery_days': delivery_days,
                 }
             else:
                 context = {
@@ -112,6 +124,7 @@ def ProductView(request, slug):
                     'title': title,
                     'percentage': percentage,
                     'money_saved': money_saved,
+                    'delivery_days': delivery_days,
                 }
 
 
