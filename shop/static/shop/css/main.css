@@ -673,6 +673,7 @@ select {
 }
 .sidecartCheckout{
     margin-bottom: 0!important;
+    font-size: 14.5px;
 }
 .sidecart-item.notice{
     border:0;
@@ -1203,7 +1204,15 @@ select {
     margin-bottom: 0;
     min-width: 15%;
 }
+.stock-notice{
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
 
+}
+.stock-number{
+    color: var(--red)
+}
 
 .remove-item{
     color: red;
@@ -1547,6 +1556,7 @@ select {
     margin-bottom: 10px;
     background-color: white;
     cursor: pointer;
+    font-size: 14.5px;
 
 }
 .load-spinner{
@@ -2157,7 +2167,7 @@ select {
     }
     .product-savings{
         padding: 5px 20px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
     }
     
 }
