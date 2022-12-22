@@ -81,23 +81,18 @@ def ProductView(request, slug):
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.get(slug=slug)
-        reviews = Review.objects.filter(product__slug=slug)
+        if product.review_average != 0:
+            reviews = Review.objects.filter(product__slug=slug)
         title = product.title
         percentage = 100 - int(product.sale_price / product.regular_price * 100)
         money_saved = product.regular_price - product.sale_price
         if(product.status != 'PRIVATE'):
-            if(reviews):
-                reviewsaverage = 0
-                count = 0
-                for i in reviews:
-                    reviewsaverage += int(i.rating)
-                    count += 1
-                reviewsaverage = reviewsaverage // count
+            if(product.review_average != 0):
+                count = reviews.count()
 
                 context = {
                     'product': product,
                     'reviews': reviews,
-                    'ratingaverage': reviewsaverage,
                     'reviewcount': count,
                     'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
                     'slider2': Product.objects.all()[:8],
@@ -106,7 +101,6 @@ def ProductView(request, slug):
                     'title': title,
                     'percentage': percentage,
                     'money_saved': money_saved,
-
                 }
             else:
                 context = {
