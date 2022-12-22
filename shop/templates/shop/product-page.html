@@ -32,7 +32,7 @@
     
     <h3 class="product-title product-page prod_title_tracker" id="main-product-title">{{ product.title }}</h3>
     {% if reviews %}
-    <div class="rating rating{{ ratingaverage}}">
+    <div class="rating rating{{ product.review_average}}">
         <span class="star1"></span>
         <span class="star2"></span>
         <span class="star3"></span>
@@ -188,6 +188,15 @@
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+              {% if item.review_average > 0 %}
+                <div class="rating rating{{ item.review_average}} list-ratings">
+                    <span class="star1"></span>
+                    <span class="star2"></span>
+                    <span class="star3"></span>
+                    <span class="star4"></span>
+                    <span class="star5"></span>
+                </div>
+                {% endif %}
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
@@ -208,6 +217,15 @@
             <div class="last-stocks-sub-container">
               <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+              {% if item.review_average > 0 %}
+                <div class="rating rating{{ item.review_average}} list-ratings">
+                    <span class="star1"></span>
+                    <span class="star2"></span>
+                    <span class="star3"></span>
+                    <span class="star4"></span>
+                    <span class="star5"></span>
+                </div>
+                {% endif %}
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
               <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
