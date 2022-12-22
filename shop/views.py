@@ -82,8 +82,9 @@ def ProductView(request, slug):
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.get(slug=slug)
         reviews = Review.objects.filter(product__slug=slug)
-
         title = product.title
+        percentage = 100 - int(product.sale_price / product.regular_price * 100)
+        money_saved = product.regular_price - product.sale_price
         if(product.status != 'PRIVATE'):
             if(reviews):
                 reviewsaverage = 0
@@ -103,6 +104,8 @@ def ProductView(request, slug):
                     'gallery': gallery,
                     'attributes' : attributes,
                     'title': title,
+                    'percentage': percentage,
+                    'money_saved': money_saved,
 
                 }
             else:
@@ -113,6 +116,8 @@ def ProductView(request, slug):
                     'attributes' : attributes,
                     'gallery': gallery,
                     'title': title,
+                    'percentage': percentage,
+                    'money_saved': money_saved,
                 }
 
 
