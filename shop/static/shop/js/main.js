@@ -128,6 +128,8 @@
             button = $(this);
             e.stopPropagation();
             e.preventDefault();
+            $(this).find('.load-spinner').css('display', 'inline-block');
+            $(this).find('.btn-text').css('display', 'none');
             var product_id = $(this).closest('.product_data').find('.prod_id').val();
             var product_qty = $(this).closest('.product_data').find('.qty-input').val();
             var productPrice = $(this).closest('.product_data').find(".product-price-tracker").text()
@@ -174,14 +176,18 @@
                         window.location.href = "https://greengoshop.mk/checkout";
                     }
                     else {
-                        if($(button).hasClass("mainaddedBtn") == false){
-                            $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
-                            
-                        }
                         cartCount = cartCount + parseInt(product_qty);
                         $("#cart-count").html(cartCount)
                         $('.sidecart-inner').load(location.href + " .sidecart-inner");
-                        toggleCart();
+                        if($(button).hasClass("mainaddedBtn") == false){
+                            setTimeout(() => {
+                                $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
+                                toggleCart();
+                              }, 250)
+                            }
+                        else{
+                            toggleCart()
+                        }
                     }
                     fbq('track', 'AddToCart', {
                         content_ids: [product_id],
@@ -277,6 +283,8 @@
         attribute_id = $(selected_attribute).find(".attrib_id").val();
         attribute_type = $(selected_attribute).find(".attrib_type").val();
         product_price = $('.main-price').find('.product-price-tracker').text()
+        $(this).find('.load-spinner').css('display', 'inline-block');
+        $(this).find('.btn-text').css('display', 'none');
         $.ajax({
             method: "POST",
             url: "/variable-add-to-cart",
@@ -294,8 +302,15 @@
                     cartCount = cartCount + parseInt(product_qty);
                     $("#cart-count").html(cartCount)
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
-                    $(button).html('ДОДАДЕН')
-                    toggleCart();
+                    if($(button).hasClass("mainaddedBtn") == false){
+                        setTimeout(() => {
+                            $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
+                            toggleCart();
+                            }, 250)
+                        }
+                    else{
+                        toggleCart()
+                    }
                 }
                 fbq('track', 'AddToCart', {
                     content_ids: [product_id],
