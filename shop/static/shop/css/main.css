@@ -1454,6 +1454,20 @@ select {
     font-size: 14px;
     font-weight: 600;
 }
+.delivery-calculator{
+    background: var(--green);
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    font-weight: 500;
+
+}
+.delivery-day{
+    font-weight: 600;
+    animation: nudge 4s linear infinite;
+    display: inline-block;
+}
 .product-page-price{
     padding-bottom: 20px;
 }
@@ -2174,6 +2188,9 @@ select {
     .product-savings{
         padding: 5px 20px;
 	margin-bottom: 5px;
+    }
+    .delivery-calculator{
+        padding: 5px;
     }
     
 }
