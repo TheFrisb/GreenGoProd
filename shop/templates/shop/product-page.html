@@ -44,6 +44,8 @@
     <div class="product-page-price main-price">  
         <p class="product-regular-price">{{ product.regular_price }} ден</p>
         <p class="product-sale-price"><span class="product-price-tracker" id="main-product-price">{{ product.sale_price }}</span> ден</p>
+        <br class="mobile">
+        <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span class="percentage">-{{ percentage }}%</span>)</p></div>
         {% if product.free_shipping == True %}
         <p class="free-shipping">бесплатна достава</p>
         {% endif %}
