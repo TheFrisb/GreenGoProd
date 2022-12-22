@@ -1539,6 +1539,31 @@ select {
     cursor: pointer;
 
 }
+.load-spinner{
+	display: none;
+	width: 20px;
+	height: 20px;
+	border: 5px solid var(--red);
+	border-radius: 100%;
+    
+}
+.open-spinner{
+	border-top: 5px solid transparent;
+	animation: load-animate infinite linear 1s;
+    
+}
+@keyframes load-animate{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(180deg);
+        opacity: .35
+    }
+    100%{
+        transform: rotate(360deg)
+    }
+}
 .addedBtn{
     background-color: var(--black)!important;
     border: 0;
@@ -1876,6 +1901,25 @@ select {
     }	
     .thankumessage-last{
 	margin-bottom: 30px;
+    }
+    .add-to-cartBtn, .variable-add-to-cartBtn, .offerBtn, .fee-add, #place_order, .proceed-to-checkout, .offer-button, .thankyou-proceed-to-home, .attribute-item{
+        cursor: pointer;
+        transition: all .2s ease-in-out; 
+    }
+    .add-to-cartBtn:hover, .variable-add-to-cartBtn:hover, .offerBtn:hover, .fee-add:hover, #place_order:hover, .proceed-to-checkout:hover, .offer-button:hover, .thankyou-proceed-to-home:hover, .attribute-item:hover{
+        transform: scale(1.05); 
+        font-weight: 600;
+    }
+    .fee-add:hover, .checkout-offerBtn:hover, #place_order:hover, .offer-button:hover, .thankyou-proceed-to-home:hover{
+        background: var(--black)!important;
+    }
+    .fee-title{
+        cursor: pointer;
+        transition: all .2s ease-in-out; 
+    }
+    .fee-title:hover{
+        transform: scale(1.02); 
+        color: var(--green)
     }
 	
 }
