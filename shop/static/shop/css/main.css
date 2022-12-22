@@ -1560,6 +1560,86 @@ select {
 .button-link{
     width: 100%;
 }
+@keyframes button1 {
+    
+    0% {
+      transform: scale(1.01);
+    }
+    
+    2% {
+      transform:scale(1.02);
+    }
+    
+    4% {
+      transform: scale(1.05);
+    }
+    5%{
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.01);
+      }
+      
+      32% {
+        transform:scale(1.02);
+      }
+      
+      34% {
+        transform: scale(1.05);
+      }
+      35%{
+          transform: scale(1);
+      }
+
+    70% {
+        transform: scale(1.01);
+      }
+      
+      72% {
+        transform:scale(1.02);
+      }
+      
+      74% {
+        transform: scale(1.05);
+      }
+      75%{
+          transform: scale(1);
+      }
+    
+}
+@keyframes button2 {
+    
+    5% {
+      transform: scale(1.01);
+    }
+    
+    7% {
+      transform:scale(1.02);
+    }
+    
+    9% {
+      transform: scale(1.05);
+    }
+    10%{
+        transform: scale(1);
+    }
+    65% {
+        transform: scale(1.01);
+      }
+      
+      67% {
+        transform:scale(1.02);
+      }
+      
+      69% {
+        transform: scale(1.05);
+      }
+      70%{
+          transform: scale(1);
+      }
+    
+}
 .add-to-cartBtn, .variable-add-to-cartBtn{
     width: 100%;
     padding: 0px 16px;
@@ -1572,7 +1652,7 @@ select {
     background-color: white;
     cursor: pointer;
     font-size: 14.5px;
-
+    animation: button1 11s linear infinite;
 }
 .load-spinner{
 	display: none;
@@ -1615,6 +1695,7 @@ select {
     font-weight: 500;
     margin-bottom: 10px;
     cursor: pointer;
+    animation: button2 11s linear infinite;
 }
 .proceed-to-checkout:hover{
     background-color: var(--black);
