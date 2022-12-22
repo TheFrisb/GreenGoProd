@@ -75,6 +75,7 @@ class Product(models.Model):
     quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
     fake_quantity = models.IntegerField(default=randint(2, 20))
+    review_average = models.IntegerField(default=0)
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
@@ -84,6 +85,14 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = self.title_slug
         self.fake_quantity = randint(2, 20)
+        reviews = Review.objects.filter(product=self)
+        total_rating = 0
+        for review in reviews:
+            total_rating += int(review.rating)
+        if reviews.count() > 0:
+            self.review_average = total_rating // reviews.count()
+        else:
+            self.review_average = 0
         super(Product, self).save(*args, **kwargs)
         self.thumbnail2 = self.thumbnail
         
@@ -185,7 +194,7 @@ class Review(models.Model):
         ('5', '5'),
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, verbose_name='Продукт')
-    image = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=250, upscale=False)], format='WEBP', options={'quality':75}, null=True)
+    image = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=250, upscale=False)], format='WEBP', options={'quality':75}, null=True, blank=True)
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
     content = models.TextField(verbose_name='Содржина') 
     rating = models.CharField(choices=rating_choices, default='5', verbose_name='Оценка', max_length=5)
