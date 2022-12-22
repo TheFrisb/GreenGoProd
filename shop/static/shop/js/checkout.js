@@ -12,7 +12,7 @@ function create_custom_dropdowns() {
             dropdown.find('.current').html(selected.data('display-text') || selected.text());
             options.each(function (j, o) {
                 var display = $(o).data('display-text') || '';
-                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '<span style="display:none">' + $(o).attr("fake-name") + '</span></li>');
             });
         }
     });
@@ -24,6 +24,7 @@ function create_custom_dropdowns() {
 
 // Open/close
 $(document).on('click', '.dropdown-select', function (event) {
+    $(this).removeClass('red')
     if($(event.target).hasClass('dd-searchbox')){
         return;
     }
@@ -65,10 +66,9 @@ function filter(){
 // Option click
 $(document).on('click', '.dropdown-select .option', function (event) {
     input = $(".checkout-city");
-    console.log(input)
     $(this).closest('.list').find('.selected').removeClass('selected');
     $(this).addClass('selected');
-    var text = $(this).data('display-text') || $(this).text();
+    var text = $(this).data('value');
     $(this).closest('.dropdown-select').find('.current').text(text);
     $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
     $(input).val(text);
@@ -116,30 +116,42 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 $(document).ready(function () {
     create_custom_dropdowns();
     $(document).on('click', '#place_order', function (e){
-        var contentIds = [];
-        var contentNames = [];
-        var orderTotal = 0;
-    
-        // Loop through the items in the cart and update the content IDs, names, and order total
-        $('#order_review tbody tr').each(function() {
+        var city = $(".checkout-city").val();
+        if(city === 'Undefined' || city === 'Одбери град'){
+            e.preventDefault();
+            if($(".dropdown-select").hasClass('ismobile')){
+                $(".dropdown-select").addClass('red')
+                $('html, body').animate({
+                    scrollTop: $(".dropdown-select").offset().top - 100
+                }, 800);
+            }
+            return;
+        }
+        else{
+            var contentIds = [];
+            var contentNames = [];
+            var orderTotal = 0;
 
-          var productId = $(this).find('.prod_id').val();
-          var productName = $(this).find('.item-name').text();
-          console.log(productId)
-          contentIds.push(productId);
-          contentNames.push(productName);
-          
-        });
-        orderTotal = $('.cart-total-span').text();
-        
-            fbq('track', 'Purchase', {
-                content_ids: contentIds,
-                content_name: contentNames,
-                content_type: 'product',
-                value: orderTotal,
-                currency: 'USD'
+            // Loop through the items in the cart and update the content IDs, names, and order total
+            $('#order_review tbody tr').each(function() {
+
+              var productId = $(this).find('.prod_id').val();
+              var productName = $(this).find('.item-name').text();
+              console.log(productId)
+              contentIds.push(productId);
+              contentNames.push(productName);
+
             });
-    
+            orderTotal = $('.cart-total-span').text();
+
+                fbq('track', 'Purchase', {
+                    content_ids: contentIds,
+                    content_name: contentNames,
+                    content_type: 'product',
+                    value: orderTotal,
+                    currency: 'USD'
+                });
+        }
     })
 });
 
