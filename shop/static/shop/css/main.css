@@ -418,6 +418,7 @@ input[type=number] {
     border: 1px solid var(--red);
 
 }
+
 .checkout-offers{
     margin-top: 20px;
 }
@@ -969,7 +970,15 @@ select {
   
 /*endslider */
 
-
+.product-savings{
+    padding: 5px 10px;
+    background: var(--black);
+    border-radius: 30px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
 
 
 
@@ -2146,7 +2155,9 @@ select {
     .content-container.checkout{
         padding-bottom: 30px;
     }
-    
+    .product-savings{
+        padding: 5px 20px;
+    }
     
 }
 
