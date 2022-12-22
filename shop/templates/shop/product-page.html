@@ -95,10 +95,10 @@
             <button class="increment-btn">+</button>
         </div>
         {% if attributes %}
-        <button class="variable-add-to-cartBtn">ВО КОШНИЧКА</button>
+        <button class="variable-add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
         <button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
         {% else %}
-        <button class="add-to-cartBtn">ВО КОШНИЧКА</button>
+        <button class="add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
         <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
         {% endif %}
         
@@ -187,7 +187,7 @@
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
-              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
+              <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
             </div>          
           </li>
         {% endfor %}  
@@ -207,7 +207,7 @@
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
               </a>
-              <button class="add-to-cartBtn sliderBtn">ВО КОШНИЧКА</button>
+              <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
             </div>
             
           </li>
