@@ -461,7 +461,8 @@ input[type=number] {
     background-color: var(--red);
     border-radius: 5px;
     color: white;
-   display:block;
+    display:block;
+    animation: nudge 4s linear infinite;
 }
 .checkout-offerBtn{
     padding: 10px!important;
