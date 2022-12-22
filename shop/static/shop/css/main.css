@@ -1856,7 +1856,10 @@ select {
     content: "\2606";
     color: orange;
 }
-
+.rating3 span:nth-child(5)::after{
+    content: "\2606";
+    color: orange;
+}
 .rating2 span:nth-child(-n+2)::after{
     content : "\2605";
     color: orange;
@@ -1882,7 +1885,10 @@ select {
 .rating span{
     margin-left: -10px;
 }
-
+.list-ratings{
+    margin-bottom: 4px;
+    margin-top: -9px;    
+}
 
 @media(min-width: 767px){
     .mobile{
