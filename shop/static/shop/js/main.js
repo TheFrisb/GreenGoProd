@@ -2,6 +2,8 @@
 
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
     const sale_price = parseInt($('.main-price').find('.product-sale-price').text());
+    const money_saved = $('.main-price').find('.money_saved').text()
+    const percentage = $('.main-price').find('.percentage').text()
     const attrib_heading = $('.product-attributes').find('.attribute-title').text();
     var cartCount = parseInt($("#cart-count").text())
 
@@ -371,16 +373,28 @@
             offer_price = parseInt($(this).find('.offer-price').text())
             $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
             $('.main-price').find('.product-price-tracker').text(offer_price);
+            if($(this).index()!=1){
+                $('.main-price').find('.money_saved').text(parseInt(offer_regular_price - offer_price))
+                $('.main-price').find('.percentage').text('-' + parseInt(100 - (offer_price / offer_regular_price * 100)) + '%')
+            }
+            else{
+                $('.main-price').find('.money_saved').text(money_saved)
+                $('.main-price').find('.percentage').text(percentage)
+            }
         }
         else{
             offer_price = $(this).find('.attrib_price').val();
             if(sale_price != offer_price){
             offer_regular_price = regular_price * ($(this).index());
             $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
+            $('.main-price').find('.money_saved').text(parseInt(offer_regular_price - offer_price))
+            $('.main-price').find('.percentage').text('-' + parseInt(100 - (offer_price / offer_regular_price * 100)) + '%')
             }
             else{
                 offer_regular_price = regular_price
                 $('.main-price').find('.product-regular-price').text(offer_regular_price + ' ден');
+                $('.main-price').find('.money_saved').text(money_saved)
+                $('.main-price').find('.percentage').text(percentage)
             }
             $('.main-price').find('.product-price-tracker').text(offer_price);
         }
