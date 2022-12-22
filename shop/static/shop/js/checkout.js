@@ -119,12 +119,10 @@ $(document).ready(function () {
         var city = $(".checkout-city").val();
         if(city === 'Undefined' || city === 'Одбери град'){
             e.preventDefault();
-            if($(".dropdown-select").hasClass('ismobile')){
-                $(".dropdown-select").addClass('red')
+            $(".dropdown-select").addClass('red')
                 $('html, body').animate({
                     scrollTop: $(".dropdown-select").offset().top - 100
                 }, 800);
-            }
             return;
         }
         else{
