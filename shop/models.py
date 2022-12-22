@@ -12,6 +12,7 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from uuid import uuid4
 from datetime import datetime
+from random import randint
 
 # Create your models here.
 
@@ -73,6 +74,7 @@ class Product(models.Model):
     slug =  models.SlugField(unique=True, max_length=250, blank = True)
     quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
+    fake_quantity = models.IntegerField(default=randint(2, 20))
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
@@ -81,7 +83,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = self.title_slug
-        
+        self.fake_quantity = randint(2, 20)
         super(Product, self).save(*args, **kwargs)
         self.thumbnail2 = self.thumbnail
         
