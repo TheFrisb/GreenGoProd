@@ -1,7 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<style>#footer,.footer-section{display:none}</style>
+<style>#footer,.footer-section{display:none}.red{border-color:red}</style>
 {% if cart %}
     
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
@@ -51,43 +51,59 @@
                     <div class="dropdownsearch">
                         <div class="options">
                           <select name="" id="dynamic_select">              
-                              <option value="return" selected>Одбери град</option>
-                              <option value="Скопје">Скопје</option>
-                              <option value="Битола">Битола</option>
-                              <option value="Куманово">Куманово</option>
-                              <option value="Прилеп">Прилеп</option>
-                              <option value="Тетово">Тетово</option>
-                              <option value="Штип">Штип</option>
-                              <option value="Свети Николе">Свети Николе</option>
-                              <option value="Кратово">Кратово</option>
-                              <option value="Пробиштип">Пробиштип</option>
-                              <option value="Кочани">Кочани</option>
-                              <option value="Пехчево">Пехчево</option>
-                              <option value="Делчево">Делчево</option>
-                              <option value="Виница">Виница</option>
-                              <option value="Берово">Берово</option>
-                              <option value="Македонска Каменица">Македонска Каменица</option>
-                              <option value="Велес">Велес</option>
-                              <option value="Кавадарци">Кавадарци</option>
-                              <option value="Демир Капија">Демир Капија</option>
-                              <option value="Неготино">Неготино</option>
-                              <option value="Гевгелија">Гевгелија</option>
-                              <option value="Валандово">Валандово</option>
-                              <option value="Богданци">Богданци</option>
-                              <option value="Дојран">Дојран</option>
-                              <option value="Радовиш">Радовиш</option>
-                              <option value="Струмица">Струмица</option>
-                              <option value="Струга">Струга</option>
-                              <option value="Крушево">Крушево</option>
-                              <option value="Демир Хисар">Демир Хисар</option>
-                              <option value="Охрид">Охрид</option>
-                              <option value="Ресен">Ресен</option>
-                              <option value="Македонски Брод">Македонски Брод</option>
-                              <option value="Кичево">Кичево</option>
-                              <option value="Гостивар">Гостивар</option>
-                              <option value="Дебар">Дебар</option>
-                              <option value="Маврово">Маврово</option>
-                              <option value="Крива Паланка">Крива Паланка</option>
+                              <option value="Одбери град" fake-name="Одбери град">Одбери град</option>
+                              <option value="Аеродром" fake-name="Aerodrom">Аеродром</option>
+                              <option value="Арачиново" fake-name="Aracinovo">Арачиново</option>
+                              <option value="Берово" fake-name="Berovo">Берово</option>
+                              <option value="Битола" fake-name="Bitola">Битола</option>
+                              <option value="Богданци" fake-name="Bogdanci">Богданци</option>
+                              <option value="Бутел" fake-name="Butel">Бутел</option>
+                              <option value="Валандово" fake-name="Valandovo">Валандово</option>
+                              <option value="Велес" fake-name="Veles">Велес</option>
+                              <option value="Виница" fake-name="Vinica">Виница</option>
+                              <option value="Гази Баба" fake-name="Gazi Baba">Гази Баба</option>
+                              <option value="Гевгелија" fake-name="Gevgelija">Гевгелија</option>
+                              <option value="Гостивар" fake-name="Gostivar">Гостивар</option>
+                              <option value="Дебар" fake-name="Debar">Дебар</option>
+                              <option value="Делчево" fake-name="Delcevo">Делчево</option>
+                              <option value="Демир Капија" fake-name="Demir Kapija">Демир Капија</option>
+                              <option value="Демир Хисар" fake-name="Demir Hisar">Демир Хисар</option>
+                              <option value="Ѓорче Петров" fake-name="Gjorce Petrov">Ѓорче Петров</option>
+                              <option value="Зелениково" fake-name="Zelenikovo">Зелениково</option>
+                              <option value="Илинден" fake-name="Ilinden">Илинден</option>
+                              <option value="Кавадарци" fake-name="Kavadarci">Кавадарци</option>
+                              <option value="Карпош" fake-name="Karpos">Карпош</option>
+                              <option value="Кисела Вода" fake-name="Kisela Voda">Кисела Вода</option>
+                              <option value="Кичево" fake-name="Kichevo">Кичево</option>
+                              <option value="Кочани" fake-name="Kocani">Кочани</option>
+                              <option value="Кратово" fake-name="Kratovo">Кратово</option>
+                              <option value="Крива Паланка" fake-name="Kriva Palanka">Крива Паланка</option>
+                              <option value="Крушево" fake-name="Krusevo">Крушево</option>
+                              <option value="Куманово" fake-name="Kumanovo">Куманово</option>
+                              <option value="Маврово" fake-name="Mavrovo">Маврово</option>
+                              <option value="Македонска Каменица" fake-name="Makedonska Kamenica">Македонска Каменица</option>
+                              <option value="Македонски Брод" fake-name="Makedonski Brod">Македонски Брод</option>
+                              <option value="Неготино" fake-name="Negotino">Неготино</option>
+                              <option value="Охрид" fake-name="Ohrid">Охрид</option>
+                              <option value="Петровец" fake-name="Petrovec">Петровец</option>
+                              <option value="Пехчево" fake-name="Pehcevo">Пехчево</option>
+                              <option value="Прилеп" fake-name="Prilep">Прилеп</option>
+                              <option value="Пробиштип" fake-name="Probistip">Пробиштип</option>
+                              <option value="Радовиш" fake-name="Radovis">Радовиш</option>
+                              <option value="Ресен" fake-name="Resen">Ресен</option>
+                              <option value="Сарај" fake-name="Saraj">Сарај</option>
+                              <option value="Свети Николе" fake-name="Sveti Nikole">Свети Николе</option>
+                              <option value="Скопје" fake-name="Skopje">Скопје</option>
+                              <option value="Сопиште" fake-name="Sopiste">Сопиште</option>
+                              <option value="Струга" fake-name="Struga">Струга</option>
+                              <option value="Струмица" fake-name="Strumica">Струмица</option>
+                              <option value="Студеничани" fake-name="Studenicani">Студеничани</option>
+                              <option value="Тетово" fake-name="Tetovo">Тетово</option>
+                              <option value="Центар" fake-name="Centar">Центар</option>
+                              <option value="Чаир" fake-name="Cair">Чаир</option>
+                              <option value="Чучер-Сандево" fake-name="Cucer Sandevo">Чучер-Сандево</option>
+                              <option value="Штип" fake-name="Stip">Штип</option>
+                              <option value="Шуто Оризари" fake-name="Suto Orizari">Шуто Оризари</option>
                         </select>
                         </div>
                     </div>
