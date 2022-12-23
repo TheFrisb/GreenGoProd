@@ -2008,6 +2008,10 @@ select {
 }
 
 @media(min-width: 767px){
+    .slider-holder{
+        position: sticky;
+        top: 0px;
+    }
     .mobile{
         display: none!important;
     }
