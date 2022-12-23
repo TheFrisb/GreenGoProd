@@ -855,7 +855,28 @@ select {
     color: var(--green);
 
 }
+.badges-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eceeef;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.badge-item{
+    flex-basis: 30%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
 
+.badge-text{
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+}
 .toggle-content ul {
     padding: 0px 15px;
 }
@@ -2274,7 +2295,9 @@ select {
     .delivery-calculator{
         padding: 5px;
     }
-    
+    .badge-text{
+        min-height: 30px;
+    }
 }
 
 @media (max-width: 320px){
