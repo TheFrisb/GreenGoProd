@@ -7,6 +7,8 @@ $(window).on("load", function () {
         speed: 100,
         
     });
+    $('.slider-holder').show();
+    $("#overlay-loader").hide();
     $("#slider2").slick({
         slidesToShow: 4,
         slidesToScroll: 1,
