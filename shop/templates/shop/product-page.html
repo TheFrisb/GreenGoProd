@@ -185,7 +185,7 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
-              <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img data-lazy="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               {% if item.review_average > 0 %}
                 <div class="rating rating{{ item.review_average}} list-ratings">
@@ -212,7 +212,7 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
-              <img src="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img data-lazy="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               {% if item.review_average > 0 %}
                 <div class="rating rating{{ item.review_average}} list-ratings">
