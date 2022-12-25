@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(window).on("load", function () {
     $(".slider-holder").slick({
         infinite: true,
         arrows: true,
@@ -15,12 +15,12 @@ $(document).ready(function() {
         lazyLoad: 'ondemand',
         responsive: [
             {
-              breakpoint: 1024,
-              settings: {
+            breakpoint: 1024,
+            settings: {
                 slidesToShow: 2,
                 slidesToScroll: 1,
                 infinite: true,
-              }
+            }
             }]
     });
     $("#slider3").slick({
@@ -31,14 +31,16 @@ $(document).ready(function() {
         lazyLoad: 'ondemand',
         responsive: [
             {
-              breakpoint: 1024,
-              settings: {
+            breakpoint: 1024,
+            settings: {
                 slidesToShow: 2,
                 slidesToScroll: 1,
                 infinite: true,
-              }
+            }
             }]
     });
+});
+$(document).ready(function() {
         var elementPosition = $('.proceed-to-checkout').offset();
         $(window).scroll(function(){
                 if($(window).scrollTop() > elementPosition.top){
