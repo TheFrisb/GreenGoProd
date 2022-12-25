@@ -1590,14 +1590,14 @@ select {
     color: black;
 }
 .slick-next::before{
-    background: url(http://127.0.0.1:8000/static/icons/chevron-right.svg) no-repeat;
+    background: url(https://greengoshop.mk/static/icons/chevron-right.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;
     width: 20px;
 }
 .slick-prev::before{
-    background: url(http://127.0.0.1:8000/static/icons/chevron-left.svg) no-repeat;
+    background: url(https://greengoshop.mk/static/icons/chevron-left.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;
@@ -1608,6 +1608,9 @@ select {
 .slider-wrapper{
     width: 100%;
     text-align: center;
+}
+.slide .sliderBtn {
+    width: auto;
 }
 .slider-wrapper .slick-prev, .slider-wrapper .slick-next{
     border: 1px solid #abaeb4;
