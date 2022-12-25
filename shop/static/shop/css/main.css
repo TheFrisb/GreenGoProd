@@ -1631,7 +1631,6 @@ select {
     opacity: 1;
 }
 .slider-holder{
-    top: 0px;
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease;
