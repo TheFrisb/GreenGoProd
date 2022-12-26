@@ -166,7 +166,7 @@
                             $('.sidecart-inner').load(location.href + " .sidecart-inner");
                         }
                        
-                        
+                      
                     }
                     else if($(button).hasClass("checkout-offerBtn")){
                         if($(button).hasClass("addedBtn") == false){
@@ -294,7 +294,9 @@
                 csrfmiddlewaretoken: token,
             },
             success: function (response){
-
+                if($(button).hasClass("proceed-to-checkout")){
+                     //pass
+                }
                 else{
                     cartCount = cartCount + parseInt(product_qty);
                     $("#cart-count").html(cartCount)
