@@ -29,7 +29,7 @@ $(window).on("load", function () {
         slidesToShow: 4,
         slidesToScroll: 1,
         infinite: true,
-        speed: 150,
+        speed: 300,
         lazyLoad: 'ondemand',
         responsive: [
             {
