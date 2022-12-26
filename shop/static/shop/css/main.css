@@ -1608,7 +1608,22 @@ select {
     width: 20px;
     
 }
+.gallery-navigation{
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
+.gallery-navigation img {
+    border: 2px solid #abaeb4;
+    cursor: pointer;
+}
+.active-gallery-item{
+    border: 2px solid var(--black)!important;
+}
 .slider-wrapper{
     width: 100%;
     text-align: center;
