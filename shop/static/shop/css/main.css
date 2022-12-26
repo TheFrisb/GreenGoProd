@@ -1030,6 +1030,7 @@ select {
     padding: 8px 16px;
     border-radius: 30px;
     border: 1px solid #abaeb4;
+    font-size: 16px;
 }
 #FieldList label{
     display: block;
