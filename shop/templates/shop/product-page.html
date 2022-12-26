@@ -7,6 +7,7 @@
 <div class="col-1 product-page">
         <div id="overlay-loader" style=""><img src="https://greengoshop.mk/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
+                    <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
                     {% for img in gallery %}
                     <div><img src="{{ img.galleryimg.url }}" alt="slider image"></div>
                     {% endfor %} 
