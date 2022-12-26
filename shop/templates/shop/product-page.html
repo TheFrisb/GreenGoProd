@@ -87,10 +87,10 @@
         </div>
         {% if attributes %}
         <button class="variable-add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-        <a href="{% url 'checkout' %}" class="button-link"><button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button></a>
+        <a href="{% url 'checkout' %}" class="proceed-to-checkout-link"><button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button></a>
         {% else %}
         <button class="add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-        <a href="{% url 'checkout' %}" class="button-link"><button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button></a>
+        <a href="{% url 'checkout' %}" class="proceed-to-checkout-link"><button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button></a>
         {% endif %}
     <div class="badges-wrapper">
         <div class="badge-item">
