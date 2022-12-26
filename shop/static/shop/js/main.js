@@ -174,9 +174,6 @@
                         }
                         $('.cart-data').load(location.href + " .cart-data")
                     }
-                    else if($(button).hasClass("proceed-to-checkout")){
-                        window.location.href = "https://greengoshop.mk/checkout";
-                    }
                     else {
                         cartCount = cartCount + parseInt(product_qty);
                         $("#cart-count").html(cartCount)
@@ -297,9 +294,7 @@
                 csrfmiddlewaretoken: token,
             },
             success: function (response){
-                if($(button).hasClass("proceed-to-checkout")){
-                    window.location.href = "https://greengoshop.mk/checkout";
-                }
+
                 else{
                     cartCount = cartCount + parseInt(product_qty);
                     $("#cart-count").html(cartCount)
