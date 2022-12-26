@@ -76,6 +76,11 @@ def CategoryView(request, slug):
 
 
 def ProductView(request, slug):
+    try:
+        cart = Cart.objects.get(session=request.session['nonuser'])
+    except:
+        request.session['nonuser'] = str(uuid.uuid4())
+        cart = Cart.objects.create(session=request.session['nonuser'])
     now = datetime.datetime.now()
     current_day = now.weekday()
     mapped_delivery_days = {
