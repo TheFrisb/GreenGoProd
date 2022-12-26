@@ -5,6 +5,7 @@
 <div class="content-container product-page">
 <a href="tel:071321312" class="phone-sticky mobile"><span>ЈАВИ СЕ И НАРАЧАЈ <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></span></a>
 <div class="col-1 product-page">
+        <div class="sticky-holder desktop">
         <div id="overlay-loader" style=""><img src="https://greengoshop.mk/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
                     <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
@@ -13,6 +14,7 @@
                     {% endfor %} 
         </div>
         <div class="gallery-navigation desktop">
+        </div>
         </div>
 </div>
 <div class="col-2 product-page product_data">
