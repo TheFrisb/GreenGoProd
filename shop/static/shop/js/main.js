@@ -174,6 +174,10 @@
                         }
                         $('.cart-data').load(location.href + " .cart-data")
                     }
+                    else if($(button).hasClass("proceed-to-checkout")){
+                        window.location.href = "/checkout/";
+                    }
+                 
                     else {
                         cartCount = cartCount + parseInt(product_qty);
                         $("#cart-count").html(cartCount)
@@ -295,7 +299,7 @@
             },
             success: function (response){
                 if($(button).hasClass("proceed-to-checkout")){
-                     //pass
+                    window.location.href = "/checkout/";
                 }
                 else{
                     cartCount = cartCount + parseInt(product_qty);
