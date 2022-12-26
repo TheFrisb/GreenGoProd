@@ -911,6 +911,7 @@ select {
   .last-stocks-sub-container img {
     object-fit: contain;
     height: 250px;
+    color: transparent!important;
   }
 
   .slide .slider-title{
