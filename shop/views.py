@@ -139,10 +139,10 @@ def ProductView(request, slug):
 def CheckoutView(request):
     orderFees = CheckoutFees.objects.all()
     try:
-        cartHolder = Cart.objects.get(session = request.session['nonuser'])
+        cartFees = CartFees.objects.filter(cart__session=request.session['nonuser'])
     except:
-        return redirect('shop-home')
-    cartFees = CartFees.objects.filter(cart=cartHolder)
+        cartFees = None
+    
     feetotal = 0
     for orderfee in orderFees:
         for cartfee in cartFees:
