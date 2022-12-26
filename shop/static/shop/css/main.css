@@ -2257,7 +2257,7 @@ select {
 }
 
 @media(min-width: 767px){
-    .slider-holder{
+    .sticky-holder{
         position: sticky!important;
         top: 0px;
     }
