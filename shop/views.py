@@ -20,6 +20,7 @@ from .forms import ExportOrder
 from django.utils.timezone import get_current_timezone, make_aware
 import csv
 from django.utils.html import strip_tags
+from .controller import facebook_pixel
 # Create your views here.
 
 
@@ -138,6 +139,10 @@ def ProductView(request, slug):
 
 def CheckoutView(request):
     orderFees = CheckoutFees.objects.all()
+    try:
+        facebook_pixel.InitiateCheckoutEvent(request)
+    except:
+        pass
     try:
         cartFees = CartFees.objects.filter(cart__session=request.session['nonuser'])
     except:
