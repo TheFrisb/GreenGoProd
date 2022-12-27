@@ -125,31 +125,31 @@ $(document).ready(function () {
                 }, 800);
             return;
         }
-  // else{
-        // var contentIds = [];
-        // var contentNames = [];
-        // var orderTotal = 0;
+   else{
+         var contentIds = [];
+         var contentNames = [];
+         var orderTotal = 0;
     
-        // // Loop through the items in the cart and update the content IDs, names, and order total
-        // $('#order_review tbody tr').each(function() {
+         // Loop through the items in the cart and update the content IDs, names, and order total
+         $('#order_review tbody tr').each(function() {
 
-        //   var productId = $(this).find('.prod_id').val();
-        //   var productName = $(this).find('.item-name').text();
-        //   console.log(productId)
-        //   contentIds.push(productId);
-        //   contentNames.push(productName);
+           var productId = $(this).find('.prod_id').val();
+           var productName = $(this).find('.item-name').text();
+           console.log(productId)
+           contentIds.push(productId);
+           contentNames.push(productName);
           
-        // });
-        // orderTotal = $('.cart-total-span').text();
+         });
+         orderTotal = $('.cart-total-span').text();
         
-        //     fbq('track', 'Purchase', {
-        //         content_ids: contentIds,
-        //         content_name: contentNames,
-        //         content_type: 'product',
-        //         value: orderTotal,
-        //         currency: 'USD'
-        //     });
-        // }
+             fbq('track', 'Purchase', {
+                 content_ids: contentIds,
+                 content_name: contentNames,
+                 content_type: 'product',
+                 value: orderTotal,
+                 currency: 'USD'
+             });
+         }
     
     })
 });
