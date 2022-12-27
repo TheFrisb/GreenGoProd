@@ -70,7 +70,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                         
                     )
 
-        logger.info(event)
+        #logger.info(event)
         events = [event]
 
         event_request = EventRequest(
@@ -80,7 +80,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                     )
 
         event_response = event_request.execute()
-        logger.info(event_response)
+        #logger.info(event_response)
 
 
     if(addtocart_type == 'OFFER'):
