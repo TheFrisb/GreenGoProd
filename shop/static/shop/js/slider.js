@@ -84,7 +84,7 @@ $(document).ready(function() {
             content_name: product_name,
             content_type: 'product',
             value: product_price,
-            currency: 'MKD'
+            currency: 'MKD',
             });
      })
 
