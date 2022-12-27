@@ -282,9 +282,14 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
         print(user_lastname)
     except:
         user_lastname = ''
-
-    user_city = city
-    user_phone_number = str(int(''.join(filter(str.isdigit, number))))
+    try:
+        user_city = city
+    except:
+        user_city = ''
+    try:  
+        user_phone_number = str(int(''.join(filter(str.isdigit, number))))
+    except:
+        user_phone_number = ''
     if user_phone_number.startswith('3') == False:
         user_phone_number = '389' + user_phone_number
 
