@@ -19,10 +19,10 @@ def addtocart(request):
                     cartItem.product_qty = cartItem.product_qty + prod_qty
                     cartItem.save()
                     
-                    try:
-                        facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
-                    except:
-                        pass
+#                     try:
+                    facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
+#                     except:
+#                         pass
                     return JsonResponse({'status': "Product added with quantity saved"})
                 else:
                     # Check Stock
@@ -30,10 +30,10 @@ def addtocart(request):
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
                     
-                    try:
+#                     try:
                         facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
-                    except:
-                        pass
+#                     except:
+#                         pass
                 
                     return JsonResponse({'status': "Product added successfuly"})
             else:
