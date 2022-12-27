@@ -36,7 +36,22 @@ def export_products_csv(request):
     for product in products:
         content = strip_tags(product.content).replace('&nbsp;', '')
         content = os.linesep.join([s for s in content.splitlines() if s])
-        writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
+        if product.status == 'VARIABLE':
+            attributes = ProductAttribute.objects.filter(product=product)
+            for attribute in attributes:
+                attribute_name = ''
+                if(attribute.color is not None):
+                    attribute_name = attribute.color.title
+
+                if(attribute.size is not None):
+                    attribute_name = attribute.size.title
+
+                if(attribute.offer is not None):
+                    attribute_name = attribute.offer.title
+                
+                writer.writerow([str(product.id) + '_' + attribute.label, product.title + ' - ' + attribute_name, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
+        else:
+            writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
 
     return response
 
