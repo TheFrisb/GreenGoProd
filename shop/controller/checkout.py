@@ -4,7 +4,7 @@ from shop.models import *
 from django.http import HttpResponse, JsonResponse
 import datetime
 import random
-
+from . import facebook_pixel
 
 def placeorder(request):
     if request.method == 'POST':
@@ -94,6 +94,10 @@ def placeorder(request):
         Cart.objects.filter(session = request.session['nonuser']).delete()
         del request.session['nonuser']
         messages.success(request, "Your order has been placed successfully")
+        try:
+            facebook_pixel.PurchaseEvent(request=request, order_items=neworderitems, order_total=neworder.total_price, number=str(request.POST.get('number')).lower(), city=str(request.POST.get('city')).lower(), name=str(request.POST.get('name')).lower())
+        except:
+            pass
         return redirect('thank-you-view', slug=neworder.tracking_no)
     return redirect('/')
 
