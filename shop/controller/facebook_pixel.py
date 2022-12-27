@@ -27,7 +27,9 @@ FacebookAdsApi.init(access_token=access_token)
 
 def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = None,
      full_product_attribute_name = None, attribute_price = None, attribute_label = None):
-
+    access_token = 'EAAEBgQEZCiHkBANSDtqNfZAlaaPOhZBZCEkUQmhtntyFgYLFmQ9rq95ZAH89CXufqqCGR9OARY7iYwBZAT9Krk2WG6Yna7lTNnQWBjMp8cjZAHqg3WZCdBDtKJYL90GMB7XdwVkx8ZAS2KvPkMSZC3houoHIYj7k45Pob6o7ZAZCobUCZB22Bq2lY6ZBui'
+    pixel_id = '201484344738499'
+    FacebookAdsApi.init(access_token=access_token)
     if(addtocart_type == 'NORMAL'):
         total_price = product.sale_price * qty
         user_data = UserData(
