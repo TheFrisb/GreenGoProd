@@ -50,8 +50,8 @@ def export_products_csv(request):
                     attribute_name = attribute.offer.title
                 
                 writer.writerow([str(product.id) + '_' + attribute.label, product.title + ' - ' + attribute_name, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
-        else:
-            writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
+        
+        writer.writerow([product.id, product.title, content , 'https://greengoshop.mk' + product.get_absolute_url(), 'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD', 'New', 'GreenGoShopMK'])
 
     return response
 
