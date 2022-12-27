@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from shop.models import Product, CartItems, Cart, CheckoutFees, CartFees, ProductAttribute
 from django.http import HttpResponse, JsonResponse
+from . import facebook_pixel
 
 
 def addtocart(request):
@@ -17,13 +18,23 @@ def addtocart(request):
                     cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder)
                     cartItem.product_qty = cartItem.product_qty + prod_qty
                     cartItem.save()
+                    
+                    try:
+                        facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
+                    except:
+                        pass
                     return JsonResponse({'status': "Product added with quantity saved"})
                 else:
                     # Check Stock
                     # if product.check .quantity >= prod_qty: Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
-                   
+                    
+                    try:
+                        facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
+                    except:
+                        pass
+                
                     return JsonResponse({'status': "Product added successfuly"})
             else:
                 return JsonResponse({'status': "No such product found"})
@@ -46,10 +57,22 @@ def offeraddtocart(request):
                     cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder, offer_price = offer_price)
                     cartItem.product_qty = cartItem.product_qty + prod_qty
                     cartItem.save()
+                    
+                    try:
+                        facebook_pixel.AddToCartPixelEvent(request, 'OFFER', product_check, prod_qty, offer_price)
+                    except:
+                        pass
+                    
                     return JsonResponse({'status': "Product added with quantity saved"})
                 else:
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty, offer_price=offer_price)
+                    
+                    try:
+                        facebook_pixel.AddToCartPixelEvent(request, 'OFFER', product_check, prod_qty, offer_price)
+                    except:
+                        pass
+                    
                     return JsonResponse({'status': "Product added successfuly"})
             else:
                 return JsonResponse({'status': "No such product found"})
@@ -71,11 +94,26 @@ def variableaddtocart(request):
                     cartItem = CartItems.objects.get(product_id=prod_id, cart = CartHolder, attribute_id = prod_attr)
                     cartItem.product_qty = cartItem.product_qty + prod_qty
                     cartItem.save()
+                    
+                    try:
+                        attributeprice = cartItem.attributeprice
+                        facebook_attribute_name = product_check.title + str(cartItem.attributename)
+                        newattribute = ProductAttribute.objects.get(id=prod_attr)
+                        facebook_pixel.AddToCartPixelEvent(request, 'VARIABLE', product_check, prod_qty, full_product_attribute_name = facebook_attribute_name, attribute_price = attributeprice, attribute_label = str(newattribute.label))
+                    except:
+                        pass
                 else:
                     prod_qty = int(request.POST.get('product_qty'))
                     newattribute = ProductAttribute.objects.get(id=prod_attr)
                     attributeprice = newattribute.price
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty = prod_qty, attribute = newattribute, attributename = ' - ' + newattribute.checkattribute, attributeprice = attributeprice)
+                    
+                    try:
+                        facebook_attribute_name = product_check.title + ' - ' + str(newattribute.checkattribute)
+                        facebook_pixel.AddToCartPixelEvent(request, 'VARIABLE', product_check, prod_qty, full_product_attribute_name = facebook_attribute_name, attribute_price = attributeprice, attribute_label = str(newattribute.label))
+                    except:
+                        pass
+                    
                     return JsonResponse({'status': "Product added successfuly"})
 
             else:
