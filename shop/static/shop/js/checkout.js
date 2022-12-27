@@ -147,7 +147,7 @@ $(document).ready(function () {
                  content_name: contentNames,
                  content_type: 'product',
                  value: orderTotal,
-                 currency: 'MKD'
+                 currency: 'MKD',
              });
          }
     
