@@ -312,5 +312,19 @@
 {% endblock content %}
 {% block scripts %}
 <script src="{%  static 'shop/js/checkout_minified.js' %}"></script>
+<script>
+    $(document).ready(function() {
+    var contentIds = [{% for item in cart %}'{{ item.product.id }}',{% endfor %}];
+    var contentNames = [{% for item in cart %}'{{ item.product.title }}',{% endfor %}];
+    fbq('track', 'InitiateCheckout', {
+        content_ids: contentIds,
+        content_name: contentNames,
+        content_type: 'product',
+        num_items: '{{cart.count}}',
+        value: '{{cart_total}}',
+        currency: 'MKD'
+        });
+    });
+ </script>
 {% endblock scripts %}
  
