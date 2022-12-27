@@ -30,10 +30,10 @@ def addtocart(request):
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
                     print('woops')
-#                     try:
-                    facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
-#                     except:
-#                         pass
+                    try:
+                        facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
+                    except:
+                        pass
                 
                     return JsonResponse({'status': "Product added successfuly"})
             else:
