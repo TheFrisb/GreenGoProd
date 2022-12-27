@@ -20,16 +20,13 @@ import logging
 
 logger = logging.getLogger(__file__)
 
-access_token = 'EAADfBqPMawoBAIXfqWsuuH74W5XdwRNLGWnIUKuhgeyplKcycl2g6pQLfcF52jm6aFKbyzyok8dPSqUkIeZBk6FDyG5sSBu3fUl5XHF6ITIxO1ISJsAyquKrZAjYnCrN8nc6l9IfC4o1USsGWrZB5w1sFtIvhaFOfByiDrwnrU55ZBBjhORUvPc1ihi6evUvFDpG7PKdzQZDZD'
+access_token = 'EAAEBgQEZCiHkBADdHkI851cusMTxrZBLh8WA2HbNSlG06N7qeTtNxEKH3fQeMxI9h0nK6HRJJSmt09xI51gfGCS6DZBCuJFcO08Ux4sVDXZCculFpt3BAVbZCABjS2EkzBHJQ4zb8nwfD7RTXvSRv4togCDzHJMEbRVaa8TWR31pmIs5DztfZA'
 pixel_id = '201484344738499'
 FacebookAdsApi.init(access_token=access_token)
 
 
 def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = None,
      full_product_attribute_name = None, attribute_price = None, attribute_label = None):
-    access_token = 'EAAEBgQEZCiHkBANSDtqNfZAlaaPOhZBZCEkUQmhtntyFgYLFmQ9rq95ZAH89CXufqqCGR9OARY7iYwBZAT9Krk2WG6Yna7lTNnQWBjMp8cjZAHqg3WZCdBDtKJYL90GMB7XdwVkx8ZAS2KvPkMSZC3houoHIYj7k45Pob6o7ZAZCobUCZB22Bq2lY6ZBui'
-    pixel_id = '201484344738499'
-    FacebookAdsApi.init(access_token=access_token)
     if(addtocart_type == 'NORMAL'):
         total_price = product.sale_price * qty
         user_data = UserData(
