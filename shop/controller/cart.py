@@ -3,7 +3,11 @@ from django.contrib import messages
 from shop.models import Product, CartItems, Cart, CheckoutFees, CartFees, ProductAttribute
 from django.http import HttpResponse, JsonResponse
 from . import facebook_pixel
+import logging
 
+
+
+logger = logging.getLogger(__file__)
 
 def addtocart(request):
     if request.method == 'POST':
@@ -33,6 +37,7 @@ def addtocart(request):
                     try:
                         facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
                     except:
+                        logger.exception("ADD TO CART(NORMAL) PIXEL EVENT EXCEPTION")
                         pass
                 
                     return JsonResponse({'status': "Product added successfuly"})
