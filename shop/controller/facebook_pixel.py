@@ -14,11 +14,8 @@ from facebook_business.adobjects.serverside.user_data import UserData
 from facebook_business.api import FacebookAdsApi
 import string
 from hashlib import sha256
-import logging
 
 
-
-logger = logging.getLogger(__file__)
 access_token = 'EAAEBgQEZCiHkBACip1qQ7R5uuXjW62RGBJM8piUXh3EKrGjhDSQVLcPRtvhE10d3XKkYfR4vH9ZCOanFQT9iuGOvfFttjy5DCi9lGduLe0sU4EVizrEjUKGrhpQ7JARGktoKVziJyZAZAjN5q9WOmkIYNKbHCz7h0TErq7aQoPloZC8omMZAKw'
 pixel_id = '201484344738499'
 FacebookAdsApi.init(access_token=access_token)
@@ -67,7 +64,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                         
                     )
 
-        logger.info(event)
+
         events = [event]
 
         event_request = EventRequest(
@@ -77,7 +74,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                     )
 
         event_response = event_request.execute()
-        logger.info(event_response)
+
 
 
     if(addtocart_type == 'OFFER'):
