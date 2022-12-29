@@ -195,8 +195,10 @@ class Review(models.Model):
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, verbose_name='Продукт')
     image = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=400, upscale=False)], format='WEBP', options={'quality':85}, null=True, blank=True)
+    image2 = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=400, upscale=False)], format='WEBP', options={'quality':85}, null=True, blank=True)
+
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
-    content = models.TextField(verbose_name='Содржина') 
+    content = models.TextField(verbose_name='Содржина', blank=True, null = Ture) 
     rating = models.CharField(choices=rating_choices, default='5', verbose_name='Оценка', max_length=5)
     date_created = models.DateField(auto_now=True)
         
