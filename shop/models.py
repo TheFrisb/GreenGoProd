@@ -198,11 +198,24 @@ class Review(models.Model):
     image2 = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=400, upscale=False)], format='WEBP', options={'quality':85}, null=True, blank=True)
 
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
+    avatar_name = models.CharField(max_length=5, blank=True)
     content = models.TextField(verbose_name='Содржина', blank=True, null = True) 
     rating = models.CharField(choices=rating_choices, default='5', verbose_name='Оценка', max_length=5)
     date_created = models.DateField(auto_now=True)
         
 
+    def save(self, *args, **kwargs):
+        words = self.name.split()
+
+        if len(words) == 1:
+            self.avatar_name = words[0][0]
+        else:
+            self.avatar_name = words[0][0] + words[-1][0]
+
+
+        super(Review, self).save(*args, **kwargs)
+        
+        
     def __str__(self):
         return 'Review за продукт: {} со име: {} и оценка: {}'.format(self.product.title,self.name, self.rating)
 
