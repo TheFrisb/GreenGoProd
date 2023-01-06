@@ -144,9 +144,15 @@
         {% for review in reviews %}
         <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
                 {% if review.image %}
-                <img src="{{ review.image.url }}" alt="" width="250" height="auto">
+                <span style="position:relative;cursor: pointer;">
+                <img src="{{ review.image.url }}" alt="" width="360" height="auto" class="review-image">
+                <div class="review-images-count">
+                    <img src="{% static 'icons/camera.svg' %}" alt="" style="width:40px; height:40px;margin-right:8px;">1
+                </div>
+                </span>
                 {% endif %}
             <div class="top-row">
+                <p class="reviewer-initials">{{review.avatar_name}}</p>
                 <p class="reviewer-name">{{ review.name }}</p>
             </div>
             <div class="rating-row">
@@ -170,8 +176,9 @@
                     {{ review.date_created }}
                 </div>
             </div>
-            <div class="review-product">
-                <a href="{% url 'product-page' review.product.slug %}" aria-label="Линк до продукт од коментар"></a>
+            <div class="review-product-end">
+                <img src="{{ product.thumbnail_loop.url }}" alt="" width="50" height="50">
+                <p>{{product.title}}</p>
             </div>
         </div>
         {% endfor %}
