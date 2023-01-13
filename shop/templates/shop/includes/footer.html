@@ -1,5 +1,24 @@
 {% if title != "Кон нарачка" %}
 {% load static %}
+<section id="ordered_items_notice_wrapper" style="display:none;position:relative;z-index:998">
+<a href="#" id="ordered_items_notice">
+    <img src="{{product.thumbnail_loop.url}}" alt="" class="product-img" id="ordered_product_thumbnail">
+    <div class="ordered_items_notice_details">
+        <div style="display: flex;flex-direction: column;">
+            <p class="ordered_items_small ordered_item_person"><span id="order_person_name" style="font-weight:600">Zoran</span> само што нарача</p>
+            <p id="order_person_product_name" class="ordered_items_big">ZASTITNA CERADA ZA AVTOMOBILSKI RABOTI</p>
+            <p> 
+                <span class="product-regular-price">
+                    <span id="order_product_regular_price">3999</span> ден 
+                </span>
+                <span class="product-sale-price" style="font-size:20px">
+                <span id="order_product_sale_price" class="ordered_items_big">
+                    1999</span> ден</span></p>
+        </div>
+    <p class="order_time ordered_items_small">пред <span id="order_time_minutes_ago" style="font-weight:600">39</span> минути</p>
+    </div>
+</a>
+</section>
 <footer id="footer">
     <div class="footer-inner">
         <div class="footer-item">
