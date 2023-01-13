@@ -508,3 +508,19 @@ def export_excel(request):
     
     return redirect('/')
   
+    
+def get_recent_ordered(request):
+    if request.method == 'GET':
+        random_int = randint(1, 20)
+        product = Product.objects.order_by('-pk').all()[random_int]
+        return JsonResponse({
+            'url': product.get_absolute_url(),
+            'thumbnail': product.thumbnail_loop.url,
+            'title': product.title,
+            'regular_price': product.regular_price,
+            'sale_price': product.sale_price,
+            })
+    else:
+        return redirect('/')
+  
+
