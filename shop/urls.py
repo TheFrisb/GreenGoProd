@@ -18,7 +18,9 @@ urlpatterns = [
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
     path('checkout/', CheckoutView, name='checkout'),
-
+    
+    path('get_recent_ordered', views.get_recent_ordered, name="getrecentordered"),
+    
     path('add-or-delete-fee', cart.addordeletefee, name="addordeletefee"),
 
     path('place-order', checkout.placeorder, name="placeorder"),
