@@ -536,5 +536,41 @@
         $(this).toggleClass("active");
         $(".checkout-garancija-content").slideToggle("fast");
     })
+  
+   function myFunction() {
+        var min = 13,
+          max = 20;
+        var rand = Math.floor(Math.random() * (max - min + 1) + min); //Generate Random number between 5 - 10
+        var minutes_ago = Math.floor(Math.random() * (58 - 2 + 1) + 1)
+        const names = ["Александар","Ангела","Марија","Елена",
+        "Здравко","Зорица","Костадин","Живка","Никола","Ева",
+        "Наум","Филип","Бранкица","Мартин","Ивана",
+        "Ристе","Лилјана","Борис","Ефимија","Живко",
+        "Христина","Васил"];
+        var name = names[Math.floor(Math.random()*names.length)];
+        $.ajax({
+            url: "/get_recent_ordered",
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function(res) {
+                $("#ordered_items_notice").attr("href", res.url);
+                $("#ordered_product_thumbnail").attr("src", res.thumbnail);
+                $("#order_person_name").html(name);
+                $("#order_person_product_name").html(res.title);
+                $("#order_product_regular_price").html(res.regular_price);
+                $("#order_product_sale_price").html(res.sale_price);
+                $("#ordered_items_notice_wrapper").fadeToggle(400);
+                $("#order_time_minutes_ago").html(minutes_ago);
+                setTimeout(function () {
+                    $("#ordered_items_notice_wrapper").fadeOut(400);
+                }, 5000);
+                }
+        });
+        
 
+        setTimeout(myFunction, rand * 1000);
+    }   
+    if($("#ordered_items_notice_wrapper")){
+        setTimeout(myFunction, (Math.floor(Math.random() * (20 - 13 + 1) + 13)) * 1000)
+    }
  })
