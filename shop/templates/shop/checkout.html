@@ -1,7 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<style>#footer,.footer-section{display:none}.red{border-color:red}</style>
+<style>#footer,.footer-section{display:none}.red{border-color:red}#ordered_items_notice_wrapper{visibility:hidden}</style>
 {% if cart %}
     
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
