@@ -19,7 +19,7 @@ import logging
 
 
 logger = logging.getLogger(__file__)
-access_token = ''
+access_token = 'EAAEBgQEZCiHkBACAiP1bwnvu7JmIoyBFSuF5HDlZBTsRqkLlNCZBgCahkNsz3xFFuR5UWdA4mY70j66Q3DMYpZBSdVbRJ6370m7Cg2Tppx9829Y8eZBWACVYNZBBq2eEzjzNEF07xaRDuDpmMhlh3eg6fAQvDvYkoo6OGuZC8EZCkCPwN82CDbTPu0DYEB4ycoEZD'
 pixel_id = '201484344738499'
 FacebookAdsApi.init(access_token=access_token)
 
