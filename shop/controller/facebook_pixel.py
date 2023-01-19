@@ -19,7 +19,7 @@ import logging
 
 
 logger = logging.getLogger(__file__)
-access_token = 'EAAEBgQEZCiHkBAFaP27ymAznoWNkZBXrzT6JvLhjZAYnZB7wC13SeLHYwbhQnlCdfA89H5JsGZB6ZAamoXleEwEJQkbilmPSIQtVGdy2mm7VZAyCflMhVkeFPtZCJD0Na0D8m2NxJm9Orla5kZA5GbigBbJrS9ph9R0Ra0XLGjWN4FQZBPJPBJvcZCg'
+access_token = 'EAAEBgQEZCiHkBAHoxL3hYa99e7N8KH5rd4jd2wnJzmLQpEsZCPJ3YpJZATpD76gi3vZBMLU0E9XE8JQaf6RvuVdx4krOR0tnml5PcKFrqxopXjZCeT9ZAAH5mkgqWTV5fCOH5YMrUkMc5TJfZCg9filki1mmk4dQuaTn6oRQyZBvlLIZAW9ZATI2dcR7EK577r1ScZD'
 pixel_id = '201484344738499'
 FacebookAdsApi.init(access_token=access_token)
 
@@ -74,7 +74,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
                         events=events,
                         pixel_id=pixel_id,
-                        test_event_code = 'TEST31193',
+                        test_event_code = 'TEST42776',
                     )
 
         event_response = event_request.execute()
@@ -126,7 +126,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
                     events=events,
                     pixel_id=pixel_id,
-                    test_event_code = 'TEST14802',
+                    test_event_code = 'TEST42776',
                 )
 
         event_response = event_request.execute()
@@ -178,7 +178,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
             events=events,
             pixel_id=pixel_id,
-            test_event_code = 'TEST31193',
+            test_event_code = 'TEST42776',
         )
 
         event_response = event_request.execute()
@@ -379,7 +379,7 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
     event_request = EventRequest(
                     events=events,
                     pixel_id=pixel_id,
-                    test_event_code = 'TEST31193',
+                    test_event_code = 'TEST42776',
                 )
 
     event_response = event_request.execute()
