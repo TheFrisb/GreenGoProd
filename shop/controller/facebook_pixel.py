@@ -15,15 +15,63 @@ from facebook_business.api import FacebookAdsApi
 import string
 from hashlib import sha256
 import logging
-
+from decouple import config
 
 
 logger = logging.getLogger(__file__)
-access_token = 'EAAEBgQEZCiHkBACAiP1bwnvu7JmIoyBFSuF5HDlZBTsRqkLlNCZBgCahkNsz3xFFuR5UWdA4mY70j66Q3DMYpZBSdVbRJ6370m7Cg2Tppx9829Y8eZBWACVYNZBBq2eEzjzNEF07xaRDuDpmMhlh3eg6fAQvDvYkoo6OGuZC8EZCkCPwN82CDbTPu0DYEB4ycoEZD'
-pixel_id = '201484344738499'
+access_token = config('FACEBOOK_TOKEN')
+pixel_id = config('PIXEL_ID')
 FacebookAdsApi.init(access_token=access_token)
 
 
+def ViewContentEvent(request, product):
+
+    user_data = UserData(
+                    client_ip_address=request.META.get('REMOTE_ADDR'),
+                    client_user_agent=request.headers['User-Agent'],
+                    fbc=request.COOKIES.get('_fbc'),
+                    fbp=request.COOKIES.get('_fbp'),                    
+                    )
+    content = Content(
+                    brand='GreenGoShop',
+                    product_id=product.id,
+                    item_price = product.sale_price,
+                    category=str(product.category.name),
+                    delivery_category=DeliveryCategory.HOME_DELIVERY,
+                )
+
+    custom_data = CustomData(
+                    content_type = 'product',
+                    currency='MKD',
+                    content_name= product.title,
+                    content_category= str(product.category.name),
+                    content_ids= product.id,
+                    delivery_category= DeliveryCategory.HOME_DELIVERY,
+                    
+                )
+
+    event = Event(
+                    event_name='ViewContent',
+                    event_time=int(time.time()),
+                    user_data=user_data,
+                    custom_data=custom_data,
+                    event_source_url= request.build_absolute_uri(),
+                    action_source=ActionSource.WEBSITE,
+                    
+                )
+
+    #logger.info(event)
+    events = [event]
+
+    event_request = EventRequest(
+                    events=events,
+                    pixel_id=pixel_id,
+                    test_event_code = 'TEST73758',
+                )
+    event_response = event_request.execute()
+
+
+          
 
 def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = None,
      full_product_attribute_name = None, attribute_price = None, attribute_label = None):
