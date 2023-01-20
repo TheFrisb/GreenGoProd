@@ -192,13 +192,7 @@
                             toggleCart()
                         }
                     }
-                     fbq('track', 'AddToCart', {
-                         content_ids: [product_id],
-                         content_name: productName,
-                         content_type: 'product',
-                         value: productPrice,
-                         currency: 'MKD',
-                       });
+
                 }
             })
         
@@ -250,13 +244,7 @@
                     }
                     $('.cart-data').load(location.href + " .cart-data")
                 }
-                 fbq('track', 'AddToCart', {
-                     content_ids: [product_id],
-                     content_name: productName,
-                     content_type: 'product',
-                     value: product_price,
-                     currency: 'MKD',
-                   });
+
             }
         })
     
@@ -315,13 +303,7 @@
                         toggleCart()
                     }
                 }
-                 fbq('track', 'AddToCart', {
-                     content_ids: [product_id],
-                     content_name: productName,
-                     content_type: 'product',
-                     value: product_price,
-                     currency: 'MKD',
-                   });
+
             }
         })
       }else{
