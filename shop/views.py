@@ -114,6 +114,11 @@ def ProductView(request, slug):
         percentage = 100 - int(product.sale_price / product.regular_price * 100)
         money_saved = product.regular_price - product.sale_price
         if(product.status != 'PRIVATE'):
+            try:
+                facebook_pixel.ViewContentEvent(request, product)
+            except:
+                pass
+            
             if(product.review_average != 0):
                 count = reviews.count()
 
