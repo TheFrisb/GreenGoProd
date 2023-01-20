@@ -517,7 +517,7 @@ def export_excel(request):
 def get_recent_ordered(request):
     if request.method == 'GET':
         random_int = randint(1, 20)
-        product = Product.objects.order_by('-pk').all()[random_int]
+        product = Product.objects.order_by('-pk').filter(status='PUBLISHED')[random_int]
         return JsonResponse({
             'url': product.get_absolute_url(),
             'thumbnail': product.thumbnail_loop.url,
