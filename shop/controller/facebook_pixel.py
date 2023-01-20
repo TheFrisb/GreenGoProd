@@ -122,7 +122,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
                         events=events,
                         pixel_id=pixel_id,
-                        test_event_code = 'TEST42776',
+                        test_event_code = 'TEST73758',
                     )
 
         event_response = event_request.execute()
@@ -174,7 +174,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
                     events=events,
                     pixel_id=pixel_id,
-                    test_event_code = 'TEST42776',
+                    test_event_code = 'TEST73758',
                 )
 
         event_response = event_request.execute()
@@ -226,7 +226,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
         event_request = EventRequest(
             events=events,
             pixel_id=pixel_id,
-            test_event_code = 'TEST42776',
+            test_event_code = 'TEST73758',
         )
 
         event_response = event_request.execute()
@@ -314,7 +314,7 @@ def InitiateCheckoutEvent(request):
     event_request = EventRequest(
                     events=events,
                     pixel_id=pixel_id,
-                    test_event_code = 'TEST31193',
+                    test_event_code = 'TEST73758',
                 )
 
     event_response = event_request.execute()
@@ -427,7 +427,7 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
     event_request = EventRequest(
                     events=events,
                     pixel_id=pixel_id,
-                    test_event_code = 'TEST42776',
+                    test_event_code = 'TEST73758',
                 )
 
     event_response = event_request.execute()
