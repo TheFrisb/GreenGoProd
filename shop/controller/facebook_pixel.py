@@ -256,7 +256,7 @@ def InitiateCheckoutEvent(request):
                 itemscount = itemscount + item.product_qty
                 content_names.append(item.product.title  + item.attributename)
                 custom_content_list.append(Content(
-                    product_id=content_ids.append(str(item.product.id) + '_' + item.attribute.label), #fix
+                    product_id=str(item.product.id) + '_' + item.attribute.label, #fix
                     quantity=str(item.product_qty),
                     item_price = str(item.attributeprice),
                     category=str(item.product.category.name),
@@ -368,7 +368,7 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
             itemscount = itemscount + item.product_qty
             content_names.append(item.product.title + item.attributename)
             custom_content_list.append(Content(
-                product_id=(str(item.product.id) + '_' + item.attribute.label), #fix
+                product_id=str(item.product.id) + '_' + item.attribute.label, #fix
                 quantity=str(item.product_qty),
                 item_price = str(item.attributeprice),
                 category=str(item.product.category.name),
