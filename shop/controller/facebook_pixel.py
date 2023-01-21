@@ -360,8 +360,8 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
     for item in order_items:
         if item.product.status == 'VARIABLE':
                 content_ids.append(str(item.product.id) + '_' + item.attribute.label)
-            else:
-                content_ids.append(str(item.product.id))
+        else:
+            content_ids.append(str(item.product.id))
         
         content_category.append(str(item.product.category.name))
         if item.has_attributes == True:
