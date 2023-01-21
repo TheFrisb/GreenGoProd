@@ -245,7 +245,10 @@ def InitiateCheckoutEvent(request):
     itemscount = 0
     if cartItems:
         for item in cartItems:
-            content_ids.append(str(item.product.id))
+            if item.product.status == 'VARIABLE':
+                content_ids.append(str(item.product.id) + '_' + item.attribute.label)
+            else:
+                content_ids.append(str(item.product.id))
             
             content_category.append(str(item.product.category.name))
             if(item.attributeprice is not None):
@@ -253,7 +256,7 @@ def InitiateCheckoutEvent(request):
                 itemscount = itemscount + item.product_qty
                 content_names.append(item.product.title  + item.attributename)
                 custom_content_list.append(Content(
-                    product_id=str(item.product.id), #fix
+                    product_id=content_ids.append(str(item.product.id) + '_' + item.attribute.label), #fix
                     quantity=str(item.product_qty),
                     item_price = str(item.attributeprice),
                     category=str(item.product.category.name),
@@ -355,14 +358,17 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
     custom_content_list = []
     itemscount = 0
     for item in order_items:
-        content_ids.append(str(item.product.id))
+        if item.product.status == 'VARIABLE':
+                content_ids.append(str(item.product.id) + '_' + item.attribute.label)
+            else:
+                content_ids.append(str(item.product.id))
         
         content_category.append(str(item.product.category.name))
         if item.has_attributes == True:
             itemscount = itemscount + item.product_qty
             content_names.append(item.product.title + item.attributename)
             custom_content_list.append(Content(
-                product_id=str(item.product.id), #fix
+                product_id=(str(item.product.id) + '_' + item.attribute.label), #fix
                 quantity=str(item.product_qty),
                 item_price = str(item.attributeprice),
                 category=str(item.product.category.name),
