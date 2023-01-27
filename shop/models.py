@@ -177,11 +177,24 @@ class ProductAttribute(models.Model):
 
         if(self.size is not None):
             return self.size.title
-## FIIIIIIIX
+
         if(self.offer is not None):
             return self.offer.title
 
         return 1
+    
+    
+    def check_type_of_attribute(self):
+        if(self.color is not None):
+            return 'COLOR'
+
+        if(self.size is not None):
+            return 'SIZE'
+
+        if(self.offer is not None):
+            return 'OFFER'
+        
+        
 
     def __str__(self):
         return 'Атрибут за {} - {} - {}'.format(self.product, self.checkattribute, self.price)
