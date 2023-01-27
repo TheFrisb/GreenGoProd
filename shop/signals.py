@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Review, Product
+from .models import Review, Product, ProductAttribute
 
 
 
@@ -17,3 +17,12 @@ def update_review_average(sender, instance, **kwargs):
     else:
         product.review_average = 0
     product.save()
+    
+    
+@receiver(post_save, sender=ProductAttribute)
+def update_product_woocommerce(sender, instance, created, **kwargs):
+    if created:
+        instance.product.status = 'VARIABLE'
+        instance.product.attributes_type = instance.check_type_of_attribute()
+        instance.product.save()
+        
