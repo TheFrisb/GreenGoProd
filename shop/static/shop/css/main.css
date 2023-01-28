@@ -1,8 +1,8 @@
 
 :root{
-    --green: #B8EB00;
+    --green: #00703D;
     --black: #0f0f0f;
-    --red: #FA3B3B;
+    --red: #FF8C01;
     --regular-price: #808080;
     --footer-gray: #2b2b2b;
 }
@@ -348,7 +348,7 @@ input[type=number] {
 }
 .cart-offers{
     padding: 15px 0px;
-    background: var(--green);
+    background: #e6f1ec;
 }
 
 .cart-offers-text{
@@ -412,9 +412,9 @@ input[type=number] {
     margin-top: auto!important;
     cursor: pointer;
     background-color: white;
-    color: black;
+    color: var(--red);
     border-radius: 30px;
-    font-weight: 500;
+    font-weight: 600;
     border: 1px solid var(--red);
 
 }
@@ -474,9 +474,9 @@ input[type=number] {
     width: auto!important;
     margin-left: auto!important;
     margin-top: auto!important;
-    background-color: var(--red)!important;
-    border: 0!important;
-    color: white!important;
+    background-color: white;
+    border: 1px solid var(--red);
+    color: var(--red)!important;
     font-weight: 600!important;
     border-radius: 30px;
 }
@@ -684,7 +684,7 @@ select {
     font-weight: 600;
 }
 .green{
-    color:var(--green);
+    color:var(--red);
 }
 
 #navigation{
@@ -852,7 +852,7 @@ select {
     display:inline-block;
     font-size: 18px;
     font-weight: 600;
-    color: var(--green);
+    color: var(--red);
 
 }
 .badges-wrapper{
@@ -928,12 +928,13 @@ select {
 
 .product-savings{
     padding: 5px 10px;
-    background: var(--black);
+    background: var(--green);
     border-radius: 30px;
     color: white;
     font-size: 12px;
     font-weight: 600;
     display: inline-block;
+    text-transform: uppercase;
 }
 
 
@@ -1072,14 +1073,16 @@ select {
     padding:10px;
     border: 0;
     border-radius: 30px;
-    background:#FA3B3B!important;
-    color:white;
+
+    background: white;
+    color:var(--red);
+    border: 1px solid var(--red);
     font-weight:600;
 	margin-left:10px;
     cursor: pointer;
 }
 .fee-add:hover{
-    background-color: var(--black);
+    background-color: var(--red);
 }
 .fee-icon{
     display: inline-block;
@@ -1101,7 +1104,7 @@ select {
     margin: 0;
 }
 .fee-price{
-    color: var(--green);
+    color: var(--red);
     font-size: 16px;
     margin: 0;
     display: inline-block;
@@ -1718,7 +1721,7 @@ select {
 .product-sale-price{
     font-size: 22px;
     display: inline-block;
-    color: var(--green);
+    color: var(--red);
     font-weight: 600;
 }
 .free-shipping{
@@ -1726,7 +1729,9 @@ select {
     font-weight: 600;
 }
 .delivery-calculator{
-    background: var(--green);
+    background: #e6f1ec;
+    border: 1px solid var(--green);
+    color: var(--black);
     padding: 20px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -1778,7 +1783,7 @@ select {
 }
 
 .offer-price{
-    color:var(--green);
+    color:var(--red);
     font-weight: 600;
 }
 .offer-title{
@@ -1917,13 +1922,14 @@ select {
     height: 43px;
     border: 1px solid var(--red);
     border-radius: 30px;
-    color: black;
-    font-weight: 500;
+    color: var(--red);
+    font-weight: 600;
     margin-bottom: 10px;
     background-color: white;
     cursor: pointer;
     font-size: 14.5px;
     animation: button1 11s linear infinite;
+    font-weight: 600
 }
 .load-spinner{
 	display: none;
@@ -1951,9 +1957,9 @@ select {
     }
 }
 .addedBtn{
-    background-color: var(--black)!important;
+    background-color: var(--red)!important;
     border: 0;
-    color: white;
+    color: white!important;
 }
 .proceed-to-checkout{
     width: 100%;
@@ -1963,7 +1969,7 @@ select {
     border: 0;
     color: white;
     border-radius: 30px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
     cursor: pointer;
     animation: button2 11s linear infinite;
@@ -2074,7 +2080,7 @@ select {
         font-size: 24px;
         font-weight: 600;
         display: inline-block;
-        color: var(--green);
+        color: var(--red);
         display: inline-block;
     }
     .offer-box .offer-save{
@@ -2371,7 +2377,7 @@ select {
         transform: scale(1.05); 
     }
    .product-link:hover .product-feed-title{
-        color: var(--green)
+        color: var(--red)
     }
     .slider-product-link{
         transform: none!important;
@@ -2380,9 +2386,8 @@ select {
         color: var(--green);
     }
     .offerBtn:hover{
-        background-color: var(--black);
+        background-color: var(--red);
         color: white;
-        border: 1px solid var(--black);
     }
     .thankyou-proceed-to-home{
 	margin-bottom: 11px;
@@ -2404,10 +2409,15 @@ select {
     }
     .add-to-cartBtn:hover, .variable-add-to-cartBtn:hover, .offerBtn:hover, .fee-add:hover, #place_order:hover, .proceed-to-checkout:hover, .offer-button:hover, .thankyou-proceed-to-home:hover, .attribute-item:hover{
         transform: scale(1.05); 
-        font-weight: 600;
+        font-weight: 700;
     }
-    .fee-add:hover, .checkout-offerBtn:hover, #place_order:hover, .offer-button:hover, .thankyou-proceed-to-home:hover{
+    .checkout-offerBtn:hover, #place_order:hover, .thankyou-proceed-to-home:hover{
         background: var(--black)!important;
+    }
+    
+    .fee-add:hover, .offer-button:hover, .checkout-offerBtn:hover{
+        background: var(--red)!important;
+        color: white!important;
     }
     .fee-title{
         cursor: pointer;
@@ -2644,7 +2654,8 @@ select {
     }
     .product-savings{
         padding: 5px 20px;
-	margin-bottom: 5px;
+	    margin-bottom: 5px;
+        
     }
     .delivery-calculator{
         padding: 5px;
