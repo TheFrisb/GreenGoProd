@@ -36,10 +36,10 @@
         <br class="mobile">
         <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span class="percentage">-{{ percentage }}%</span>)</p></div>
         {% if product.free_shipping == True %}
-        <p class="delivery-calculator"><span style="color:red;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
+        <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
         <p class="free-shipping">бесплатна достава</p>
         {% else %}
-        <p class="delivery-calculator"><span style="color:red;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
+        <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
         {% endif %}
     </div>
     {% if attributes %}
