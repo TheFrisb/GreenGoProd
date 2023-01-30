@@ -107,7 +107,7 @@ class Product(models.Model):
         return reverse('product-page', kwargs={'slug': self.slug})
 
 
-class product_campaigns(models.Model):
+class Product_campaigns(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, verbose_name='Продукт')
     title = models.TextField(null=True, blank=True)
 
