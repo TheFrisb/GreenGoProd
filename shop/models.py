@@ -76,7 +76,7 @@ class Product(models.Model):
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
     fake_quantity = models.IntegerField(default=randint(2, 20))
     review_average = models.IntegerField(default=0)
-    camapign_name = models.TextField(null=True, blank=True)
+    campaign_name = models.TextField(null=True, blank=True)
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
