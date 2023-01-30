@@ -8,6 +8,10 @@ class InformationInline(admin.StackedInline):
     list_display = ("Product_Title", "name",  "rating", "date_created")
 
 
+class CampaignItems(admin.StackedInline):
+    model = product_campaigns
+    
+    
 class InformationInline2(admin.StackedInline):
     model = OrderFeesItem
     list_display = ("title", "price")
@@ -49,7 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('attributes_type',),
         }),
         )
-    inlines = [ProductAttributesInLine, GalleryInline]
+    inlines = [ProductAttributesInLine, GalleryInline, CampaignItems]
     # list_editable 
     
   
