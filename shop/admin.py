@@ -26,7 +26,7 @@ class CartItemInline(admin.StackedInline):
     
 
 class ProductAttributesInLine(admin.TabularInline):
-    model = ProductAttribute
+    model = Product_campaigns
     list_display=("product", "color", "size", "price")
 
 class OrderAdmin(admin.ModelAdmin):
