@@ -9,7 +9,7 @@ class InformationInline(admin.StackedInline):
 
 
 class CampaignItems(admin.StackedInline):
-    model = product_campaigns
+    model = Product_campaigns
     
     
 class InformationInline2(admin.StackedInline):
