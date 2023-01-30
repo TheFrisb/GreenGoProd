@@ -53,6 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('attributes_type',),
         }),
         )
+    readonly_fields=('woocommerce_sync_status', 'woocommerce_id',)
     inlines = [ProductAttributesInLine, GalleryInline, CampaignItems]
     # list_editable 
     
