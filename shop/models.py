@@ -366,7 +366,8 @@ class OrderItem(models.Model):
     attribute_price = models.IntegerField(null = True)
     is_cart_offer = models.BooleanField(default = False)
     is_thankyou_offer = models.BooleanField(default = False)
-    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креиран во:', null=True)
+   
     @property
     def get_product_total(self):
         return self.price*self.quantity
