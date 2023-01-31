@@ -381,7 +381,7 @@ def export_excel(request):
                 ),
             ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'number', 'number', 'message')
             print(rows)
-            
+            total_ordered_stock_price = {}
             for row in rows:
                 row_num += 1
                 height = 10
