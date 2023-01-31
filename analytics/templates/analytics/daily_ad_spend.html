@@ -1,0 +1,344 @@
+{% extends "analytics/base_analytics.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .dropdownsearch{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .options{
+    width:100%;  
+  }
+select {
+      display: none !important;
+  }
+  
+  .dropdown-select {
+      background-color: #fff;
+      border-radius: 5px;
+      border: solid 1px #0a58ca;
+      cursor: pointer;
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      height: 38px;
+      line-height: 35px;
+      outline: none;
+      padding-left: 16px;
+      padding-right: 30px;
+      position: relative;
+      text-align: left !important;
+      transition: all 0.2s ease-in-out;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      white-space: nowrap;
+      width: auto;
+  
+  }
+  
+  .dropdown-select:focus {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:hover {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:active,
+  .dropdown-select.open {
+      background-color: #fff !important;
+      border-color: #0d6efd;;
+  }
+  
+  .dropdown-select:after {
+      height: 0;
+      width: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #abaeb4;
+      -webkit-transform: origin(50% 20%);
+      transform: origin(50% 20%);
+      transition: all 0.125s ease-in-out;
+      content: '';
+      display: block;
+      margin-top: -2px;
+      pointer-events: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+  }
+  
+  .dropdown-select.open:after {
+      -webkit-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+  }
+  
+  .dropdown-select.open .list {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  .dropdown-select.open .option {
+      cursor: pointer;
+  }
+  
+  .dropdown-select.wide {
+      width: 100%;
+  }
+  
+  .dropdown-select.wide .list {
+      left: 0 !important;
+      right: 0 !important;
+  }
+  
+  .dropdown-select .list {
+      box-sizing: border-box;
+      transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75);
+      -webkit-transform-origin: 50% 0;
+      transform-origin: 50% 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09);
+      background-color: #fff;
+      border-radius: 6px;
+      margin-top: 4px;
+      padding: 3px 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 999;
+      max-height: 250px;
+      overflow: auto;
+      border: 1px solid #0d6efd;
+  }
+  
+  .dropdown-select .list:hover .option:not(:hover) {
+      background-color: transparent !important;
+  }
+  .dropdown-select .dd-search{
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0.5rem;
+  }
+  
+  .dropdown-select .dd-searchbox{
+    width:90%;
+    padding:0.5rem;
+    border:1px solid #abaeb4;
+    border-color:#abaeb4;
+    border-radius:4px;
+    outline:none;
+  }
+  .dropdown-select .dd-searchbox:focus{
+    border-color: #0d6efd!important;
+  }
+  
+  .dropdown-select .list ul {
+      padding: 0;
+  }
+  
+  .dropdown-select .option {
+      cursor: default;
+      font-weight: 400;
+      line-height: 40px;
+      outline: none;
+      padding-left: 18px;
+      padding-right: 29px;
+      text-align: left;
+      transition: all 0.2s;
+      list-style: none;
+  }
+  
+  .dropdown-select .option:hover,
+  .dropdown-select .option:focus {
+      background-color: #212529!important;
+      color: white!important;
+      font-weight: 600!important;
+      font-size: 16px!important;
+  }
+  
+  .dropdown-select .option.selected {
+      font-weight: 600;
+      color: #0d6efd;
+  }
+  
+  .dropdown-select .option.selected:focus {
+        background-color: #f6f6f6 !important;
+  }
+  
+  .dropdown-select a {
+      color: #aaa;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+  }
+  
+  .dropdown-select a:hover {
+      color: #666;
+  }
+</style>
+<div class="container-fluid text-center py-3 border">
+    <h3>Аналитика за производи</h3>
+</div>
+
+<div class="container-xxl w-80 py-4">
+{% csrf_token %}
+<input type="hidden" name="owner" id="owner" value="{{ daily_item.id }}">
+  <div class="row mb-4">
+    <div class="col">
+        <h4 class="py-3 border-bottom border-2 border-danger d-inline-block ">{{ daily_item.product.title }}</h1>
+    </div>
+    <form class="col">
+      <div class="form-group">
+          <label for="product-search">Одбери производ</label>
+          <input type="hidden" required name="city" placeholder="Одбери продукт" class="form-control" value="#" id="chosen_product">
+                    <div class="dropdownsearch mb-1">
+                        <div class="options">
+                          <select name="" id="dynamic_select">
+                              <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{ option.get_absolute_url }}">Одбери производ</option>
+                              {% for option in search_options %}                               
+                              <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{  option.get_absolute_url }}">{{ option.product.sku }}</option>
+                              {% endfor %}     
+                        </select>
+                        </div>
+                    </div>
+          <button class="btn btn-primary float-end" type="button" id="change_product">Одбери</button>
+      </div>
+    </form>
+
+  </div>
+  <div class="row">
+    <div class="alert alert-success collapse" role="alert">
+      Успешно зачуван коментар.
+    </div>
+    <table class="table table-sm table-bordered text-center align-middle table-hover" id="table">
+      <thead class="table-dark fw-normal">
+
+          <th>Дата</th>
+          <th>Количина</th>
+          <th>Цена(АОВ</th>
+          <th>Нето</th>
+          <th>Набавка</th>
+          <th>Фиксен трошок</th>
+          <th>Реклама</th>
+          <th>Neto вкупно</th>
+          <th>Kes din</th>
+          <th>Kes Den</th>
+          <th>Cost per purchase</th>
+          <th>BE ROAS</th>
+          <th>ROAS</th>
+          <th>ROI</th>
+          <th>Коментар</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in daily_rows %}
+          <tr>
+            <td class="bg-warning text-dark">{{ row.created_at|date:"d/m" }}</td>
+            <td class="table-light">{{ row.quantity }}</td>
+            <td class="table-light">{{ row.price }}</td>
+            <td class="table-light">{{ row.neto_price }}</td>
+            <td class="table-light">{{ row.stock_price }}</td>
+            <td class="table-light">{{ row.fixed_cost }}</td>
+            <td class="table-light">{{ row.ad_cost|floatformat:2 }}</td>
+            <td class="table-light">{{ row.neto_total }}</td>
+            {% if row.profit > 0 %}
+            <td class="bg-success text-white">{{ row.profit }}</td>
+            {% else %}
+            <td class="table-secondary">{{ row.profit }}</td>
+            {% endif %}
+            <td class="table-secondary">{% widthratio row.profit 2 1 %}</td>
+            <td class="table-secondary">{{ row.cost_per_purchase|floatformat:2 }}</td>
+            {% if row.be_roas > 0 %}
+            <td class="bg-success text-white">{{ row.be_roas|floatformat:2 }}</td>
+            {% else %}
+            <td class="table-secondary">{{ row.be_roas|floatformat:2 }}</td>
+            {% endif %}
+            {% if row.roas > 0 %}
+            <td class="bg-success text-white">{{ row.roas|floatformat:2 }}</td>
+            {% else %}
+            <td class="table-secondary">{{ row.be_roas|floatformat:2 }}</td>
+            {% endif %}
+            <td class="table-light">{{ row.roi|floatformat:2 }}</td>
+            {% if row.comment %}
+            <td class="table-light" style="word-wrap: break-word; max-width: 150px;">{{ row.comment }}></td>
+            {% else %}
+            <td class="table-light" style="word-wrap: break-word; max-width: 150px;"><button class="btn btn-outline-primary btn-sm add_comment_button" data-row-id="{{ row.id }}" >ДОДАДИ</button></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+        <tr>
+          <td class="table-dark"></td>
+          <td class="table-dark fw-bold">{{ total_quantity }}</td>
+          <td class="table-dark"></td>
+          <td class="table-dark"></td>
+          <td class="table-dark"></td>
+          <td class="table-dark"></td>
+          <td class="table-dark fw-bold">{{ total_ad_spend|floatformat:2 }}</td>
+          <td class="table-dark"></td>
+          <td class="table-dark fw-bold">{{ total_profit }}</td>
+          <td class="table-dark"></td>
+          <td class="table-dark fw-bold">{{ total_cpp|floatformat:2 }}</td>
+          <td class="table-dark "></td>
+          <td class="table-dark fw-bold">{{ total_roas|floatformat:2 }}</td>
+          <td class="table-dark fw-bold">{{ total_roi|floatformat:2 }}</td>
+          <td class="table-dark"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <form class="p-5 border border-primary rounded" >
+    <div class="row d-flex align-items-end">
+      <div class="col-4">
+        <label for="row_ad_spend">Внеси го соодветниот AD SPEND според датата</label>
+        <input type="number" class="form-control border border-primary" placeholder="(Бројка во денари)" name="row_ad_spend" id="old_row_ad_spend" value="">
+      </div>
+      <div class="col-3">
+        <label for="old_row_quantity" class="">Внеси ја соодветната количина</label>
+        <input type="number" class="form-control border border-primary" placeholder="Бројка" name="old_row_quantity" id="old_row_quantity" value="">
+      </div>
+      <div class="col-4">
+        <label for="row_date" class="">Внеси jа датата за кој ред е наменена</label>
+        <input type="date" class="form-control border border-primary" placeholder="Одбери дата" name="row_date" id="old_row_date">
+      </div>
+      <div class="col">
+        <button class="btn btn-primary" name="submit_old_row" id="enter_old_row">Внеси</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Додади коментар</h5>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea type="text" name="comment" id="enter_comment" style="width: 100%"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Затвори</button>
+        <button type="button" class="btn btn-primary" id="submit_comment">Зачуви</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'analytics/analytics.js' %}"></script>
+{% endblock scripts %}
