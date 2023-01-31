@@ -145,11 +145,11 @@ def add_old_row(request):
         owner = daily_items.objects.get(id=owner_id)
         product = owner.product
         
-        product_price = product.sale_price
+        product_price = product.sale_price - 100
         stock_price = product.supplier_stock_price
-        fixed_cost = 84
+        fixed_cost = 0
 
-        neto_price = product_price - stock_price - fixed_cost
+        neto_price = product_price - stock_price
         yesterdays_ad_spend = ad_spend
         neto_total = quantity * neto_price
         print(neto_total, quantity, yesterdays_ad_spend)
