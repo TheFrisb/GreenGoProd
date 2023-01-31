@@ -26,11 +26,4 @@ def update_product_woocommerce(sender, instance, created, **kwargs):
         instance.product.attributes_type = instance.check_type_of_attribute()
         instance.product.save()
         
-@receiver(post_save, sender=product_campaigns)
-def create_campaign_owner(sender, instance, created, **kwargs):
-    if created:
-        if daily_items.objects.filter(product=instance.product).exists():
-            pass
-        else:
-            new_daily_item = daily_items(product=instance.product)
-            new_daily_item.save()
+
