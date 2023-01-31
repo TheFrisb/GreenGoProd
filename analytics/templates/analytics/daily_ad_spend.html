@@ -267,7 +267,7 @@ select {
             {% endif %}
             <td class="table-secondary">{{ row.roi|floatformat:2 }}</td>
             {% if row.comment %}
-            <td class="table-light" style="word-wrap: break-word; max-width: 150px;">{{ row.comment }}></td>
+            <td class="table-light" style="word-wrap: break-word; max-width: 150px;">{{ row.comment }}</td>
             {% else %}
             <td class="table-light" style="word-wrap: break-word; max-width: 150px;"><button class="btn btn-outline-primary btn-sm add_comment_button" data-row-id="{{ row.id }}" >ДОДАДИ</button></td>
             {% endif %}
