@@ -406,6 +406,7 @@ def export_excel(request):
                         total_ordered_dict[item.label] += item.quantity
                     else:
                         total_ordered_dict[item.label] = item.quantity
+                        total_ordered_stock_price[item.label] = item.product.supplier_stock_price
                         
                 for item in order_items:
                     if item.is_cart_offer is True:
@@ -476,8 +477,10 @@ def export_excel(request):
                 
                 worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
                 worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                worksheet.cell(row=row_num, column=11).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
                 cell = worksheet.cell(row=row_num, column = 10).value = value
+                cell = worksheet.cell(row=row_num, column = 11). value = total_ordered_stock_price.get(key)
                 i += 1
             
             row_num += 2
