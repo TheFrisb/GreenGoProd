@@ -74,7 +74,7 @@ class Product(models.Model):
     slug =  models.SlugField(unique=True, max_length=250, blank = True)
     quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
-    fake_quantity = models.IntegerField(default=randint(2, 20))
+    fake_quantity = models.IntegerField(null=True)
     review_average = models.IntegerField(default=0)
     #Product Data
 
