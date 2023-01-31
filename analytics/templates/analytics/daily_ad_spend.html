@@ -266,8 +266,9 @@ select {
             {% if row.roas > 0 %}
             <td class="bg-success text-white">{{ row.roas|floatformat:2 }}</td>
             {% else %}
-            <td class="table-secondary">{{ row.be_roas|floatformat:2 }}</td>
+            <td class="table-secondary">{{ row.roas|floatformat:2 }}</td>
             {% endif %}
+            <td class="table-secondary">{{ row.roi|floatformat:2 }}</td>
             {% if row.comment %}
             <td class="table-light" style="word-wrap: break-word; max-width: 150px;">{{ row.comment }}></td>
             {% else %}
