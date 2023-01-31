@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['www.greengoshop.mk', 'greengoshop.mk', '161.35.16.191'] 
 INSTALLED_APPS = [
     'shop.apps.ShopConfig',
-    'analytics.apps.AnalyticsConfig',
+    'analytics.apps.AnalyticsCofig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
