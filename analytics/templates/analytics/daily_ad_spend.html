@@ -229,7 +229,6 @@ select {
           <th>Цена(АОВ</th>
           <th>Нето</th>
           <th>Набавка</th>
-          <th>Фиксен трошок</th>
           <th>Реклама</th>
           <th>Neto вкупно</th>
           <th>Нето профит</th>
@@ -248,7 +247,6 @@ select {
             <td class="table-light">{{ row.price }}</td>
             <td class="table-light">{{ row.neto_price }}</td>
             <td class="table-light">{{ row.stock_price }}</td>
-            <td class="table-light">{{ row.fixed_cost }}</td>
             <td class="table-light">{{ row.ad_cost|floatformat:2 }}</td>
             <td class="table-light">{{ row.neto_total }}</td>
             {% if row.profit > 0 %}
@@ -256,7 +254,6 @@ select {
             {% else %}
             <td class="table-secondary">{{ row.profit }}</td>
             {% endif %}
-            <td class="table-secondary">{% widthratio row.profit 2 1 %}</td>
             <td class="table-secondary">{{ row.cost_per_purchase|floatformat:2 }}</td>
             {% if row.be_roas > 0 %}
             <td class="bg-success text-white">{{ row.be_roas|floatformat:2 }}</td>
