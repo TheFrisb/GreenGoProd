@@ -21,7 +21,7 @@ def daily_ad_spend(request):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    search_options = daily_items.objects.all()
+    search_options = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
@@ -59,7 +59,7 @@ def daily_ad_spend_by_id(request, pk):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    search_options = daily_items.objects.all()
+    search_options = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
