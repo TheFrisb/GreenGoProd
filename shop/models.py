@@ -79,7 +79,7 @@ class Product(models.Model):
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
-    supplier_stock_price = models.IntegerField(verbose_name='Набавна цена', blank=True, null=True)
+    supplier_stock_price = models.IntegerField(verbose_name='Набавна цена', null=True)
 
     sku = models.CharField(max_length = 100, verbose_name='Лабел')
     
