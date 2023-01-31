@@ -33,7 +33,8 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['name', 'address', 'city','number', 'tracking_no']
     list_display = ("tracking_no", "name", "created_at", "get_status", "total_price", "get_shipping")
     inlines = [InformationInline, InformationInline2]
-
+    change_list_template = 'admin/redirect_to_shopmanager.html'
+    
 
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'sku', 'supplier__name']
