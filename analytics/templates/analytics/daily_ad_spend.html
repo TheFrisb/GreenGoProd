@@ -232,8 +232,7 @@ select {
           <th>Фиксен трошок</th>
           <th>Реклама</th>
           <th>Neto вкупно</th>
-          <th>Kes din</th>
-          <th>Kes Den</th>
+          <th>Нето профит</th>
           <th>Cost per purchase</th>
           <th>BE ROAS</th>
           <th>ROAS</th>
@@ -269,7 +268,6 @@ select {
             {% else %}
             <td class="table-secondary">{{ row.be_roas|floatformat:2 }}</td>
             {% endif %}
-            <td class="table-light">{{ row.roi|floatformat:2 }}</td>
             {% if row.comment %}
             <td class="table-light" style="word-wrap: break-word; max-width: 150px;">{{ row.comment }}></td>
             {% else %}
