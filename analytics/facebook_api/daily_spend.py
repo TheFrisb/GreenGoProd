@@ -35,7 +35,7 @@ def get_campaign_id():
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
             populate_daily_rows(name_of_campaign, ad_spend)
-            logger.info(campaign['name'])
+            logger.info(name_of_campaign)
                 
 
     return 'Campaign not found'
@@ -47,13 +47,14 @@ def populate_daily_rows(name_of_campaign, ad_spend):
         product_campaign_ob = product_campaigns.objects.get(title=name_of_campaign)
         campaigns_product = product_campaign_ob.product
         product_campaign = product_campaigns.objects.filter(product=campaigns_product)
-        logger.info(product_campaign_ob)
-        logger.info(campaigns_product)
-        logger.info(product_campaign)
+
 
     except:
         return 1
     if product_campaign.count() == 1:
+        logger.info(product_campaign_ob)
+        logger.info(campaigns_product)
+        logger.info(product_campaign)
         product = product_campaign[0].product
         owner_of_campaign = daily_items.objects.filter(product=product).first()
         product_price = product.sale_price
