@@ -33,7 +33,7 @@ def get_campaign_id():
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
             print(name_of_campaign)
-            #populate_daily_rows(name_of_campaign, ad_spend)
+            populate_daily_rows(name_of_campaign, ad_spend)
 
                 
 
@@ -46,6 +46,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
         product_campaign_ob = product_campaigns.objects.get(title=name_of_campaign)
         campaigns_product = product_campaign_ob.product
         product_campaign = product_campaigns.objects.filter(product=campaigns_product)
+        print('CAMPAIGN_OBJECT', product_campaign_ob, 'CAMPAIGN - PRODUCT', campaigns_product, 'PRODUCT_CAMPAIGN', product_campaign)
 
 
     except:
@@ -58,12 +59,13 @@ def populate_daily_rows(name_of_campaign, ad_spend):
         stock_price = product.supplier_stock_price
         fixed_cost = 0
         quantity = 0
-
+        print('CAMPAIGN FOUND, PRODUCT: ', product, 'OWNER: ', owner_of_campaign
         yesterday = timezone.now() - timezone.timedelta(days=1)
         start_time = yesterday.replace(hour=0, minute=0, second=0)
         end_time = yesterday.replace(hour=23, minute=59, second=59)
         
         ordered_products = OrderItem.objects.filter(product=product, created_at__range=(start_time, end_time))
+        print('ORDERED PRODUCTS: ', ordered_products)
         for product in ordered_products:
             quantity = quantity + product.quantity
 
@@ -84,11 +86,11 @@ def populate_daily_rows(name_of_campaign, ad_spend):
             roas = (quantity * product_price)
             roi = (neto_price * quantity)
 
-        daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-                                ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-                                be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
+        #daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
+         #                       ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
+         #                       be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
         
-        daily_row_new.save()
+        #daily_row_new.save()
     
     elif product_campaign.count() > 1:
         yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
