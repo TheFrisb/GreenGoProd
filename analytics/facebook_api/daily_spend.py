@@ -59,7 +59,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
         stock_price = product.supplier_stock_price
         fixed_cost = 0
         quantity = 0
-        print('CAMPAIGN FOUND, PRODUCT: ', product, 'OWNER: ', owner_of_campaign
+        print('CAMPAIGN FOUND, PRODUCT: ', product, 'OWNER: ', owner_of_campaign)
         yesterday = timezone.now() - timezone.timedelta(days=1)
         start_time = yesterday.replace(hour=0, minute=0, second=0)
         end_time = yesterday.replace(hour=23, minute=59, second=59)
