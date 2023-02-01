@@ -152,7 +152,7 @@ LOGGING = {
     },
 }
 CRONJOBS = [
-    ('0 4 * * *', 'shop.cron.old_carts_cleaner'),
+    ('0 2 * * *', 'shop.cron.old_carts_cleaner'),
     ('8 4 * * *', 'analytics.facebook_api.daily_spend.get_campaign_id')
 ]
 
