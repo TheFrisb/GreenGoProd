@@ -8,10 +8,8 @@ from analytics.models import *
 from datetime import datetime
 from shop.models import product_campaigns, Product
 from decouple import config
-import logging
 
 
-logger = logging.getLogger(__file__)
 def get_campaign_id():
     # Initialize the Facebook Ads SDK with the access token
     FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
@@ -34,7 +32,6 @@ def get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
-
             populate_daily_rows(name_of_campaign, ad_spend)
 
                 
