@@ -12,7 +12,6 @@ from shop.models import Product
 
 @login_required
 def daily_ad_spend(request):
-    daily_spend.get_campaign_id()
     daily_item = daily_items.objects.filter().first()
     daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
     total_quantity = 0
