@@ -8,10 +8,8 @@ from analytics.models import *
 from datetime import datetime
 from shop.models import product_campaigns, Product
 from decouple import config
-import logging
 
 
-logger = logging.getLogger(__file__)
 def get_campaign_id():
     # Initialize the Facebook Ads SDK with the access token
     FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
@@ -35,7 +33,7 @@ def get_campaign_id():
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
             populate_daily_rows(name_of_campaign, ad_spend)
-            logger.info(name_of_campaign)
+
                 
 
     return 'Campaign not found'
@@ -52,9 +50,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
     except:
         return 1
     if product_campaign.count() == 1:
-        logger.info(product_campaign_ob)
-        logger.info(campaigns_product)
-        logger.info(product_campaign)
+
         product = product_campaign[0].product
         owner_of_campaign = daily_items.objects.filter(product=product).first()
         product_price = product.sale_price
@@ -90,7 +86,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
         daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
                                 ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
                                 be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
-        logger.info(product, owner_of_campaign, product_price, stock_price, yesterday, start_time, end_time , ordered_products, neto_price, yesterdays_ad_spen, neto-totalm profit, be_roas,roas,roi)
+        
         daily_row_new.save()
     
     elif product_campaign.count() > 1:
