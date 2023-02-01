@@ -26,6 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = ['www.greengoshop.mk', 'greengoshop.mk', '161.35.16.191'] 
 INSTALLED_APPS = [
+    'django_crontab',
     'shop.apps.ShopConfig',
     'analytics.apps.AnalyticsConfig',
     'django.contrib.admin',
@@ -150,7 +151,9 @@ LOGGING = {
         },
     },
 }
-
+CRONJOBS = [
+    ('0 4 * * *', 'shop.cron.old_carts_cleaner')
+]
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'CET'
