@@ -34,7 +34,7 @@ def get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
-            logger.info(name_of_campaign)
+
             populate_daily_rows(name_of_campaign, ad_spend)
 
                 
