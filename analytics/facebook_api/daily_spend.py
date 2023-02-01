@@ -55,7 +55,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
 
         product = product_campaign[0].product
         owner_of_campaign = daily_items.objects.filter(product=product).first()
-        product_price = product.sale_price
+        product_price = product.sale_price - 100
         stock_price = product.supplier_stock_price
         fixed_cost = 0
         quantity = 0
@@ -109,7 +109,7 @@ def populate_daily_rows(name_of_campaign, ad_spend):
 
             product = product_campaign[0].product
             owner_of_campaign = daily_items.objects.filter(product=product).first()
-            product_price = product.sale_price
+            product_price = product.sale_price - 100
             stock_price = product.supplier_stock_price
             fixed_cost = 0
             quantity = 0
