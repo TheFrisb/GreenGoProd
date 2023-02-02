@@ -1,4 +1,8 @@
 {% extends 'shop/base.html' %}
+{% load static %}
+{% block metatags %}
+<meta property="og:image" content="https://greengoshop.mk{% static 'icons/logo_meta_tag.webp' %}" />
+{% endblock metatags %}
 {% block content %}
 <div class="content-container thank-you">
     <a href="{% url 'shop-home' %}" class="thankyou-proceed-to-home">ПРОДОЛЖИ СО КУПУВАЊЕ</a>
