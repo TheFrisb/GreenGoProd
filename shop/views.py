@@ -434,16 +434,16 @@ def export_excel(request):
 
                     if item.full_product_title!='':
                         if priority is True:
-                            order_items_total_name += 'PRIORITETNA ' + str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
-                            order_items_total_label += 'PRIORITETNA ' + str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                            order_items_total_name += 'PRIORITETNA ' + str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1)
+                            order_items_total_label += 'PRIORITETNA ' + str(item.label) + ' x ' + str(item.quantity + occurence - 1)
                         else:
-                            order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1) + '\n'
-                            order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1) + '\n'
+                            order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1)
+                            order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1)
                         height += 15
 
 
-                if(height2 > height):
-                    height = height2
+               # if(height2 > height):
+                  #  height = height2
 
                 worksheet.row_dimensions[row_num].height = height
                 for col_num in range(1, len(row)+1):
