@@ -553,6 +553,10 @@
         setTimeout(myFunction, rand * 1000);
     }   
     if($("#ordered_items_notice_wrapper")){
+        $(document).on('click','#close_ordered_items_notice', function(e){
+            e.preventDefault();
+            $("#ordered_items_notice_wrapper").fadeOut(200);
+        })
         setTimeout(myFunction, (Math.floor(Math.random() * (20 - 13 + 1) + 13)) * 1000)
     }
  })
