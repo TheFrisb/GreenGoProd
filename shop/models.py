@@ -86,7 +86,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = self.title_slug
-        self.fake_quantity = randint(2, 20)
+        self.fake_quantity = randint(2, 6)
         reviews = Review.objects.filter(product=self)
         total_rating = 0
         for review in reviews:
