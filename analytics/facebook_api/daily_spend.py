@@ -177,9 +177,9 @@ def testing_get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
-            if(name_of_campaign == '(mkd)  5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)':
+            if(name_of_campaign == '(mkd)  5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)'):
                print('MATCH (mkd) 5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)')
-            if(name_of_campaign == '(mkd) 5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)':
+            if(name_of_campaign == '(mkd) 5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)'):
                print('MATCH 1 SPACE')
             #print(name_of_campaign)
             
