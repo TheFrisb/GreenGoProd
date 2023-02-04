@@ -167,7 +167,7 @@ def testing_get_campaign_id():
     for campaign in campaigns:
         campaign_id = campaign['id']
         campaign_obj = Campaign(campaign_id)
-        print(campaign_id)
+        print(typeof(campaign_id))
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         today = datetime.now().strftime('%Y-%m-%d')
 
