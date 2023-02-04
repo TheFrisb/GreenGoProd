@@ -51,7 +51,7 @@ def daily_ad_spend(request):
 
 def daily_ad_spend_by_id(request, pk):
     daily_item = daily_items.objects.get(slug=pk)
-    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('-owner__id')
+    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
     total_quantity = 0
     total_ad_spend = 0
     total_profit = 0
