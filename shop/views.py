@@ -294,6 +294,22 @@ def shopmanager_confirmed(request):
     return render(request, "shop/shopmanager/dashboard.html", context)
 
 
+def shopmanager_abandoned_carts(request):
+    abandoned_carts = Abandoned_Carts.objects.all().order_by('-id')
+    abandoned_cartItems = Abandoned_Carts.objects.all().order_by('-id')
+    paginator = Paginator(abandoned_carts, 50)
+    page = request.GET.get('page')
+    carts = paginator.get_page(page)
+    #print(abandoned_carts.first().get_items)
+    context = {
+        'carts': carts,
+        'cartItems': abandoned_cartItems,
+        'title': 'Abandoned Carts',
+    }
+    return render(request, "shop/shopmanager/abandoned_carts.html", context)
+
+
+
 def shopmanager_deleted(request):
     orders = Order.objects.filter(status='Deleted').order_by('-updated_at')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Deleted').order_by('-id')
@@ -531,4 +547,59 @@ def get_recent_ordered(request):
     else:
         return redirect('/')
   
+def create_or_check_abandoned_cart(request):
+    if request.method == 'POST':
+        current_cart = Cart.objects.get(session = request.session['nonuser'])
+        current_cartitems = CartItems.objects.filter(cart=current_cart)
 
+        if current_cartitems.count() == 0:
+            return JsonResponse({'status': "No cartItems"})
+        
+        else:     
+            abandoned_name = str(request.POST.get('name'))
+            abandoned_phone_number = str(request.POST.get('phone'))
+            # abandoned_cart = Abandoned_Carts.objects.update_or_create(session = request.session['nonuser'], defaults={
+            #     'name': abandoned_name,
+            #     'phone': abandoned_phone_number
+            # })
+            
+            try:
+                abandoned_cart = Abandoned_Carts.objects.get(session = request.session['nonuser'])
+                abandoned_cart.name = abandoned_name
+                abandoned_cart.phone = abandoned_phone_number
+                abandoned_cart.save()
+                print('Found and updated')
+            except:
+                abandoned_cart = Abandoned_Carts.objects.create(session = request.session['nonuser'])
+                abandoned_cart.name = abandoned_name
+                abandoned_cart.phone = abandoned_phone_number
+                abandoned_cart.save()
+                print('Not Found and created')
+            print(abandoned_cart)
+
+            for current_item in current_cartitems:
+                abandoned_item = Abandoned_CartItems.objects.filter(cart=abandoned_cart, product = current_item.product,
+                                                                    attributename=current_item.attributename, product_qty = current_item.product_qty,
+                                                                    attribute=current_item.attribute, attributeprice=current_item.attributeprice,
+                                                                    offer_price=current_item.offer_price).first()
+                print('Abandoned item: ', abandoned_item)
+                if not abandoned_item:
+                    Abandoned_CartItems.objects.create(cart=abandoned_cart, product = current_item.product,
+                                                                    attributename=current_item.attributename, product_qty = current_item.product_qty,
+                                                                    attribute=current_item.attribute, attributeprice=current_item.attributeprice,
+                                                                    offer_price=current_item.offer_price)
+
+        return JsonResponse({'status': "Success"})
+    else:
+        return redirect('/')
+    
+
+
+def remove_abandoned_cart(request):
+    if request.method == 'POST':
+        id = str(request.POST.get('cartId'))
+        Abandoned_Carts.objects.get(pk=id).delete()
+        return JsonResponse({'status': "Success"})
+    else:
+        return redirect('/')
+    
