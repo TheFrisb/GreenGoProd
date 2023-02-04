@@ -24,10 +24,10 @@
               <td>
                 <p style="margin:0!important">{{ cart.phone }}</p>
                 {% if cart.possible_number %}
-                <p style="margin:0!important">Можен број: {{ cart.possible_number }}</p>
+                <p style="margin:0!important" data-toggle="tooltip" data-placement="top" title="Човек со истото име и презиме претходно има нарачан со тај број">Можен број: {{ cart.possible_number }}</p>
                 {% endif %}
             </td>  
-              <td style="word-wrap: break-word; max-width: 520px;">
+              <td style="word-wrap: break-word; max-width: 520px;" data-toggle="tooltip" data-placement="top" title="Во цената не е пресметано количина, туку само цената на продукт">
                 {% for item in cart.abandoned_cartitem_set.all %}
                     {% if item.attributename %}
                     <p style="margin:0!important">{{ item.product.title }}{{ item.attributename }} x{{item.product_qty}} - {{ item.attributeprice }} ден</p>
