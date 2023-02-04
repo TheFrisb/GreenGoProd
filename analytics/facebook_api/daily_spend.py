@@ -162,7 +162,7 @@ def testing_get_campaign_id():
     # Search for campaigns by string and ad account ID
     account = AdAccount(config('MARKETING_AD_ACCOUNT'))
     # campaigns = account.get_campaigns(fields=['name','id'], params={'limit':100})
-    campaigns = account.get_campaigns(fields=['name','id','effective_status'])
+    campaigns = account.get_campaigns(fields=['name','id','effective_status'],  params={'limit':100})
     # print(campaigns)
     # Iterate over all campaigns and find the first campaign that matches the search string
     for campaign in campaigns:
