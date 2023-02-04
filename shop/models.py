@@ -410,3 +410,59 @@ class OrderFeesItem(models.Model):
    
     def __str__(self):
         return '{} ({} ден)'.format(self.title, self.price)
+    
+    
+    
+class Abandoned_Carts(models.Model):
+    session = models.CharField(max_length=100)
+
+    name = models.CharField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=100, null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креирана во:')
+    @property
+    def session_id(self):
+        return self.session
+    
+
+    @property
+    def possible_number(self):
+        order = Order.objects.filter(name__iexact=self.name).first()
+        if not order:
+            return False
+        else:
+            return str(order.number)
+
+    
+class Abandoned_CartItems(models.Model):
+    cart = models.ForeignKey(Abandoned_Carts, on_delete=models.CASCADE, null=True, related_name='abandoned_cartitem_set')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attributename = models.CharField(max_length=100, null = True, default='')
+    product_qty = models.IntegerField(null=False, blank=False)
+    attribute = models.ForeignKey(ProductAttribute, on_delete=models.CASCADE, null = True)
+    attributeprice = models.IntegerField(null=True)
+    offer_price = models.IntegerField(null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_session(self):
+        return self.cart.session
+
+    @property
+    def has_attributes(self):
+        if(self.attribute is not None):
+            return True
+        else:
+            return False
+        
+    @property
+    def has_offer(self):
+        if(self.offer_price is not None):
+            return True
+        else:
+            return False
+
+    class Meta:
+        verbose_name = "Abandoned Cart Items"
+        verbose_name_plural = "Abandoned Cart Items"
+        
