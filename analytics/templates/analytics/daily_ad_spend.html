@@ -205,9 +205,9 @@ select {
                     <div class="dropdownsearch mb-1">
                         <div class="options">
                           <select name="" id="dynamic_select">
-                              <option value="{{ option.owner.product.title }}" fake-name="{{ option.owner.product.sku }}" data-url="{{ option.owner.get_absolute_url }}">Одбери производ</option>
+                              <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{ option.get_absolute_url }}">Одбери производ</option>
                               {% for option in search_options %}                               
-                              <option value="{{ option.owner.product.title }}" fake-name="{{ option.owner.product.sku }}" data-url="{{  option.owner.get_absolute_url }}">{{ option.owner.product.sku }}</option>
+                              <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{  option.get_absolute_url }}">{{ option.product.sku }}</option>
                               {% endfor %}     
                         </select>
                         </div>
