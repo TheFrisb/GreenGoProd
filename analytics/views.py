@@ -20,9 +20,8 @@ def daily_ad_spend(request):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday = timezone.now() - timedelta(days=1)
-
-    search_options = daily_rows.filter(created_at__date=yesterday.date()).order_by('created_at')
+    yesterday = timezone.now().date() - timedelta(days=1)
+    daily_rows = daily_row.objects.filter(created_at__date=yesterday).order_by('created_at')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
@@ -60,9 +59,8 @@ def daily_ad_spend_by_id(request, pk):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday = timezone.now() - timedelta(days=1)
-
-    search_options = daily_rows.filter(created_at__date=yesterday.date()).order_by('created_at')
+    yesterday = timezone.now().date() - timedelta(days=1)
+    daily_rows = daily_row.objects.filter(created_at__date=yesterday).order_by('created_at')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
