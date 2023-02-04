@@ -126,6 +126,67 @@ $(document).ready(function () {
             return;
         }
     })
+    
+    var token = $('input[name=csrfmiddlewaretoken]').val()
+    ;(function($){
+        $.fn.extend({
+            donetyping: function(callback,timeout){
+                timeout = timeout || 1e3; // 1 second default timeout
+                var timeoutReference,
+                    doneTyping = function(el){
+                        if (!timeoutReference) return;
+                        timeoutReference = null;
+                        callback.call(el);
+                    };
+                return this.each(function(i,el){
+                    var $el = $(el);
+
+                    $el.is(':input') && $el.on('keyup keypress paste',function(e){
+
+                        if (e.type=='keyup' && e.keyCode!=8) return;
+
+                        if (timeoutReference) clearTimeout(timeoutReference);
+                        timeoutReference = setTimeout(function(){
+                            doneTyping(el);
+                        }, timeout);
+                    }).on('blur',function(){
+                        doneTyping(el);
+                    });
+                });
+            }
+        });
+    })(jQuery);
+    $('#checkout_input_name').donetyping(function(){
+      input_name = $('#checkout_input_name').val();
+      input_phone = $('#checkout_input_phone').val()
+      $.ajax({
+        method: "POST",
+        url: "/check-abandoned-carts",
+        data: {
+            'name': input_name,
+            'phone': input_phone,
+            csrfmiddlewaretoken: token,
+        },
+        success: function(response){
+        }
+      })
+    }, 3000);
+    $('#checkout_input_phone').donetyping(function(){
+      input_name = $('#checkout_input_name').val();
+      input_phone = $('#checkout_input_phone').val()
+      $.ajax({
+        method: "POST",
+        url: "/check-abandoned-carts",
+        data: {
+            'name': input_name,
+            'phone': input_phone,
+            csrfmiddlewaretoken: token,
+        },
+        success: function(response){
+        }
+      })
+      }, 3000);
+    
 });
 
 
