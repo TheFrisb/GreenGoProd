@@ -77,7 +77,23 @@ $(document).ready(function() {
             }
         })
     })
-    
+    $(".remove_abandoned_cart").click(function (e){
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+        var cart_id = $(this).data("order-id")
+        var btn = $(this)
+        console.log('Clicked')
+        $.ajax({
+            method: "POST",
+            url: "/remove-abandoned-cart",
+            data:{
+                'cartId': cart_id,
+                csrfmiddlewaretoken: token,
+            },
+            success: function (response){
+                $(btn).closest("tr").addClass("table-dark").fadeOut(4000);
+            }
+        })
+    })
     
     
     
