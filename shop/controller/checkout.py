@@ -92,6 +92,7 @@ def placeorder(request):
         CartFees.objects.filter(cart=CartHolder).delete()
         CartItems.objects.filter(cart=CartHolder).delete()
         Cart.objects.filter(session = request.session['nonuser']).delete()
+        Abandoned_Carts.objects.filter(session = request.session['nonuser']).delete()
         del request.session['nonuser']
         messages.success(request, "Your order has been placed successfully")
         try:
