@@ -9,7 +9,7 @@
     <table class="table table-sm  table-bordered table-hover align-middle" id="table">
         <thead class="table-dark">
   
-            <th class="col-1">Cart ID</th>
+            <th class="col-1">Дата</th>
             <th class="col-3">Име</th>
             <th class="col-2">Телефонски број</th>
             <th class="col-5">Продукти</th>
@@ -19,7 +19,7 @@
         <tbody>
             {% for cart in carts %}
             <tr class="table-success" style="font-weight:600!important">
-              <td class=>{{ cart.id }}</td>    
+              <td class=>{{ cart.created_at }}</td>    
               <td class=>{{ cart.name }}</td>  
               <td class=>
                 <p style="margin:0!important">{{ cart.phone }}</p>
