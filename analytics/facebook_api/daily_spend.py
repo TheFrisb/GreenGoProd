@@ -171,6 +171,7 @@ def testing_get_campaign_id():
         
         ob = product_campaigns.objects.filter(campaign_id=campaign_id).first()
         if ob:
+            print(campaign['name'], ' - ', campaign['id'], '|||', ob.title, ' - ', ob.campaign_id)
             count +=1
         
         campaign_obj = Campaign(campaign_id)
