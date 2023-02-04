@@ -1,0 +1,78 @@
+{% extends "analytics/base_analytics.html" %}
+{% load static %}
+{% block content %}
+{% csrf_token %}
+<div class="container-fluid text-center py-3 border">
+    <h3>Abandoned Carts</h3>
+</div>
+<div class="container-xxl py-4 text-center table-responsive">
+    <table class="table table-sm  table-bordered table-hover align-middle" id="table">
+        <thead class="table-dark">
+  
+            <th class="col-1">Cart ID</th>
+            <th class="col-3">Име</th>
+            <th class="col-2">Телефонски број</th>
+            <th class="col-5">Продукти</th>
+            <th class="col-1">Акција</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+            <tr class="table-success" style="font-weight:600!important">
+              <td class=>{{ cart.id }}</td>    
+              <td class=>{{ cart.name }}</td>  
+              <td class=>
+                <p style="margin:0!important">{{ cart.phone }}</p>
+                {% if cart.possible_number %}
+                <p style="margin:0!important">Можен број: {{ cart.possible_number }}</p>
+                {% endif %}
+            </td>  
+              <td style="word-wrap: break-word; max-width: 520px;">
+                {% for item in cart.abandoned_cartitem_set.all %}
+                    {% if item.attributename %}
+                    <p style="margin:0!important">{{ item.product.title }}{{ item.attributename }} x{{item.product_qty}} - {{ item.attributeprice }} ден</p>
+                    {% elif item.offer_price %}
+                    <p style="margin:0!important">(CART OFFER) | {{ item.product.title }} x{{item.product_qty}} - {{ item.offer_price }} ден</p>
+                    {% else %}
+                    <p style="margin:0!important">{{ item.product.title }} x{{item.product_qty}} - {{ item.product.sale_price }} ден</p>
+                    {% endif %}
+                {% endfor %}
+              </td>
+              <td><button class="btn btn-dark btn-sm remove_abandoned_cart" data-order-id="{{ cart.id }}">Отстрани</button> </td>           
+            </tr>
+            {% endfor %}
+
+        </tbody>
+      </table>
+
+      
+
+</div>
+<div class="container-sm py-4 text-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination nav justify-content-center">
+          {% if carts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ carts.previous_page_number }}">Previous</a>
+          </li>
+          {% endif %}
+      
+          {% for num in carts.paginator.page_range %}
+          <li class="page-item {% if carts.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+          {% endfor %}
+      
+          {% if carts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ carts.next_page_number }}">Next</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+</div>
+
+{% endblock content %}
+{% block scripts %}
+<script src="{% static 'shop/js/shopmanager.js' %}"></script>
+{% endblock scripts %}
