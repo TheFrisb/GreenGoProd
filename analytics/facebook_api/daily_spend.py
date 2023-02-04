@@ -168,10 +168,10 @@ def testing_get_campaign_id():
         campaign_id = campaign['id']
         name_of_campaign = campaign['name']
         ob = product_campaigns.objects.filter(title=name_of_campaign).first()
-           if ob:
-               print(name_of_campaign, ' | ', campaign_id, ' ||| ', ob.title, ' | ')
-               ob.campaign_id = campaign_id
-               ob.save()
+        if ob:
+            print(name_of_campaign, ' | ', campaign_id, ' ||| ', ob.title, ' | ')
+            ob.campaign_id = campaign_id
+            ob.save()
                 
         campaign_obj = Campaign(campaign_id)
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
