@@ -18,7 +18,8 @@ urlpatterns = [
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 
     path('checkout/', CheckoutView, name='checkout'),
-    
+    path('check-abandoned-carts', views.create_or_check_abandoned_cart, name="create_or_check_abandoned_cart"),
+    path('remove-abandoned-cart', views.remove_abandoned_cart, name='removeabandonedcart'),
     path('get_recent_ordered', views.get_recent_ordered, name="getrecentordered"),
     
     path('add-or-delete-fee', cart.addordeletefee, name="addordeletefee"),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('shopmanager/dashboard', views.shopmanager_dashboard, name='shopmanagerhome'),
     path('shopmanager/confirmed', views.shopmanager_confirmed, name='shconfirmed'),
     path('shopmanager/deleted', views.shopmanager_deleted, name='shdeleted'),
+    path('shopmanager/abandoned-carts', views.shopmanager_abandoned_carts, name='shabandonedcarts'),
     path('update-order', shopmanager.updateOrderStatus, name="updateorder" ),
     path('export-excel', views.export_excel, name="export_excel"),
 
