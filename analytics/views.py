@@ -20,7 +20,7 @@ def daily_ad_spend(request):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    yesterday = timezone.now() - timezone.timedelta(days=1)
     search_options = daily_rows.filter(created_at=yesterday).order_by('created_at')
     if(daily_rows):
         for row in daily_rows:
@@ -59,7 +59,7 @@ def daily_ad_spend_by_id(request, pk):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    yesterday = timezone.now() - timezone.timedelta(days=1)
     search_options = daily_rows.filter(created_at=yesterday).order_by('created_at')
     if(daily_rows):
         for row in daily_rows:
