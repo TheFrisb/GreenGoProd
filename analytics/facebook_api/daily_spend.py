@@ -87,8 +87,8 @@ def populate_daily_rows(name_of_campaign, ad_spend):
             roi = (neto_price * quantity)
 
      #  daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-                                ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-                                be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
+       #                         ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
+       #                         be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
         
        # daily_row_new.save()
     
