@@ -60,5 +60,5 @@ class daily_row(models.Model):
 
 
     def __str__(self):
-        return 'Daily row за - {}'.format(self.owner)
+        return 'Daily row за - {} - {}'.format(self.owner, self.created_at)
 
