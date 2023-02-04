@@ -152,3 +152,34 @@ def populate_daily_rows(name_of_campaign, ad_spend):
     else:
         return 1
     return 1
+
+
+
+def testing_get_campaign_id():
+    # Initialize the Facebook Ads SDK with the access token
+    FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
+    # Search for campaigns by string and ad account ID
+    account = AdAccount(config('MARKETING_AD_ACCOUNT'))
+    # campaigns = account.get_campaigns(fields=['name','id'], params={'limit':100})
+    campaigns = account.get_campaigns(fields=['name','id','effective_status'], params={'effective_status':['ACTIVE']})
+    # print(campaigns)
+    # Iterate over all campaigns and find the first campaign that matches the search string
+    for campaign in campaigns:
+        campaign_id = campaign['id']
+        campaign_obj = Campaign(campaign_id)
+        print(campaign_id, ' - ', campaign_obj, ' - ', campaign['name'])
+        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+        today = datetime.now().strftime('%Y-%m-%d')
+
+        insights = campaign_obj.get_insights(fields=['spend'],params={'date_preset': 'yesterday'})
+        if insights:
+            
+            campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
+            ad_spend = float(campaign_data['spend'])
+            name_of_campaign = campaign['name']
+            print(name_of_campaign)
+            
+
+                
+
+    return 'Campaign not found'
