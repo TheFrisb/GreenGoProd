@@ -167,7 +167,7 @@ def testing_get_campaign_id():
     for campaign in campaigns:
         campaign_id = campaign['id']
         campaign_obj = Campaign(campaign_id)
-        print(campaign_id, ' - ', campaign_obj, ' - ', campaign['name'])
+        print(campaign_id)
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         today = datetime.now().strftime('%Y-%m-%d')
 
@@ -177,11 +177,7 @@ def testing_get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
-            if(name_of_campaign == '(mkd)  5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)'):
-               print('MATCH (mkd) 5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)')
-            if(name_of_campaign == '(mkd) 5 VO 1 PROFESIONALNA I MULTIFUNKCIONALNA CETKA ZA KOSA (web)'):
-               print('MATCH 1 SPACE')
-            #print(name_of_campaign)
+            
             
 
                 
