@@ -52,7 +52,7 @@ def daily_ad_spend(request):
 
 def daily_ad_spend_by_id(request, pk):
     daily_item = daily_items.objects.get(slug=pk)
-    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
+    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('-owner__id')
     total_quantity = 0
     total_ad_spend = 0
     total_profit = 0
@@ -60,7 +60,7 @@ def daily_ad_spend_by_id(request, pk):
     total_roas = 0
     total_roi = 0
     yesterday = timezone.now().date() - timedelta(days=1)
-    search_options = daily_row.objects.filter(created_at__date=yesterday).order_by('created_at')
+    search_options = daily_row.objects.filter(created_at__date=yesterday).order_by('-owner__id')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
