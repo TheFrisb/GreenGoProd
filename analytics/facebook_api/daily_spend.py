@@ -177,7 +177,11 @@ def testing_get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
-            
+            campaign_id = campaign['id']
+            ob = product_campaigns.objects.filter(title=name_of_campaign).first()
+            if ob:
+                ob.campaign_id = campaign_id
+                ob.save()
             
 
                 
