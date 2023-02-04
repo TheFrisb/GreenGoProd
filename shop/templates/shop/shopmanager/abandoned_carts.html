@@ -19,9 +19,9 @@
         <tbody>
             {% for cart in carts %}
             <tr class="table-success" style="font-weight:600!important">
-              <td class=>{{ cart.created_at }}</td>    
-              <td class=>{{ cart.name }}</td>  
-              <td class=>
+              <td>{{ cart.created_at }}</td>    
+              <td>{{ cart.name }}</td>  
+              <td>
                 <p style="margin:0!important">{{ cart.phone }}</p>
                 {% if cart.possible_number %}
                 <p style="margin:0!important">Можен број: {{ cart.possible_number }}</p>
