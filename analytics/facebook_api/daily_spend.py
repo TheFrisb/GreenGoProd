@@ -167,7 +167,6 @@ def testing_get_campaign_id():
     for campaign in campaigns:
         campaign_id = campaign['id']
         campaign_obj = Campaign(campaign_id)
-        print(type(campaign_id))
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         today = datetime.now().strftime('%Y-%m-%d')
 
@@ -180,6 +179,7 @@ def testing_get_campaign_id():
             campaign_id = campaign['id']
             ob = product_campaigns.objects.filter(title=name_of_campaign).first()
             if ob:
+                print(name_of_campaign, ' | ', campaign_id, ' ||| ', ob.title, ' | ')
                 ob.campaign_id = campaign_id
                 ob.save()
             
