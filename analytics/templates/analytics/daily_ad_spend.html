@@ -197,9 +197,9 @@ select {
 </div>
 <div class="container-xxl d-flex p-1 border-bottom border-start border-end text-uppercase overflow-hidden align-items-center" id="campaign-list">
   {% for option in search_options %}
-  {% if option.is_active and option == daily_item %}
+  {% if option.owner == daily_item %}
     <a href="{{ option.get_absolute_url }}" class="link-primary text-decoration-none" style="min-width:500px;text-align:center; transition: transform 0.15s ease-out; ">{{ option.product.sku }}</a>
-    {% elif option.is_active and option != daily_item %}
+    {% else %}
     <a href="{{ option.get_absolute_url }}" class="link-secondary text-decoration-none" style="min-width:500px;text-align:center; transition: transform 0.15s ease-out; ">{{ option.product.sku }}</a>
     
   {% endif %}
@@ -220,8 +220,8 @@ select {
                     <div class="dropdownsearch mb-1">
                         <div class="options">
                           <select name="" id="dynamic_select">
-                              <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{ option.get_absolute_url }}">Одбери производ</option>
-                              {% for option in search_options %}                               
+                              <option value="" fake-name="}" data-url="#">Одбери производ</option>
+                              {% for option in search_options2 %}                               
                               <option value="{{ option.product.title }}" fake-name="{{ option.product.sku }}" data-url="{{  option.get_absolute_url }}">{{ option.product.sku }}</option>
                               {% endfor %}     
                         </select>
