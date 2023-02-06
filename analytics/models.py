@@ -9,7 +9,7 @@ from django.utils import timezone
 class daily_items(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, verbose_name='Продукт')
     slug =  models.SlugField(unique=True, max_length=250, blank = True, null=True)
-
+    is_active = models.BooleanField(default=True)
     def get_absolute_url(self):
         return reverse('daily_ad_spend_by_id', args=[str(self.slug)])
     
