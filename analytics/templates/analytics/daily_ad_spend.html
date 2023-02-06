@@ -195,7 +195,7 @@ select {
 <div class="container-fluid text-center border">
     <h3>Аналитика за производи</h3>
 </div>
-<div class="container-xxl d-flex p-3 border-bottom border-start border-end text-uppercase overflow-hidden" id="campaign-list">
+<div class="container-xxl d-flex p-3 border-bottom border-start border-end text-uppercase overflow-hidden align-content-center" id="campaign-list">
   {% for option in search_options %}
   {% if option == daily_item %}
   <a href="{{ option.get_absolute_url }}" class="link-primary text-decoration-none" style="min-width:500px;text-align:center; transition: transform 0.15s ease-out; ">{{ option.product.sku }}</a>
