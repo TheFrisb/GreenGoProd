@@ -177,5 +177,16 @@ $(document).ready(function () {
             }
         })
     })
+    $("#campaign-list").bind('mousewheel', function(e) {
+        e.preventDefault()
+        if ($("#campaign-list").is(":hover")) {
+         if (e.originalEvent.wheelDelta / 120 > 0) {
+           $(this).scrollLeft($(this).scrollLeft() - 100);
+         }
+         else {
+          $(this).scrollLeft($(this).scrollLeft() + 100);
+         }
+        }
+       });
     
 });
