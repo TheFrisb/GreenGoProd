@@ -200,9 +200,7 @@ select {
   <a href="{{ option.owner.get_absolute_url }}" class="link-secondary text-decoration-none" style="min-width:300px;text-align:center; transition: transform 0.15s ease-out; ">{{ option.owner.product.sku }}</a>
   {% endfor %}
 </div>
-<div class="container-xxl d-flex p-3 border-bottom border-start border-end text-uppercase overflow-hidden" id="campaign-list">
-  <a href="#" class="link-primary text-decoration-none" style="min-width:300px;text-align:center; transition: transform 0.15s ease-out; ">Branovidna presa za kosa</a>
-</div>
+
 <div class="container-xxl w-80 py-4">
 {% csrf_token %}
 <input type="hidden" name="owner" id="owner" value="{{ daily_item.id }}">
