@@ -20,7 +20,10 @@ def daily_ad_spend(request):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    search_options = daily_items.objects.all().order_by('-id')
+    yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    yesterday_row_2 = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
+    search_options = daily_row.objects.filter(created_at__date__range = (yesterday_row_2,yesterday_row))
+    search_options2 = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
@@ -39,6 +42,7 @@ def daily_ad_spend(request):
         'daily_item': daily_item,
         'daily_rows': daily_rows,
         'search_options': search_options,
+        'search_options2': search_options2,
         'total_quantity': total_quantity,
         'total_ad_spend':  total_ad_spend,
         'total_profit':  total_profit,
@@ -58,7 +62,10 @@ def daily_ad_spend_by_id(request, pk):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    search_options = daily_items.objects.all().order_by('-id')
+    yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    yesterday_row_2 = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
+    search_options = daily_row.objects.filter(created_at__date__range = (yesterday_row_2,yesterday_row))
+    search_options2 = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
@@ -77,6 +84,7 @@ def daily_ad_spend_by_id(request, pk):
         'daily_item': daily_item,
         'daily_rows': daily_rows,
         'search_options': search_options,
+        'search_options2': search_options2,
         'total_quantity': total_quantity,
         'total_ad_spend':  total_ad_spend,
         'total_profit':  total_profit,
