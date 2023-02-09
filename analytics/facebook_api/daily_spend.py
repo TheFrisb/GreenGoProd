@@ -166,13 +166,10 @@ def testing_get_campaign_id():
     for campaign in campaigns:
         campaign_id = campaign['id']
         campaign_obj = Campaign(campaign_id)
-        print(campaign_id, ' - ', campaign['name'])
+        
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         today = datetime.now().strftime('%Y-%m-%d')
-        
-        for o in ob:
-            if o.campaign_id == campaign_id:
-                print(o.product.title, ' - ', o.campaign_id)
+
         
         insights = campaign_obj.get_insights(fields=['spend'],params={'date_preset': 'yesterday'})
         if insights:
@@ -182,6 +179,7 @@ def testing_get_campaign_id():
             name_of_campaign = campaign['name']
 
             campaign_id = campaign['id']
+            print(campaign_id, ' - ', name_of_campaign)
             populate_daily_rows(campaign_id, ad_spend)
 
                 
