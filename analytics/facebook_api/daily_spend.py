@@ -52,7 +52,7 @@ def populate_daily_rows(campaign_id, ad_spend):
     except:
         return 1
     if product_campaign.count() == 1:
-
+        
         product = product_campaign[0].product
         owner_of_campaign = daily_items.objects.filter(product=product).first()
         product_price = product.sale_price - 100
@@ -62,7 +62,7 @@ def populate_daily_rows(campaign_id, ad_spend):
         yesterday = timezone.now() - timezone.timedelta(days=1)
         start_time = yesterday.replace(hour=0, minute=0, second=0)
         end_time = yesterday.replace(hour=23, minute=59, second=59)
-        
+        print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(product=product, created_at__range=(start_time, end_time))
         for product in ordered_products:
             quantity = quantity + product.quantity
@@ -115,7 +115,7 @@ def populate_daily_rows(campaign_id, ad_spend):
             yesterday = timezone.now() - timezone.timedelta(days=1)
             start_time = yesterday.replace(hour=0, minute=0, second=0)
             end_time = yesterday.replace(hour=23, minute=59, second=59)
-            
+            print(owner_of_campaign)
             ordered_products = OrderItem.objects.filter(product=product, created_at__range=(start_time, end_time))
             for product in ordered_products:
                 print(product, ' - ', product.quantity, ' - ', product.created_at)
