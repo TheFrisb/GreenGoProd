@@ -84,11 +84,11 @@ def populate_daily_rows(campaign_id, ad_spend):
             roas = (quantity * product_price)
             roi = (neto_price * quantity)
 
-        daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-                                ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-                                be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
+        #daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
+          #                      ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
+         #                       be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
         
-        daily_row_new.save()
+        #daily_row_new.save()
     
     elif product_campaign.count() > 1:
         yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
@@ -98,9 +98,9 @@ def populate_daily_rows(campaign_id, ad_spend):
 
         if(row):
 
-            row.ad_cost += ad_spend * 56.59
+           # row.ad_cost += ad_spend * 56.59
 
-            row.save()
+            #row.save()
 
             return JsonResponse({'status': "Updated existing row for yesterday's date"})
         else:
@@ -140,11 +140,11 @@ def populate_daily_rows(campaign_id, ad_spend):
                 roas = (quantity * product_price)
                 roi = (neto_price * quantity)
 
-            daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-                                    ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-                                    be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
-            
-            daily_row_new.save()
+            #daily_row_new = daily_row(owner=owner_of_campaign, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
+             #                       ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
+              #                      be_roas = be_roas, roas=roas, roi=roi, created_at=yesterday)
+            #
+            #daily_row_new.save()
 
         
     else:
