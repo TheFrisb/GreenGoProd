@@ -154,25 +154,18 @@ def populate_daily_rows(campaign_id, ad_spend):
 
 
 def testing_get_campaign_id():
-    count = 0
     # Initialize the Facebook Ads SDK with the access token
     FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
     # Search for campaigns by string and ad account ID
     account = AdAccount(config('MARKETING_AD_ACCOUNT'))
     # campaigns = account.get_campaigns(fields=['name','id'], params={'limit':100})
-    campaigns = account.get_campaigns(fields=['name','id','effective_status'],  params={'limit':100})
+    campaigns = account.get_campaigns(fields=['name','id','effective_status'], params={'effective_status':['ACTIVE']})
     # print(campaigns)
     # Iterate over all campaigns and find the first campaign that matches the search string
     for campaign in campaigns:
         campaign_id = campaign['id']
-        name_of_campaign = campaign['name']
-        
-        ob = product_campaigns.objects.filter(campaign_id=campaign_id).first()
-        if ob:
-            print(campaign['name'], ' - ', campaign['id'], '|||', ob.title, ' - ', ob.campaign_id)
-            count +=1
-        
         campaign_obj = Campaign(campaign_id)
+        print(campaign_id, ' - ', campaign['name'])
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         today = datetime.now().strftime('%Y-%m-%d')
 
@@ -182,10 +175,10 @@ def testing_get_campaign_id():
             campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
             ad_spend = float(campaign_data['spend'])
             name_of_campaign = campaign['name']
+
             campaign_id = campaign['id']
-           
-           
+            populate_daily_rows(campaign_id, ad_spend)
 
                 
-    print(count)
+
     return 'Campaign not found'
