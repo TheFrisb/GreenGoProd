@@ -8,6 +8,7 @@ from analytics.models import *
 from datetime import datetime
 from shop.models import product_campaigns, Product
 from decouple import config
+from django.db.models import Q
 
 
 def get_campaign_id():
@@ -63,7 +64,7 @@ def populate_daily_rows(campaign_id, ad_spend):
         start_time = yesterday.replace(hour=0, minute=0, second=0)
         end_time = yesterday.replace(hour=23, minute=59, second=59)
         print(owner_of_campaign)
-        ordered_products = OrderItem.objects.filter(product=product, created_at__range=(start_time, end_time))
+        ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
         for product in ordered_products:
             quantity = quantity + product.quantity
 
@@ -116,7 +117,7 @@ def populate_daily_rows(campaign_id, ad_spend):
             start_time = yesterday.replace(hour=0, minute=0, second=0)
             end_time = yesterday.replace(hour=23, minute=59, second=59)
             print(owner_of_campaign)
-            ordered_products = OrderItem.objects.filter(product=product, created_at__range=(start_time, end_time))
+            ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
             for product in ordered_products:
                 print(product, ' - ', product.quantity, ' - ', product.created_at)
                 quantity = quantity + product.quantity
