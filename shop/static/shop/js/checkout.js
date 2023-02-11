@@ -159,12 +159,14 @@ $(document).ready(function () {
     $('#checkout_input_name').donetyping(function(){
       input_name = $('#checkout_input_name').val();
       input_phone = $('#checkout_input_phone').val()
+      input_address = $('#checkout_input_address').val()
       $.ajax({
         method: "POST",
         url: "/check-abandoned-carts",
         data: {
             'name': input_name,
             'phone': input_phone,
+            'address': input_address,
             csrfmiddlewaretoken: token,
         },
         success: function(response){
@@ -174,18 +176,37 @@ $(document).ready(function () {
     $('#checkout_input_phone').donetyping(function(){
       input_name = $('#checkout_input_name').val();
       input_phone = $('#checkout_input_phone').val()
+      input_address = $('#checkout_input_address').val()
       $.ajax({
         method: "POST",
         url: "/check-abandoned-carts",
         data: {
             'name': input_name,
             'phone': input_phone,
+            'address': input_address,
             csrfmiddlewaretoken: token,
         },
         success: function(response){
         }
       })
       }, 3000);
+    $('#checkout_input_address').donetyping(function(){
+        input_name = $('#checkout_input_name').val();
+        input_phone = $('#checkout_input_phone').val()
+        input_address = $('#checkout_input_address').val()
+        $.ajax({
+          method: "POST",
+          url: "/check-abandoned-carts",
+          data: {
+              'name': input_name,
+              'phone': input_phone,
+              'address': input_address,
+              csrfmiddlewaretoken: token,
+          },
+          success: function(response){
+          }
+        })
+        }, 3000);
     
 });
 
