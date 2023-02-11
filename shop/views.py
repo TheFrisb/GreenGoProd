@@ -558,6 +558,7 @@ def create_or_check_abandoned_cart(request):
         else:     
             abandoned_name = str(request.POST.get('name'))
             abandoned_phone_number = str(request.POST.get('phone'))
+            abandoned_address = str(request.POST.get('address'))
             # abandoned_cart = Abandoned_Carts.objects.update_or_create(session = request.session['nonuser'], defaults={
             #     'name': abandoned_name,
             #     'phone': abandoned_phone_number
@@ -567,12 +568,14 @@ def create_or_check_abandoned_cart(request):
                 abandoned_cart = Abandoned_Carts.objects.get(session = request.session['nonuser'])
                 abandoned_cart.name = abandoned_name
                 abandoned_cart.phone = abandoned_phone_number
+                abandoned_cart.address = abandoned_address
                 abandoned_cart.save()
                 print('Found and updated')
             except:
                 abandoned_cart = Abandoned_Carts.objects.create(session = request.session['nonuser'])
                 abandoned_cart.name = abandoned_name
                 abandoned_cart.phone = abandoned_phone_number
+                abandoned_cart.address = abandoned_address
                 abandoned_cart.save()
                 print('Not Found and created')
             print(abandoned_cart)
