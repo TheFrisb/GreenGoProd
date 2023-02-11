@@ -417,7 +417,8 @@ class Abandoned_Carts(models.Model):
 
     name = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
-    
+    address = models.CharField(max_length=150, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креирана во:')
     @property
     def session_id(self):
