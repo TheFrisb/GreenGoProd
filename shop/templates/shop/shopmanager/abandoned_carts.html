@@ -12,6 +12,7 @@
             <th class="col-1">Дата</th>
             <th class="col-3">Име</th>
             <th class="col-2">Телефонски број</th>
+            <th class="col-2">Адреса</th>
             <th class="col-5">Продукти</th>
             <th class="col-1">Акција</th>
           </tr>
@@ -27,6 +28,7 @@
                 <p style="margin:0!important" data-toggle="tooltip" data-placement="top" title="Човек со истото име и презиме претходно има нарачано со тај број">Можен број: {{ cart.possible_number }}</p>
                 {% endif %}
             </td>  
+              <td>{{ cart.address }}</td> 
               <td style="word-wrap: break-word; max-width: 520px;" data-toggle="tooltip" data-placement="top" title="Во цената не е пресметано количина, туку само цената на продукт">
                 {% for item in cart.abandoned_cartitem_set.all %}
                     {% if item.attributename %}
