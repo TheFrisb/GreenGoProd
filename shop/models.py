@@ -63,7 +63,7 @@ class Product(models.Model):
     status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
     thumbnail = ProcessedImageField(upload_to='products/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True)
     thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':95})
-    
+    export_image = ImageSpecField(source='thumbnail', processors=[ResizeToFill(200,200)], format='PNG', options={'quality':95})
     title = models.CharField(max_length = 100, verbose_name='Име')
     content = RichTextUploadingField(blank=True, null=True, verbose_name='Содржина');
     regular_price = models.IntegerField(verbose_name='Стара цена')
