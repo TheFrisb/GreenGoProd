@@ -559,6 +559,7 @@ def export_excel(request):
                 worksheet2.cell(row=row_num2, column=1).font = Font(bold=True, size=24)
                 thin = Side(border_style='thin', color='151515')
                 worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                worksheet2.merge_cells("A" + str(row_num2) + ":D" + str(row_num2))
                 worksheet2.cell(row=row_num2, column=1).value = name
                 row_num2 += 1
                 total = 0
