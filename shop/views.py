@@ -21,6 +21,10 @@ from django.utils.timezone import get_current_timezone, make_aware
 import csv
 from django.utils.html import strip_tags
 from .controller import facebook_pixel
+from openpyxl.drawing.image import Image
+import openpyxl
+from openpyxl.styles import Border, Side
+from openpyxl.styles import PatternFill
 # Create your views here.
 
 
@@ -524,6 +528,69 @@ def export_excel(request):
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
                 cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
+            nabavki_dict = {}
+            nabavki_list = []
+            rows2 = OrderItem.objects.filter(Q(order__created_at__range = [date_from, date_to], order__status = 'Confirmed',) | Q(order__created_at__range = [date_from, date_to], order__status = 'Pending')).all()
+            
+            for row in rows2:
+                
+                label = row.label
+                quantity = row.quantity
+                stock_price = row.product.supplier_stock_price
+                thumbnail_url = row.product.export_image.path
+                supplier = row.product.supplier.name
+
+                if label in nabavki_dict:
+                    nabavki_dict[label]["quantity"] += quantity
+                else:
+                    nabavki_dict[label] = {"supplier": supplier, "stock_price": stock_price, "thumbnail_url": thumbnail_url, "quantity": quantity}
+
+            nabavki_list = [{"label": key, "supplier": value["supplier"], "stock_price": value["stock_price"], "thumbnail_url": value["thumbnail_url"], "quantity": value["quantity"]} for key, value in nabavki_dict.items()]
+            row_num2 = 1
+            worksheet2 = workbook.create_sheet("Nabavki")
+            worksheet2.column_dimensions['A'].width = 27
+            worksheet2.column_dimensions['B'].width = 50
+
+            suppliers = Dobavuvac.objects.all()
+            for supplier in suppliers:
+                name = supplier.name
+                worksheet2.row_dimensions[row_num2].height = 30
+                worksheet2.cell(row=row_num2, column=1).alignment = Alignment(horizontal='center', vertical='center')
+                worksheet2.cell(row=row_num2, column=1).font = Font(bold=True, size=24)
+                thin = Side(border_style='thin', color='151515')
+                worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                worksheet2.cell(row=row_num2, column=1).value = name
+                row_num2 += 1
+                total = 0
+                for item in nabavki_list:
+                    if item["supplier"] == name:
+                        worksheet2.row_dimensions[row_num2].height = 150
+                        if "thumbnail_url" in item:
+                            img = openpyxl.drawing.image.Image(item["thumbnail_url"])
+                            worksheet2.add_image(img, 'A' + str(row_num2))
+
+                        worksheet2.cell(row=row_num2, column=2).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
+                        worksheet2.cell(row=row_num2, column=3).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
+                        worksheet2.cell(row=row_num2, column=4).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
+                        worksheet2.cell(row=row_num2, column=1).alignment = Alignment(horizontal='center', vertical='center')
+                        worksheet2.cell(row=row_num2, column=2).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                        worksheet2.cell(row=row_num2, column=3).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                        worksheet2.cell(row=row_num2, column=4).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                        worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                        worksheet2.cell(row=row_num2, column=2).value = item["label"]
+                        worksheet2.cell(row=row_num2, column=3).value = item["stock_price"]
+                        worksheet2.cell(row=row_num2, column=4).value = item["quantity"]
+                        total = total + (int(item["quantity"]) * int(item["stock_price"]))
+                        row_num2 += 1
+                fill = PatternFill(start_color='FFFF00', end_color='FFFF00', patternType='solid')
+                worksheet2.cell(row=row_num2, column=4).alignment = Alignment(horizontal='center', vertical='center')
+                worksheet2.cell(row=row_num2, column=4).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                worksheet2.cell(row=row_num2, column=4).font = Font(bold=True)
+                worksheet2.cell(row=row_num2, column=4).fill = fill
+                worksheet2.cell(row=row_num2, column=4).value = total
+
+
+                row_num2 += 3
 
             response = HttpResponse(content=save_virtual_workbook(workbook))
             
