@@ -188,5 +188,14 @@ $(document).ready(function () {
          }
         }
        });
+    current_item = $("#current_item").text();
+    list_items = $("#campaign-list a")
+    for(let i = 0; i < list_items.length; i++){
+        text = $(list_items[i]).text();
+        if(current_item == text){
+            scroll_to_index = $(list_items[i]).index()
+            $("#campaign-list").scrollLeft(500 * scroll_to_index)
+        }
+    }
     
 });
