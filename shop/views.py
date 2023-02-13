@@ -549,7 +549,7 @@ def export_excel(request):
             row_num2 = 1
             worksheet2 = workbook.create_sheet("Nabavki")
             worksheet2.column_dimensions['A'].width = 27
-            worksheet2.column_dimensions['B'].width = 50
+            worksheet2.column_dimensions['B'].width = 30
 
             suppliers = Dobavuvac.objects.all()
             for supplier in suppliers:
