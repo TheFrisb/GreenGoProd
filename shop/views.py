@@ -559,7 +559,7 @@ def export_excel(request):
                 worksheet2.cell(row=row_num2, column=1).font = Font(bold=True, size=24)
                 thin = Side(border_style='thin', color='151515')
                 worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
-                worksheet2.merge_cells("A" + str(row_num2) + ":D" + str(row_num2))
+                worksheet2.merge_cells("A" + str(row_num2) + ":E" + str(row_num2))
                 worksheet2.cell(row=row_num2, column=1).value = name
                 row_num2 += 1
                 start_row = row_num2
@@ -588,11 +588,11 @@ def export_excel(request):
                         row_num2 += 1
                 end_row = row_num2
                 fill = PatternFill(start_color='FFFF00', end_color='FFFF00', patternType='solid')
-                worksheet2.cell(row=row_num2, column=4).alignment = Alignment(horizontal='center', vertical='center')
-                worksheet2.cell(row=row_num2, column=4).border = Border(left=thin, right=thin, top=thin, bottom=thin)
-                worksheet2.cell(row=row_num2, column=4).font = Font(bold=True)
-                worksheet2.cell(row=row_num2, column=4).fill = fill
-                worksheet2.cell(row=row_num2, column=4).value = f'=SUM(E{start_row}:E{end_row})'
+                worksheet2.cell(row=row_num2, column=5).alignment = Alignment(horizontal='center', vertical='center')
+                worksheet2.cell(row=row_num2, column=5).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                worksheet2.cell(row=row_num2, column=5).font = Font(bold=True)
+                worksheet2.cell(row=row_num2, column=5).fill = fill
+                worksheet2.cell(row=row_num2, column=5).value = f'=SUM(E{start_row}:E{end_row})'
 
 
                 row_num2 += 3
