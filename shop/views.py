@@ -562,6 +562,7 @@ def export_excel(request):
                 worksheet2.merge_cells("A" + str(row_num2) + ":D" + str(row_num2))
                 worksheet2.cell(row=row_num2, column=1).value = name
                 row_num2 += 1
+                start_row = row_num2
                 total = 0
                 for item in nabavki_list:
                     if item["supplier"] == name:
@@ -573,22 +574,25 @@ def export_excel(request):
                         worksheet2.cell(row=row_num2, column=2).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
                         worksheet2.cell(row=row_num2, column=3).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
                         worksheet2.cell(row=row_num2, column=4).alignment = Alignment(wrapText=True,  horizontal='center', vertical='center')
+                        worksheet2.cell(row=row_num2, column=5).alignment = Alignment(horizontal='center', vertical='center')
                         worksheet2.cell(row=row_num2, column=1).alignment = Alignment(horizontal='center', vertical='center')
                         worksheet2.cell(row=row_num2, column=2).border = Border(left=thin, right=thin, top=thin, bottom=thin)
                         worksheet2.cell(row=row_num2, column=3).border = Border(left=thin, right=thin, top=thin, bottom=thin)
                         worksheet2.cell(row=row_num2, column=4).border = Border(left=thin, right=thin, top=thin, bottom=thin)
                         worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                        worksheet2.cell(row=row_num2, column=5).border = Border(left=thin, right=thin, top=thin, bottom=thin)
                         worksheet2.cell(row=row_num2, column=2).value = item["label"]
-                        worksheet2.cell(row=row_num2, column=3).value = item["stock_price"]
-                        worksheet2.cell(row=row_num2, column=4).value = item["quantity"]
-                        total = total + (int(item["quantity"]) * int(item["stock_price"]))
+                        worksheet2.cell(row=row_num2, column=3).value = item["quantity"]
+                        worksheet2.cell(row=row_num2, column=4).value = item["stock_price"]
+                        worksheet2.cell(row=row_num2, column=5).value = f'=PRODUCT(C{row_num2},D{row_num2})'
                         row_num2 += 1
+                end_row = row_num2
                 fill = PatternFill(start_color='FFFF00', end_color='FFFF00', patternType='solid')
                 worksheet2.cell(row=row_num2, column=4).alignment = Alignment(horizontal='center', vertical='center')
                 worksheet2.cell(row=row_num2, column=4).border = Border(left=thin, right=thin, top=thin, bottom=thin)
                 worksheet2.cell(row=row_num2, column=4).font = Font(bold=True)
                 worksheet2.cell(row=row_num2, column=4).fill = fill
-                worksheet2.cell(row=row_num2, column=4).value = total
+                worksheet2.cell(row=row_num2, column=4).value = f'=SUM(E{start_row}:E{end_row})'
 
 
                 row_num2 += 3
