@@ -548,7 +548,7 @@ def export_excel(request):
             nabavki_list = [{"label": key, "supplier": value["supplier"], "stock_price": value["stock_price"], "thumbnail_url": value["thumbnail_url"], "quantity": value["quantity"]} for key, value in nabavki_dict.items()]
             row_num2 = 1
             worksheet2 = workbook.create_sheet("Nabavki")
-            worksheet2.column_dimensions['A'].width = 27
+            worksheet2.column_dimensions['A'].width = 20.3
             worksheet2.column_dimensions['B'].width = 30
 
             suppliers = Dobavuvac.objects.all()
@@ -559,6 +559,7 @@ def export_excel(request):
                 worksheet2.cell(row=row_num2, column=1).font = Font(bold=True, size=24)
                 thin = Side(border_style='thin', color='151515')
                 worksheet2.cell(row=row_num2, column=1).border = Border(left=thin, right=thin, top=thin, bottom=thin)
+                worksheet2.cell(row=row_num2, column=5).border = Border(right=thin)
                 worksheet2.merge_cells("A" + str(row_num2) + ":E" + str(row_num2))
                 worksheet2.cell(row=row_num2, column=1).value = name
                 row_num2 += 1
@@ -566,7 +567,7 @@ def export_excel(request):
                 total = 0
                 for item in nabavki_list:
                     if item["supplier"] == name:
-                        worksheet2.row_dimensions[row_num2].height = 150
+                        worksheet2.row_dimensions[row_num2].height = 113.5
                         if "thumbnail_url" in item:
                             img = openpyxl.drawing.image.Image(item["thumbnail_url"])
                             worksheet2.add_image(img, 'A' + str(row_num2))
