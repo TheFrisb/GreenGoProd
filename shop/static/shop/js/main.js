@@ -431,7 +431,7 @@
             attribute_id = $(this).closest('.product_data').find('.attrib_id').val();
         }
         var token = $('input[name=csrfmiddlewaretoken]').val()
-
+        var cart_items_count = $('#cart_items_count').val()
 
         $.ajax({
             method: "POST",
@@ -446,6 +446,10 @@
                 if (window.location.href.indexOf("checkout") > -1){
                     $('.cart-data').load(location.href + " .cart-data")
                     $('.checkout-offers').load(location.href + " .checkout-offers")
+                    if(cart_items_count == 1){
+                        $(".content-container.checkout").remove();
+                        $(".page-container").append('<div class="content-container checkout"><div class="no-cart"><h2 class="no-cart-title">Немате производи во кошничка</h2><a href="/" class="no-cartBtn">Врати ме на почетна</a></div></div>');
+                    }
                 }
                 else{
                     cartCount = cartCount - parseInt(cart_quantity)
