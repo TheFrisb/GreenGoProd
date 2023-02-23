@@ -4,7 +4,7 @@
 <meta property="og:image" content="https://greengoshop.mk{% static 'icons/logo_meta_tag.webp' %}" />
 {% endblock metatags %}
 {% block content %}
-<style>#footer,.footer-section{display:none}.red{border-color:red}#ordered_items_notice_wrapper{visibility:hidden}</style>
+<style>body #fb-root{display:none!important}#footer,.footer-section{display:none}.red{border-color:red}#ordered_items_notice_wrapper{visibility:hidden}</style>
 {% if cart %}
     
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
