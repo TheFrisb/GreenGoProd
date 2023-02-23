@@ -307,7 +307,7 @@
             }
         })
       }else{
-        $(".attribute-title").css("color", "red");
+        $(".attribute-title").css("color", "red").animate({'font-size':'16px', 'font-weight':'700'}, 300).animate({'font-size':'12px', 'font-weight':'700'});
       }
 
 
@@ -350,6 +350,9 @@
         e.preventDefault();
     })
     $('.product-attributes').on('click', '.attribute-item', function(){
+        if($(this).hasClass('disabled')){
+            return;
+        }
         attrib_title = ': ' + $(this).find('.attrib_title').val();
         if($(this).hasClass('offer')){
             offer_regular_price = regular_price * ($(this).index());
