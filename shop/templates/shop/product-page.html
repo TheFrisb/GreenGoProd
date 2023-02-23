@@ -50,13 +50,21 @@
         {% if product.attributes_type == 'COLOR' %}
             <p class="attribute-title">Одбери боја</p>
             {% for attribute in attributes %}
-            
+            {% if attribute.is_disabled == False %}
             <div class="attribute-item">
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
                 <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
             </div>
+            {% else %}
+            <div class="attribute-item disabled" style="opacity:0.8" >
+                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
+                <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
+                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
+                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}; background-image: url({% static 'icons/disabled-x.png' %}); background-size: 24px 24px;"></div>
+            </div>
+            {% endif %}
             {% endfor %}
         {% endif %}
         {% if product.attributes_type == 'SIZE' %}
