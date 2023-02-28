@@ -198,4 +198,21 @@ $(document).ready(function () {
         }
     }
     
+    $(document).on('click', '#get_dated_ad_spend', function(e){
+        e.preventDefault();
+        var date = $("#ad_spend_datepicker").val()
+        $.ajax({
+            method: "GET",
+            url: "/analytics/get_ad_spend_by_date",
+            data: {
+                'date': date,
+                csrfmiddlewaretoken: token,
+            },
+
+            success: function(response){
+
+                $("#retrieved_ad_spend").text(response['ad_spend'] + ' мкд')
+            }
+        })
+    })
 });
