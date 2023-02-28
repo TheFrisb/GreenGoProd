@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from .facebook_api import daily_spend
 from datetime import datetime, timedelta
 from shop.models import Product
+import requests
 import logging
 from decouple import config
 
