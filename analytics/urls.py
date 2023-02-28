@@ -3,6 +3,7 @@ from . import views
 
 
 urlpatterns = [
+    path('retrieve_adspend', views.retrieve_adspend, name='retrieve_adspend'),
     path('get_ad_spend_by_date', views.get_ad_spend_by_date, name='get_ad_spend_by_date'),
     path('daily_ad_spend/<int:pk>/', views.daily_ad_spend_by_id, name='daily_ad_spend_by_id'),
     path('daily_ad_spend/', views.daily_ad_spend, name='daily_ad_spend'),
