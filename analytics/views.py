@@ -8,6 +8,11 @@ from django.http import HttpResponse, JsonResponse
 from .facebook_api import daily_spend
 from datetime import datetime, timedelta
 from shop.models import Product
+import logging
+from decouple import config
+
+
+logger = logging.getLogger(__file__)
 
 
 @login_required
@@ -232,13 +237,39 @@ def add_old_row(request):
 #         return JsonResponse({'status': "Unsuccessful older row creation"})
 
 
-def get_ad_spend_by_date(request):
+def retrieve_adspend(request):
     if request.method == 'GET':
-        date = request.GET.get('date')
-        row = daily_row.objects.filter(created_at__date=date)
-        total_ad_spend = 0.00
-        for r in row:
-            total_ad_spend += r.ad_cost
-        return JsonResponse({'ad_spend': total_ad_spend})
+        date_1 = request.GET.get('date_from'),
+        date_2 = request.GET.get('date_till'),
+        date_from = date_1[0]
+        date_till = date_2[0]
+        
+        print(date_from, date_till)
+        AD_SPEND_SECRET
+        MARKET_AD_ACCOUNT
+        access_token = config('AD_SPEND_SECRET)
+        ad_account_id = config('MARKET_AD_ACCOUNT')
+
+        url = f'https://graph.facebook.com/v16.0/act_{ad_account_id}/insights'
+        params = {
+            'level': 'account',
+            'time_range': f"{{'since':'{date_from}','until':'{date_till}'}}",
+            'fields': 'spend',
+            'access_token': access_token,
+            'filtering': '[{"field":"campaign.name","operator":"CONTAIN", "value":"MK"}]'
+            
+        }   
+        response = requests.get(url, params=params)
+        response_json = response.json()
+        total_spend = float(response_json['data'][0]['spend'])
+        
+        
+
+        return JsonResponse({'USD_Val': str(total_spend)})
+        print(date_from, ' ', date_till)
+
     else:
-        return JsonResponse({'status': "Bad request"})
+        return JsonResponse({'status': 'Wrong request!'})
+
+    
+   
