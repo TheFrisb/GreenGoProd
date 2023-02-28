@@ -248,7 +248,7 @@ def retrieve_adspend(request):
         print(date_from, date_till)
 
         access_token = config('AD_SPEND_SECRET')
-        ad_account_id = config('MARKET_AD_ACCOUNT')
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
 
         url = f'https://graph.facebook.com/v16.0/act_{ad_account_id}/insights'
         params = {
