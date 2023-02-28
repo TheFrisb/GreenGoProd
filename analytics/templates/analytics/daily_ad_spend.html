@@ -325,11 +325,13 @@ select {
       </div>
     </div>
   </form>
-  <div class="row mt-3 mb-3">
-    <div class="col">
-      <input type="date" name="date" id="ad_spend_datepicker" style="padding:5px;border-radius:5px;border:1px solid #0a58ca">
-      <button class="btn btn-primary btn-sm" id="get_dated_ad_spend">Превземи Ad Spend</button>
-      <p id="retrieved_ad_spend"></p>
+    <div class="row my-5">
+    <div class="col" style="display: flex!important;justify-content: center!important;align-items: center!important;gap: 5px!important; flex-wrap: wrap">
+      <input type="date" name="daterange" id="datepicker_from" style="padding: 2px!important;border: 1px solid #0a58ca!important;border-radius: 4px!important">
+      <input type="date" name="daterange" id="datepicker_till" style="padding: 2px!important;border: 1px solid #0a58ca!important;border-radius: 4px!important">
+
+      <button class="btn btn-primary btn-sm" id="adspend_retriever">Превземи AdSpend</button>
+      <p id="retrieved_adspend" style="font-weight: 600;text-align: center;flex-basis: 100%; display:none;">ADSPEND MKD: <span id="adspend_inUSD">123</span> USD | ADSPEND MKD: <span id="adspend_inMKD"></span> MKD</p>
     </div>
   </div>
   </div>
