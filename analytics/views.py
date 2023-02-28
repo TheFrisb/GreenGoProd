@@ -232,4 +232,13 @@ def add_old_row(request):
 #         return JsonResponse({'status': "Unsuccessful older row creation"})
 
 
-    
+def get_ad_spend_by_date(request):
+    if request.method == 'GET':
+        date = request.GET.get('date')
+        row = daily_row.objects.filter(created_at__date=date)
+        total_ad_spend = 0.00
+        for r in row:
+            total_ad_spend += r.ad_cost
+        return JsonResponse({'ad_spend': total_ad_spend})
+    else:
+        return JsonResponse({'status': "Bad request"})
