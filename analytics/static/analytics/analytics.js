@@ -215,4 +215,40 @@ $(document).ready(function () {
             }
         })
     })
+    
+        $(document).on("click", "#adspend_retriever", function(e){
+        e.preventDefault();
+        var date_from = $("#datepicker_from").val();
+        var date_till = $("#datepicker_till").val();
+        if(date_till.length == 0){
+            date_till = date_from
+        }
+    
+        var button = $(this);
+
+        $.ajax({
+            method: "GET",
+            url: "/analytics/retrieve_adspend",
+            data: {
+                'date_from': date_from,
+                'date_till': date_till,
+                csrfmiddlewaretoken: token,
+            },
+            success: function (response){
+                $("#retrieved_adspend").show()
+                $("#adspend_inUSD").text(response['USD_Val'])
+                $.ajax({
+                    method: "GET",
+                    url: "https://v6.exchangerate-api.com/v6/8762058d6b172b396d60ffda/latest/USD",
+
+                    success: function(exchange_response) {
+                        var mkd_val = (response['USD_Val'] * exchange_response.conversion_rates.MKD).toFixed(2);
+                        console.log(response['USD_Val'] * exchange_response.conversion_rates.MKD)
+                        $("#adspend_inMKD").text(mkd_val);
+                    }
+                })
+
+            }
+        })
+    })
 });
