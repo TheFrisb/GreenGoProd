@@ -246,8 +246,7 @@ def retrieve_adspend(request):
         date_till = date_2[0]
         
         print(date_from, date_till)
-        AD_SPEND_SECRET
-        MARKET_AD_ACCOUNT
+
         access_token = config('AD_SPEND_SECRET')
         ad_account_id = config('MARKET_AD_ACCOUNT')
 
