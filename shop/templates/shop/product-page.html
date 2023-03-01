@@ -14,7 +14,14 @@
                     <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
                     {% for img in gallery %}
                     <div><img src="{{ img.galleryimg.url }}" alt="slider image"></div>
-                    {% endfor %} 
+                    {% endfor %}
+                    {% if attributes %}
+                        {% for attribute in attributes %}
+                        {% if attribute.thumbnail %}
+                        <div class="{{ attribute.id }}_variable"><img src="{{ attribute.thumbnail.url }}" alt="slider image" ></div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
         </div>
         <div class="gallery-navigation desktop">
         </div>
