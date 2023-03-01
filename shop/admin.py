@@ -27,7 +27,7 @@ class CartItemInline(admin.StackedInline):
 
 class ProductAttributesInLine(admin.TabularInline):
     model = ProductAttribute
-    list_display=("product", "color", "size", "price", "is_disabled")
+    list_display=("product", "color", "size", "price", "thumbnail", "is_disabled")
 
 class OrderAdmin(admin.ModelAdmin):
     search_fields = ['name', 'address', 'city','number', 'tracking_no']
