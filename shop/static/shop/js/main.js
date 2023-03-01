@@ -354,6 +354,14 @@
             return;
         }
         attrib_title = ': ' + $(this).find('.attrib_title').val();
+     
+        var attrib_id = $(this).find('.attrib_id').val();
+
+        if($('.' + attrib_id + '_variable').length){
+            image = $('.' + attrib_id + '_variable').not(".slick-cloned");
+            $('.slider-holder').slick('slickGoTo', image.index() - 1);
+        }
+      
         if($(this).hasClass('offer')){
             offer_regular_price = regular_price * ($(this).index());
             offer_price = parseInt($(this).find('.offer-price').text())
