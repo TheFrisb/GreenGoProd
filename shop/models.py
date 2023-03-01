@@ -173,6 +173,7 @@ class ProductAttribute(models.Model):
 
         
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, verbose_name='Одбери продукт')
+    thumbnail = ProcessedImageField(upload_to='products_attributes/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True, blank=True, verbose_name='Слика')
     color = models.ForeignKey(Color , on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Боја')
     size = models.ForeignKey(Size, on_delete = models.SET_NULL,  null = True, blank=True, verbose_name='Големина')
     offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Понуда')
