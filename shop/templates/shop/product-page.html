@@ -65,11 +65,12 @@
                 <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
             </div>
             {% else %}
-            <div class="attribute-item disabled" style="opacity:0.8" >
+            <div class="attribute-item disabled" style="position:relative" >
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
-                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}; background-image: url({% static 'icons/disabled-x.png' %}); background-size: 24px 24px;"></div>
+                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}; opacity:0.5"></div>
+                <img src="{% static 'icons/disabled-x.png' %}" alt="" style="position:absolute;width:24px;height:24px;top:10%;right:10%;">
             </div>
             {% endif %}
             {% endfor %}
