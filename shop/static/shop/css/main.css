@@ -8,8 +8,6 @@
 }
 *{
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
     font-family: 'Montserrat', sans-serif;
 }
 body{
@@ -1980,7 +1978,6 @@ select {
     transition: 0.3s ease;
 }
 .toggle-item{
-    text-align: center;
     border: 1px solid #abaeb4;
     border-radius: 30px;
     overflow-y: hidden;
@@ -1990,11 +1987,10 @@ select {
 }
 .toggle-title{
     padding: 12px 15px;
-}
-.toggle-item p{
+    text-align: center;
     font-weight: 600;
-    display: inline-block;
 }
+
 .toggle-content {
     display:none; 
     padding: 12px 15px;
@@ -2857,4 +2853,41 @@ section#ordered_items_notice_wrapper {
 .fb_mpn_mobile_landing_page_slide_up{
     bottom: 60px!important;
     z-index: 214783646!important;
+}
+
+.main-toggle h1{
+    margin: 21.4px 0px;
+}
+.main-toggle h2{
+   margin: 19.9px 0px; 
+}
+.main-toggle h3{
+    margin: 18.7px 0px;
+}
+.main-toggle h4{
+    margin: 21.2px 0px;
+}
+.main-toggle h5{
+    margin: 22.1px 0px;
+}
+.main-toggle h6{
+    margin: 25px 0px;
+}
+.main-toggle pre{
+    margin: 16px 0px;
+}
+.main-toggle p{
+    margin: 16px 0px;
+}   
+.main-toggle ul{
+    margin: 0;
+}
+.main-toggle ul p{
+    margin: 0;
+}
+.main-toggle ol{
+    margin: 0;
+}
+.main-toggle ol p{
+    margin: 0;
 }
