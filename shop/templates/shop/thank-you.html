@@ -40,12 +40,22 @@
         <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
         <p class="sl_price">{{ offerproduct.attribute_price }} ден</p>
         <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
+        <div class="quantity product_data" style="margin-bottom:10px!important">
+            <button class="decrement-btn">-</button>
+            <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
+            <button class="increment-btn">+</button>
+        </div>
         <button class="offer-button">НАРАЧАЈ</button>
         {% else %}
         <p class="offer-ttl">{{ offerproduct.product.title }}</p>
         <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
         <p class="sl_price">{{ offerproduct.price }} ден</p>
         <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
+        <div class="quantity product_data" style="margin-bottom:10px!important">
+            <button class="decrement-btn">-</button>
+            <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
+            <button class="increment-btn">+</button>
+        </div>
         <button class="offer-button">НАРАЧАЈ</button>
         {% endif %}
         </div class="offer-box">
