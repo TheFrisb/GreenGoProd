@@ -14,7 +14,12 @@
         <div class="slider-holder">
                     <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
                     {% for img in gallery %}
-                    <div><img src="{{ img.galleryimg.url }}" alt="slider image"></div>
+                    <div>
+                         <img src="{{ img.galleryimg.url }}" alt="slider image">
+                         {% if img.is_verified %}
+                         <p class="verified-product-image">производот е ист како на сликата</p>
+                         {% endif %}
+                    </div>
                     {% endfor %}
                     {% if attributes %}
                         {% for attribute in attributes %}
