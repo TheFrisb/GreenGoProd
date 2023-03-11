@@ -2456,12 +2456,12 @@ section#ordered_items_notice_wrapper {
 
 @media (max-width: 767px){
     .product-sale-badge{
-        right: -5%!important;
-        width: 58px!important;
-        height: 58px!important;
+        right: -5%;
+        width: 58px;
+        height: 58px;
     }
     .product-sale-badge p{
-        font-size: 18px!important;
+        font-size: 18px;
     }
     .desktop{
         display: none!important;
@@ -2744,6 +2744,11 @@ section#ordered_items_notice_wrapper {
 	width: 210px;
 	height: 210px;
      }
+    .product-sale-badge{
+        right: -1%;
+
+    }
+
 }
 @media(max-width:34em){
     .main{
