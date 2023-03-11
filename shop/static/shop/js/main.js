@@ -322,7 +322,7 @@
         e.preventDefault();
         var order_id = $(this).closest('.offer-box').find('.order_id').val();
         var product_id = $(this).closest('.offer-box').find('.prod_id').val();
-        var product_qty = 1;
+        var product_qty = $(this).closest('.offer-box').find('.qty-input').val();
         var token = $('input[name=csrfmiddlewaretoken]').val()
         
         $.ajax({
