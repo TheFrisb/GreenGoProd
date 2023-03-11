@@ -2902,6 +2902,11 @@ section#ordered_items_notice_wrapper {
 .main-toggle ol p{
     margin: 0;
 }
+.product-page .product-sale-badge{
+    top: 2%;
+    right: 3.5%;
+    z-index: 10;
+}
 .product-sale-badge{
     position: absolute;
     top: -5%;
