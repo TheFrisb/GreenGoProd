@@ -45,7 +45,7 @@
         <p class="product-regular-price">{{ product.regular_price }} ден</p>
         <p class="product-sale-price"><span class="product-price-tracker" id="main-product-price">{{ product.sale_price }}</span> ден</p>
         <br class="mobile">
-        <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span class="percentage">-{{ percentage }}%</span>)</p></div>
+        <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span class="percentage">-{{ product.get_percentage_off }}%</span>)</p></div>
         {% if product.free_shipping == True %}
         <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
         <p class="free-shipping">бесплатна достава</p>
