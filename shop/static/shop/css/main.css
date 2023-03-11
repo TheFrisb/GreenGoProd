@@ -2184,6 +2184,7 @@ select {
     justify-content: flex-start;
     align-items: center;
     margin: 0px 16px;
+    flex-wrap: wrap;
 }
 .reviewer-initials{
     flex-basis: 56px;
