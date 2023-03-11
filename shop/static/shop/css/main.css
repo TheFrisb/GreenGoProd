@@ -2433,6 +2433,14 @@ section#ordered_items_notice_wrapper {
 }
 
 @media (max-width: 767px){
+    .product-sale-badge{
+        right: -5%;
+        width: 58px;
+        height: 58px;
+    }
+    .product-sale-badge p{
+        font-size: 18px;
+    }
     .desktop{
         display: none!important;
     }
@@ -2893,4 +2901,21 @@ section#ordered_items_notice_wrapper {
 }
 .main-toggle ol p{
     margin: 0;
+}
+.product-sale-badge{
+    position: absolute;
+    top: -5%;
+    right: -10%;
+    width: 64px;
+    height: 64px;
+    background-color: #00703d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+}
+.product-sale-badge p{
+    font-size: 20px;
 }
