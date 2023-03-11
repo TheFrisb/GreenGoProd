@@ -102,7 +102,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-
+    def get_percentage_off(self):
+        return int(100 - (self.sale_price / self.regular_price * 100))
+    
+    
     def get_absolute_url(self):
         return reverse('product-page', kwargs={'slug': self.slug})
 
