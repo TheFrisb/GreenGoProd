@@ -174,7 +174,7 @@ def CheckoutView(request):
     
     feetotal = 0
     for orderfee in orderFees:
-        for cartfee in cartFees:
+        for cartfee in cartFees or []:
             if(orderfee == cartfee.fee):
                 orderfee.is_added = True
                 feetotal += cartfee.price
