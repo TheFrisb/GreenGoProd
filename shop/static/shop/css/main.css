@@ -1692,6 +1692,28 @@ select {
     display: none;
     z-index: 999;
 }
+.product-page .product-sale-badge{
+    top: 2%;
+    right: 3.5%;
+    z-index: 10;
+}
+.product-sale-badge{
+    position: absolute;
+    top: -5%;
+    right: -10%;
+    width: 64px;
+    height: 64px;
+    background-color: #00703d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+}
+.product-sale-badge p{
+    font-size: 20px;
+}
 
 .col-2.product-page{
     padding: 10px;
@@ -2434,12 +2456,12 @@ section#ordered_items_notice_wrapper {
 
 @media (max-width: 767px){
     .product-sale-badge{
-        right: -5%;
-        width: 58px;
-        height: 58px;
+        right: -5%!important;
+        width: 58px!important;
+        height: 58px!important;
     }
     .product-sale-badge p{
-        font-size: 18px;
+        font-size: 18px!important;
     }
     .desktop{
         display: none!important;
@@ -2901,26 +2923,4 @@ section#ordered_items_notice_wrapper {
 }
 .main-toggle ol p{
     margin: 0;
-}
-.product-page .product-sale-badge{
-    top: 2%;
-    right: 3.5%;
-    z-index: 10;
-}
-.product-sale-badge{
-    position: absolute;
-    top: -5%;
-    right: -10%;
-    width: 64px;
-    height: 64px;
-    background-color: #00703d;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    color: white;
-}
-.product-sale-badge p{
-    font-size: 20px;
 }
