@@ -109,6 +109,8 @@ def addtoorder(request):
     
     product = Product.objects.get(id=request.POST.get('product_id'))
     product_qty = int(request.POST.get('product_qty'))
+    if product_qty < 1:
+        product_qty = 1
     order = Order.objects.get(id = request.POST.get('order_id'))
     if order:
         orderItem = OrderItem.objects.filter(order = order, product = product).first();
@@ -119,7 +121,7 @@ def addtoorder(request):
                     order = orderItem.order,
                     product = orderItem.product,
                     price = orderItem.attribute_price - orderItem.attribute_price * 20 // 100,
-                    quantity = 1,
+                    quantity = product_qty,
                     label = orderItem.label,
                     supplier = orderItem.product.supplier,
                     attribute_name = orderItem.attribute_name,
@@ -127,31 +129,31 @@ def addtoorder(request):
                 )
                 if(order.shipping == True):
                     order.shipping = False
-                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
-                    order.total_price = order.total_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100) - order.shipping_price
+                    order.subtotal_price = order.subtotal_price + ((orderItem.attribute_price - orderItem.attribute_price * 20 // 100) * product_qty)
+                    order.total_price = order.total_price + ((orderItem.attribute_price - orderItem.attribute_price * 20 // 100) * product_qty) - order.shipping_price
                 else:
                     order.shipping = False
-                    order.subtotal_price = order.subtotal_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
-                    order.total_price = order.total_price + (orderItem.attribute_price - orderItem.attribute_price * 20 // 100)
+                    order.subtotal_price = order.subtotal_price + ((orderItem.attribute_price - orderItem.attribute_price * 20 // 100) * product_qty)
+                    order.total_price = order.total_price + ((orderItem.attribute_price - orderItem.attribute_price * 20 // 100) * product_qty)
 
             else:
                 OrderItem.objects.create(
                     order = orderItem.order,
                     product = orderItem.product,
                     price = orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100,
-                    quantity = 1,
+                    quantity = product_qty,
                     label = orderItem.product.sku,
                     supplier = orderItem.product.supplier,
                     is_thankyou_offer = True,
                 )
                 if(order.shipping == True):
                     order.shipping = False
-                    order.subtotal_price = order.subtotal_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
-                    order.total_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) - order.shipping_price
+                    order.subtotal_price = order.subtotal_price + ((orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) * product_qty)
+                    order.total_price = order.total_price + ((orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) * product_qty) - order.shipping_price
                 else:
                     order.shipping = False
-                    order.subtotal_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
-                    order.total_price = order.total_price + (orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100)
+                    order.subtotal_price = order.total_price + ((orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) * product_qty)
+                    order.total_price = order.total_price + ((orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) * product_qty)
 
             order.save()
         return JsonResponse({'status': "Product added successfully"})
