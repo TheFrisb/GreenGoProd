@@ -1629,6 +1629,14 @@ select {
 .active-gallery-item{
     border: 2px solid var(--black)!important;
 }
+.verified-product-image{
+    position: absolute;
+    bottom: 25px;
+    text-align: center;
+    width: 550px;
+    font-weight: 600;
+    font-size: 14px;
+}
 .slider-wrapper{
     width: 100%;
     text-align: center;
@@ -2455,6 +2463,9 @@ section#ordered_items_notice_wrapper {
 }
 
 @media (max-width: 767px){
+    .verified-product-image{
+        width: 100vw;
+    }
     .product-sale-badge{
         right: -5%;
         width: 58px;
