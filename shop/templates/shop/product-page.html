@@ -12,10 +12,13 @@
         <div class="product-sale-badge"><p>-{{product.get_percentage_off}}%</p></div>
         <div id="overlay-loader" style=""><img src="https://greengoshop.mk/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
-                    <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
-                    {% if product.gallery_is_verified %}
+                    <div>
+                         <img src="{{ product.thumbnail.url }}" alt="slider image">
+                         {% if product.gallery_is_verified %}
                          <p class="verified-product-image">производот е ист како на сликата</p>
-                    {% endif %}
+                         {% endif %}
+                    </div>
+                    
                     {% for img in gallery %}
                     <div>
                          <img src="{{ img.galleryimg.url }}" alt="slider image">
