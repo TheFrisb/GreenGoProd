@@ -13,10 +13,13 @@
         <div id="overlay-loader" style=""><img src="https://greengoshop.mk/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
                     <div><img src="{{ product.thumbnail.url }}" alt="slider image"></div>
+                    {% if product.gallery_is_verified %}
+                         <p class="verified-product-image">производот е ист како на сликата</p>
+                    {% endif %}
                     {% for img in gallery %}
                     <div>
                          <img src="{{ img.galleryimg.url }}" alt="slider image">
-                         {% if img.is_verified %}
+                         {% if product.gallery_is_verified %}
                          <p class="verified-product-image">производот е ист како на сликата</p>
                          {% endif %}
                     </div>
@@ -25,6 +28,9 @@
                         {% for attribute in attributes %}
                         {% if attribute.thumbnail %}
                         <div class="{{ attribute.id }}_variable"><img src="{{ attribute.thumbnail.url }}" alt="slider image" ></div>
+                        {% if product.gallery_is_verified %}
+                         <p class="verified-product-image">производот е ист како на сликата</p>
+                        {% endif %}
                         {% endif %}
                         {% endfor %}
                     {% endif %}
