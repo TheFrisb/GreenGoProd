@@ -30,10 +30,12 @@
                     {% if attributes %}
                         {% for attribute in attributes %}
                         {% if attribute.thumbnail %}
-                        <div class="{{ attribute.id }}_variable"><img src="{{ attribute.thumbnail.url }}" alt="slider image" ></div>
-                        {% if product.gallery_is_verified %}
-                         <p class="verified-product-image">производот е ист како на сликата</p>
-                        {% endif %}
+                        <div class="{{ attribute.id }}_variable">
+                            <img src="{{ attribute.thumbnail.url }}" alt="slider image" >
+                            {% if product.gallery_is_verified %}
+                            <p class="verified-product-image">производот е ист како на сликата</p>
+                            {% endif %}
+                        </div>
                         {% endif %}
                         {% endfor %}
                     {% endif %}
