@@ -77,6 +77,7 @@ class Product(models.Model):
     fake_quantity = models.IntegerField(null=True)
     review_average = models.IntegerField(default=0)
     gallery_is_verified = models.BooleanField(default=False, blank=True, verbose_name='Верифицирани слика од производ')
+    is_best_seller = models.BooleanField(default=False, blank=True, verbose_name='Прикажи голема побарувачка на product page')
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
