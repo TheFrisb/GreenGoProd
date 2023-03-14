@@ -76,6 +76,7 @@ class Product(models.Model):
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
     fake_quantity = models.IntegerField(null=True)
     review_average = models.IntegerField(default=0)
+    gallery_is_verified = models.BooleanField(default=False, blank=True, verbose_name='Верифицирани слика од производ')
     #Product Data
 
     supplier = models.ForeignKey(Dobavuvac, on_delete=models.CASCADE, verbose_name='Добавувач')
@@ -127,7 +128,7 @@ class ProductGallery(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
     galleryimg = ProcessedImageField(upload_to='products/product-gallery/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True, verbose_name='Слика за галерија')
-    is_verified = models.BooleanField(default=False, blank=True, verbose_name='Верифицирана слика од производ')
+
 
 class Color(models.Model):
     class Meta:
