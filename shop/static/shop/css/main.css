@@ -793,7 +793,11 @@ select {
     align-items: center;
 
 }
-
+.best-seller{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 .footer-section p{
     margin-top: 25px;
     margin-bottom: 16px;
@@ -2463,6 +2467,9 @@ section#ordered_items_notice_wrapper {
 }
 
 @media (max-width: 767px){
+    .best-seller{
+        justify-content: center;
+    }
     .verified-product-image{
         width: 100vw;
     }
