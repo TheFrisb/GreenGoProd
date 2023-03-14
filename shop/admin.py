@@ -44,11 +44,11 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Задолжителни:', {
             'fields': ('status', 'category', 'title', 'title_slug', 'thumbnail',  'content', 'regular_price', 'sale_price',
-            'free_shipping', 'supplier', 'sku', 'supplier_stock_price', 'date_posted', 'gallery_is_verified',),
+            'free_shipping', 'supplier', 'sku', 'supplier_stock_price', 'date_posted',),
         }),
-        ('Количина:', {
-            'fields': ('quantity',),
-           'description': 'Внеси доколку сакаш да контролираш количина',
+        ('Widgets:', {
+            'fields': ('gallery_is_verified', 'is_best_seller',),
+           'description': 'Прикажи widgets на product page',
         }),
         ('Атрибути и Понуди:',{
             'fields': ('attributes_type',),
