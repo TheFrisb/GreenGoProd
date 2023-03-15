@@ -517,6 +517,10 @@
     $(".toggle-title").click(function (e){
         $(this).next(".toggle-content").slideToggle("fast");
     })
+    $(".faq-title").click(function (e){
+        $(this).next(".faq-content").slideToggle("fast");
+        $(this).find(".faq-icon").toggleClass("vertical-flip");
+    })
     $(".checkout-dostava").click(function (e){
         if($(".checkout-garancija").hasClass("active")){
             $(".checkout-garancija").removeClass("active");
