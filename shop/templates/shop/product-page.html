@@ -178,6 +178,66 @@
             </div>
         </div>
     </div>
+    <div class="frequently-asked-questions" style="padding: 15px 0px">
+        <p style="text-align: center; font-weight: 600; padding-bottom: 15px;">Често поставувани прашања</p>
+        {% for faq in faq_toggle %}
+        <div class="faq-toggle product-faq">
+            <div class="faq-title">
+                <span style="display:flex; align-items:center;gap:10px">
+                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <p style="text-align:left;font-size:16px;">{{ faq.question }}</p>
+                </span>
+                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon vertical-flip"></div>
+            <div class="faq-content">
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">{{ faq.content }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="faq-toggle">
+            <div class="faq-title">
+                <span style="display:flex; align-items:center;gap:10px">
+                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <p style="text-align:left;font-size:16px;">Која е цената на доставата?</p>
+                </span>
+                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
+            <div class="faq-content">
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Сите наши производи имаат БЕСПЛАТНА ДОСТАВА до дома.</p>
+            </div>
+        </div>
+        <div class="faq-toggle">
+            <div class="faq-title">
+                <span style="display:flex; align-items:center;gap:10px">
+                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <p style="text-align:left;font-size:16px;">Кога ќе го добијам нарачаниот производ?</p>
+                </span>
+                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
+            <div class="faq-content">
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Пратката ќе ја добиете во рок од 2-4 работни денови.</p>
+            </div>
+        </div>
+        <div class="faq-toggle">
+            <div class="faq-title">
+                <span style="display:flex; align-items:center;gap:10px">
+                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <p style="text-align:left;font-size:16px;">Што ако добијам оштетен производ?</p>
+                </span>
+                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
+            <div class="faq-content">
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Доколку не сте задоволни од производот можете да побарате рефундација или да го замените производот со некој друг што го имаме на залиха моментално. Се што треба е да ни се јавите на телефонскиот број 071321312 и веднаш ќе добиете некој од нашите колеги кој ќе ви помогне да се реши проблемот.</p>
+            </div>
+        </div>
+        <div class="faq-toggle">
+            <div class="faq-title">
+                <span style="display:flex; align-items:center;gap:10px">
+                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <p style="text-align:left;font-size:16px;">Дали можам да го вратам својот производ?</p>
+                </span>
+                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
+            <div class="faq-content">
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Се разбира! Сите наши производи имаат гаранција за поврат до 30 дена од денот на подигање, што значи дека неискористените производи можете да ги вратите во рок од 30 дена.</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% if reviews %}
 
