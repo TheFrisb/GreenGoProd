@@ -112,6 +112,7 @@ def ProductView(request, slug):
         attributes = ProductAttribute.objects.filter(product__slug=slug)
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.get(slug=slug)
+        faq_toggle = ProductFAQ.objects.filter(product=product)
         if product.review_average != 0:
             reviews = Review.objects.filter(product__slug=slug)
         title = product.title
@@ -138,6 +139,7 @@ def ProductView(request, slug):
                     'percentage': percentage,
                     'money_saved': money_saved,
                     'delivery_days': delivery_days,
+                    'faq_toggle': faq_toggle,
                 }
             else:
                 context = {
@@ -150,6 +152,7 @@ def ProductView(request, slug):
                     'percentage': percentage,
                     'money_saved': money_saved,
                     'delivery_days': delivery_days,
+                    'faq_toggle': faq_toggle,
                 }
 
 
