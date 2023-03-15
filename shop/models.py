@@ -120,6 +120,15 @@ class product_campaigns(models.Model):
         return self.product.title
     
     
+class ProductFAQ(models.Model):
+    class Meta:
+        verbose_name = "Често поставувани прашања"
+        verbose_name_plural = "Често поставувани прашања"
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    question = models.CharField(max_length=100, verbose_name="Прашање")
+    content = models.TextField(verbose_name="Одговор")
+    
     
 class ProductGallery(models.Model):
     class Meta:
