@@ -3,6 +3,11 @@ from .models import *
 from .forms import *
 # Register your models here.
 
+
+class FAQInline(admin.TabularInline):
+    model = ProductFAQ
+    
+    
 class InformationInline(admin.StackedInline):
     model = OrderItem
     list_display = ("Product_Title", "name",  "rating", "date_created")
@@ -54,7 +59,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('attributes_type',),
         }),
         )
-    inlines = [ProductAttributesInLine, GalleryInline, CampaignItems]
+    inlines = [ProductAttributesInLine, GalleryInline, FAQInline, CampaignItems]
     # list_editable 
     
   
