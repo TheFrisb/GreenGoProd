@@ -18,7 +18,9 @@
             <img src="{% static 'icons/header-logo.webp' %}" alt="default.jpg" class="header-logo-img" width="280" height="80" >
         </a>
         </div>
-
+        <a href="tel:+38971321312" class="header-icon mobile above-small">
+            <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon" width="24" height="24" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);">
+        </a>
         <div class="header-search">
             <form action="{% url 'search_results' %}" method="get" aria-label="Пребарај производи">
             <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи" aria-label="Копче за пребарување">
