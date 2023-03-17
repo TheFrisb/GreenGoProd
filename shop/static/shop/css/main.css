@@ -170,7 +170,54 @@ input[type=number] {
 .material-symbols-outlined{
     font-size:24px!important;
 }
+  #para1,
+  #para2 {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    animation: bannerslide 12s infinite;
+    text-align: center;
+    color: white;
+    font-weight: 500;
 
+  }
+  
+  #para1 {
+    animation-delay: 0s;
+    
+  }
+  
+  #para2 {
+    animation-delay: 6s;
+    opacity: 0;
+  }
+  @keyframes bannerslide {
+    0% {
+        -webkit-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        transform: translateX(100%);
+        opacity: 1;
+      }
+      25% {
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+        opacity: 1;
+      }
+      50%{
+        -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        transform: translateX(0%);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: translateX(-120%);
+        -ms-transform: translateX(-120%);
+        transform: translateX(-120%);
+        opacity: 1;
+      }
+  }
 
 
 .header-icon:hover{
