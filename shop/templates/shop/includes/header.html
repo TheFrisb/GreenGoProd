@@ -2,10 +2,19 @@
 {% load static %}
 
 <section id="header-banner">
-    <div class="banner-inner-header">
-        <p id="para1">100% сигурно купување</p>  
-        <p id="para2">Бесплатна достава на сите производи</p>
+    {% if not product %}
+    <div class="banner-inner-header-1" style="display: flex;align-items:center;justify-content:center ">
+        <a href="tel:071321312" class="banner-text">071321312 (09:00 - 16:00)</a>
+        <a href="mailto:contact@greengoshop.mk" class="banner-text">contact@greengoshop.mk</a>
+        <a href="https://www.facebook.com/greengoshop.mk" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}"  class="image-icon filter-white"  alt="" width="16" height="16"></a>
+        <a href="https://www.instagram.com/greengoshop.mk" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16" height="16"></a>
     </div>
+    {% else %}
+    <div class="banner-inner-header">
+        <p id="para1">🔥 100% сигурно купување</p>  
+        <p id="para2">🚚 Бесплатна достава на сите производи</p>
+    </div>
+    {% endif %}
 </section>
 <header id="header">
     <div class="inner-header">
