@@ -80,8 +80,6 @@ input[type=number] {
 #header-banner .banner-text{
     text-decoration: none;
     color: white;
-    padding-top: 13px;
-    padding-bottom: 13px;
     font-size: 14px;
     font-weight: 500;
     padding-right: 5px;
@@ -180,6 +178,7 @@ input[type=number] {
     text-align: center;
     color: white;
     font-weight: 500;
+    font-size: 15px;
 
   }
   
@@ -2842,6 +2841,12 @@ section#ordered_items_notice_wrapper {
     .product-sale-badge{
         right: -1%;
 
+    }
+    .banner-inner-header{
+        height: 18px;
+    }
+    #para1, #para2{
+        font-size: 14px;
     }
 
 }
