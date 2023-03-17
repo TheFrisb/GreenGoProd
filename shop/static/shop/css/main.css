@@ -89,7 +89,7 @@ input[type=number] {
     text-decoration: none;
 }
 .banner-inner-header{
-    height: 20px;
+    height: 22px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -2843,7 +2843,7 @@ section#ordered_items_notice_wrapper {
 
     }
     .banner-inner-header{
-        height: 18px;
+        height: 20px;
     }
     #para1, #para2{
         font-size: 14px;
