@@ -92,7 +92,7 @@ input[type=number] {
     height: 20px;
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 .header-info{
     font-size: 14px;
