@@ -72,10 +72,8 @@ input[type=number] {
 #header-banner{
     background: var(--green);
     width: 100%;
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    flex-wrap: nowrap;
+    overflow: hidden;
+    position: relative;
     padding: 0.4em 0em;
 }
 
@@ -91,6 +89,12 @@ input[type=number] {
 }
 #header-banner a{
     text-decoration: none;
+}
+.banner-inner-header{
+    height: 20px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 .header-info{
     font-size: 14px;
