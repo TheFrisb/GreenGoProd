@@ -1,4 +1,4 @@
- $(document).ready(function() {
+$(document).ready(function() {
 
     const regular_price = parseInt($('.main-price').find('.product-regular-price').text());
     const sale_price = parseInt($('.main-price').find('.product-sale-price').text());
@@ -158,40 +158,23 @@
                 },
                 
                 success: function (response){
+                    $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                    $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                    cartCount++;
+                    $("#cart-count").html(cartCount)
                     if($(button).hasClass("sidecartOfferBtn")){
                         if($(button).hasClass("addedBtn") == false){
                             $(button).toggleClass('addedBtn').html('ДОДАДЕН');
-                            cartCount++;
-                            $("#cart-count").html(cartCount)
-                            $('.sidecart-inner').load(location.href + " .sidecart-inner");
                         }
                        
                       
                     }
-                    else if($(button).hasClass("checkout-offerBtn")){
-                        if($(button).hasClass("addedBtn") == false){
-                            $(button).toggleClass('addedBtn').html('ДОДАДЕН');
-                        }
-                        $('.cart-data').load(location.href + " .cart-data")
+                    if($(button).hasClass("proceed-to-checkout")){
+
+                        $("#checkout_form_overlay").toggle();
+                        $('body').toggleClass("checkout-is-active");
                     }
-                    else if($(button).hasClass("proceed-to-checkout")){
-                        window.location.href = "/checkout/";
-                    }
-                 
-                    else {
-                        cartCount = cartCount + parseInt(product_qty);
-                        $("#cart-count").html(cartCount)
-                        $('.sidecart-inner').load(location.href + " .sidecart-inner");
-                        if($(button).hasClass("mainaddedBtn") == false){
-                            setTimeout(() => {
-                                $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
-                                toggleCart();
-                              }, 250)
-                            }
-                        else{
-                            toggleCart()
-                        }
-                    }
+                    
 
                 }
             })
@@ -212,6 +195,15 @@
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
         var product_qty = 1;
         var product_price = $(this).closest('.product_data').find('.offer_price').val();
+
+        if($(this).hasClass("checkout-offer")){
+            var product_id = $(this).siblings('.prod_id').val();
+            var product_qty = 1;
+            var product_price = $(this).siblings('.offer_price').val();
+            console.log(product_id, product_price)
+
+        }
+
         var productName = $(this.closest('.product_data')).find('.prod_title_tracker').text()
         var token = $('input[name=csrfmiddlewaretoken]').val()
         if (product_qty == null){
@@ -229,21 +221,20 @@
             },
             
             success: function (response){
+                cartCount++;
+                $("#cart-count").html(cartCount)
                 if($(button).hasClass("sidecartOfferBtn")){
                     if($(button).hasClass("addedBtn") == false){
                         $(button).toggleClass('addedBtn').html('ДОДАДЕН');
-                        cartCount++;
-                        $("#cart-count").html(cartCount)
-                        $('.sidecart-inner').load(location.href + " .sidecart-inner");
                     }
-                    
                 }
-                else if($(button).hasClass("checkout-offerBtn")){
+                else if($(button).hasClass("add-upsell")){
                     if($(button).hasClass("addedBtn") == false){
                         $(button).toggleClass('addedBtn').html('ДОДАДЕН');
                     }
-                    $('.cart-data').load(location.href + " .cart-data")
                 }
+                $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
 
             }
         })
@@ -286,13 +277,23 @@
                 csrfmiddlewaretoken: token,
             },
             success: function (response){
-                if($(button).hasClass("proceed-to-checkout")){
-                    window.location.href = "/checkout/";
-                }
-                else{
-                    cartCount = cartCount + parseInt(product_qty);
+                cartCount = cartCount + parseInt(product_qty);
                     $("#cart-count").html(cartCount)
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                    $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                if($(button).hasClass("proceed-to-checkout")){
+                    $("#checkout_form_overlay").toggle();
+                    $('body').toggleClass("checkout-is-active");
+                    $.ajax({
+                        method: "POST",
+                        url: "/call-pixel-checkout",
+                        data: {
+                            csrfmiddlewaretoken: token,
+                        },
+                    })
+                }    
+                else
+                {     
                     if($(button).hasClass("mainaddedBtn") == false){
                         setTimeout(() => {
                             $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
@@ -302,10 +303,11 @@
                     else{
                         toggleCart()
                     }
+                    }
                 }
 
-            }
         })
+        
       }else{
         $(".attribute-title").css("color", "red").animate({'font-size':'16px', 'font-weight':'700'}, 300).animate({'font-size':'12px', 'font-weight':'700'});
       }
@@ -409,6 +411,7 @@
             attribute_id = $(this).closest('.product_data').find('.attrib_id').val();
         }
         var token = $('input[name=csrfmiddlewaretoken]').val()
+        console.log(product_id,product_qty,attribute_id,token)
         $.ajax({
             method: "POST",
             url: "/update-cart",
@@ -420,12 +423,8 @@
             },
             
             success: function (response){
-                if($(button).hasClass('sidecart-qty')){
-                    $('.sidecart-inner').load(location.href + " .sidecart-inner");
-                }
-                else{
-                    $('.cart-data').load(location.href + " .cart-data")
-                }
+                $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
             }
         })
     })
@@ -454,39 +453,32 @@
             },
             
             success: function (response){
-                if (window.location.href.indexOf("checkout") > -1){
-                    $('.cart-data').load(location.href + " .cart-data")
-                    $('.checkout-offers').load(location.href + " .checkout-offers")
-                    if(cart_items_count == 1){
-                        $(".content-container.checkout").remove();
-                        $(".page-container").append('<div class="content-container checkout"><div class="no-cart"><h2 class="no-cart-title">Немате производи во кошничка</h2><a href="/" class="no-cartBtn">Врати ме на почетна</a></div></div>');
+                cartCount = cartCount - parseInt(cart_quantity)  
+                $('.sidecart-inner').load(location.href + " .sidecart-inner")
+                $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                $("#cart-count").html(cartCount)
+                if($(".checkout-items-count").val() == 1){
+                    console.log('yea')
+                    if($('body').hasClass('checkout-is-active')){
+                        $("#checkout_form_overlay").toggle();
+                        $('body').toggleClass("checkout-is-active");
                     }
                 }
-                else{
-                    cartCount = cartCount - parseInt(cart_quantity)
-                    
-                    $('.sidecart-inner').load(location.href + " .sidecart-inner")
-                    $("#cart-count").html(cartCount)
-                }
+                
                 
             }
         })
     })
     
-    $(".checkout-fees").on('click', '.fee-toggle', function(e){
-        e.preventDefault();
-        $(this).find('.fee-icon').toggleClass('active');
-        $(this).closest('.checkout-fees').find('.fee-description').slideToggle('next');
-    })
 
-    $(".checkout-fees").on('click', '.fee-add', function(e){
+    $(document).on('click', '.fee-item', function(e){
         e.preventDefault();
-        button = $(this);
+        fee = $(this);
         fee_action = 'add';
-        if($(this).closest('.checkout-fees').hasClass('active')){
+        if($(this).hasClass('checked')){
             fee_action = 'remove';
         }
-        var fee_id = $(this).closest('.fee_data').find('.fee_id').val();
+        var fee_id = $(this).find('.fee_data').val();
         var token = $('input[name=csrfmiddlewaretoken]').val()
         $.ajax({
             method: "POST",
@@ -498,15 +490,8 @@
             },
             
             success: function (response){
-                if($(button).closest('.checkout-fees').hasClass('active')){
-                    $(button).toggleClass('addedBtn').html('ДОДАЈ');
-                    $(button).closest('.checkout-fees').toggleClass('active');
-                }else {
-                    $(button).toggleClass('addedBtn').html('ДОДАДЕН');
-                    $(button).closest('.checkout-fees').toggleClass('active');
-                }
-                
-                $('.cart-data').load(location.href + " .cart-data")   
+                $(fee).toggleClass('checked')
+                $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
                 
             }
         })
@@ -579,3 +564,271 @@
         setTimeout(myFunction, (Math.floor(Math.random() * (20 - 13 + 1) + 13)) * 1000)
     }
  })
+
+ 
+function create_custom_dropdowns() {
+    $('select').each(function (i, select) {
+        if (!$(this).next().hasClass('dropdown-select')) {
+            $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            if(window.matchMedia("(max-width: 767px)").matches){
+                $(dropdown).addClass('ismobile')
+            }
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '<span style="display:none">' + $(o).attr("fake-name") + '</span></li>');
+            });
+        }
+    });
+
+    $('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
+}
+
+// Event listeners
+
+// Open/close
+$(document).on('click', '.dropdown-select', function (event) {
+    $(this).removeClass('red')
+    if($(event.target).hasClass('dd-searchbox')){
+        return;
+    }
+    $('.dropdown-select').not($(this)).removeClass('open');
+    $(this).toggleClass('open');
+    if ($(this).hasClass('open')) {
+        $(this).find('.option').attr('tabindex', 0);
+        $(this).find('.selected').focus();
+        $("#txtSearchValue").focus();
+        if($(this).hasClass('ismobile')){
+            $('html, body').animate({
+                scrollTop: $(this).offset().top - 100
+            }, 800);
+        }
+    } else {
+        $(this).find('.option').removeAttr('tabindex');
+        $(this).focus();
+    }
+});
+
+// Close when clicking outside
+$(document).on('click', function (event) {
+    if ($(event.target).closest('.dropdown-select').length === 0) {
+        $('.dropdown-select').removeClass('open');
+        $('.dropdown-select .option').removeAttr('tabindex');
+    }
+    event.stopPropagation();
+});
+
+function filter(){
+    var valThis = $('#txtSearchValue').val();
+    $('.dropdown-select ul > li').each(function(){
+     var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();         
+   });
+};
+// Search
+
+// Option click
+$(document).on('click', '.dropdown-select .option', function (event) {
+    input = $(".checksout-city");
+    $(this).closest('.list').find('.selected').removeClass('selected');
+    $(this).addClass('selected');
+    var text = $(this).data('value');
+    $(this).closest('.dropdown-select').find('.current').text(text);
+    $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    $(input).val(text);
+    
+});
+
+// Keyboard events
+$(document).on('keydown', '.dropdown-select', function (event) {
+    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+    // Space or Enter
+    //if (event.keyCode == 32 || event.keyCode == 13) {
+    if (event.keyCode == 13) {
+        if ($(this).hasClass('open')) {
+            focused_option.trigger('click');
+        } else {
+            $(this).trigger('click');
+        }
+        return false;
+        // Down
+    } else if (event.keyCode == 40) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            focused_option.next().focus();
+        }
+        return false;
+        // Up
+    } else if (event.keyCode == 38) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+            focused_option.prev().focus();
+        }
+        return false;
+        // Esc
+    } else if (event.keyCode == 27) {
+        if ($(this).hasClass('open')) {
+            $(this).trigger('click');
+        }
+        return false;
+    }
+});
+
+$(document).ready(function () {
+    create_custom_dropdowns();
+    $(document).on('click', '#place_order', function (e){
+        var city = $(".checksout-city").val();
+        if(city === 'Undefined' || city === 'Одбери град'){
+            e.preventDefault();
+            $(".dropdown-select").addClass('red-city')
+                $('#checkout_form_overlay').animate({
+                    scrollTop: $(".dropdown-select").offset().top - 100
+                }, 800);
+            return;
+        }
+    })
+    
+    var token = $('input[name=csrfmiddlewaretoken]').val()
+    ;(function($){
+        $.fn.extend({
+            donetyping: function(callback,timeout){
+                timeout = timeout || 1e3; // 1 second default timeout
+                var timeoutReference,
+                    doneTyping = function(el){
+                        if (!timeoutReference) return;
+                        timeoutReference = null;
+                        callback.call(el);
+                    };
+                return this.each(function(i,el){
+                    var $el = $(el);
+
+                    $el.is(':input') && $el.on('keyup keypress paste',function(e){
+
+                        if (e.type=='keyup' && e.keyCode!=8) return;
+
+                        if (timeoutReference) clearTimeout(timeoutReference);
+                        timeoutReference = setTimeout(function(){
+                            doneTyping(el);
+                        }, timeout);
+                    }).on('blur',function(){
+                        doneTyping(el);
+                    });
+                });
+            }
+        });
+    })(jQuery);
+    $('#checkout_input_name').donetyping(function(){
+      input_name = $('#checkout_input_name').val();
+      input_phone = $('#checkout_input_phone').val()
+      input_address = $('#checkout_input_address').val()
+      $.ajax({
+        method: "POST",
+        url: "/check-abandoned-carts",
+        data: {
+            'name': input_name,
+            'phone': input_phone,
+            'address': input_address,
+            csrfmiddlewaretoken: token,
+        },
+        success: function(response){
+        }
+      })
+    }, 3000);
+    $('#checkout_input_phone').donetyping(function(){
+      input_name = $('#checkout_input_name').val();
+      input_phone = $('#checkout_input_phone').val()
+      input_address = $('#checkout_input_address').val()
+      $.ajax({
+        method: "POST",
+        url: "/check-abandoned-carts",
+        data: {
+            'name': input_name,
+            'phone': input_phone,
+            'address': input_address,
+            csrfmiddlewaretoken: token,
+        },
+        success: function(response){
+        }
+      })
+      }, 3000);
+    $('#checkout_input_address').donetyping(function(){
+        input_name = $('#checkout_input_name').val();
+        input_phone = $('#checkout_input_phone').val()
+        input_address = $('#checkout_input_address').val()
+        $.ajax({
+          method: "POST",
+          url: "/check-abandoned-carts",
+          data: {
+              'name': input_name,
+              'phone': input_phone,
+              'address': input_address,
+              csrfmiddlewaretoken: token,
+          },
+          success: function(response){
+          }
+        })
+        }, 3000);
+    $(document).on("click", ".product-page-upsell", function(){
+        current_item = $(this)
+        $(this).toggleClass("checked");
+        $(this).find(".product-upsell-checkbox").toggleClass("checked");
+
+        $(".product-page-upsell").each(function(i, obj){
+            if($(this).hasClass("checked")){
+                var upsell_name = $(this).find(".product-upsell-title-data").val();
+                console.log(upsell_name)
+            }
+        })
+        var image = $(this).find(".product-upsell-image").attr('src')
+        var price = $(this).find(".product-upsell-price-data").val();
+        var product_id = $("#main-product-id").val();
+        var upsell_name = $(this).find(".product-upsell-title-data").val();
+        $.ajax({
+            method: "POST",
+            url: "/upsell-add-to-cart",
+            data: {
+                'product_id': product_id,
+                'upsell_title': upsell_name,
+                'upsell_price': price,
+                'thumbnail_url': image,
+                csrfmiddlewaretoken: token,
+            },
+            
+            success: function (response){
+                console.log(response)
+
+            }
+        })
+        
+
+    });
+    $(document).on("click", ".sidecartCheckout", function(e){
+        $("#checkout_form_overlay").toggle();
+        $('body').toggleClass("checkout-is-active");
+        $.ajax({
+            method: "POST",
+            url: "/call-pixel-checkout",
+            data: {
+                csrfmiddlewaretoken: token,
+            },
+        })
+    })
+    $(document).on("click", "#close-checkout", function(e){
+        e.preventDefault();
+        if($('body').hasClass('checkout-is-active')){
+            $("#checkout_form_overlay").toggle();
+            $('body').toggleClass("checkout-is-active");
+        }
+    })
+
+});
+
+
+
+
