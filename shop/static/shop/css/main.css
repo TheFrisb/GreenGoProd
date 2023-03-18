@@ -3315,6 +3315,9 @@ section#ordered_items_notice_wrapper {
 }
 
 @media(max-width:768px){
+    .pay-button{
+        font-size:14px;
+    }
     .checkout-fees-checkbox{
         padding: 8px;
     }
@@ -3357,4 +3360,9 @@ section#ordered_items_notice_wrapper {
         padding: 7px;
     }
     
+}
+@media(max-width:321px){
+	.pay-button{
+		font-size:12px;
+	}
 }
