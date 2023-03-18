@@ -193,6 +193,7 @@ class ProductAttribute(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Понуда')
     price = models.IntegerField(blank=True, null=True, verbose_name='Цена')
     label = models.CharField(max_length=50, null=True, verbose_name='Лабел')
+    supplier_stock_price = models.IntegerField(verbose_name='Набавна цена', null=True)
     is_disabled = models.BooleanField(default = False, blank=True)
     @property
     def checkattribute(self):
