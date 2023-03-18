@@ -20,6 +20,266 @@
     </div>
 </a>
 </section>
+<div id="checkout_form_overlay" style="display:none">
+    <section id="checkout_form" style="position:relative;">
+        <span id="close-checkout" style="position:absolute;">&#10006</span>
+        <h1 class="margin-bottom">Податоци за испорака</h1>
+        <p class="margin-bottom red-text">Плаќање на врата</p>
+        <form form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form">
+            <div class="form-group">
+                <label for="name">Име и Презиме <span class="red">*</span></label>
+                <div class="input">
+                    <div class="form-icon-holder">
+                        <img src="{% static 'icons/checkout/user.svg' %}" alt="" style="width: 24px; height:24px">
+                    </div>
+                    <input type="text" required="" name="name" id="checkout_input_name" placeholder="Внесете го вашето Име и Презиме">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Адреса <abbr title="required" class="required">*</abbr></label>
+                <div class="input">
+                    <div class="form-icon-holder">
+                        <img src="{% static 'icons/checkout/address.svg' %}" alt="" style="width: 24px; height:24px">
+                    </div>
+                    <input type="text" required name="address" id="checkout_input_address" placeholder="Внесете ја вашата адреса">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="number">Телефонски број <abbr title="required" class="required">*</abbr></label>
+                <div class="input">
+                    <div class="form-icon-holder">
+                        <img src="{% static 'icons/checkout/phone.svg' %}" alt="" style="width: 24px; height:24px">
+                    </div>
+                    <input type="tel" placeholder="формат: 07X-XXX-XXX" required name="number" id="checkout_input_phone">
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
+                <div class="input">
+                    <div class="form-icon-holder">
+                        <img src="{% static 'icons/checkout/city.svg' %}" alt="" style="width: 24px; height:24px">
+                    </div>
+                    <input type="text" required name="city" placeholder="Одберете град">
+                </div>
+            </div> -->
+            <div class="form-group">
+                <label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
+                <div class="input">
+                    <div class="form-icon-holder">
+                        <img src="{% static 'icons/checkout/city.svg' %}" alt="" style="width: 24px; height:24px">
+                    </div>
+            <input type="hidden" required name="city" placeholder="Одберете град" class="checksout-city" value="Undefined">
+            <div class="dropdownsearch">
+                <div class="options">
+                  <select name="" id="dynamic_select">              
+                      <option value="Одбери град" fake-name="Одбери град">Одбери град</option>
+                      <option value="Аеродром" fake-name="Aerodrom">Аеродром</option>
+                      <option value="Арачиново" fake-name="Aracinovo">Арачиново</option>
+                      <option value="Берово" fake-name="Berovo">Берово</option>
+                      <option value="Битола" fake-name="Bitola">Битола</option>
+                      <option value="Богданци" fake-name="Bogdanci">Богданци</option>
+                      <option value="Бутел" fake-name="Butel">Бутел</option>
+                      <option value="Валандово" fake-name="Valandovo">Валандово</option>
+                      <option value="Велес" fake-name="Veles">Велес</option>
+                      <option value="Виница" fake-name="Vinica">Виница</option>
+                      <option value="Гази Баба" fake-name="Gazi Baba">Гази Баба</option>
+                      <option value="Гевгелија" fake-name="Gevgelija">Гевгелија</option>
+                      <option value="Гостивар" fake-name="Gostivar">Гостивар</option>
+                      <option value="Дебар" fake-name="Debar">Дебар</option>
+                      <option value="Делчево" fake-name="Delcevo">Делчево</option>
+                      <option value="Демир Капија" fake-name="Demir Kapija">Демир Капија</option>
+                      <option value="Демир Хисар" fake-name="Demir Hisar">Демир Хисар</option>
+                      <option value="Дојран" fake-name="Dojran">Дојран</option>
+                      <option value="Ѓорче Петров" fake-name="Gjorce Petrov">Ѓорче Петров</option>
+                      <option value="Зелениково" fake-name="Zelenikovo">Зелениково</option>
+                      <option value="Илинден" fake-name="Ilinden">Илинден</option>
+                      <option value="Кавадарци" fake-name="Kavadarci">Кавадарци</option>
+                      <option value="Карпош" fake-name="Karpos">Карпош</option>
+                      <option value="Кисела Вода" fake-name="Kisela Voda">Кисела Вода</option>
+                      <option value="Кичево" fake-name="Kichevo">Кичево</option>
+                      <option value="Кочани" fake-name="Kocani">Кочани</option>
+                      <option value="Кратово" fake-name="Kratovo">Кратово</option>
+                      <option value="Крива Паланка" fake-name="Kriva Palanka">Крива Паланка</option>
+                      <option value="Крушево" fake-name="Krusevo">Крушево</option>
+                      <option value="Куманово" fake-name="Kumanovo">Куманово</option>
+                      <option value="Маврово" fake-name="Mavrovo">Маврово</option>
+                      <option value="Македонска Каменица" fake-name="Makedonska Kamenica">Македонска Каменица</option>
+                      <option value="Македонски Брод" fake-name="Makedonski Brod">Македонски Брод</option>
+                      <option value="Неготино" fake-name="Negotino">Неготино</option>
+                      <option value="Охрид" fake-name="Ohrid">Охрид</option>
+                      <option value="Петровец" fake-name="Petrovec">Петровец</option>
+                      <option value="Пехчево" fake-name="Pehcevo">Пехчево</option>
+                      <option value="Прилеп" fake-name="Prilep">Прилеп</option>
+                      <option value="Пробиштип" fake-name="Probistip">Пробиштип</option>
+                      <option value="Радовиш" fake-name="Radovis">Радовиш</option>
+                      <option value="Ресен" fake-name="Resen">Ресен</option>
+                      <option value="Сарај" fake-name="Saraj">Сарај</option>
+                      <option value="Свети Николе" fake-name="Sveti Nikole">Свети Николе</option>
+                      <option value="Скопје" fake-name="Skopje">Скопје</option>
+                      <option value="Сопиште" fake-name="Sopiste">Сопиште</option>
+                      <option value="Струга" fake-name="Struga">Струга</option>
+                      <option value="Струмица" fake-name="Strumica">Струмица</option>
+                      <option value="Студеничани" fake-name="Studenicani">Студеничани</option>
+                      <option value="Тетово" fake-name="Tetovo">Тетово</option>
+                      <option value="Центар" fake-name="Centar">Центар</option>
+                      <option value="Чаир" fake-name="Cair">Чаир</option>
+                      <option value="Чучер-Сандево" fake-name="Cucer Sandevo">Чучер-Сандево</option>
+                      <option value="Штип" fake-name="Stip">Штип</option>
+                      <option value="Шуто Оризари" fake-name="Suto Orizari">Шуто Оризари</option>
+                </select>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+            <div class="checkout-form-inner">
+                <input type="hidden" value="{{ cart.count }}" class="checkout-items-count">
+                <h4>Колку парчиња сакате?</h4>
+                <div class="checkout-products margin-bottom">
+                    {% for item in cart %}
+                    <div class="checkout-product product_data" style="position: relative">
+                        <input type="hidden" name="product_id" value="{{ item.product.id }}" class="prod_id">
+
+                        <span class="remove-checkout-item remove-item" style="position:absolute;right:-10px;padding:10px;color:#abaeb4;">&#10006</span>
+                        <div class="product-info" style="position:relative;">
+                            
+                            {% csrf_token %}
+                            <span class="row-qty">{{ item.product_qty }}</span>
+                            <img src="{{ item.product.thumbnail.url }}" alt="" style="width:60px;height:60px;">
+                            <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
+                                {% if item.has_attributes %}
+                                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
+                                <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} {{ item.attributename }} </a>
+                                {% else %}
+                                <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} </a>
+                                {% endif %}
+                                <div class="quantity">
+                                    <button class="decrement-btn changeQuantity">-</button>
+                                    <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}" aria-label="Количина"> 
+                                    <button class="increment-btn changeQuantity">+</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {% if item.has_attributes %}
+                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.attributeprice }} ден</p>
+                        {% elif item.has_offer %}
+                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.offer_price }} ден</p>
+                        {% else %}
+                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.product.sale_price }} ден</p>
+                        {% endif %}
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                <p class="free-delivery-notice margin-bottom">Бесплатна достава доколку нарачате повеќе од 1 продукт</p>
+                <h4>Одберете начин на достава</h4>
+                <div class="delivery-methods margin-bottom">
+                    <div class="method">
+                        <div class="checked-circle" style="display:flex;align-items: center;gap:10px;">
+                            <div style="padding:3px;border:1px solid #00703d; border-radius:50%; display:inline-block;"><div style="width:12px;height:12px;background-color:#00703d;border-radius:50%"></div></div>
+                            <p>Достава до врата</p>
+                        </div>
+                    </div>
+                    <p style="font-weight:700;text-align:right;">бесплатна достава</p>
+                </div>
+
+                <div class="checkout-order-review margin-bottom">
+                    <div class="order-row">
+                        <p>Цена</p>
+                        <p >{{ cart_total }} ден</p>
+                    </div>      
+                        {% for fee in cartFees %}
+                        <div class="order-row">
+                            <p>{{ fee.title }}</p>
+                            <p >{{ fee.price }} ден</p>
+                        </div>
+                        {% endfor %}
+                    <div class="order-row">
+                        <p>Провизија</p>
+                        <p>20 ден</p>
+                    </div>
+                    <div class="order-row">
+                        <p>Достава</p>
+                        {% if free_shipping %}
+                        <p>бесплатна достава</p>
+                        {% else %}
+                        <p>До врата - 130 ден</p>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="order-total order-row" style="border-top: 1px solid #afafaf">
+                        <p style="font-weight:900">Вкупно за плаќање на курирот</p>
+                        {% if free_shipping %}
+                        <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                        {% else %}
+                        <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if cartOffers %}
+                    <p class="margin-bottom red-text">Често купувани заедно</p>
+                    <div class="checkout-upsells margin-bottom">
+                        {% for item in cartOffers %}
+                        <div class="checkout-upsell">
+                            
+                            <div style="display: flex;justify-content: flex-start;align-items: center;gap: 10px;">
+                                <img src="https://greengoshop.mk/media/products/image_2022-12-03_031808601.webp" alt="" style="width:50px;height:50px;">
+                                <div class="upsell-info">
+                                    <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }}</a>
+                                    <div class="upsell-price">
+                                        <p>
+                                            <span style="text-decoration: line-through;font-size: 12px;color: #abaeb4;font-weight:600;">{{ item.product.regular_price }} ден</span> <span style="font-size: 14px;color: #ff8c01;font-weight:600;">{{ item.price }} ден</span></p>
+                                    </div>
+                                    <p class="checkoutOffer-text" style="display:inline-block!important">{{ item.offer_text }}</p>
+                                </div>
+                            </div>
+                            {% if item.is_added == True %}
+                                <button class="offerBtn addedBtn add-upsell checkout-offer">ДОДАДЕН</button>
+                                <input type="hidden" name="prod_id" value="{{ item.product.id }}" class="prod_id">
+                                <input type="hidden" name="offer_price" value="{{ item.price}}" class="offer_price">
+                            {% else %}
+                            <button class="add-upsell offerBtn checkout-offer">ДОДАЈ</button>
+                            <input type="hidden" name="prod_id" value="{{ item.product.id }}" class="prod_id">
+                            <input type="hidden" name="offer_price" value="{{ item.price}}" class="offer_price">
+                            {% endif %}           
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if orderFees %}
+                <div class="upsell-fees margin-bottom">
+                    
+                        {% for fee in orderFees %}
+                            {% if fee.is_added == True %}
+                                <div class="fee-item checked">
+                            {% else %}
+                                <div class="fee-item">
+                            {% endif %}
+                                <input type="hidden" name="fee_id" value="{{ fee.id }}" class="fee_data">
+                                <div class="checkout-fees-checkbox">
+                                    <div class="checkout-checkmark"></div>
+                                </div>
+                                <img src="{% static 'icons/checkout/truck.svg' %}" alt="" width="24px" height="24px" style="filter: invert(59%) sepia(26%) saturate(4529%) hue-rotate(359deg) brightness(103%) contrast(104%);">
+                                <p>Додади <span style="color:red;font-weight:700">{{ fee.title }}</span> за само <span style="font-weight:700; color:#ff8c01">{{ fee.price }} ден</span></p>
+                                
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <button class="pay-button" type="submit" id="place_order">
+                <div style="line-height: 24px">
+                    <span>👉 КОМПЛЕТИРАЈ ЈА НАРАЧКАТА 👈</span>
+                </div>
+                <div>
+                    <span style="font-weight:500;">Плати на врата при подигање</span>
+                </div>
+            </button>
+            
+        </form>
+    </section>
+</div>
 <footer id="footer">
     <div class="footer-inner">
         <div class="footer-item">
