@@ -672,7 +672,7 @@ select {
     outline:none;
   }
   .dropdown-select .dd-searchbox:focus{
-    border-color: #b8eb00!important;
+    border-color: #00703d!important;
   }
   
   .dropdown-select .list ul {
@@ -1319,7 +1319,7 @@ select {
     padding: 15px;
     border-radius: 30px;
     display:block;
-    background-color:#B8EB00;
+    background-color:#00703d;
     color:white;
     font-weight: 600;
 }
@@ -2087,7 +2087,7 @@ select {
     text-decoration: underline;
 }
 .toggle-static-link:hover{
-    color:#B8EB00;
+    color:#00703d;
 }
 .main-toggle{
     display: block;
