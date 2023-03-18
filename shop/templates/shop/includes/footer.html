@@ -224,7 +224,7 @@
                         <div class="checkout-upsell">
                             
                             <div style="display: flex;justify-content: flex-start;align-items: center;gap: 10px;">
-                                <img src="https://greengoshop.mk/media/products/image_2022-12-03_031808601.webp" alt="" style="width:50px;height:50px;">
+                                <img src="{{ item.product.thumbnail_loop.url }}" alt="" style="width:50px;height:50px;">
                                 <div class="upsell-info">
                                     <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }}</a>
                                     <div class="upsell-price">
