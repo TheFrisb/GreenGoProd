@@ -166,13 +166,19 @@ $(document).ready(function() {
                         if($(button).hasClass("addedBtn") == false){
                             $(button).toggleClass('addedBtn').html('ДОДАДЕН');
                         }
+                        else{
+                            toggleCart()
+                        }
                        
                       
                     }
-                    if($(button).hasClass("proceed-to-checkout")){
+                    elif($(button).hasClass("proceed-to-checkout")){
 
                         $("#checkout_form_overlay").toggle();
                         $('body').toggleClass("checkout-is-active");
+                    }
+                    else{
+                        
                     }
                     
 
