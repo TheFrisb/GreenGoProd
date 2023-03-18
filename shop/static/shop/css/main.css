@@ -698,7 +698,7 @@ select {
   
   .dropdown-select .option.selected {
       font-weight: 600;
-      color: #b8eb00;
+      color: #00703d;
   }
   
   .dropdown-select .option.selected:focus {
