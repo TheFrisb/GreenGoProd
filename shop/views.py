@@ -682,3 +682,10 @@ def remove_abandoned_cart(request):
     else:
         return redirect('/')
     
+
+def call_pixel_checkout(request):
+    try:
+        facebook_pixel.InitiateCheckoutEvent(request)
+        return JsonResponse({'status': "Success"})
+    except:
+        return JsonResponse({'status': "error"})
