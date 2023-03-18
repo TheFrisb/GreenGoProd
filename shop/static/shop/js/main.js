@@ -172,13 +172,10 @@ $(document).ready(function() {
                        
                       
                     }
-                    elif($(button).hasClass("proceed-to-checkout")){
+                    if($(button).hasClass("proceed-to-checkout")){
 
                         $("#checkout_form_overlay").toggle();
                         $('body').toggleClass("checkout-is-active");
-                    }
-                    else{
-                        
                     }
                     
 
