@@ -1,4 +1,4 @@
-from .models import Cart, Category, CartItems, CartOffers
+from .models import Cart, Category, CartItems, CartOffers, CheckoutFees, CartFees
 import uuid
 
 def cart_renderer(request):
