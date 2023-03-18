@@ -190,8 +190,7 @@ $(document).ready(function() {
                         }
                     }
                     
-
-                }
+                
             })
         
     })
