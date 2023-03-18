@@ -1286,15 +1286,7 @@ select {
     display:inline-block;
     cursor: pointer;
 }
-#place_order{
-    padding: 14px 35px;
-    background-color: var(--red);
-    border-radius: 60px;
-    border: 0;
-    color: white;
-    font-weight: 600;
-    align-self: center;
-}
+
 .checkout-dostava.active, .checkout-garancija.active{
     color:var(--green);
 }
@@ -2746,12 +2738,7 @@ section#ordered_items_notice_wrapper {
         margin-right: auto;
     }
    
-    #place_order{
-        order: 1;
-        flex-basis: 100%;
-        width: 100%;
-        font-size: 16px;
-    }
+
     .checkout-dostava-content, .checkout-garancija-content{
         padding: 0 5% 5% 5%;
     }
