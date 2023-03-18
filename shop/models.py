@@ -403,7 +403,7 @@ class CheckoutFees(models.Model):
     content = models.TextField(verbose_name='Содржина', null=False)
     price = models.IntegerField(verbose_name='Цена', null = False)
     is_added = models.BooleanField(default = False)
-
+    emoji = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return 'Order fee: {} ({} ден)'.format(self.title, self.price)
