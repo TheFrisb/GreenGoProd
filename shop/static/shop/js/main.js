@@ -170,12 +170,24 @@ $(document).ready(function() {
                             toggleCart()
                         }
                        
-                      
                     }
-                    if($(button).hasClass("proceed-to-checkout")){
+                    else if($(button).hasClass("proceed-to-checkout")){
 
                         $("#checkout_form_overlay").toggle();
                         $('body').toggleClass("checkout-is-active");
+                    }
+
+                    else{     
+                        if($(button).hasClass("mainaddedBtn") == false){
+                            setTimeout(() => {
+                                $(button).toggleClass('mainaddedBtn').html('ДОДАДЕН');
+                                toggleCart();
+                                }, 250)
+                            }
+                        else{
+                            toggleCart()
+                        }
+                        }
                     }
                     
 
