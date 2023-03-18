@@ -25,6 +25,19 @@ def extras(request):
                 if(offer.product == item.product ):
                     offer.is_added = True
     total = 0
+    try:
+        cartFees = CartFees.objects.filter(cart__session=request.session['nonuser'])
+    except:
+        cartFees = None
+    orderFees = CheckoutFees.objects.all()
+    
+    feetotal = 0
+    for orderfee in orderFees:
+        for cartfee in cartFees or []:
+            if(orderfee == cartfee.fee):
+                orderfee.is_added = True
+                feetotal += cartfee.price
+                
     if cartItems:
         for item in cartItems:
             if(item.attributeprice is not None):
@@ -44,5 +57,5 @@ def extras(request):
                     free_shipping = True
     if(itemscount >= 2):
         free_shipping = True
-    return {'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping}
+    return {'cart': cartItems, 'cart_total': total, 'cartOffers': cartOffers, 'itemscount': itemscount, 'free_shipping': free_shipping, 'orderFees': orderFees, 'cartFees': cartFees, 'feetotal': feetotal,}
     
