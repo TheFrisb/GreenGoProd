@@ -10,6 +10,7 @@ urlpatterns = [
     path('product-category/<str:slug>/', views.CategoryView, name='category-page'),
     path('export-csv/', views.export_products_csv),
     path('product/<str:slug>/', views.ProductView, name='product-page'),
+    path('call-pixel-checkout', views.call_pixel_checkout, name='call_pixel_checkout'),
 
     path('add-to-cart', cart.addtocart, name="addtocart" ),
     path('variable-add-to-cart', cart.variableaddtocart, name="variableaddtocart"),
