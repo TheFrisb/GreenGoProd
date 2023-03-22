@@ -538,8 +538,8 @@ $(document).ready(function() {
     })
   
    function myFunction() {
-        var min = 13,
-          max = 20;
+        var min = 30,
+          max = 45;
         var rand = Math.floor(Math.random() * (max - min + 1) + min); //Generate Random number between 5 - 10
         var minutes_ago = Math.floor(Math.random() * (58 - 2 + 1) + 1)
         const names = ["Александар","Ангела","Марија","Елена",
@@ -575,7 +575,7 @@ $(document).ready(function() {
             e.preventDefault();
             $("#ordered_items_notice_wrapper").fadeOut(200);
         })
-        setTimeout(myFunction, (Math.floor(Math.random() * (20 - 13 + 1) + 13)) * 1000)
+        setTimeout(myFunction, (Math.floor(Math.random() * (25 - 13 + 1) + 13)) * 1000)
     }
  })
 
