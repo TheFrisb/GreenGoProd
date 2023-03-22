@@ -15,7 +15,9 @@
                     <div>
                          <img src="{{ product.thumbnail.url }}" alt="slider image">
                          {% if product.gallery_is_verified %}
-                         <p class="verified-product-image">производот е ист како на сликата</p>
+                         <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
+                            <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
+                            производот е ист како на сликата</p>
                          {% endif %}
                     </div>
                     
@@ -23,7 +25,9 @@
                     <div>
                          <img src="{{ img.galleryimg.url }}" alt="slider image">
                          {% if product.gallery_is_verified %}
-                         <p class="verified-product-image">производот е ист како на сликата</p>
+                         <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
+                            <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
+                            производот е ист како на сликата</p>
                          {% endif %}
                     </div>
                     {% endfor %}
@@ -33,7 +37,9 @@
                         <div class="{{ attribute.id }}_variable">
                             <img src="{{ attribute.thumbnail.url }}" alt="slider image" >
                             {% if product.gallery_is_verified %}
-                            <p class="verified-product-image">производот е ист како на сликата</p>
+                            <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
+                            <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
+                            производот е ист како на сликата</p>
                             {% endif %}
                         </div>
                         {% endif %}
