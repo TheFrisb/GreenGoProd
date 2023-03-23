@@ -76,11 +76,19 @@
                 <td class="cart-item product_data" style="padding: 9px 12px;">
                     <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                     {% csrf_token %}
-                    <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="45" height="45">
+                    {% if item.upsell_thumbnail %}
+                        <img src="{{ item.upsell_thumbnail }}" alt="" width="45" height="45">
+                    {% else %}
+                        <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="45" height="45">
+                    {% endif %}
                     {% if item.attribute_name %}
                     <p class="item-name">{{ item.product.title }} - {{item.attribute_name}}</p>
                     {% else %}
-                    <p class="item-name">{{ item.product.title }}</p>
+                        {% if item.item_name %}
+                            <p class="item-name">{{ item.item_name }}</p>
+                        {% else %}
+                            <p class="item-name">{{ item.product.title }}</p>
+                        {% endif %}
                     {% endif %}
                     <strong class="product-quantity">x {{ item.quantity }}</strong>
                 </td>
