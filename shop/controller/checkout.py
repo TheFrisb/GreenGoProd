@@ -63,15 +63,28 @@ def placeorder(request):
                 attribute_price = item.attributeprice,
             )
             elif(item.has_offer==True):
-                OrderItem.objects.create(
-                    order = neworder,
-                    product = item.product,
-                    price = item.offer_price,
-                    quantity = item.product_qty,
-                    label = item.product.sku,
-                    supplier = item.product.supplier,
-                    is_cart_offer = True,
-                )
+                if item.is_upsell:
+                    OrderItem.objects.create(
+                        order = neworder,
+                        product = item.product,
+                        price = item.offer_price,
+                        quantity = item.product_qty,
+                        label = item.product.sku,
+                        supplier = item.product.supplier,
+                        is_cart_offer = True,
+                        item_name = item.upsell_title,
+                        upsell_thumbnail = item.upsell_thumbnail,
+                    )
+                else:
+                    OrderItem.objects.create(
+                        order = neworder,
+                        product = item.product,
+                        price = item.offer_price,
+                        quantity = item.product_qty,
+                        label = item.product.sku,
+                        supplier = item.product.supplier,
+                        is_cart_offer = True,
+                    )
             else:
                 OrderItem.objects.create(
                     order = neworder,
