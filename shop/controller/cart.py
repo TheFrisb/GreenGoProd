@@ -183,3 +183,32 @@ def addordeletefee(request):
             else:
                 return JsonResponse({'status': "No such fee found"})
     return redirect('/')
+
+
+def add_upsell_to_cart(request):
+    if request.method == 'POST':
+        cart = Cart.objects.filter(session = request.session['nonuser'])
+        if cart:
+            CartHolder = Cart.objects.get(session = request.session['nonuser'])
+            prod_id = int(request.POST.get('product_id'))
+            upsell_price = int(request.POST.get('price'))
+            image_url = str(request.POST.get('image_url'))
+            upsell_name = str(request.POST.get('upsell_name'))
+            product_check = Product.objects.get(id=prod_id)
+            if(product_check):
+                if(CartItems.objects.filter(cart = CartHolder, product_id=prod_id)):
+                    return JsonResponse({'status': "Product already in cart"})
+                else:
+                    CartItems.objects.create(cart = CartHolder, product_id=prod_id,
+                                              product_qty=1, offer_price=upsell_price,
+                                              upsell_title = upsell_name,
+                                              upsell_thumbnail=image_url)
+                    
+
+                    
+                    return JsonResponse({'status': "Product added successfuly"})
+            else:
+                return JsonResponse({'status': "No such product found"})
+        else:
+            return JsonResponse({'status': "Login to continue"})
+    return redirect('/')
