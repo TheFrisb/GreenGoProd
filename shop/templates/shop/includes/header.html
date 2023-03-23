@@ -59,27 +59,47 @@
         {% if cart %}
         
         {% for item in cart %}
-       
+        {% if item.is_upsell %}
+        <a href="#" class="sidecart-item basic-sidecart-item  product_data" style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
+        {% else %}
         <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item basic-sidecart-item  product_data" style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
+        {% endif %}
+        
             <input type="hidden" class="prod_id" value="{{ item.product.id }}">
             <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute.id }}">
+            {% if item.is_upsell %}
+            <img src="{{ item.upsell_thumbnail }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+            {% else %}
             <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+            {% endif %}
             <span class="sidecart-item-content">
                 {% if item.has_attributes %}
                 <p class="sidecart-item-name">{{ item.product.title }}{{ item.attributename }}</p>
                 <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.attributeprice }} ден</span></p>
                 {% elif item.has_offer %}
-                <p class="sidecart-item-name">{{ item.product.title }}</p>
-                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
+                    {% if item.is_upsell %}
+                        <p class="sidecart-item-name">{{ item.upsell_title }}</p>
+                        {% if item.offer_price == 0 %}
+                            <p class="sidecart-item-quantity"><span class="green">вклучен со продуктот</span></p>
+                        {% else %}
+                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
+                        {% endif %}
+                    {% else %}
+                        <p class="sidecart-item-name">{{ item.product.title }}</p>
+                        <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
+                    {% endif %}
                 {% else %}
                 <p class="sidecart-item-name">{{ item.product.title }}</p>
                 <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
                 {% endif %}
+                {% if item.offer_price == 0  and item.is_upsell %}
+                {% else %}
                 <div class="quantity sidecart-qty-box">
                     <button class="changeQuantity decrement-btn sidecart-qty">-</button>
                     <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
                     <button class="changeQuantity increment-btn sidecart-qty">+</button>         
                 </div>
+                {% endif %}
             </span>
             <span class="sidecart-remove-item remove-item">&#10006;</span>
         </a>
