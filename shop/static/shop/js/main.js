@@ -175,6 +175,13 @@ $(document).ready(function() {
 
                         $("#checkout_form_overlay").toggle();
                         $('body').toggleClass("checkout-is-active");
+                        $.ajax({
+                            method: "POST",
+                            url: "/call-pixel-checkout",
+                            data: {
+                                csrfmiddlewaretoken: token,
+                            },
+                        })
                     }
 
                     else{     
