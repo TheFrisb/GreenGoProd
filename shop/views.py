@@ -123,7 +123,7 @@ def ProductView(request, slug):
                 facebook_pixel.ViewContentEvent(request, product)
             except:
                 pass
-            
+            upsells = ProductUpsells.objects.filter(parent_product=product)
             if(product.review_average != 0):
                 count = reviews.count()
 
@@ -140,6 +140,7 @@ def ProductView(request, slug):
                     'money_saved': money_saved,
                     'delivery_days': delivery_days,
                     'faq_toggle': faq_toggle,
+                    'upsells': upsells,
                 }
             else:
                 context = {
@@ -153,6 +154,7 @@ def ProductView(request, slug):
                     'money_saved': money_saved,
                     'delivery_days': delivery_days,
                     'faq_toggle': faq_toggle,
+                    'upsells': upsells,
                 }
 
 
