@@ -284,6 +284,8 @@ class CartItems(models.Model):
     attributeprice = models.IntegerField(null=True)
     offer_price = models.IntegerField(null=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    upsell_title = models.CharField(max_length = 100, verbose_name='Име', null=True)
+    upsell_thumbnail = models.TextField(null=True)
 
     @property
     def get_session(self):
@@ -302,6 +304,13 @@ class CartItems(models.Model):
             return True
         else:
             return False
+     
+    def is_upsell(self):
+        if(self.upsell_title is not None):
+            return True
+        else:
+            return False
+        
 
     class Meta:
         verbose_name = "Cart Items"
@@ -381,7 +390,9 @@ class OrderItem(models.Model):
     is_cart_offer = models.BooleanField(default = False)
     is_thankyou_offer = models.BooleanField(default = False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креиран во:', null=True)
-   
+    item_name = models.CharField(max_length=150,null=True)
+    upsell_thumbnail = models.TextField(null=True)
+    
     @property
     def get_product_total(self):
         return self.price*self.quantity
@@ -482,3 +493,21 @@ class Abandoned_CartItems(models.Model):
         verbose_name = "Abandoned Cart Items"
         verbose_name_plural = "Abandoned Cart Items"
         
+        
+        
+class ProductUpsells(models.Model):
+    class Meta:
+        verbose_name = "Upsells"
+        verbose_name_plural = "Upsells"
+
+    parent_product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт на кој да се прикажат', related_name='parent_product', )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Upsell продукт')
+    title = models.CharField(max_length = 100, verbose_name='Име')
+    thumbnail = ProcessedImageField(upload_to='upsells/%Y/%m/%d/', processors=[ResizeToFill(70,70)], format='WEBP', options={'quality':95}, null=True, verbose_name="Слика", blank=True)
+    regular_price = models.IntegerField(verbose_name='Стара цена', blank=True, null=True)
+    sale_price = models.IntegerField(verbose_name='Цена', blank=True, null=True)
+    is_free = models.BooleanField(default=False, blank=True, verbose_name="Бесплатен")
+    
+    def __str__(self):
+        return self.title
+    
