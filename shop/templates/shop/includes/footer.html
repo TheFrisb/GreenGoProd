@@ -145,19 +145,30 @@
                             
                             {% csrf_token %}
                             <span class="row-qty">{{ item.product_qty }}</span>
+                            {% if item.is_upsell %}
+                            <img src="{{ item.upsell_thumbnail }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                            {% else %}
                             <img src="{{ item.product.thumbnail.url }}" alt="" style="width:60px;height:60px;">
+                            {% endif %}
                             <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
                                 {% if item.has_attributes %}
                                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
                                 <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} {{ item.attributename }} </a>
                                 {% else %}
-                                <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} </a>
+                                {% if item.is_upsell %}
+                                    <a href="#">{{ item.upsell_title }} </a>
+                                    {% else %}
+                                        <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} </a>
+                                    {% endif %}
                                 {% endif %}
+                                {% if item.offer_price == 0  and item.is_upsell %}
+                                {% else %}
                                 <div class="quantity">
                                     <button class="decrement-btn changeQuantity">-</button>
                                     <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}" aria-label="Количина"> 
                                     <button class="increment-btn changeQuantity">+</button>
                                 </div>
+                                {% endif %}
                             </div>
                             
                         </div>
