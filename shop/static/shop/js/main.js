@@ -860,40 +860,7 @@ $(document).ready(function () {
           }
         })
         }, 3000);
-    $(document).on("click", ".product-page-upsell", function(){
-        current_item = $(this)
-        $(this).toggleClass("checked");
-        $(this).find(".product-upsell-checkbox").toggleClass("checked");
 
-        $(".product-page-upsell").each(function(i, obj){
-            if($(this).hasClass("checked")){
-                var upsell_name = $(this).find(".product-upsell-title-data").val();
-                console.log(upsell_name)
-            }
-        })
-        var image = $(this).find(".product-upsell-image").attr('src')
-        var price = $(this).find(".product-upsell-price-data").val();
-        var product_id = $("#main-product-id").val();
-        var upsell_name = $(this).find(".product-upsell-title-data").val();
-        $.ajax({
-            method: "POST",
-            url: "/upsell-add-to-cart",
-            data: {
-                'product_id': product_id,
-                'upsell_title': upsell_name,
-                'upsell_price': price,
-                'thumbnail_url': image,
-                csrfmiddlewaretoken: token,
-            },
-            
-            success: function (response){
-                console.log(response)
-
-            }
-        })
-        
-
-    });
     $(document).on("click", ".sidecartCheckout", function(e){
         $("#checkout_form_overlay").toggle();
         $('body').toggleClass("checkout-is-active");
