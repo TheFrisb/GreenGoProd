@@ -17,6 +17,7 @@ urlpatterns = [
     path('offer-add-to-cart', cart.offeraddtocart, name="offeraddtocart"),
     path('update-cart', cart.updatecart, name="updatecart"),
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
+    path('add-upsell-to-cart', cart.add_upsell_to_cart, name="addupselltocart"),
 
     path('checkout/', CheckoutView, name='checkout'),
     path('check-abandoned-carts', views.create_or_check_abandoned_cart, name="create_or_check_abandoned_cart"),
