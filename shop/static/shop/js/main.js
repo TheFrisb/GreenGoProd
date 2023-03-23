@@ -912,7 +912,12 @@ $(document).ready(function () {
             $('body').toggleClass("checkout-is-active");
         }
     })
+    $(document).on("click", ".product-page-upsell", function(){
+        current_item = $(this)
+        $(this).toggleClass("checked");
+        $(this).find(".product-upsell-checkbox").toggleClass("checked");
 
+    });
 });
 
 
