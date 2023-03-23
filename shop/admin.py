@@ -13,6 +13,13 @@ class InformationInline(admin.StackedInline):
     list_display = ("Product_Title", "name",  "rating", "date_created")
 
 
+class ProductUpsellsInline(admin.StackedInline):
+    model = ProductUpsells
+    fk_name = "parent_product"
+    autocomplete_fields = ["product"]
+    list_display = ("product", "title", "thumbnail", "regular_price", "sale_price", "is_free")
+    
+    
 class CampaignItems(admin.StackedInline):
     model = product_campaigns
     
@@ -59,7 +66,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('attributes_type',),
         }),
         )
-    inlines = [ProductAttributesInLine, GalleryInline, FAQInline, CampaignItems]
+    inlines = [ProductAttributesInLine, GalleryInline, FAQInline, CampaignItems, ProductUpsellsInline]
     # list_editable 
     
   
