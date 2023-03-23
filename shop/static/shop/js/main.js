@@ -162,6 +162,38 @@ $(document).ready(function() {
                     $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
                     cartCount++;
                     $("#cart-count").html(cartCount)
+                    if($(button).hasClass("hasUpsells")){
+                        console.log('called 1')
+                        $(".product-page-upsell").each(function(i, obj){
+                            if($(this).hasClass("checked")){
+                                var image = $(this).find(".product-upsell-image").attr('src')
+                                var price = $(this).find(".product-upsell-price-data").val();
+                                var product_id = $(this).find(".product-upsell-product-id").val();
+                                var upsell_name = $(this).find(".product-upsell-title-data").val();
+                                var upsell_id = $(this).find(".product-upsell-data-id").val()
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/add-upsell-to-cart",
+                                    data: {
+                                        'product_id': product_id,
+                                        'price': price,
+                                        'image_url': image,
+                                        'upsell_name': upsell_name,
+                                        'upsell_id': upsell_id,
+                                        csrfmiddlewaretoken: token,
+                                    },
+                                    success: function (response){
+                                        $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                                        $('.checkout-form-inner').load(location.href + " .checkout-form-inner")
+                                    }
+                                })
+
+                                
+                            }
+                        })
+
+
+                    }
                     if($(button).hasClass("sidecartOfferBtn")){
                         if($(button).hasClass("addedBtn") == false){
                             $(button).toggleClass('addedBtn').html('ДОДАДЕН');
@@ -302,6 +334,39 @@ $(document).ready(function() {
                     $("#cart-count").html(cartCount)
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
                     $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                if($(button).hasClass("hasUpsells")){
+                        console.log('called 1')
+                        $(".product-page-upsell").each(function(i, obj){
+                            if($(this).hasClass("checked")){
+                                var image = $(this).find(".product-upsell-image").attr('src')
+                                var price = $(this).find(".product-upsell-price-data").val();
+                                var product_id = $(this).find(".product-upsell-product-id").val();
+                                var upsell_name = $(this).find(".product-upsell-title-data").val();
+                                var upsell_id = $(this).find(".product-upsell-data-id").val()
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/add-upsell-to-cart",
+                                    data: {
+                                        'product_id': product_id,
+                                        'price': price,
+                                        'image_url': image,
+                                        'upsell_name': upsell_name,
+                                        'upsell_id': upsell_id,
+                                        csrfmiddlewaretoken: token,
+                                    },
+                                    success: function (response){
+                                        $('.sidecart-inner').load(location.href + " .sidecart-inner");
+                                        $('.checkout-form-inner').load(location.href + " .checkout-form-inner")
+                                    }
+                                })
+
+                                
+                            }
+                        })
+
+
+                    }
+                
                 if($(button).hasClass("proceed-to-checkout")){
                     $("#checkout_form_overlay").toggle();
                     $('body').toggleClass("checkout-is-active");
