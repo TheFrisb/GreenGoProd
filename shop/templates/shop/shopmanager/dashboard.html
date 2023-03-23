@@ -48,7 +48,11 @@
                         {% if item.attribute_name %}
                         <p class="table-content"><span class="table-strong">{{ item.product.title }} - {{ item.attribute_name }}</span>
                         {% else %}
-                        <p class="table-content"><span class="table-strong">{{ item.product.title }}</span>
+                            {% if item.item_name %}
+                                <p class="table-content"><span class="table-strong">{{ item.item_name }}</span>
+                            {% else %}
+                                <p class="table-content"><span class="table-strong">{{ item.product.title }}</span>
+                            {% endif %}
                         {% endif %}
                         x <span class="table-strong">{{ item.quantity }}</span> - {{item.price}} ден</p>
                         {% endif %}
