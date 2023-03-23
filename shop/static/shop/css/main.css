@@ -3366,3 +3366,51 @@ section#ordered_items_notice_wrapper {
 		font-size:12px;
 	}
 }
+
+.product-page-upsells{
+    padding-bottom: 10px;
+}
+.product-page-upsell{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 1px solid #abaeb4;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: left;
+}
+.product-upsell-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--green);
+    background-color: #fff;
+    position: relative;
+    border-radius: 5px;
+    padding: 9px;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 7px;
+    height: 12px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    display: none;
+  }
+  .product-page-upsell.checked{
+    border-color: var(--green);
+  }
+  .product-upsell-checkbox.checked .checkmark {
+    display: block;
+    border-color: white;
+  }
+  .product-upsell-checkbox.checked{
+    background-color: var(--green);
+  }
