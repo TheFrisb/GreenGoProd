@@ -81,6 +81,42 @@
         <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
         {% endif %}
     </div>
+    <div class="product-page-upsells">
+        {% for upsell in upsells %}
+        {% if upsell.is_free %}
+        <div class="product-page-upsell checked free-upsell">
+            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data" value="0">
+            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data" value="{{ upsell.title }}">
+            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id" value="{{ upsell.product.id }}">
+            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id" value="{{ upsell.id }}">
+            <div class="product-upsell-checkbox checked">
+                <div class="checkmark"></div>
+            </div>
+            <img src="{{ upsell.thumbnail.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            <div class="product-page-upsell-info">
+                <p style="font-weight:600">{{ upsell.title }}</p>
+                <p><span style="font-size:14px;font-weight:600;color: #ff8c01;">вклучен со продуктот</span></p>   
+            </div>
+        </div>
+        {% else %}
+        <div class="product-page-upsell">
+            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data" value="{{ upsell.sale_price }}">
+            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data" value="{{ upsell.title }}">
+            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id" value="{{ upsell.product.id }}">
+            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id" value="{{ upsell.id }}">
+            <div class="product-upsell-checkbox">
+                <div class="checkmark"></div>
+            </div>
+            <img src="{{ upsell.thumbnail.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            <div class="product-page-upsell-info">
+                <p style="font-weight:600">{{ upsell.title }}</p>
+                <p><span style="font-size:12px;font-weight:500;color:#808080;text-decoration: line-through;">{{ upsell.regular_price }} ден</span> <span style="font-size:14px;font-weight:600;color: #ff8c01;">{{ upsell.sale_price }} ден</span></p>    
+            </div>
+        </div>
+        {% endif %}
+        
+        {% endfor %}
+    </div>
     {% if attributes %}
     <div class="product-attributes">
         {% if product.attributes_type == 'COLOR' %}
