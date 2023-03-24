@@ -124,10 +124,14 @@
     {% if attributes %}
     <div class="product-attributes">
         {% if product.attributes_type == 'COLOR' %}
-            <p class="attribute-title">Одбери боја</p>
+            <p class="attribute-title">Одберена боја: {{ default_attribute }}</p>
             {% for attribute in attributes %}
             {% if attribute.is_disabled == False %}
-            <div class="attribute-item">
+                {% if attribute.is_checked %}
+                        <div class="attribute-item active">
+                {% else %}  
+                        <div class="attribute-item">        
+                {% endif %}               
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
@@ -145,9 +149,13 @@
             {% endfor %}
         {% endif %}
         {% if product.attributes_type == 'SIZE' %}
-            <p class="attribute-title">Одбери големина</p>
+            <p class="attribute-title">Одберена големина: {{ default_attribute }}</p>
             {% for attribute in attributes %}
-            <div class="attribute-item">
+            {% if attribute.is_checked %}
+                <div class="attribute-item active">
+            {% else %}
+                <div class="attribute-item">
+            {% endif %}
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.size.title }}">
@@ -156,9 +164,13 @@
             {% endfor %}
         {% endif %}
         {% if product.attributes_type == 'OFFER' %}
-            <p class="attribute-title">Одбери понуда</p>
+            <p class="attribute-title">Одберена понуда: {{ default_attribute }}</p>
             {% for attribute in attributes %}
-            <div class="attribute-item offer">
+            {% if attribute.is_checked %}
+                <div class="attribute-item offer active">        
+            {% else %}        
+                <div class="attribute-item offer">
+            {% endif %}            
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.offer.title }}">
                 <p class="offer-title">{{ attribute.offer.title }}</p>
