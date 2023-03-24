@@ -110,6 +110,15 @@ def ProductView(request, slug):
     delivery_days = mapped_delivery_days[current_day]
     try:
         attributes = ProductAttribute.objects.filter(product__slug=slug)
+        if attributes:
+            for attribute in attributes:
+                if attribute.is_disabled == False:
+                    attribute.is_checked = True
+                    default_attribute = attribute.checkattribute
+                    break
+        else:
+            default_attribute = None
+            
         gallery = ProductGallery.objects.filter(product__slug=slug)
         product = Product.objects.get(slug=slug)
         faq_toggle = ProductFAQ.objects.filter(product=product)
@@ -141,6 +150,7 @@ def ProductView(request, slug):
                     'delivery_days': delivery_days,
                     'faq_toggle': faq_toggle,
                     'upsells': upsells,
+                    'default_attribute': default_attribute,
                 }
             else:
                 context = {
@@ -155,6 +165,7 @@ def ProductView(request, slug):
                     'delivery_days': delivery_days,
                     'faq_toggle': faq_toggle,
                     'upsells': upsells,
+                    'default_attribute': default_attribute,
                 }
 
 
