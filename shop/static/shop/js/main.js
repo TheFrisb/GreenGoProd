@@ -881,6 +881,9 @@ $(document).ready(function () {
     })
     $(document).on("click", ".product-page-upsell", function(){
         current_item = $(this)
+        if(current_item.hasClass("free-upsell")){
+            return;
+        }
         $(this).toggleClass("checked");
         $(this).find(".product-upsell-checkbox").toggleClass("checked");
 
