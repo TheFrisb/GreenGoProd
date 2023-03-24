@@ -124,7 +124,7 @@
     {% if attributes %}
     <div class="product-attributes">
         {% if product.attributes_type == 'COLOR' %}
-            <p class="attribute-title">Одберена боја: {{ default_attribute }}</p>
+            <p class="attribute-title">Одберена боја: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
             {% for attribute in attributes %}
             {% if attribute.is_disabled == False %}
                 {% if attribute.is_checked %}
@@ -149,7 +149,7 @@
             {% endfor %}
         {% endif %}
         {% if product.attributes_type == 'SIZE' %}
-            <p class="attribute-title">Одберена големина: {{ default_attribute }}</p>
+            <p class="attribute-title">Одберена големина: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
             {% for attribute in attributes %}
             {% if attribute.is_checked %}
                 <div class="attribute-item active">
@@ -164,7 +164,7 @@
             {% endfor %}
         {% endif %}
         {% if product.attributes_type == 'OFFER' %}
-            <p class="attribute-title">Одберена понуда: {{ default_attribute }}</p>
+            <p class="attribute-title">Одберена понуда: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
             {% for attribute in attributes %}
             {% if attribute.is_checked %}
                 <div class="attribute-item offer active">        
