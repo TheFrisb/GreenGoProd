@@ -525,8 +525,10 @@ class ProductUpsells(models.Model):
                 self.sale_price = 0
             else:
                 linked_product = Product.objects.get(id=self.product.id)
-                self.regular_price = linked_product.regular_price
-                self.sale_price = linked_product.sale_price
+                if self.regular_price is None:
+                    self.regular_price = linked_product.regular_price
+                if self.sale_price is None:
+                    self.sale_price = linked_product.sale_price
                 
         super(ProductUpsells, self).save(*args, **kwargs)
         
