@@ -311,7 +311,16 @@ class CartItems(models.Model):
         else:
             return False
         
-
+    def getItemTotal(self):
+        if(self.has_offer):
+            return self.offer_price * self.product_qty
+        
+        elif self.has_attributes:
+            return self.attributeprice * self.product_qty
+        
+        else:
+            return self.product.sale_price * self.product_qty
+        
     class Meta:
         verbose_name = "Cart Items"
         verbose_name_plural = "Cart Items"
