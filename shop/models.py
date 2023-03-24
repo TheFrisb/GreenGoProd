@@ -195,6 +195,7 @@ class ProductAttribute(models.Model):
     label = models.CharField(max_length=50, null=True, verbose_name='Лабел')
     supplier_stock_price = models.IntegerField(verbose_name='Набавна цена', null=True)
     is_disabled = models.BooleanField(default = False, blank=True)
+    is_checked = models.BooleanField(default=False, blank=True)
     @property
     def checkattribute(self):
         if(self.color is not None):
