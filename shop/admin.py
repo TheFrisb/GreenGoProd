@@ -39,6 +39,7 @@ class CartItemInline(admin.StackedInline):
 
 class ProductAttributesInLine(admin.TabularInline):
     model = ProductAttribute
+    exclude = ('is_checked',)
     list_display=("product", "color", "size", "supplier_stock_price", "price", "thumbnail", "is_disabled")
 
 class OrderAdmin(admin.ModelAdmin):
