@@ -508,6 +508,20 @@ class ProductUpsells(models.Model):
     sale_price = models.IntegerField(verbose_name='Цена', blank=True, null=True)
     is_free = models.BooleanField(default=False, blank=True, verbose_name="Бесплатен")
     
+    
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            if self.is_free:
+                self.regular_price = 0
+                self.sale_price = 0
+            else:
+                linked_product = Product.objects.get(id=self.product.id)
+                self.regular_price = linked_product.regular_price
+                self.sale_price = linked_product.sale_price
+                
+        super(ProductUpsells, self).save(*args, **kwargs)
+        
+        
     def __str__(self):
         return self.title
     
