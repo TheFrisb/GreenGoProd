@@ -482,7 +482,7 @@ $(document).ready(function() {
         }
         $('.product-attributes div').removeClass('active');
         $(this).toggleClass('active');
-        $(".attribute-title").text(attrib_heading + attrib_title);
+        $(".attribute-changing-title").text(attrib_title);
         $(".attribute-title").css("color", "#0f0f0f");
     })
 
