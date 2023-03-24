@@ -172,13 +172,7 @@
                             </div>
                             
                         </div>
-                        {% if item.has_attributes %}
-                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.attributeprice }} ден</p>
-                        {% elif item.has_offer %}
-                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.offer_price }} ден</p>
-                        {% else %}
-                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.product.sale_price }} ден</p>
-                        {% endif %}
+                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.getItemTotal }} ден</p>
                         
                     </div>
                     {% endfor %}
