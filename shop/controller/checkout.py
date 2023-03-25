@@ -72,6 +72,7 @@ def placeorder(request):
                         label = item.product.sku,
                         supplier = item.product.supplier,
                         is_cart_offer = True,
+                        is_upsell_offer = True,
                         item_name = item.upsell_title,
                         upsell_thumbnail = item.upsell_thumbnail,
                     )
