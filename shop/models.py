@@ -305,13 +305,15 @@ class CartItems(models.Model):
             return True
         else:
             return False
-     
+        
+    @property
     def is_upsell(self):
         if(self.upsell_title is not None):
             return True
         else:
             return False
         
+    @property
     def getItemTotal(self):
         if(self.has_offer):
             return self.offer_price * self.product_qty
