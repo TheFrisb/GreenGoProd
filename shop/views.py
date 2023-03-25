@@ -388,6 +388,7 @@ def export_excel(request):
             date_to = form.cleaned_data["date_to"]
             total_ordered_dict = {}
             cart_offers_dict = {}
+            upsell_offers_dict = {}
             thankyou_offers_dict = {}
             workbook = Workbook()
             worksheet = workbook.active
@@ -446,10 +447,16 @@ def export_excel(request):
                         
                 for item in order_items:
                     if item.is_cart_offer is True:
-                        if item.label in cart_offers_dict:
-                            cart_offers_dict[item.label] += item.quantity
+                        if item.is_upsell_offer is True:
+                            if item.label in upsell_offers_dict:
+                                upsell_offers_dict[item.label] += item.quantity
+                            else:
+                                upsell_offers_dict[item.label] = item.quantity
                         else:
-                            cart_offers_dict[item.label] = item.quantity
+                            if item.label in cart_offers_dict:
+                                cart_offers_dict[item.label] += item.quantity
+                            else:
+                                cart_offers_dict[item.label] = item.quantity
 
                     if item.is_thankyou_offer is True:
                         if item.label in thankyou_offers_dict:
@@ -531,7 +538,20 @@ def export_excel(request):
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
                 cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
-
+                
+            row_num += 2
+            worksheet.cell(row=row_num, column=9).font = Font(bold=True)
+            cell = worksheet.cell(row=row_num, column=9).value = 'PONUDI NA PRODUCT PAGE'
+            for key, value in upsell_offers_dict.items():
+                row_num += 1
+                i = 0
+                
+                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = value
+                i += 1
+                
             row_num += 2
             worksheet.cell(row=row_num, column=9).font = Font(bold=True)
             cell = worksheet.cell(row=row_num, column=9).value = 'THANKYOU PONUDI'
