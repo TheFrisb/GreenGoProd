@@ -168,28 +168,11 @@ input[type=number] {
 .material-symbols-outlined{
     font-size:24px!important;
 }
-  #para1,
-  #para2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: bannerslide 12s infinite;
+  #header-banner-product-text {
     text-align: center;
     color: white;
     font-weight: 500;
     font-size: 15px;
-    top: 5px;
-
-  }
-  
-  #para1 {
-    animation-delay: 0s;
-    
-  }
-  
-  #para2 {
-    animation-delay: 6s;
-    opacity: 0;
   }
   @keyframes bannerslide {
     0% {
@@ -2810,9 +2793,7 @@ section#ordered_items_notice_wrapper {
     .ordered_item_person{
         margin-bottom: 5px;
     }
-    #para1, #para2{
-        top: 0px!important;
-    }
+
 }
 
 @media (max-width: 320px){
@@ -2836,7 +2817,7 @@ section#ordered_items_notice_wrapper {
     .banner-inner-header{
         height: 18px;
     }
-    #para1, #para2{
+    #header-banner-product-text{
         font-size: 14px;
     }
 
