@@ -888,6 +888,32 @@ $(document).ready(function () {
         $(this).find(".product-upsell-checkbox").toggleClass("checked");
 
     });
+    
+    if($(".header-banner-for-product-page").length){
+        if(window.matchMedia('(max-width: 768px)').matches){
+            var text1 = '🔥 100% сигурно купување';
+            var text2 = '🚚 Бесплатна достава на сите производи';
+            var counter = 1;
+            text_holder = $("#header-banner-product-text");
+            // rotate between both texts every 6 seconds with a fade effect
+            setInterval(function(){
+                if(counter == 1){
+                    text_holder.fadeOut(function(){
+                        text_holder.text(text2);
+                        text_holder.fadeIn();
+                    });
+                    counter = 2;
+                }else{
+                    text_holder.fadeOut(function(){
+                        text_holder.text(text1);
+                        text_holder.fadeIn();
+                    });
+                    counter = 1;
+                }
+            }   , 6000);   
+                      
+        }
+    }
 });
 
 
