@@ -62,7 +62,9 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, verbose_name='Категорија', null=True)
     status = models.CharField( choices=status_choices, default = 'PRIVATE', max_length=50, verbose_name='СТАТУС')
     thumbnail = ProcessedImageField(upload_to='products/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True)
+    thumbnail_as_jpeg = ImageSpecField(source='thumbnail',format='JPEG')
     thumbnail_loop = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='WEBP', options={'quality':95})
+    thumbnail_loop_as_jpeg = ImageSpecField(source='thumbnail', processors=[ResizeToFill(250,250)], format='JPEG', options={'quality':95})
     export_image = ImageSpecField(source='thumbnail', processors=[ResizeToFill(150,150)], format='PNG', options={'quality':95})
     title = models.CharField(max_length = 100, verbose_name='Име')
     content = RichTextUploadingField(blank=True, null=True, verbose_name='Содржина');
@@ -188,6 +190,7 @@ class ProductAttribute(models.Model):
         
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, verbose_name='Одбери продукт')
     thumbnail = ProcessedImageField(upload_to='products_attributes/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True, blank=True, verbose_name='Слика')
+    thumbnail_as_jpeg = ImageSpecField(source='thumbnail',format='JPEG')
     color = models.ForeignKey(Color , on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Боја')
     size = models.ForeignKey(Size, on_delete = models.SET_NULL,  null = True, blank=True, verbose_name='Големина')
     offer = models.ForeignKey(Offer, on_delete=models.SET_NULL,  null = True, blank=True, verbose_name='Понуда')
@@ -237,7 +240,8 @@ class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, verbose_name='Продукт')
     image = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=400, upscale=False)], format='WEBP', options={'quality':95}, null=True, blank=True)
     image2 = ProcessedImageField(upload_to='review/%Y/%m/%d/', processors=[ResizeToFit(width=400, upscale=False)], format='WEBP', options={'quality':95}, null=True, blank=True)
-
+    image_as_jpeg = ImageSpecField(source='image',format='JPEG')
+    iamge2_as_jpeg = ImageSpecField(source='image2',format='JPEG')
     name = models.CharField(max_length=150, verbose_name='Име на reviewer')
     avatar_name = models.CharField(max_length=5, blank=True)
     content = models.TextField(verbose_name='Содржина', blank=True, null = True) 
@@ -287,6 +291,7 @@ class CartItems(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     upsell_title = models.CharField(max_length = 100, verbose_name='Име', null=True)
     upsell_thumbnail = models.TextField(null=True)
+    
 
     @property
     def get_session(self):
@@ -517,6 +522,7 @@ class ProductUpsells(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Upsell продукт')
     title = models.CharField(max_length = 100, verbose_name='Име')
     thumbnail = ProcessedImageField(upload_to='upsells/%Y/%m/%d/', processors=[ResizeToFill(70,70)], format='WEBP', options={'quality':95}, null=True, verbose_name="Слика", blank=True)
+    thumbnail_as_jpeg = ImageSpecField(source='thumbnail',format='JPEG')
     regular_price = models.IntegerField(verbose_name='Стара цена', blank=True, null=True)
     sale_price = models.IntegerField(verbose_name='Цена', blank=True, null=True)
     is_free = models.BooleanField(default=False, blank=True, verbose_name="Бесплатен")
