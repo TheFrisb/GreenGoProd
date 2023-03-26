@@ -140,7 +140,7 @@ class ProductGallery(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
     galleryimg = ProcessedImageField(upload_to='products/product-gallery/%Y/%m/%d/', processors=[ResizeToFill(550,550)], format='WEBP', options={'quality':95}, null=True, verbose_name='Слика за галерија')
-
+    galleryimg_as_jpeg = ImageSpecField(source='galleryimg',format='JPEG')
 
 class Color(models.Model):
     class Meta:
