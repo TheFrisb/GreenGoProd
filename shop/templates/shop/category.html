@@ -7,7 +7,10 @@
         {% for product in category %}
             <div class="product">
                 <a href="{% url 'product-page' product.slug  %}" class="product-link" aria-label="Линк до продукт">
-                <img src="{{ product.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail">
+                <picture>
+                    <source srcset="{{ product.thumbnail_loop.url }}" type="image/webp">
+                    <img src="{{ product.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail">
+                </picture>
                 <h2 class="product-feed-title">{{ product.title }}</h2>
                 {% if product.review_average > 0 %}
                 <div class="rating rating{{ product.review_average}} list-ratings">
