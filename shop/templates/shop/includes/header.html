@@ -21,7 +21,11 @@
 
         <div class="header-logo-container">
         <a href="{% url 'shop-home' %}" class="header-logo-link" aria-label="Почетна">
-            <img src="{% static 'icons/header-logo.webp' %}" alt="default.jpg" class="header-logo-img" width="280" height="80" >
+            <picture>
+                <source srcset="{% static 'icons/header-logo.webp' %}" type="image/webp">
+                <img src="{% static 'icons/header-logo.png' %}" alt="default.jpg" class="header-logo-img" width="280" height="80" >
+            </picture>
+            
         </a>
         </div>
         <a href="tel:+38971321312" class="header-icon mobile above-small">
@@ -70,7 +74,10 @@
             {% if item.is_upsell %}
             <img src="{{ item.upsell_thumbnail }}" alt="" width="70" height="70" class="cart-item-thumbnail">
             {% else %}
-            <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+            <picture>
+                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+            </picture>
             {% endif %}
             <span class="sidecart-item-content">
                 {% if item.has_attributes %}
@@ -115,7 +122,10 @@
             <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Понуди за кошничка">
                 <input type="hidden" class="prod_id" value="{{ item.product.id }}">
                 <input type="hidden" class="offer_price" value="{{ item.price }}">
-                <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                <picture>
+                    <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                    <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                </picture>           
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                     <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
@@ -155,7 +165,11 @@
             <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Кошничка понуди 2">
                 <input type="hidden" class="prod_id" value="{{ item.product.id }}">
                 <input type="hidden" class="offer_price" value="{{ item.price }}">
-                <img src="{{ item.product.thumbnail_loop.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                <picture>
+                    <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                    <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                </picture>
+                
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                     <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
