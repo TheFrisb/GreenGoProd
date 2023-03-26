@@ -1,4 +1,3 @@
-{% if title != "Кон нарачка" %}
 {% load static %}
 <section id="ordered_items_notice_wrapper" style="display:none;position:relative;">
 <a href="#" id="ordered_items_notice">
@@ -148,7 +147,10 @@
                             {% if item.is_upsell %}
                             <img src="{{ item.upsell_thumbnail }}" alt="" width="60" height="60" class="cart-item-thumbnail">
                             {% else %}
-                            <img src="{{ item.product.thumbnail.url }}" alt="" style="width:60px;height:60px;">
+                            <picture>
+                                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" style="width:60px;height:60px;">
+                            </picture>
                             {% endif %}
                             <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
                                 {% if item.has_attributes %}
@@ -229,7 +231,11 @@
                         <div class="checkout-upsell">
                             
                             <div style="display: flex;justify-content: flex-start;align-items: center;gap: 10px;">
-                                <img src="{{ item.product.thumbnail_loop.url }}" alt="" style="width:50px;height:50px;">
+                                <picture>
+                                    <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                                    <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" style="width:50px;height:50px;">
+                                </picture>
+                               
                                 <div class="upsell-info">
                                     <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }}</a>
                                     <div class="upsell-price">
@@ -331,4 +337,3 @@
         <h4>Copyright 2023 © Сите права припаѓаат на GreenGoShop</h4>
     </div>
 </section>
-{% endif %}
