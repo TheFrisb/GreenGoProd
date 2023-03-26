@@ -24,7 +24,7 @@
         <span id="close-checkout" style="position:absolute;">&#10006</span>
         <h1 class="margin-bottom">Податоци за испорака</h1>
         <p class="margin-bottom red-text">Плаќање на врата</p>
-        <form form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form">
+        <form form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form" onsubmit="submitBtn.disabled = true; return true;">
             <div class="form-group">
                 <label for="name">Име и Презиме <span class="red">*</span></label>
                 <div class="input">
@@ -281,7 +281,7 @@
                 </div>
             </div>
             {% endif %}
-            <button class="pay-button" type="submit" id="place_order">
+            <button class="pay-button" type="submit" id="place_order" name="submitBtn">
                 <div style="line-height: 24px">
                     <span>👉 КОМПЛЕТИРАЈ ЈА НАРАЧКАТА 👈</span>
                 </div>
