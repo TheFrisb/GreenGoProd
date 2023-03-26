@@ -13,7 +13,11 @@
         <div id="overlay-loader" style=""><img src="https://greengoshop.mk/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
                     <div>
-                         <img src="{{ product.thumbnail.url }}" alt="slider image">
+                         <picture>
+                            <source srcset="{{product.thumbnail.url}}" type="image/webp">
+                            <img src="{{ product.thumbnail_as_jpeg.url }}" alt="slider image">
+                         </picture>
+                         
                          {% if product.gallery_is_verified %}
                          <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
                             <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
@@ -23,7 +27,10 @@
                     
                     {% for img in gallery %}
                     <div>
-                         <img src="{{ img.galleryimg.url }}" alt="slider image">
+                        <picture>
+                            <source srcset="{{ img.galleryimg.url }}" type="image/webp">
+                            <img src="{{ img.galleryimg_as_jpeg.url }}" alt="slider image">
+                         </picture>
                          {% if product.gallery_is_verified %}
                          <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
                             <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
@@ -35,7 +42,10 @@
                         {% for attribute in attributes %}
                         {% if attribute.thumbnail %}
                         <div class="{{ attribute.id }}_variable">
-                            <img src="{{ attribute.thumbnail.url }}" alt="slider image" >
+                            <picture>
+                                <source srcset="{{ attribute.thumbnail.url }}" type="image/webp">
+                                <img src="{{ attribute.thumbnail_as_jpeg.url }}" alt="slider image">
+                             </picture>
                             {% if product.gallery_is_verified %}
                             <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
                             <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
@@ -93,7 +103,10 @@
                 <div class="checkmark"></div>
             </div>
             {% if upsell.thumbnail %}
-            <img src="{{ upsell.thumbnail.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            <picture>
+                <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
+                <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            </picture>
             {% endif %}
             <div class="product-page-upsell-info">
                 <p style="font-weight:600">{{ upsell.title }}</p>
@@ -110,7 +123,10 @@
                 <div class="checkmark"></div>
             </div>
             {% if upsell.thumbnail %}
-            <img src="{{ upsell.thumbnail.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            <picture>
+                <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
+                <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
+            </picture>
             {% endif %}
             <div class="product-page-upsell-info">
                 <p style="font-weight:600">{{ upsell.title }}</p>
@@ -315,7 +331,11 @@
         <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
                 {% if review.image %}
                 <span style="position:relative;cursor: pointer;">
-                <img src="{{ review.image.url }}" alt="" width="360" height="auto" class="review-image">
+                <picture>
+                    <source srcset="{{ review.image.url }}" type="image/webp">
+                    <img src="{{ review.image_as_jpeg.url }}" alt="" width="360" height="auto" class="review-image">
+                </picture>
+                
                 <div class="review-images-count">
                     <img src="{% static 'icons/camera.svg' %}" alt="" style="width:40px; height:40px;margin-right:8px;">1
                 </div>
@@ -348,7 +368,11 @@
                 </div>
             </div>
             <div class="review-product-end">
-                <img src="{{ product.thumbnail_loop.url }}" alt="" width="50" height="50">
+                <picture>
+                    <source srcset="{{ product.thumbnail_loop.url }}" type="image/webp">
+                    <img src="{{ product.thumbnail_loop_as_jpeg.url }}" alt="" width="50" height="50">
+                </picture>
+                
                 <p>{{product.title}}</p>
             </div>
         </div>
@@ -368,7 +392,7 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
-              <img data-lazy="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               {% if item.review_average > 0 %}
                 <div class="rating rating{{ item.review_average}} list-ratings">
@@ -395,7 +419,7 @@
             <input type="hidden" class="prod_id" value="{{ item.id }}">
             <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
             <div class="last-stocks-sub-container">
-              <img data-lazy="{{ item.thumbnail_loop.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
+              <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
               <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
               {% if item.review_average > 0 %}
                 <div class="rating rating{{ item.review_average}} list-ratings">
