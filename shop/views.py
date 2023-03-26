@@ -62,6 +62,9 @@ def export_products_csv(request):
 
 
 def ProductListView(request):
+    webp_support = False
+    if 'webp' in request.META.get('HTTP_ACCEPT', ''):
+        webp_support = True
     products = Product.objects.filter(status__in=['PUBLISHED','VARIABLE']).order_by('-date_posted')
     paginator = Paginator(products, 16)
     page = request.GET.get('page')
@@ -70,6 +73,7 @@ def ProductListView(request):
     context = {
         'products': products,
         'title': 'Почетна',
+        'webp_support': webp_support,
         }
     
     
@@ -77,6 +81,9 @@ def ProductListView(request):
 
 
 def CategoryView(request, slug):
+    webp_support = False
+    if 'webp' in request.META.get('HTTP_ACCEPT', ''):
+        webp_support = True
     if(Category.objects.filter(slug=slug)):
         products = Product.objects.filter(category__slug=slug).order_by('-date_posted')
         paginator = Paginator(products, 16)
@@ -87,6 +94,7 @@ def CategoryView(request, slug):
         context = {
             'products': products, 
             'title': title,
+            'webp_support': webp_support,
             }
         
         return render(request, "shop/home.html", context)
@@ -96,6 +104,9 @@ def CategoryView(request, slug):
 
 
 def ProductView(request, slug):
+    webp_support = False
+    if 'webp' in request.META.get('HTTP_ACCEPT', ''):
+        webp_support = True
     now = datetime.datetime.now()
     current_day = now.weekday()
     mapped_delivery_days = {
@@ -151,6 +162,7 @@ def ProductView(request, slug):
                     'faq_toggle': faq_toggle,
                     'upsells': upsells,
                     'default_attribute': default_attribute,
+                    'webp_support': webp_support,
                 }
             else:
                 context = {
@@ -166,6 +178,7 @@ def ProductView(request, slug):
                     'faq_toggle': faq_toggle,
                     'upsells': upsells,
                     'default_attribute': default_attribute,
+                    'webp_support': webp_support,
                 }
 
 
@@ -200,12 +213,16 @@ def CheckoutView(request):
         'orderFees': orderFees,
         'cartFees': cartFees,
         'feetotal': feetotal,
+        
         }
 
     return render(request, 'shop/checkout.html', context)
 
 
 def ThankYouView(request, slug):
+    webp_support = False
+    if 'webp' in request.META.get('HTTP_ACCEPT', ''):
+        webp_support = True
     order = Order.objects.filter(tracking_no=slug).first
     if(order):   
         orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
@@ -226,6 +243,7 @@ def ThankYouView(request, slug):
         'orderFees': orderFees,
         'feetotal': feetotal,
         'title': title,
+        'webp_support': webp_support,
     }
 
     return render(request, 'shop/thank-you.html', context)
@@ -234,10 +252,14 @@ def ThankYouView(request, slug):
 
 
 class SearchResultsView(ListView):
+    webp_support = False
+    if 'webp' in request.META.get('HTTP_ACCEPT', ''):
+        webp_support = True
     model = Product
     template_name = 'shop/home.html'
     extra_context = {
-        'title' : "Барање"
+        'title' : "Барање",
+        'webp_support': webp_support,
     }
     context_object_name = 'products'
     def get_queryset(self):
