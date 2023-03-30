@@ -13,13 +13,11 @@ import requests
 import logging
 from decouple import config
 from moviepy.video.io.VideoFileClip import VideoFileClip
-import os
 import random
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
-
-
+import os
 logger = logging.getLogger(__file__)
 
 
