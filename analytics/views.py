@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -17,7 +18,6 @@ import random
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
-import os
 logger = logging.getLogger(__file__)
 
 
