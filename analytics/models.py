@@ -62,3 +62,14 @@ class daily_row(models.Model):
     def __str__(self):
         return 'Daily row за - {} - {}'.format(self.owner, self.created_at)
 
+
+    
+class ad(models.Model):
+    main_image = models.ImageField(upload_to='campaigns/ads/ad_images/%Y/%m/%d/', null=True, verbose_name='Слика на реклама')
+    main_video = models.FileField(upload_to='campaigns/ads/ad_videos/%Y/%m/%d/', null=True, verbose_name='Видео на реклама')
+    video_thumbnail = models.ImageField(upload_to='campaigns/ads/ad_videos/thumbnails/%Y/%m/%d/', null=True, verbose_name='Thumbnail на видео')
+    main_video_link = models.TextField(null=True, blank=True, verbose_name='Видео линк')
+    @property
+    def video_filename(self):
+        return str(os.path.basename(self.main_video.name))
+    
