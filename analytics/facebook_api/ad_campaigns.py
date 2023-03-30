@@ -393,10 +393,10 @@ def search_ad_interests(request, query):
         ad_account_id = config('MARKETING_AD_ACCOUNT')
         instagram_account_id = '5225011497548175'
         pixel_id = config('PIXEL_ID')   
-        app_secret = config('FACEBOOK_APP_SECRET')
+        app_secret = config('CAMPAIGNS_SECRET')
         app_id = config('FACEBOOK_APP_ID')
 
-        FacebookAdsApi.init(access_token=access_token)
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
         q = query
         params = {
