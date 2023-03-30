@@ -224,7 +224,7 @@ def search_ad_interests(request, query):
         app_secret = config('CAMPAIGNS_SECRET')
         app_id = config('FACEBOOK_APP_ID')
 
-        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
+        FacebookAdsApi.init(access_token=access_token)
 
         q = query
         params = {
