@@ -19,7 +19,7 @@ from decouple import config
 
 def create_facebook_campaign(campaign_name):
     access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT)
+    ad_account_id = config('MARKETING_AD_ACCOUNT')
     FacebookAdsApi.init(access_token=access_token)
     fields = [
     ]
@@ -38,7 +38,7 @@ def create_facebook_campaign(campaign_name):
 
 def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_id, interest_name, genders=None):
     access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT)
+    ad_account_id = config('MARKETING_AD_ACCOUNT')
     instagram_account_id = '5225011497548175'
     pixel_id = config('PIXEL_ID')
     selected_genders = []
@@ -91,7 +91,7 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
 def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_description_text, ad_headline_text,ad_link_url, ad_image=None, ad_video = None, ad_thumbnail=None):
  
     access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT)
+    ad_account_id = config('MARKETING_AD_ACCOUNT')
     instagram_account_id = '5225011497548175'
     pixel_id = config('PIXEL_ID')
     FacebookAdsApi.init(access_token=access_token)
@@ -390,7 +390,7 @@ def search_ad_interests(request, query):
     if request.method == 'GET':
                            
         access_token = config('CAMPAIGNS_SECRET')
-        ad_account_id = config('MARKETING_AD_ACCOUNT)
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
         instagram_account_id = '5225011497548175'
         pixel_id = config('PIXEL_ID')   
         app_secret = config('FACEBOOK_APP_SECRET')
