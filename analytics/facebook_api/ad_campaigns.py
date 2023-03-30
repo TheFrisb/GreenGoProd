@@ -389,7 +389,7 @@ def format_number(num):
 def search_ad_interests(request, query):
     if request.method == 'GET':
                            
-        access_token = config('CAMPAIGNS_SECRET')
+        access_token = config('MARKETING_API_SECRET_KEY')
         ad_account_id = config('MARKETING_AD_ACCOUNT')
         instagram_account_id = '5225011497548175'
         pixel_id = config('PIXEL_ID')   
