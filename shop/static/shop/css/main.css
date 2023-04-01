@@ -1789,8 +1789,8 @@ select {
     font-weight: 600;
 }
 .delivery-calculator{
-    background: #e6f1ec;
-    border: 1px solid var(--green);
+    background: #eceeef;
+    border: 2px dashed var(--green);
     color: var(--black);
     padding: 20px;
     margin-top: 10px;
@@ -3123,7 +3123,7 @@ section#ordered_items_notice_wrapper {
     color: #000;
     font-size: 14px;
     word-break: break-word;
-    font-weight: 500;
+    font-weight: 600;
     margin-right: 10px;
 }
 
@@ -3212,7 +3212,7 @@ section#ordered_items_notice_wrapper {
     color: #000;
     font-size: 14px;
     word-break: break-word;
-    font-weight: 500;
+    font-weight: 600;
 }
 .checkout-upsell .add-upsell{
     font-weight: 600;
