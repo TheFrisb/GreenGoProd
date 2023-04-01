@@ -89,6 +89,7 @@
         {% endif %}
         <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
     </div>
+    {% if upsells %}
     <div class="product-page-upsells">
         {% for upsell in upsells %}
         {% if upsell.is_free %}
@@ -135,6 +136,7 @@
         
         {% endfor %}
     </div>
+    {% endif %}
     {% if attributes %}
     <div class="product-attributes">
         {% if product.attributes_type == 'COLOR' %}
