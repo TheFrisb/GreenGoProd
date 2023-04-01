@@ -2517,8 +2517,20 @@ section#ordered_items_notice_wrapper {
     }
 	
 }
-
+.quantity-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+.quantity-flex .stock-notice{
+    margin-bottom:0!important;
+}
 @media (max-width: 767px){
+    .quantity-flex{
+        flex-direction: column-reverse;
+        gap:5px;
+    }
     .best-seller{
         justify-content: center;
     }
