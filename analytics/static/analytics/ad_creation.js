@@ -180,7 +180,10 @@ $(document).ready(function () {
         var primary_text = $(button).closest('.ad').find('.ad_primary_text').val()
         var headline = $(button).closest('.ad').find('.ad_headline').val()
         var description = $(button).closest('.ad').find('.ad_description').val()
-        $(button).closest(".ad").after(ad_template.clone());
+        var current_ad_template = $(button).closest('.ad').clone();
+        var parent_adset = $(button).closest('.adset_template')
+        
+        $(button).closest(".ad").after(current_ad_template.clone());
         if($(button).siblings('.checkbox-place').find('.ad_text_copied_checkbox').is(':checked')){
             $(button).closest(".ad").next('.ad').find('.ad_primary_text').val(primary_text)
             $(button).closest(".ad").next('.ad').find('.ad_headline').val(headline)
@@ -188,7 +191,7 @@ $(document).ready(function () {
         }
 
         $(button).remove();
-        $(".ad").each(function(index, value){
+        parent_adset.find(".ad").each(function(index, value){
             $(value).find(".ad_name").text("РЕКЛАМА " + (index + 1))
         })
         
@@ -201,8 +204,9 @@ $(document).ready(function () {
         }
         ad_count -= 1;
         var button = $(this);
+        var parent_adset = $(button).closest('.adset_template')
         $(button).closest(".ad").remove();
-        $(".ad").each(function(index, value){
+        parent_adset.find(".ad").each(function(index, value){
             $(value).find(".ad_name").text("РЕКЛАМА " + (index + 1))
         })
         if(ad_count==1){
