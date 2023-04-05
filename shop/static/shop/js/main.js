@@ -768,7 +768,7 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 
 $(document).ready(function () {
     create_custom_dropdowns();
-    $(document).on('click', '#place_order', function (e){
+    $(document).on('click', '.checkout_form_payBtn', function (e){
         var city = $(".checksout-city").val();
         if(city === 'Undefined' || city === 'Одбери град'){
             e.preventDefault();
