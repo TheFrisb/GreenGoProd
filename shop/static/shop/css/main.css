@@ -2483,11 +2483,11 @@ section#ordered_items_notice_wrapper {
     .thankumessage-last{
 	margin-bottom: 30px;
     }
-    .add-to-cartBtn, .variable-add-to-cartBtn, .offerBtn, .fee-add, #place_order, .proceed-to-checkout, .offer-button, .thankyou-proceed-to-home, .attribute-item, .faq-title{
+    .add-to-cartBtn, .variable-add-to-cartBtn, .offerBtn, .fee-add, .checkout_form_payBtn, .proceed-to-checkout, .offer-button, .thankyou-proceed-to-home, .attribute-item, .faq-title{
         cursor: pointer;
         transition: all .2s ease-in-out; 
     }
-    .add-to-cartBtn:hover, .variable-add-to-cartBtn:hover, .offerBtn:hover, .fee-add:hover, #place_order:hover, .proceed-to-checkout:hover, .offer-button:hover, .thankyou-proceed-to-home:hover, .attribute-item:hover, .faq-title:hover{
+    .add-to-cartBtn:hover, .variable-add-to-cartBtn:hover, .offerBtn:hover, .fee-add:hover, .checkout_form_payBtn:hover, .proceed-to-checkout:hover, .offer-button:hover, .thankyou-proceed-to-home:hover, .attribute-item:hover, .faq-title:hover{
         transform: scale(1.05); 
         font-weight: 700;
     }
@@ -2499,7 +2499,7 @@ section#ordered_items_notice_wrapper {
     .faq-title:hover .faq-icon{
 	filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(280deg) brightness(103%) contrast(103%);
     }
-    .checkout-offerBtn:hover, #place_order:hover, .thankyou-proceed-to-home:hover{
+    .checkout-offerBtn:hover, .checkout_form_payBtn:hover, .thankyou-proceed-to-home:hover{
         background: var(--black)!important;
     }
     
