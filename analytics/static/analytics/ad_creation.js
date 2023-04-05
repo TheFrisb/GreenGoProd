@@ -114,7 +114,6 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 
 $(document).ready(function () {
     var adset_count = 1;
-    var ad_count = 1;
     var token = $('input[name=csrfmiddlewaretoken]').val()
     create_custom_dropdowns();
     $('[data-toggle="tooltip"]').tooltip()
@@ -175,7 +174,6 @@ $(document).ready(function () {
 
     $(document).on('click', ".add_ad", function(e){
         e.preventDefault(e);
-        ad_count += 1;
         var button = $(this);
         var primary_text = $(button).closest('.ad').find('.ad_primary_text').val()
         var headline = $(button).closest('.ad').find('.ad_headline').val()
@@ -198,19 +196,22 @@ $(document).ready(function () {
     })
     $(document).on('click', ".remove_ad", function(e){
         e.preventDefault(e);
+        var button = $(this);
+        var parent_adset = $(button).closest('.adset_template')
+        var first_ad = parent_adset.find(".ad").first()
+        var ad_count = parent_adset.find(".ad").length
         // return if it's the only ad
         if(ad_count == 1){
             return;
         }
         ad_count -= 1;
-        var button = $(this);
-        var parent_adset = $(button).closest('.adset_template')
+        
         $(button).closest(".ad").remove();
         parent_adset.find(".ad").each(function(index, value){
             $(value).find(".ad_name").text("РЕКЛАМА " + (index + 1))
         })
         if(ad_count==1){
-            $(".ad").find($(".ad-button-holder")).prepend('<button class="btn btn-primary btn-sm my-2 add_ad" type="Button">Додади нов AD</button>')
+            $(first_ad).find($(".ad-button-holder .checkbox-place")).after('<button class="btn btn-primary btn-sm my-2 add_ad" type="Button">Додади нов AD</button>')
         }
     })
 
