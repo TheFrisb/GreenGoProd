@@ -24,7 +24,7 @@
         <span id="close-checkout" style="position:absolute;">&#10006</span>
         <h1 class="margin-bottom">Податоци за испорака</h1>
         <p class="margin-bottom red-text">Плаќање на врата</p>
-        <form form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form" onsubmit="submitBtn.disabled = true; return true;">
+        <form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form" onsubmit="submitBtn1.disabled = true;submitBtn2.disabled = true; return true;">
             <div class="form-group">
                 <label for="name">Име и Презиме <span class="red">*</span></label>
                 <div class="input">
@@ -179,8 +179,7 @@
                     </div>
                     {% endfor %}
                 </div>
-                <p class="free-delivery-notice margin-bottom">Бесплатна достава на сите продукти!</p>
-                <h4>Одберете начин на достава</h4>
+                <button class="pay-button margin-bottom checkout_form_payBtn" type="submit" name="submitBtn1" style="font-weight:600">НАРАЧАЈ ВЕДНАШ</button>
                 <div class="delivery-methods margin-bottom">
                     <div class="method">
                         <div class="checked-circle" style="display:flex;align-items: center;gap:10px;">
@@ -281,14 +280,7 @@
                 </div>
             </div>
             {% endif %}
-            <button class="pay-button" type="submit" id="place_order" name="submitBtn">
-                <div style="line-height: 24px">
-                    <span>👉 КОМПЛЕТИРАЈ ЈА НАРАЧКАТА 👈</span>
-                </div>
-                <div>
-                    <span style="font-weight:500;">Плати на врата при подигање</span>
-                </div>
-            </button>
+            <button class="pay-button checkout_form_payBtn" type="submit" name="submitBtn2" style="font-weight:600">НАРАЧАЈ ВЕДНАШ</button>
             
         </form>
     </section>
