@@ -72,7 +72,6 @@ class Product(models.Model):
     sale_price = models.IntegerField(verbose_name='Цена')
     free_shipping = models.BooleanField(default=False, blank=True, verbose_name='Бесплатна достава')
     date_posted = models.DateTimeField(default=timezone.now, verbose_name='Дата на креирање')
-    title_slug = models.CharField(max_length = 100,verbose_name='Url исто како на другио Website')
     slug =  models.SlugField(unique=True, max_length=250, blank = True)
     quantity = models.IntegerField(null=True, blank=True, verbose_name='Залиха')
     attributes_type = models.CharField(choices=attributes_choices, max_length=50, blank=True, verbose_name='Одбери тип')
@@ -89,7 +88,8 @@ class Product(models.Model):
     
 
     def save(self, *args, **kwargs):
-        self.slug = self.title_slug
+        if not self.slug:
+            self.slug = slugify(self.sku)
         self.fake_quantity = randint(2, 6)
         reviews = Review.objects.filter(product=self)
         total_rating = 0
