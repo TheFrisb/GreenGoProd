@@ -725,8 +725,8 @@ $(document).ready(function () {
                         }
                     }) 
                 },
-                error: function(data) {
-                    $("#error_alert").text(data.responseJSON.error);
+                error: function(xhr, status, error) {
+                    $("#error_alert").text(error);
                     $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                     $(button).removeClass('disabled')
                     $(button).html('Креирај кампања')
