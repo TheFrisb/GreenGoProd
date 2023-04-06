@@ -505,7 +505,7 @@ def save_new_campaign_id(request):
         redirect('/')
 
 
- def get_ad_preview(request):
+def get_ad_preview(request):
     if request.method == 'GET':
         ad_primary_text = request.GET.get('ad_primary_text')
         ad_description_text = request.GET.get('ad_description_text')
