@@ -299,7 +299,7 @@ def create_ad_preview(ad_primary_text, ad_description_text, ad_headline_text, ph
     fields = [
     ]
     params = {
-    'creative': {'object_story_spec':{'link_data':{'call_to_action':{'type':'SHOP_NOW','value':{'link':'https://greengoshop.mk'}},'description':ad_description_text,'link':'https://greengoshop.mk','message':ad_primary_text,'name':ad_headline_text,'picture':'https://greengoshop.mk/media/uploads/2022/12/13/image_2022-12-13_210847739.png'},'page_id':'110068238444042'}},
+    'creative': {'object_story_spec':{'link_data':{'call_to_action':{'type':'SHOP_NOW','value':{'link':'https://greengoshop.mk'}},'description':ad_description_text,'link':'https://greengoshop.mk','message':ad_primary_text,'name':ad_headline_text,'picture':photo_url},'page_id':'110068238444042'}},
     'ad_format': 'MOBILE_FEED_STANDARD',
     }
     ad_previews = AdAccount(ad_account_id).get_generate_pre_views(
