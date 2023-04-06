@@ -46,12 +46,12 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
         selected_genders = genders
         
     FacebookAdsApi.init(access_token=access_token)
-    
+    random_number = random.randint(1, 10000)
     if interest_id != 'OPEN_AUDIENCE':
         ad_set = AdAccount(ad_account_id).create_ad_set(
             fields=[],
             params={
-                'name': name,
+                'name': name + str(random_number),
                 'optimization_goal': 'OFFSITE_CONVERSIONS',
                 'billing_event': 'IMPRESSIONS',
                 'promoted_object': {
