@@ -160,6 +160,7 @@ $(document).ready(function() {
                 success: function (response){
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
                     $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                    $('.checkout-upsells').load(location.href + " .checkout-upsells");
                     cartCount++;
                     $("#cart-count").html(cartCount)
                     if($(button).hasClass("hasUpsells")){
@@ -288,6 +289,7 @@ $(document).ready(function() {
                 }
                 $('.sidecart-inner').load(location.href + " .sidecart-inner");
                 $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                $('.checkout-upsells').load(location.href + " .checkout-upsells");
 
             }
         })
@@ -334,6 +336,7 @@ $(document).ready(function() {
                     $("#cart-count").html(cartCount)
                     $('.sidecart-inner').load(location.href + " .sidecart-inner");
                     $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                    $('.checkout-upsells').load(location.href + " .checkout-upsells");
                 if($(button).hasClass("hasUpsells")){
                         console.log('called 1')
                         $(".product-page-upsell").each(function(i, obj){
@@ -543,6 +546,7 @@ $(document).ready(function() {
                 $('.sidecart-inner').load(location.href + " .sidecart-inner")
                 $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
                 $("#cart-count").html(cartCount)
+                $('.checkout-upsells').load(location.href + " .checkout-upsells");
                 if($(".checkout-items-count").val() == 1){
                     console.log('yea')
                     if($('body').hasClass('checkout-is-active')){
@@ -578,6 +582,7 @@ $(document).ready(function() {
             success: function (response){
                 $(fee).toggleClass('checked')
                 $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                $('.checkout-upsell-fees').load(location.href + " .checkout-upsell-fees");
                 
             }
         })
