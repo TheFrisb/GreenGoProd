@@ -699,9 +699,20 @@ $(document).ready(function () {
         console.log(ad_primary_text, ad_headline, ad_description)
         var photo_url = '';
         if($(button).hasClass("ad_type_is_photo")){
+            if($(this).closest('.ad').find('.ad_type_photo_input').attr('src') == ''){
+                $("#error_alert").text("Немаш одберано слика за preview!");
+                $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                return;
+            }
             photo_url = $(this).closest('.ad').find('.ad_type_photo_input').attr('src');
+            
         }
         else{
+            if($(this).closest('.ad').find('.ad_type_video_input').attr('src') == ''){
+                $("#error_alert").text("Немаш одберано thumbnail за preview!");
+                $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                return;
+            }
             photo_url = $(this).closest('.ad').find('.ad_type_video_thumbnail_input').attr('src');
         }
         console.log('ad_prev')
