@@ -709,7 +709,12 @@ $(document).ready(function () {
         }
         else{
             if($(this).closest('.ad').find('.ad_type_video_input').attr('src') == ''){
-                $("#error_alert").text("Немаш одберано thumbnail за preview!");
+                $("#error_alert").text("Немаш одберано video за preview!");
+                $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                return;
+            }
+            if($(this).closest('.ad').find('.ad_type_video_thumbnail_input').attr('src') == ''){
+                $("#error_alert").text("Немаш одберано слика за preview!");
                 $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                 return;
             }
