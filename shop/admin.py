@@ -52,11 +52,11 @@ class OrderAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'sku', 'supplier__name']
     list_filter = ['category', 'status']
-    exclude = ("slug",)
+    readonly_fields = ['slug']
     list_display = ("title", "sale_price",  "date_posted")
     fieldsets = (
         ('Задолжителни:', {
-            'fields': ('status', 'category', 'title', 'title_slug', 'thumbnail',  'content', 'regular_price', 'sale_price',
+            'fields': ('status', 'category', 'title', 'slug', 'thumbnail',  'content', 'regular_price', 'sale_price',
             'free_shipping', 'supplier', 'sku', 'supplier_stock_price', 'date_posted',),
         }),
         ('Widgets:', {
