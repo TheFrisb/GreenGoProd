@@ -457,7 +457,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data.thumbnail_url)
                 $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_media_preview').attr('src', data.thumbnail_url)
-                $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded"><img src="' + data.thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
+                $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container custom_thumbnail rounded"><img src="' + data.thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
             }
         })
 
