@@ -310,3 +310,42 @@ def create_ad_preview(ad_primary_text, ad_description_text, ad_headline_text, ph
 
     return ad_previews[0]['body']
     
+
+def get_open_audience(request):
+    if request.method == 'GET':
+        access_token = config('CAMPAIGNS_SECRET')
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
+        instagram_account_id = '5225011497548175'
+        pixel_id = config('PIXEL_ID')   
+        app_secret = config('CAMPAIGNS_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
+
+
+        targeting_spec2 = {
+            'age_min': 20,
+            'age_max': 65,
+            'geo_locations': {
+                'countries': ['MK'],
+            },
+            
+        }
+        params={
+            'targeting_spec': json.dumps(targeting_spec2),
+            'app_id': app_id,
+            'app_secret': app_secret,
+            'access_token': access_token,
+        }
+        estimated_interest_url = f"https://graph.facebook.com/v16.0/{ad_account_id}/reachestimate"
+        response = requests.get(estimated_interest_url, params=params)
+        result = {}
+        if response.status_code == 200:
+            response_json = response.json()
+            result['users_lower_bound'] = f"{int(response_json['data']['users_lower_bound']):,}"
+            result['users_upper_bound'] = f"{int(response_json['data']['users_upper_bound']):,}"
+            result['adset_name'] = f"Open Audience " + format_number(response_json['data']['users_upper_bound'])
+        else:
+            pass
+
+
+        return result
