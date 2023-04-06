@@ -113,6 +113,7 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 });
 
 $(document).ready(function () {
+
     $.ajax({
         url: 'https://greengoshop.mk/analytics/get-open-audience',
         method: 'GET',
@@ -130,14 +131,12 @@ $(document).ready(function () {
             
         }
     })
-    
-    
+
     var adset_count = 1;
     var token = $('input[name=csrfmiddlewaretoken]').val()
     create_custom_dropdowns();
     $('[data-toggle="tooltip"]').tooltip()
-
-    var ad_template = $("#ad_template").clone();
+    var ad_template = $(".ad_template").clone();
 
     $(document).on('click', ".add_adset", function(e){
         e.preventDefault(e);
@@ -198,17 +197,15 @@ $(document).ready(function () {
         var headline = $(button).closest('.ad').find('.ad_headline').val()
         var description = $(button).closest('.ad').find('.ad_description').val()
         var current_ad_template = $(button).closest('.ad').clone();
-        var parent_adset = $(button).closest('.adset_template')
-        
+        var adset = $(button).closest('.adset_template')
         $(button).closest(".ad").after(current_ad_template.clone());
         if($(button).siblings('.checkbox-place').find('.ad_text_copied_checkbox').is(':checked')){
             $(button).closest(".ad").next('.ad').find('.ad_primary_text').val(primary_text)
             $(button).closest(".ad").next('.ad').find('.ad_headline').val(headline)
             $(button).closest(".ad").next('.ad').find('.ad_description').val(description)
         }
-
         $(button).remove();
-        parent_adset.find(".ad").each(function(index, value){
+        adset.find(".ad").each(function(index, value){
             $(value).find(".ad_name").text("РЕКЛАМА " + (index + 1))
         })
         
@@ -219,11 +216,13 @@ $(document).ready(function () {
         var parent_adset = $(button).closest('.adset_template')
         var first_ad = parent_adset.find(".ad").first()
         var ad_count = parent_adset.find(".ad").length
-        // return if it's the only ad
+
+
         if(ad_count == 1){
             return;
         }
         ad_count -= 1;
+        
         
         $(button).closest(".ad").remove();
         parent_adset.find(".ad").each(function(index, value){
@@ -434,6 +433,7 @@ $(document).ready(function () {
                             $(element).append('<li class="dropdown-item"><input type="hidden" name="aud_id" class="audience_id" value=' + audience.id + '>' + '<input type="hidden" name="aud_name" class="audience_name" value=' + audience.name + '>' + audience.adset_name + '</li>')
                         })
                     })
+                    $(button).closest(".input-group").siblings('.audience_selecting_place').find('.dropdown-toggle').click()
                     
                 }
             })
@@ -457,7 +457,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data.thumbnail_url)
                 $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_media_preview').attr('src', data.thumbnail_url)
-                $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container manual_thumbnail rounded"><img src="' + data.thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
+                $(button).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded"><img src="' + data.thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
             }
         })
 
@@ -726,7 +726,7 @@ $(document).ready(function () {
                     }) 
                 },
                 error: function(xhr, status, error) {
-                    $("#error_alert").text(error);
+                    $("#error_alert").text(error, );
                     $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                     $(button).removeClass('disabled')
                     $(button).html('Креирај кампања')
@@ -758,11 +758,10 @@ $(document).ready(function () {
                 return;
             }
             photo_url = $(this).closest('.ad').find('.ad_type_photo_input').attr('src');
-            
         }
         else{
             if($(this).closest('.ad').find('.ad_type_video_input').attr('src') == ''){
-                $("#error_alert").text("Немаш одберано video за preview!");
+                $("#error_alert").text("Немаш одберано видео за preview!");
                 $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                 return;
             }
@@ -771,11 +770,13 @@ $(document).ready(function () {
                 $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                 return;
             }
+
             photo_url = $(this).closest('.ad').find('.ad_type_video_thumbnail_input').attr('src');
         }
+        console.log(photo_url)
         console.log('ad_prev')
         $.ajax({
-            url: 'https://greengoshop.mk/analytics/get-ad-preview',
+            url: 'https://greengoshop.mk/analytics/get-ad-previews',
             type: 'GET',
             data: {
                 'csrfmiddlewaretoken': token,
@@ -790,6 +791,12 @@ $(document).ready(function () {
                 $(".iframe_holder").empty();
                 $(".iframe_holder").append(tempElement.firstChild);
             },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $("#error_alert").text("Status code: " + jqXHR.status + " Response text: " + errorThrown);
+                $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                $(button).removeClass('disabled')
+                $(button).html('Креирај кампања')
+              }
 
         })
     })
