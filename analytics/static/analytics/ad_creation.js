@@ -706,7 +706,7 @@ $(document).ready(function () {
         }
         console.log('ad_prev')
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/get-ad-preview',
+            url: 'https://greengoshop.mk/analytics/get-ad-preview',
             type: 'GET',
             data: {
                 'csrfmiddlewaretoken': token,
