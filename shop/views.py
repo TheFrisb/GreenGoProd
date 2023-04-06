@@ -173,7 +173,7 @@ def ProductView(request, slug):
 
             return render(request, "shop/product-page.html", context)
         else:
-            return redirect('shop-home')
+            pass
     except:
         messages.warning(request, "Линкот што го следевте не постои")
         return redirect('shop-home')
