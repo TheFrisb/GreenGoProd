@@ -22,9 +22,104 @@
 <div id="checkout_form_overlay" style="display:none">
     <section id="checkout_form" style="position:relative;">
         <span id="close-checkout" style="position:absolute;">&#10006</span>
-        <h1 class="margin-bottom">Податоци за испорака</h1>
-        <p class="margin-bottom red-text">Плаќање на врата</p>
+        <h1 class="margin-bottom">Колку парчиња сакате?</h1>
         <form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form" onsubmit="submitBtn1.disabled = true;submitBtn2.disabled = true; return true;">
+            <div class="checkout-form-inner">
+                <input type="hidden" value="{{ cart.count }}" class="checkout-items-count">
+                <h4>Колку парчиња сакате?</h4>
+                <div class="checkout-products margin-bottom">
+                    {% for item in cart %}
+                    <div class="checkout-product product_data" style="position: relative">
+                        <input type="hidden" name="product_id" value="{{ item.product.id }}" class="prod_id">
+
+                        <span class="remove-checkout-item remove-item" style="position:absolute;right:-10px;padding:10px;color:#abaeb4;">&#10006</span>
+                        <div class="product-info" style="position:relative;">
+                            
+                            {% csrf_token %}
+                            <span class="row-qty">{{ item.product_qty }}</span>
+                            {% if item.is_upsell %}
+                            <img src="{{ item.upsell_thumbnail }}" alt="" width="60" height="60" class="cart-item-thumbnail">
+                            {% else %}
+                            <picture>
+                                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" style="width:60px;height:60px;">
+                            </picture>
+                            {% endif %}
+                            <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
+                                {% if item.has_attributes %}
+                                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
+                                <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} {{ item.attributename }} </a>
+                                {% else %}
+                                {% if item.is_upsell %}
+                                    <a href="#">{{ item.upsell_title }} </a>
+                                    {% else %}
+                                        <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} </a>
+                                    {% endif %}
+                                {% endif %}
+                                {% if item.offer_price == 0  and item.is_upsell %}
+                                {% else %}
+                                <div class="quantity">
+                                    <button class="decrement-btn changeQuantity">-</button>
+                                    <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}" aria-label="Количина"> 
+                                    <button class="increment-btn changeQuantity">+</button>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.getItemTotal }} ден</p>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="delivery-methods margin-bottom">
+                    <div class="method">
+                        <div class="checked-circle" style="display:flex;align-items: center;gap:10px;">
+                            <div style="padding:3px;border:1px solid #00703d; border-radius:50%; display:inline-block;"><div style="width:12px;height:12px;background-color:#00703d;border-radius:50%"></div></div>
+                            <p>Достава до врата</p>
+                        </div>
+                    </div>
+                    <p style="font-weight:700;text-align:right;">бесплатна достава</p>
+                </div>
+
+                <div class="checkout-order-review margin-bottom">
+                    <div class="order-row">
+                        <p>Цена</p>
+                        <p >{{ cart_total }} ден</p>
+                    </div>      
+                        {% for fee in cartFees %}
+                        <div class="order-row">
+                            <p>{{ fee.title }}</p>
+                            <p >{{ fee.price }} ден</p>
+                        </div>
+                        {% endfor %}
+                    <div class="order-row">
+                        <p>Провизија</p>
+                        <p>20 ден</p>
+                    </div>
+                    <div class="order-row">
+                        <p>Достава</p>
+                        {% if free_shipping %}
+                        <p>бесплатна достава</p>
+                        {% else %}
+                        <p>До врата - 130 ден</p>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="order-total order-row" style="border-top: 1px solid #afafaf">
+                        <p style="font-weight:900">Вкупно за плаќање на курирот</p>
+                        {% if free_shipping %}
+                        <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                        {% else %}
+                        <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                
+            </div>
+            <h4 style="margin-bottom:8px!important">Податоци за испорака</h4>
+            <p class="red-text">Плаќање на врата</p>
             <div class="form-group">
                 <label for="name">Име и Презиме <span class="red">*</span></label>
                 <div class="input">
@@ -52,15 +147,6 @@
                     <input type="tel" placeholder="формат: 07X-XXX-XXX" required name="number" id="checkout_input_phone">
                 </div>
             </div>
-            <!-- <div class="form-group">
-                <label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
-                <div class="input">
-                    <div class="form-icon-holder">
-                        <img src="{% static 'icons/checkout/city.svg' %}" alt="" style="width: 24px; height:24px">
-                    </div>
-                    <input type="text" required name="city" placeholder="Одберете град">
-                </div>
-            </div> -->
             <div class="form-group">
                 <label for="city">Град/Село <abbr title="required" class="required">*</abbr></label>
                 <div class="input">
@@ -130,100 +216,8 @@
             </div>
         </div>
     </div>
-            
-            <div class="checkout-form-inner">
-                <input type="hidden" value="{{ cart.count }}" class="checkout-items-count">
-                <h4>Колку парчиња сакате?</h4>
-                <div class="checkout-products margin-bottom">
-                    {% for item in cart %}
-                    <div class="checkout-product product_data" style="position: relative">
-                        <input type="hidden" name="product_id" value="{{ item.product.id }}" class="prod_id">
-
-                        <span class="remove-checkout-item remove-item" style="position:absolute;right:-10px;padding:10px;color:#abaeb4;">&#10006</span>
-                        <div class="product-info" style="position:relative;">
-                            
-                            {% csrf_token %}
-                            <span class="row-qty">{{ item.product_qty }}</span>
-                            {% if item.is_upsell %}
-                            <img src="{{ item.upsell_thumbnail }}" alt="" width="60" height="60" class="cart-item-thumbnail">
-                            {% else %}
-                            <picture>
-                                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
-                                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" style="width:60px;height:60px;">
-                            </picture>
-                            {% endif %}
-                            <div style="display:flex; justify-content: flex-start; align-items: center; flex-wrap: wrap;">
-                                {% if item.has_attributes %}
-                                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute_id }}">
-                                <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} {{ item.attributename }} </a>
-                                {% else %}
-                                {% if item.is_upsell %}
-                                    <a href="#">{{ item.upsell_title }} </a>
-                                    {% else %}
-                                        <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }} </a>
-                                    {% endif %}
-                                {% endif %}
-                                {% if item.offer_price == 0  and item.is_upsell %}
-                                {% else %}
-                                <div class="quantity">
-                                    <button class="decrement-btn changeQuantity">-</button>
-                                    <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}" aria-label="Количина"> 
-                                    <button class="increment-btn changeQuantity">+</button>
-                                </div>
-                                {% endif %}
-                            </div>
-                            
-                        </div>
-                        <p style="font-weight: 700; font-size: 14px; word-wrap: break-word; text-align: right;min-width:80px;margin-right:16px;">{{ item.getItemTotal }} ден</p>
-                        
-                    </div>
-                    {% endfor %}
-                </div>
-                <button class="pay-button margin-bottom checkout_form_payBtn" type="submit" name="submitBtn1" style="font-weight:600">НАРАЧАЈ ВЕДНАШ</button>
-                <div class="delivery-methods margin-bottom">
-                    <div class="method">
-                        <div class="checked-circle" style="display:flex;align-items: center;gap:10px;">
-                            <div style="padding:3px;border:1px solid #00703d; border-radius:50%; display:inline-block;"><div style="width:12px;height:12px;background-color:#00703d;border-radius:50%"></div></div>
-                            <p>Достава до врата</p>
-                        </div>
-                    </div>
-                    <p style="font-weight:700;text-align:right;">бесплатна достава</p>
-                </div>
-
-                <div class="checkout-order-review margin-bottom">
-                    <div class="order-row">
-                        <p>Цена</p>
-                        <p >{{ cart_total }} ден</p>
-                    </div>      
-                        {% for fee in cartFees %}
-                        <div class="order-row">
-                            <p>{{ fee.title }}</p>
-                            <p >{{ fee.price }} ден</p>
-                        </div>
-                        {% endfor %}
-                    <div class="order-row">
-                        <p>Провизија</p>
-                        <p>20 ден</p>
-                    </div>
-                    <div class="order-row">
-                        <p>Достава</p>
-                        {% if free_shipping %}
-                        <p>бесплатна достава</p>
-                        {% else %}
-                        <p>До врата - 130 ден</p>
-                        {% endif %}
-                        
-                    </div>
-                    <div class="order-total order-row" style="border-top: 1px solid #afafaf">
-                        <p style="font-weight:900">Вкупно за плаќање на курирот</p>
-                        {% if free_shipping %}
-                        <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
-                        {% else %}
-                        <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% if cartOffers %}
+    <button class="pay-button margin-bottom checkout_form_payBtn" type="submit" name="submitBtn1" style="font-weight:600">НАРАЧАЈ ВЕДНАШ</button>  
+            {% if cartOffers %}
                     <p class="margin-bottom red-text">Често купувани заедно</p>
                     <div class="checkout-upsells margin-bottom">
                         {% for item in cartOffers %}
@@ -257,7 +251,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                {% if orderFees %}
+            {% if orderFees %}
                 <div class="upsell-fees margin-bottom">
                     
                         {% for fee in orderFees %}
@@ -278,8 +272,7 @@
                             </div>
                         {% endfor %}
                 </div>
-            </div>
-            {% endif %}
+                {% endif %}
             <button class="pay-button checkout_form_payBtn" type="submit" name="submitBtn2" style="font-weight:600">НАРАЧАЈ ВЕДНАШ</button>
             
         </form>
