@@ -3,6 +3,7 @@ from . import views
 
 
 urlpatterns = [
+    path('get-open-audience', views.get_open_audience, name='get_open_audience'),
     path('get-ad-preview', views.get_ad_preview, name='get_ad_preview'),
     path('save-new-campaign-id', views.save_new_campaign_id, name='save_new_campaign_id'),
     path('create-campaign', views.create_campaign, name='create_campaign'),
