@@ -726,12 +726,16 @@ $(document).ready(function () {
                         }
                     }) 
                 },
-                error: function(xhr, status, error) {
-                    $("#error_alert").text(error, );
-                    $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log('Error:', textStatus, errorThrown);
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                      console.log('Error message:', xhr.responseJSON.error);
+                    }
+                    $("#error_alert").text(xhr.responseJSON.error);
+                    $("#error_alert").fadeIn(100).delay(20000).fadeOut(100);
                     $(button).removeClass('disabled')
                     $(button).html('Креирај кампања')
-                  }
+                  },
                 
 
                 
