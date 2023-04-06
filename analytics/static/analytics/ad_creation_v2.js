@@ -354,7 +354,7 @@ $(document).ready(function () {
                             console.log(thumbnail_urls)
                             $.each(thumbnail_urls, function(index, thumbnail_url) {
                                 console.log(thumbnail_url)
-                                $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded"><img src="' + thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
+                                $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded manual_thumbnail"><img src="' + thumbnail_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
                             })
                         }
 
