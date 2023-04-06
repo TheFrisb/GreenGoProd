@@ -110,70 +110,74 @@ def ProductView(request, slug):
         6: ['Вторник', 'Четврток'],
     }
     delivery_days = mapped_delivery_days[current_day]
-    
-    attributes = ProductAttribute.objects.filter(product__slug=slug)
-    if attributes:
-        for attribute in attributes:
-            if attribute.is_disabled == False:
-                attribute.is_checked = True
-                default_attribute = attribute.checkattribute
-                break
-    else:
-        default_attribute = None
-
-    gallery = ProductGallery.objects.filter(product__slug=slug)
-    product = Product.objects.get(slug=slug)
-    faq_toggle = ProductFAQ.objects.filter(product=product)
-    if product.review_average != 0:
-        reviews = Review.objects.filter(product__slug=slug)
-    title = product.title
-    percentage = 100 - int(product.sale_price / product.regular_price * 100)
-    money_saved = product.regular_price - product.sale_price
-    if(product.status != 'PRIVATE'):
-        try:
-            facebook_pixel.ViewContentEvent(request, product)
-        except:
-            pass
-        upsells = ProductUpsells.objects.filter(parent_product=product)
-        if(product.review_average != 0):
-            count = reviews.count()
-
-            context = {
-                'product': product,
-                'reviews': reviews,
-                'reviewcount': count,
-                'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                'slider2': Product.objects.exclude(id=product.id).filter(status='PUBLSIHED').order_by('-date_posted')[:8],
-                'gallery': gallery,
-                'attributes' : attributes,
-                'title': title,
-                'percentage': percentage,
-                'money_saved': money_saved,
-                'delivery_days': delivery_days,
-                'faq_toggle': faq_toggle,
-                'upsells': upsells,
-                'default_attribute': default_attribute,
-            }
+    try:
+        attributes = ProductAttribute.objects.filter(product__slug=slug)
+        if attributes:
+            for attribute in attributes:
+                if attribute.is_disabled == False:
+                    attribute.is_checked = True
+                    default_attribute = attribute.checkattribute
+                    break
         else:
-            context = {
-                'product': product,
-                'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                'slider2': Product.objects.exclude(id=product.id).filter(status='PUBLSIHED').order_by('-date_posted')[:8],
-                'attributes' : attributes,
-                'gallery': gallery,
-                'title': title,
-                'percentage': percentage,
-                'money_saved': money_saved,
-                'delivery_days': delivery_days,
-                'faq_toggle': faq_toggle,
-                'upsells': upsells,
-                'default_attribute': default_attribute,
-            }
+            default_attribute = None
+
+        gallery = ProductGallery.objects.filter(product__slug=slug)
+        product = Product.objects.get(slug=slug)
+        faq_toggle = ProductFAQ.objects.filter(product=product)
+        if product.review_average != 0:
+            reviews = Review.objects.filter(product__slug=slug)
+        title = product.title
+        percentage = 100 - int(product.sale_price / product.regular_price * 100)
+        money_saved = product.regular_price - product.sale_price
+        if(product.status != 'PRIVATE'):
+            try:
+                facebook_pixel.ViewContentEvent(request, product)
+            except:
+                pass
+            upsells = ProductUpsells.objects.filter(parent_product=product)
+            if(product.review_average != 0):
+                count = reviews.count()
+
+                context = {
+                    'product': product,
+                    'reviews': reviews,
+                    'reviewcount': count,
+                    'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
+                    'slider2': Product.objects.exclude(id=product.id).filter(status='PUBLSIHED').order_by('-date_posted')[:8],
+                    'gallery': gallery,
+                    'attributes' : attributes,
+                    'title': title,
+                    'percentage': percentage,
+                    'money_saved': money_saved,
+                    'delivery_days': delivery_days,
+                    'faq_toggle': faq_toggle,
+                    'upsells': upsells,
+                    'default_attribute': default_attribute,
+                }
+            else:
+                context = {
+                    'product': product,
+                    'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
+                    'slider2': Product.objects.exclude(id=product.id).filter(status='PUBLSIHED').order_by('-date_posted')[:8],
+                    'attributes' : attributes,
+                    'gallery': gallery,
+                    'title': title,
+                    'percentage': percentage,
+                    'money_saved': money_saved,
+                    'delivery_days': delivery_days,
+                    'faq_toggle': faq_toggle,
+                    'upsells': upsells,
+                    'default_attribute': default_attribute,
+                }
 
 
-        return render(request, "shop/product-page.html", context)
-    else:
+            return render(request, "shop/product-page.html", context)
+        else:
+            return redirect('shop-home')
+    except:
+        messages.warning(request, "Линкот што го следевте не постои")
         return redirect('shop-home')
+        
     
 
 
