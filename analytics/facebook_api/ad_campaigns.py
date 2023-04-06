@@ -15,8 +15,6 @@ import random
 from decouple import config
 
 
-
-
 def create_facebook_campaign(campaign_name):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
@@ -293,5 +291,22 @@ def search_ad_interests(request, query):
 
 
         
+def create_ad_preview(ad_primary_text, ad_description_text, ad_headline_text, photo_url):
+    access_token = config('CAMPAIGNS_SECRET')
+    ad_account_id = config('MARKETING_AD_ACCOUNT')
+    
+    FacebookAdsApi.init(access_token=access_token)
+    fields = [
+    ]
+    params = {
+    'creative': {'object_story_spec':{'link_data':{'call_to_action':{'type':'SHOP_NOW','value':{'link':'https://greengoshop.mk'}},'description':ad_description_text,'link':'https://greengoshop.mk','message':ad_primary_text,'name':ad_headline_text,'picture':'https://greengoshop.mk/media/uploads/2022/12/13/image_2022-12-13_210847739.png'},'page_id':'110068238444042'}},
+    'ad_format': 'MOBILE_FEED_STANDARD',
+    }
+    ad_previews = AdAccount(ad_account_id).get_generate_pre_views(
+    fields=fields,
+    params=params,
+    )
 
+
+    return ad_previews[0]['body']
     
