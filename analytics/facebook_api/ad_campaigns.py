@@ -44,74 +44,75 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
         selected_genders = [1, 2]
     else:
         selected_genders = genders
-        
+
+
     FacebookAdsApi.init(access_token=access_token)
-    random_number = random.randint(1, 10000)
+
     if interest_id != 'OPEN_AUDIENCE':
         ad_set = AdAccount(ad_account_id).create_ad_set(
-            fields=[],
-            params={
-                'name': name,
-                'optimization_goal': 'OFFSITE_CONVERSIONS',
-                'billing_event': 'IMPRESSIONS',
-                'promoted_object': {
-                    'pixel_id': pixel_id,
-                    'custom_event_type': 'PURCHASE',
-                },
-                'lifetime_budget': 0,
-                'daily_budget': budget,
-                'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
-                'campaign_id': campaign_id,
-                'targeting': {
-                    'age_max': max_age,
-                    'age_min': min_age,
-                    'genders': selected_genders,
-                    'geo_locations': {
-                        'countries': ['MK'],
-                        'location_types': ['home', 'recent'],
-                    },
-                    "flexible_spec": [
-                        {
-                            'interests': [
-                                {
-                                    'id': interest_id,
-                                    'name': interest_name,
-                                },
-                            ],
-                        }
-                    ]
-                },
-                'status': 'PAUSED',
+        fields=[],
+        params={
+            'name': name,
+            'optimization_goal': 'OFFSITE_CONVERSIONS',
+            'billing_event': 'IMPRESSIONS',
+            'promoted_object': {
+                'pixel_id': pixel_id,
+                'custom_event_type': 'PURCHASE',
             },
+            'lifetime_budget': 0,
+            'daily_budget': budget,
+            'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
+            'campaign_id': campaign_id,
+            'targeting': {
+                'age_max': max_age,
+                'age_min': min_age,
+                'genders': selected_genders,
+                'geo_locations': {
+                    'countries': ['MK'],
+                    'location_types': ['home', 'recent'],
+                },
+                "flexible_spec": [
+                    {
+                        'interests': [
+                            {
+                                'id': interest_id,
+                                'name': interest_name,
+                            },
+                        ]
+                    }
+                ]
+            },
+            'status': 'PAUSED',
+        },
         )
         return ad_set
     else:
         ad_set = AdAccount(ad_account_id).create_ad_set(
-            fields=[],
-            params={
-                'name': name,
-                'optimization_goal': 'OFFSITE_CONVERSIONS',
-                'billing_event': 'IMPRESSIONS',
-                'promoted_object': {
-                    'pixel_id': pixel_id,
-                    'custom_event_type': 'PURCHASE',
-                },
-                'lifetime_budget': 0,
-                'daily_budget': budget,
-                'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
-                'campaign_id': campaign_id,
-                'targeting': {
-                    'age_max': max_age,
-                    'age_min': min_age,
-                    'genders': selected_genders,
-                    'geo_locations': {
-                        'countries': ['MK'],
-                        'location_types': ['home', 'recent'],
-                    },
-                    "flexible_spec": [],
-                },
-                'status': 'PAUSED',
+        fields=[],
+        params={
+            'name': name,
+            'optimization_goal': 'OFFSITE_CONVERSIONS',
+            'billing_event': 'IMPRESSIONS',
+            'promoted_object': {
+                'pixel_id': pixel_id,
+                'custom_event_type': 'PURCHASE',
             },
+            'lifetime_budget': 0,
+            'daily_budget': budget,
+            'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
+            'campaign_id': campaign_id,
+            'targeting': {
+                'age_max': max_age,
+                'age_min': min_age,
+                'genders': selected_genders,
+                'geo_locations': {
+                    'countries': ['MK'],
+                    'location_types': ['home', 'recent'],
+                },
+                "flexible_spec": [],
+            },
+            'status': 'PAUSED',
+        },
         )
         return ad_set
         
@@ -124,6 +125,8 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
     instagram_account_id = '5225011497548175'
     pixel_id = config('PIXEL_ID')
     FacebookAdsApi.init(access_token=access_token)
+
+    
 
     if(ad_type == 'image'):
         print('is_image')
