@@ -390,8 +390,8 @@ $(document).ready(function () {
                 success: function (data) {
                     console.log(data.image_url)
                     $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_media_preview').attr('src', data.image_url)
-                    
-                    $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded"><img src="' + data.image_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
+                    $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_bundles').find('.thumbnail-container').removeClass('border border-dark active_thumbnail')
+                    $(button).closest('.media_input').siblings('.media_holder').find('.thumbnail_bundles').append('<div class="col-md-3 my-2 thumbnail-container rounded custom_thumbnail active_thumbnail border border-dark"><img src="' + data.image_url + '" class="img-thumbnail thumbnail-option" style="cursor:pointer!important"></div>')
                 },
                 error: function (data) {
                     $("#error_alert").text(data);
@@ -402,8 +402,8 @@ $(document).ready(function () {
         }
     })
     $(document).on('click', '.thumbnail-option', function(e){
-        $(this).closest('.thumbnail-container').siblings().removeClass('border border-dark')
-        $(this).closest('.thumbnail-container').addClass('border border-dark')
+        $(this).closest('.thumbnail-container').siblings().removeClass('border border-dark active_thumbnail')
+        $(this).closest('.thumbnail-container').addClass('border border-dark active_thumbnail')
         $(this).closest('.thumbnail_bundles').siblings('.main-thumbnail-row').find('.thumbnail_media_preview').attr('src', $(this).attr('src'))
         
     })
@@ -612,7 +612,7 @@ $(document).ready(function () {
                     adset_dict['genders'] = [1];
                 }
                 // loop over every ad in adset 
-
+                var ad_videos_list = [];
                 $.each(adset_ads_inputs, function(subindex, ad){
 
 
@@ -637,9 +637,43 @@ $(document).ready(function () {
                         ad_dict['ad_image_path'] = ad_image_path;
                     }
                     else{
-                        $(ad).find('.adset_ad_name_input').val('Video ' + video_counter)
-                        video_counter += 1;
-                        console.log($(ad).find('.adset_ad_name_input').val())
+                        var is_included = 0
+                        for(var i=0; i < ad_videos_list.length; i++){
+                            console.log('LOOP')
+                            console.log(ad_videos_list[i].url)
+                            if(ad_videos_list[i].url == $(ad).find('.media_input_video.big-input').val()){
+                                is_included = 1;
+                                console.log('Found same video')
+                                if($(ad).find('.thumbnail-container.manual_thumbnail.active_thumbnail').length){
+                                    ad_videos_list[i].manual_thumbnail += 1;
+                                    $(ad).find('.adset_ad_name_input').val('Video ' + (i+1) + ' - ' + 'Manual Thumbnail ' + ad_videos_list[i].manual_thumbnail)
+                                }
+                                if($(ad).find('.thumbnail-container.custom_thumbnail.active_thumbnail').length){
+                                    ad_videos_list[i].custom_thumbnail += 1;
+                                    $(ad).find('.adset_ad_name_input').val('Video ' + (i+1) + ' - ' + 'Custom Thumbnail ' + ad_videos_list[i].custom_thumbnail)
+                                }
+                            }
+
+                        }
+                        if(is_included == 0){
+                            var manual_thumbnail = 0;
+                            var custom_thumbnail = 0;
+                            if($(ad).find('.thumbnail-container.manual_thumbnail.active_thumbnail').length){
+                                manual_thumbnail = 1;
+                                $(ad).find('.adset_ad_name_input').val('Video ' + (parseInt(ad_videos_list.length) + 1) + ' - ' + 'Manual Thumbnail ' + manual_thumbnail)
+                            }
+                            if($(ad).find('.thumbnail-container.custom_thumbnail.active_thumbnail').length){
+                                custom_thumbnail = 1;
+                                $(ad).find('.adset_ad_name_input').val('Video ' + (parseInt(ad_videos_list.length) + 1) + ' - ' + 'Custom Thumbnail ' + custom_thumbnail)
+                            }
+
+                            ad_videos_list.push({
+                                'url': $(ad).find('.media_input_video.big-input').val(),
+                                'manual_thumbnail': manual_thumbnail,
+                                'custom_thumbnail': custom_thumbnail
+                            })
+                        }
+
                         
                         var ad_type = 'video';
                         var ad_name = $(ad).find('.adset_ad_name_input').val();
