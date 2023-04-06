@@ -51,7 +51,7 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
         ad_set = AdAccount(ad_account_id).create_ad_set(
             fields=[],
             params={
-                'name': name + str(random_number),
+                'name': name,
                 'optimization_goal': 'OFFSITE_CONVERSIONS',
                 'billing_event': 'IMPRESSIONS',
                 'promoted_object': {
