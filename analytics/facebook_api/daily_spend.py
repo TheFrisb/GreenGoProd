@@ -6,7 +6,7 @@ from facebook_business.adobjects.campaign import Campaign
 from datetime import datetime, timedelta
 from analytics.models import *
 from datetime import datetime
-from shop.models import product_campaigns, Product
+from shop.models import product_campaigns, Product, ProductUpsells
 from decouple import config
 from django.db.models import Q
 
@@ -58,6 +58,12 @@ def populate_daily_rows(campaign_id, ad_spend):
         owner_of_campaign = daily_items.objects.filter(product=product).first()
         product_price = product.sale_price - 100
         stock_price = product.supplier_stock_price
+        related_upsells = ProductUpsells.objects.filter(parent_product=product)
+        if related_upsells:
+            for upsell in related_upsells:
+                if upsell.is_free:
+                    stock_price += upsell.product.supplier_stock_price
+                    
         fixed_cost = 0
         quantity = 0
         yesterday = timezone.now() - timezone.timedelta(days=1)
@@ -110,6 +116,12 @@ def populate_daily_rows(campaign_id, ad_spend):
             owner_of_campaign = daily_items.objects.filter(product=product).first()
             product_price = product.sale_price - 100
             stock_price = product.supplier_stock_price
+            related_upsells = ProductUpsells.objects.filter(parent_product=product)
+            if related_upsells:
+                for upsell in related_upsells:
+                    if upsell.is_free:
+                        stock_price += upsell.product.supplier_stock_price
+                        
             fixed_cost = 0
             quantity = 0
             
