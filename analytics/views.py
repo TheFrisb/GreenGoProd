@@ -517,3 +517,13 @@ def get_ad_preview(request):
     else:
         return JsonResponse({'status': 'Wrong request!'})
 
+
+def get_open_audience(request):
+    if request.method == 'GET':
+        result = ad_campaigns.get_open_audience(request)
+        return JsonResponse({'audience': result})
+    
+    else:
+        return redirect('/')
+    
+    
