@@ -113,6 +113,25 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 });
 
 $(document).ready(function () {
+    $.ajax({
+        url: 'https://greengoshop.mk/analytics/get-open-audience',
+        method: 'GET',
+        data: {
+            'csrfmiddlewaretoken': token
+        },
+        success: function (data) {
+            // loop over all audience-select-value elements and append options from data
+            var audience = data.audience;
+
+            $(".dropdown-menu").each(function(index, element){
+                $(element).append('<li class="dropdown-item"><input type="hidden" name="aud_id" class="audience_id" value="OPEN_AUDIENCE">' + '<input type="hidden" name="aud_name" class="audience_name" value="OPEN_AUDIENCE">' + audience.adset_name + '</li>')
+
+            })
+            
+        }
+    })
+    
+    
     var adset_count = 1;
     var token = $('input[name=csrfmiddlewaretoken]').val()
     create_custom_dropdowns();
