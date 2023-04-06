@@ -725,8 +725,8 @@ $(document).ready(function () {
                         }
                     }) 
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $("#error_alert").text("Status code: " + jqXHR.status + "Response text: " + errorThrown);
+                error: function(error) {
+                    $("#error_alert").text(JSON.stringify(error));
                     $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                     $(button).removeClass('disabled')
                     $(button).html('Креирај кампања')
