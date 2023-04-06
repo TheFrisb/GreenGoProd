@@ -26,7 +26,6 @@
         <form action="{% url 'placeorder' %}" method="POST" autocomplete id="checkout_form" onsubmit="submitBtn1.disabled = true;submitBtn2.disabled = true; return true;">
             <div class="checkout-form-inner">
                 <input type="hidden" value="{{ cart.count }}" class="checkout-items-count">
-                <h4>Колку парчиња сакате?</h4>
                 <div class="checkout-products margin-bottom">
                     {% for item in cart %}
                     <div class="checkout-product product_data" style="position: relative">
