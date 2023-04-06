@@ -776,7 +776,7 @@ $(document).ready(function () {
         console.log(photo_url)
         console.log('ad_prev')
         $.ajax({
-            url: 'https://greengoshop.mk/analytics/get-ad-previews',
+            url: 'https://greengoshop.mk/analytics/get-ad-preview',
             type: 'GET',
             data: {
                 'csrfmiddlewaretoken': token,
@@ -791,12 +791,7 @@ $(document).ready(function () {
                 $(".iframe_holder").empty();
                 $(".iframe_holder").append(tempElement.firstChild);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                $("#error_alert").text("Status code: " + jqXHR.status + " Response text: " + errorThrown);
-                $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
-                $(button).removeClass('disabled')
-                $(button).html('Креирај кампања')
-              }
+
 
         })
     })
