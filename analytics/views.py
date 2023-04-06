@@ -505,4 +505,15 @@ def save_new_campaign_id(request):
         redirect('/')
 
 
+ def get_ad_preview(request):
+    if request.method == 'GET':
+        ad_primary_text = request.GET.get('ad_primary_text')
+        ad_description_text = request.GET.get('ad_description_text')
+        ad_headline_text = request.GET.get('ad_headline_text')
+        photo_url = 'https://greengoshop.mk' + str(request.GET.get('photo_url'))
+
+        result = ad_campaigns.create_ad_preview(ad_primary_text=ad_primary_text, ad_description_text=ad_description_text, ad_headline_text=ad_headline_text, photo_url=photo_url)
+        return JsonResponse({'ad_preview': result})
+    else:
+        return JsonResponse({'status': 'Wrong request!'})
 
