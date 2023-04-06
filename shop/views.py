@@ -143,7 +143,7 @@ def ProductView(request, slug):
                     'reviews': reviews,
                     'reviewcount': count,
                     'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                    'slider2': Product.objects.filter(status='PUBLSIHED').exclude(id=product.id).order_by('-date_posted')[:8],
+                    'slider2': Product.objects.filter(status='PUBLISHED').exclude(id=product.id).order_by('-date_posted')[:8],
                     'gallery': gallery,
                     'attributes' : attributes,
                     'title': title,
@@ -158,7 +158,7 @@ def ProductView(request, slug):
                 context = {
                     'product': product,
                     'slider1': Product.objects.filter(category__name='ЗАЛИХА')[:8],
-                    'slider2': Product.objects.filter(status='PUBLSIHED').exclude(id=product.id).order_by('-date_posted')[:8],
+                    'slider2': Product.objects.filter(status='PUBLISHED').exclude(id=product.id).order_by('-date_posted')[:8],
                     'attributes' : attributes,
                     'gallery': gallery,
                     'title': title,
