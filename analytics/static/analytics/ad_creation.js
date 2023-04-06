@@ -691,5 +691,38 @@ $(document).ready(function () {
         }
         
     })
+    $(document).on("click", ".create_ad_preview" ,function(){
+        var button = $(this)
+        var ad_primary_text = $(this).closest('.ad').find('.ad_primary_text_input').val();
+        var ad_headline = $(this).closest('.ad').find('.ad_headline_input').val();
+        var ad_description = $(this).closest('.ad').find('.ad_description_input').val();
+        console.log(ad_primary_text, ad_headline, ad_description)
+        var photo_url = '';
+        if($(button).hasClass("ad_type_is_photo")){
+            photo_url = $(this).closest('.ad').find('.ad_type_photo_input').attr('src');
+        }
+        else{
+            photo_url = $(this).closest('.ad').find('.ad_type_video_thumbnail_input').attr('src');
+        }
+        console.log('ad_prev')
+        $.ajax({
+            url: 'http://127.0.0.1:8000/analytics/get-ad-preview',
+            type: 'GET',
+            data: {
+                'csrfmiddlewaretoken': token,
+                'ad_primary_text': ad_primary_text,
+                'ad_headline_text': ad_headline,
+                'ad_description_text': ad_description,
+                'photo_url': photo_url,
+            },
+            success: function(response){
+                var tempElement = document.createElement('div');
+                tempElement.innerHTML = response['ad_preview'];
+                $(".iframe_holder").empty();
+                $(".iframe_holder").append(tempElement.firstChild);
+            },
+
+        })
+    })
 });
 
