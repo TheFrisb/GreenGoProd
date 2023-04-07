@@ -120,8 +120,6 @@ def user_login(request):
 
             if user is not None:
                 login(request, user)
-                messages.success(request, "Logged in Successfully")
-                return redirect("daily_ad_spend")
             else:
                 messages.error(request, "Invalid username or Password")
                 return redirect('/')
