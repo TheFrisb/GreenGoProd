@@ -192,7 +192,7 @@ $(document).ready(function () {
         if(adset_count == 1){
             return;
         }
-
+        var first_adset = $(".adset_template").first()
         var button = $(this);
         adset_count -= 1;
         $(button).closest(".adset_template").remove();
@@ -202,7 +202,7 @@ $(document).ready(function () {
         })
         console.log(adset_count)
         if(adset_count==1){
-            $(".adset_template").find($(".adset-button-holder")).prepend('<button class="btn btn-primary my-2 add_adset" id="add_adset">Додади нов Ad Set</button>')
+            $(first_adset).find($(".adset-button-holder")).prepend('<button class="btn btn-primary my-2 add_adset" id="add_adset">Додади нов Ad Set</button>')
         }
     })
 
