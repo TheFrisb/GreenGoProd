@@ -128,7 +128,7 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["file"]},
     "handlers": {
         "file": {
-            "level": "INFO",
+            "level": "WARNING",
             "class": "logging.FileHandler",
             "filename": "/home/sammy/myprojectdir/django.log",
             "formatter": "app",
@@ -137,7 +137,7 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["file"],
-            "level": "DEBUG",
+            "level": "WARNING",
             "propagate": True
         },
     },
