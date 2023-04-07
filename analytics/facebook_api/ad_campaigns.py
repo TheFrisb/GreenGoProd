@@ -18,230 +18,241 @@ logger = logging.getLogger(__file__)
 
 
 def create_facebook_campaign(campaign_name):
-    access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT')
-    app_secret = config('FACEBOOK_APP_SECRET')
-    app_id = config('FACEBOOK_APP_ID')
-    FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
-    fields = [
-    ]
-    params = {
-    'name': campaign_name,
-    'objective': 'OUTCOME_SALES',
-    'status': 'PAUSED',
-    'special_ad_categories': [],
-    }
-    campaign = AdAccount(ad_account_id).create_campaign(
-    fields=fields,
-    params=params,
-    )
-    return campaign
+    try:
+        access_token = config('CAMPAIGNS_SECRET')
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
+        fields = [
+        ]
+        params = {
+        'name': campaign_name,
+        'objective': 'OUTCOME_SALES',
+        'status': 'PAUSED',
+        'special_ad_categories': [],
+        }
+        campaign = AdAccount(ad_account_id).create_campaign(
+        fields=fields,
+        params=params,
+        )
+        return campaign
+    except Exception as e:
+        logger.error(str(e))
+        return 2
 
 
 
 def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_id, interest_name, genders=None):
-    access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT')
-    instagram_account_id = '5225011497548175'
-    pixel_id = config('PIXEL_ID')
-    selected_genders = []
-    if genders is None:
-        selected_genders = [1, 2]
-    else:
-        selected_genders = genders
+    try:
+        access_token = config('CAMPAIGNS_SECRET')
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
+        instagram_account_id = '5225011497548175'
+        pixel_id = config('PIXEL_ID')
+        selected_genders = []
+        if genders is None:
+            selected_genders = [1, 2]
+        else:
+            selected_genders = genders
 
 
-    app_secret = config('FACEBOOK_APP_SECRET')
-    app_id = config('FACEBOOK_APP_ID')
-    FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
-    if interest_id != 'OPEN_AUDIENCE':
-        ad_set = AdAccount(ad_account_id).create_ad_set(
-        fields=[],
-        params={
-            'name': name,
-            'optimization_goal': 'OFFSITE_CONVERSIONS',
-            'billing_event': 'IMPRESSIONS',
-            'promoted_object': {
-                'pixel_id': pixel_id,
-                'custom_event_type': 'PURCHASE',
-            },
-            'lifetime_budget': 0,
-            'daily_budget': budget,
-            'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
-            'campaign_id': campaign_id,
-            'targeting': {
-                'age_max': max_age,
-                'age_min': min_age,
-                'genders': selected_genders,
-                'geo_locations': {
-                    'countries': ['MK'],
-                    'location_types': ['home', 'recent'],
+        if interest_id != 'OPEN_AUDIENCE':
+            ad_set = AdAccount(ad_account_id).create_ad_set(
+            fields=[],
+            params={
+                'name': name,
+                'optimization_goal': 'OFFSITE_CONVERSIONS',
+                'billing_event': 'IMPRESSIONS',
+                'promoted_object': {
+                    'pixel_id': pixel_id,
+                    'custom_event_type': 'PURCHASE',
                 },
-                "flexible_spec": [
-                    {
-                        'interests': [
-                            {
-                                'id': interest_id,
-                                'name': interest_name,
-                            },
-                        ]
-                    }
-                ]
-            },
-            'status': 'PAUSED',
-        },
-        )
-        return ad_set
-    else:
-        ad_set = AdAccount(ad_account_id).create_ad_set(
-        fields=[],
-        params={
-            'name': name,
-            'optimization_goal': 'OFFSITE_CONVERSIONS',
-            'billing_event': 'IMPRESSIONS',
-            'promoted_object': {
-                'pixel_id': pixel_id,
-                'custom_event_type': 'PURCHASE',
-            },
-            'lifetime_budget': 0,
-            'daily_budget': budget,
-            'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
-            'campaign_id': campaign_id,
-            'targeting': {
-                'age_max': max_age,
-                'age_min': min_age,
-                'genders': selected_genders,
-                'geo_locations': {
-                    'countries': ['MK'],
-                    'location_types': ['home', 'recent'],
+                'lifetime_budget': 0,
+                'daily_budget': budget,
+                'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
+                'campaign_id': campaign_id,
+                'targeting': {
+                    'age_max': max_age,
+                    'age_min': min_age,
+                    'genders': selected_genders,
+                    'geo_locations': {
+                        'countries': ['MK'],
+                        'location_types': ['home', 'recent'],
+                    },
+                    "flexible_spec": [
+                        {
+                            'interests': [
+                                {
+                                    'id': interest_id,
+                                    'name': interest_name,
+                                },
+                            ]
+                        }
+                    ]
                 },
-                "flexible_spec": [],
+                'status': 'PAUSED',
             },
-            'status': 'PAUSED',
-        },
-        )
-        return ad_set
+            )
+            return ad_set
+        else:
+            ad_set = AdAccount(ad_account_id).create_ad_set(
+            fields=[],
+            params={
+                'name': name,
+                'optimization_goal': 'OFFSITE_CONVERSIONS',
+                'billing_event': 'IMPRESSIONS',
+                'promoted_object': {
+                    'pixel_id': pixel_id,
+                    'custom_event_type': 'PURCHASE',
+                },
+                'lifetime_budget': 0,
+                'daily_budget': budget,
+                'bid_strategy': 'LOWEST_COST_WITHOUT_CAP',
+                'campaign_id': campaign_id,
+                'targeting': {
+                    'age_max': max_age,
+                    'age_min': min_age,
+                    'genders': selected_genders,
+                    'geo_locations': {
+                        'countries': ['MK'],
+                        'location_types': ['home', 'recent'],
+                    },
+                    "flexible_spec": [],
+                },
+                'status': 'PAUSED',
+            },
+            )
+            return ad_set
+    except Exception as e:
+        logger.error(str(e))
+        return 2
         
 
 
 def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_description_text, ad_headline_text,ad_link_url, ad_image=None, ad_video = None, ad_thumbnail=None):
-    access_token = config('CAMPAIGNS_SECRET')
-    ad_account_id = config('MARKETING_AD_ACCOUNT')
-    instagram_account_id = '5225011497548175'
-    pixel_id = config('PIXEL_ID')
-    app_secret = config('FACEBOOK_APP_SECRET')
-    app_id = config('FACEBOOK_APP_ID')
-    FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
+    try:
+        access_token = config('CAMPAIGNS_SECRET')
+        ad_account_id = config('MARKETING_AD_ACCOUNT')
+        instagram_account_id = '5225011497548175'
+        pixel_id = config('PIXEL_ID')
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
 
 
-    if(ad_type == 'image'):
-        print('is_image')
-        image = AdImage(parent_id=ad_account_id)
-        image[AdImage.Field.filename] = ad_image[1:]
-        image.remote_create()
+        if(ad_type == 'image'):
+            print('is_image')
+            image = AdImage(parent_id=ad_account_id)
+            image[AdImage.Field.filename] = ad_image[1:]
+            image.remote_create()
 
-        # Create creative
-        link_data = AdCreativeLinkData()
-        link_data[AdCreativeLinkData.Field.link] = ad_link_url
-        link_data[AdCreativeLinkData.Field.message] = ad_primary_text #Primary text
-        link_data[AdCreativeLinkData.Field.description] = ad_description_text #Description
-        link_data[AdCreativeLinkData.Field.name] = ad_headline_text #Headline
-        link_data[AdCreativeLinkData.Field.caption] = 'www.greengoshop.mk'
+            # Create creative
+            link_data = AdCreativeLinkData()
+            link_data[AdCreativeLinkData.Field.link] = ad_link_url
+            link_data[AdCreativeLinkData.Field.message] = ad_primary_text #Primary text
+            link_data[AdCreativeLinkData.Field.description] = ad_description_text #Description
+            link_data[AdCreativeLinkData.Field.name] = ad_headline_text #Headline
+            link_data[AdCreativeLinkData.Field.caption] = 'www.greengoshop.mk'
 
-        link_data[AdCreativeLinkData.Field.image_hash] = image.get_hash()
-        link_data[AdCreativeLinkData.Field.call_to_action] = {
-        'type': 'SHOP_NOW',
-        'value': {
-            'link': ad_link_url
-        }
-        }
-        object_story_spec = AdCreativeObjectStorySpec()
-        object_story_spec[AdCreativeObjectStorySpec.Field.page_id] = '110068238444042'
-        object_story_spec[AdCreativeObjectStorySpec.Field.link_data] = link_data
-        object_story_spec[AdCreativeObjectStorySpec.Field.instagram_actor_id] = instagram_account_id
-
-        creative = AdCreative(parent_id=ad_account_id)
-        creative[AdCreative.Field.name] = 'My ad'
-        creative[AdCreative.Field.object_story_spec] = object_story_spec
-        creative.remote_create()
-        tracking_specs = [{
-            'action.type': ['offsite_conversion'],
-            'offsite_pixel': [pixel_id],
-        }]
-        ad = AdAccount(ad_account_id).create_ad(
-            fields=[],
-            params={
-                'name': ad_name,
-                'adset_id': ad_set_id,
-                'conversion_domain': 'greengoshop.mk',
-                'creative': {'creative_id': creative['id']},
-                'instagram_actor_id': instagram_account_id,
-                'status': 'PAUSED',
-                'pixel_id': pixel_id,
-                'page_id': '110068238444042',
-            },
-        )
-        return ad
-
-
-    elif(ad_type == 'video'):
-        print('is_video')
-        video = AdVideo(parent_id=ad_account_id)
-        video[AdVideo.Field.filepath] = ad_video[1:]
-        video.remote_create()
-
-        thumbnail = AdImage(parent_id=ad_account_id)
-        thumbnail[AdImage.Field.filename] = ad_thumbnail[1:]
-        created_thumbnail = thumbnail.remote_create()
-
-        video_data = AdCreativeVideoData()
-        video_data[AdCreativeVideoData.Field.video_id] = video.get_id()
-        video_data[AdCreativeVideoData.Field.image_url] = created_thumbnail["url"]
-        video_data[AdCreativeVideoData.Field.message] = ad_primary_text #Primary text
-        video_data[AdCreativeVideoData.Field.link_description] = ad_description_text #Description
-        video_data[AdCreativeVideoData.Field.title] = ad_headline_text #Headline
-
-
-        #message,name,caption,description,
-        video_data[AdCreativeVideoData.Field.call_to_action] = {
+            link_data[AdCreativeLinkData.Field.image_hash] = image.get_hash()
+            link_data[AdCreativeLinkData.Field.call_to_action] = {
             'type': 'SHOP_NOW',
             'value': {
                 'link': ad_link_url
-                }
-        }
+            }
+            }
+            object_story_spec = AdCreativeObjectStorySpec()
+            object_story_spec[AdCreativeObjectStorySpec.Field.page_id] = '110068238444042'
+            object_story_spec[AdCreativeObjectStorySpec.Field.link_data] = link_data
+            object_story_spec[AdCreativeObjectStorySpec.Field.instagram_actor_id] = instagram_account_id
+
+            creative = AdCreative(parent_id=ad_account_id)
+            creative[AdCreative.Field.name] = 'My ad'
+            creative[AdCreative.Field.object_story_spec] = object_story_spec
+            creative.remote_create()
+            tracking_specs = [{
+                'action.type': ['offsite_conversion'],
+                'offsite_pixel': [pixel_id],
+            }]
+            ad = AdAccount(ad_account_id).create_ad(
+                fields=[],
+                params={
+                    'name': ad_name,
+                    'adset_id': ad_set_id,
+                    'conversion_domain': 'greengoshop.mk',
+                    'creative': {'creative_id': creative['id']},
+                    'instagram_actor_id': instagram_account_id,
+                    'status': 'PAUSED',
+                    'pixel_id': pixel_id,
+                    'page_id': '110068238444042',
+                },
+            )
+            return ad
+
+
+        elif(ad_type == 'video'):
+            print('is_video')
+            video = AdVideo(parent_id=ad_account_id)
+            video[AdVideo.Field.filepath] = ad_video[1:]
+            video.remote_create()
+
+            thumbnail = AdImage(parent_id=ad_account_id)
+            thumbnail[AdImage.Field.filename] = ad_thumbnail[1:]
+            created_thumbnail = thumbnail.remote_create()
+
+            video_data = AdCreativeVideoData()
+            video_data[AdCreativeVideoData.Field.video_id] = video.get_id()
+            video_data[AdCreativeVideoData.Field.image_url] = created_thumbnail["url"]
+            video_data[AdCreativeVideoData.Field.message] = ad_primary_text #Primary text
+            video_data[AdCreativeVideoData.Field.link_description] = ad_description_text #Description
+            video_data[AdCreativeVideoData.Field.title] = ad_headline_text #Headline
+
+
+            #message,name,caption,description,
+            video_data[AdCreativeVideoData.Field.call_to_action] = {
+                'type': 'SHOP_NOW',
+                'value': {
+                    'link': ad_link_url
+                    }
+            }
 
 
 
-        object_story_spec = AdCreativeObjectStorySpec()
-        object_story_spec[AdCreativeObjectStorySpec.Field.page_id] = '110068238444042'
-        object_story_spec[AdCreativeObjectStorySpec.Field.instagram_actor_id] = instagram_account_id
-        object_story_spec[AdCreativeObjectStorySpec.Field.video_data] = video_data
+            object_story_spec = AdCreativeObjectStorySpec()
+            object_story_spec[AdCreativeObjectStorySpec.Field.page_id] = '110068238444042'
+            object_story_spec[AdCreativeObjectStorySpec.Field.instagram_actor_id] = instagram_account_id
+            object_story_spec[AdCreativeObjectStorySpec.Field.video_data] = video_data
 
-        creative = AdCreative(parent_id=ad_account_id)
-        creative[AdCreative.Field.name] = 'My ad'
-        creative[AdCreative.Field.object_story_spec] = object_story_spec
+            creative = AdCreative(parent_id=ad_account_id)
+            creative[AdCreative.Field.name] = 'My ad'
+            creative[AdCreative.Field.object_story_spec] = object_story_spec
 
-        creative.remote_create()
+            creative.remote_create()
 
-        #generate random int from 1 to 10000
-        random_number = random.randint(1, 10000)
+            #generate random int from 1 to 10000
+            random_number = random.randint(1, 10000)
 
-        ad = AdAccount(ad_account_id).create_ad(
-            fields=[],
-            params={
-                'name': ad_name,
-                'adset_id': ad_set_id, # change
-                'conversion_domain': 'greengoshop.mk',
-                'creative': {'creative_id': creative['id']},
-                'instagram_actor_id': instagram_account_id,
-                'status': 'PAUSED',
-                'pixel_id': pixel_id,
-                'page_id': '110068238444042',  
-            },
-        )
-
+            ad = AdAccount(ad_account_id).create_ad(
+                fields=[],
+                params={
+                    'name': ad_name,
+                    'adset_id': ad_set_id, # change
+                    'conversion_domain': 'greengoshop.mk',
+                    'creative': {'creative_id': creative['id']},
+                    'instagram_actor_id': instagram_account_id,
+                    'status': 'PAUSED',
+                    'pixel_id': pixel_id,
+                    'page_id': '110068238444042',  
+                },
+            )
+    except Exception as e:
+        logger.error(str(e))
+        return 2
         
 def format_number(num):
     if num >= 1000000:
