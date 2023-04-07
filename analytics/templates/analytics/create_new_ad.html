@@ -252,7 +252,7 @@ select:not(.form-select) {
                         <label for="minimum_age">Max age</label>
                         <input type="number" name="minimum_age" value="65" style="width:100%!important" class="rounded border border-dark adset_maxage_input" min="19" max="65">
                     </div>
-                    <div class="col-md-5" style="display:flex;justify-content: center;align-items: flex-end; flex-wrap:wrap">
+                    <div class="col-md-4" style="display:flex;justify-content: center;align-items: flex-end; flex-wrap:wrap">
                         <div class="form-check form-check-inline checkbox-place">
                             <input class="form-check-input adset_male_input" type="checkbox" value="gender_male" name="gender_male" checked value="1" >
                             <label class="form-check-label " for="gender_male">Машко</label>
@@ -261,6 +261,10 @@ select:not(.form-select) {
                             <input class="form-check-input adset_female_input" type="checkbox" value="gender_female" name="gender_female" checked value="2">
                             <label class="form-check-label" for="gender_female">Женско</label>
                         </div>
+                      <div class="col-md-3">
+                        <label for="start_time">Start Time:</label>
+                        <input type="datetime-local" class="adset_start_time_input border border-dark rounded" name="start_time" data-toggle="tooltip" data-placement="top" title="Секојпат 20 минути понапред од сега">
+                    </div>
                         
                     </div>
                 </div>
