@@ -727,6 +727,7 @@ $(document).ready(function () {
 // }) 
                 },
                 error: function(xhr, textStatus, errorThrown) {
+                    console.log(errorThrown)
                     console.log(xhr.responseJSON)
                     console.log('Error:', textStatus, errorThrown);
                     if (xhr.responseJSON && xhr.responseJSON.error) {
