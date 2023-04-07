@@ -21,7 +21,7 @@ from io import BytesIO
 logger = logging.getLogger(__name__)
 
 
-@login_required
+@login_required(login_url='/analytics/login/')
 def daily_ad_spend(request):
     daily_item = daily_items.objects.filter().first()
     daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
