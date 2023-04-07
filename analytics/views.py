@@ -18,7 +18,7 @@ import random
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
-
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -489,6 +489,7 @@ def create_campaign(request):
             return JsonResponse({ 'campaign_id': campaign_id })
         except Exception as e:
             error_message = str(e)
+            logger.exception(f"An error occurred in campaign creation: {error_message}")
             return JsonResponse({ 'status': 'error', 'error': error_message }, status=500)
     else:
         return redirect('/')
