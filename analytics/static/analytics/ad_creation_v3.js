@@ -882,5 +882,44 @@ $(document).ready(function () {
 
         })
     })
+    $(document).on("click", "#store_new_audience_btn" ,function(){
+        var button = $(this);
+        var audience_name = $("#store_new_audience_name_input").val();
+        $.ajax({
+            url: 'http://127.0.0.1:8000/analytics/store-new-audience',
+            type: 'POST',
+            data: {
+
+                'csrfmiddlewaretoken': token,
+                'audience_name': audience_name,
+            },
+            success: function(response){
+                $(".default-list-item").after('<li class="list-group-item" style="padding:4px 16px; position:relative"><span>' + audience_name + '</span><span style="position:absolute; right:16px;cursor:pointer;background-color: white;padding-left:4px;" class="remove_stored_audience">&#10005;</span><input type="hidden" name="stored_audience_id" class="stored_audience_id_input" value="' + response.audience_id + '"></li>')
+                $("#success_alert").text("Додаден нов audience!");
+                
+                $("#success_alert").fadeIn(100).delay(3000).fadeOut(100);
+                
+                
+   
+            }
+        })
+    });
+    $(document).on("click", ".remove_stored_audience", function(){
+        var button = $(this);
+        var audience_id = $(this).siblings(".stored_audience_id_input").val();
+        $.ajax({
+            url: 'http://127.0.0.1:8000/analytics/remove-stored-audience',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': token,
+                'audience_id': audience_id,
+            },
+            success: function(response){
+                $(button).closest(".list-group-item").remove();
+                $("#success_alert").text("Избришан audience!");
+                $("#success_alert").fadeIn(100).delay(3000).fadeOut(100);
+            }
+        })
+    });
 });
 
