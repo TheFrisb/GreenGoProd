@@ -277,16 +277,14 @@ def retrieve_adspend(request):
         return JsonResponse({'status': 'Wrong request!'})
 
     
-@login_required
+@login_required(login_url='/analytics/login/')
 def create_new_ad(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    else:
-        context={
-            'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
-        }
 
-        return render(request, 'analytics/create_new_ad.html', context)
+    context={
+        'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
+    }
+
+    return render(request, 'analytics/create_new_ad.html', context)
 
 
 def get_product(request):
