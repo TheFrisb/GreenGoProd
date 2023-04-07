@@ -280,6 +280,7 @@ def create_new_ad(request):
 
     context={
         'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
+        'stored_audiences': Stored_Audience.objects.all().order_by('-created_at'),
     }
 
     return render(request, 'analytics/create_new_ad.html', context)
