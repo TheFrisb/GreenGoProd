@@ -886,7 +886,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_name = $("#store_new_audience_name_input").val();
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/store-new-audience',
+            url: 'https://greengoshop.mk/analytics/store-new-audience',
             type: 'POST',
             data: {
 
@@ -908,7 +908,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_id = $(this).siblings(".stored_audience_id_input").val();
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/remove-stored-audience',
+            url: 'https://greengoshop.mk/analytics/remove-stored-audience',
             type: 'POST',
             data: {
                 'csrfmiddlewaretoken': token,
