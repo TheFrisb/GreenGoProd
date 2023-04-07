@@ -125,10 +125,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "root": {"level": "ERROR", "handlers": ["file"]},
+    "root": {"level": "INFO", "handlers": ["file"]},
     "handlers": {
         "file": {
-            "level": "ERROR",
+            "level": "INFO",
             "class": "logging.FileHandler",
             "filename": "/home/sammy/myprojectdir/django.log",
             "formatter": "app",
@@ -137,7 +137,7 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["file"],
-            "level": "ERROR",
+            "level": "DEBUG",
             "propagate": True
         },
     },
