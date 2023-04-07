@@ -279,11 +279,14 @@ def retrieve_adspend(request):
     
 @login_required
 def create_new_ad(request):
-    context={
-        'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
-    }
+    if not request.user.is_authenticated:
+        return redirect('login')
+    else:
+        context={
+            'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
+        }
 
-    return render(request, 'analytics/create_new_ad.html', context)
+        return render(request, 'analytics/create_new_ad.html', context)
 
 
 def get_product(request):
