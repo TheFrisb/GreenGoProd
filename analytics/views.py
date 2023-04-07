@@ -277,13 +277,12 @@ def retrieve_adspend(request):
         return JsonResponse({'status': 'Wrong request!'})
 
     
-   
+@login_required
 def create_new_ad(request):
     context={
         'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
     }
-    print('yeah')
-    #ad_campaigns.create_ad_campaign()
+
     return render(request, 'analytics/create_new_ad.html', context)
 
 
