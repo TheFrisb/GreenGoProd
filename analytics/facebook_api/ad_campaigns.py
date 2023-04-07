@@ -162,6 +162,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         creative = AdCreative(parent_id=ad_account_id)
         creative[AdCreative.Field.name] = 'My ad'
         creative[AdCreative.Field.object_story_spec] = object_story_spec
+        creative[AdCreative.Field.url_tags] = "utm_source=facebook+ads&utm_medium={{adset.name}}&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{placement}}"
         creative.remote_create()
         tracking_specs = [{
             'action.type': ['offsite_conversion'],
@@ -219,7 +220,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         creative = AdCreative(parent_id=ad_account_id)
         creative[AdCreative.Field.name] = 'My ad'
         creative[AdCreative.Field.object_story_spec] = object_story_spec
-
+        creative[AdCreative.Field.url_tags] = "utm_source=facebook+ads&utm_medium={{adset.name}}&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{placement}}"
         creative.remote_create()
 
         #generate random int from 1 to 10000
