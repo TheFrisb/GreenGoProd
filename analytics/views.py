@@ -18,6 +18,7 @@ import random
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
+import time
 logger = logging.getLogger(__name__)
 
 
@@ -460,6 +461,7 @@ def create_campaign(request):
                                                        min_age = min_age, interest_id=audience_id, interest_name=audience_name)
             created_adset_id = created_adset['id']
             for ad in adset['ads']:
+                time.sleep(150)
                 ad_image = ''
                 ad_video = ''
                 ad_thumbnail = ''
