@@ -526,3 +526,22 @@ def get_open_audience(request):
         return redirect('/')
     
     
+def store_new_audience(request):
+    if request.method == 'POST':
+        audience_name = request.POST.get('audience_name')
+        new_audience = Stored_Audience.objects.create(name=audience_name)
+        return JsonResponse({'success': 'success', 'audience_id': new_audience.id})
+    
+    else:
+        return redirect('/')
+    
+
+def remove_stored_audience(request):
+    if request.method == 'POST':
+        audience_id = request.POST.get('audience_id')
+        Stored_Audience.objects.get(id=audience_id).delete()
+        return JsonResponse({'success': 'success'})
+    
+    else:
+        return redirect('/')
+    
