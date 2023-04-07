@@ -122,7 +122,7 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
             },
             )
             return ad_set
-        except Exception as e:
+    except Exception as e:
         # Log the exception using the Django logger
         logger.exception(f"An error occurred while creating a Facebook ADSET: {e}")
         return {"error": str(e)}
