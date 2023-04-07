@@ -20,7 +20,9 @@ def create_facebook_campaign(campaign_name):
     try:
         access_token = config('CAMPAIGNS_SECRET')
         ad_account_id = config('MARKETING_AD_ACCOUNT')
-        FacebookAdsApi.init(access_token=access_token)
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
         fields = [
         ]
         params = {
@@ -53,7 +55,9 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
             selected_genders = genders
 
 
-        FacebookAdsApi.init(access_token=access_token)
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
         if interest_id != 'OPEN_AUDIENCE':
             ad_set = AdAccount(ad_account_id).create_ad_set(
@@ -135,7 +139,9 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         ad_account_id = config('MARKETING_AD_ACCOUNT')
         instagram_account_id = '5225011497548175'
         pixel_id = config('PIXEL_ID')
-        FacebookAdsApi.init(access_token=access_token)
+        app_secret = config('FACEBOOK_APP_SECRET')
+        app_id = config('FACEBOOK_APP_ID')
+        FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
 
 
@@ -366,7 +372,7 @@ def get_open_audience(request):
         ad_account_id = config('MARKETING_AD_ACCOUNT')
         instagram_account_id = '5225011497548175'
         pixel_id = config('PIXEL_ID')   
-        app_secret = config('CAMPAIGNS_SECRET')
+        app_secret = config('FACEBOOK_APP_SECRET')
         app_id = config('FACEBOOK_APP_ID')
         FacebookAdsApi.init(app_id=app_id, app_secret=app_secret, access_token=access_token)
 
