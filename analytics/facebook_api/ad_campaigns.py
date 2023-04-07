@@ -38,7 +38,7 @@ def create_facebook_campaign(campaign_name):
 
 
 
-def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_id, interest_name, genders=None):
+def create_facebook_adset(campaign_id, name, adset_start_time, budget, max_age, min_age, interest_id, interest_name, genders=None):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
     instagram_account_id = '5225011497548175'
@@ -86,6 +86,7 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
                     }
                 ]
             },
+            'time_start': adset_start_time,
             'status': 'PAUSED',
         },
         )
@@ -115,6 +116,7 @@ def create_facebook_adset(campaign_id, name, budget, max_age, min_age, interest_
                 },
                 "flexible_spec": [],
             },
+            'time_start': adset_start_time,
             'status': 'PAUSED',
         },
         )
