@@ -731,11 +731,12 @@ $(document).ready(function () {
                     console.log('Error:', textStatus, errorThrown);
                     if (xhr.responseJSON && xhr.responseJSON.error) {
                       console.log('Error message:', xhr.responseJSON.error);
-                        $("#error_alert").text(xhr.responseJSON.error);
-                        $("#error_alert").fadeIn(100).delay(20000).fadeOut(100);
+                        
+                    }
+                    $("#error_alert").text("Неуспешно креирана реклама пиши на Беџо");
+                        $("#error_alert").fadeIn(100).delay(15000).fadeOut(100);
                         $(button).removeClass('disabled')
                         $(button).html('Креирај кампања')
-                    }
                     
                   },
                 
