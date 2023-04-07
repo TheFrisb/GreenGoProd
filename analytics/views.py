@@ -18,7 +18,6 @@ import random
 from django.conf import settings
 from PIL import Image
 from io import BytesIO
-import time
 logger = logging.getLogger(__name__)
 
 
@@ -447,7 +446,6 @@ def create_campaign(request):
 
 
         for adset in adsets:
-            time.sleep(150)
             adset_name = adset['adset_name']
             budget = int(adset['adset_budget'])
             min_age = int(adset['adset_minage'])
