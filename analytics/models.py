@@ -74,3 +74,11 @@ class ad(models.Model):
     def video_filename(self):
         return str(os.path.basename(self.main_video.name))
     
+
+class Stored_Audience(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Име на audience')
+    created_at = models.DateTimeField(default=timezone.now, editable=True, verbose_name='Креиран во')
+
+    def __str__(self):
+        return self.name
+    
