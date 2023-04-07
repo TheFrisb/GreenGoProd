@@ -694,8 +694,8 @@ $(document).ready(function () {
                 
             })
             console.log(adsets, product_id, campaign_name)
-            $(button).addClass('disabled')
-            $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
+            // $(button).addClass('disabled')
+            // $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
            
             $.ajax({
                 url: 'https://greengoshop.mk/analytics/create-campaign',
@@ -711,20 +711,20 @@ $(document).ready(function () {
                     $("#success_alert").fadeIn(100);
                     $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Додавање на Campaign ID на продуктот...')
                     console.log(response.campaign_id)
-                    $.ajax({
-                        url: 'https://greengoshop.mk/analytics/save-new-campaign-id',
-                        type: 'POST',
-                        data: {
-                            'csrfmiddlewaretoken': token,
-                            'campaign_id': response.campaign_id,
-                            'product_id': product_id,
-                        },
-                        success: function(response){
-                            setTimeout(function() {
-                                location.reload(true)
-                            }, 3000);
-                        }
-                    }) 
+                    // $.ajax({
+//     url: 'https://greengoshop.mk/analytics/save-new-campaign-id',
+//     type: 'POST',
+//     data: {
+//         'csrfmiddlewaretoken': token,
+//         'campaign_id': response.campaign_id,
+//         'product_id': product_id,
+//     },
+//     success: function(response){
+//         setTimeout(function() {
+//             location.reload(true)
+//         }, 3000);
+//     }
+// }) 
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.log('Error:', textStatus, errorThrown);
