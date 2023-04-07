@@ -445,6 +445,7 @@ def create_campaign(request):
 
         for adset in adsets:
             adset_name = adset['adset_name']
+            adset_start_time = adset['adset_start_time']
             budget = int(adset['adset_budget'])
             min_age = int(adset['adset_minage'])
             max_age = int(adset['adset_maxage'])
@@ -454,7 +455,7 @@ def create_campaign(request):
             if "genders" in adset:
                 genders = adset['genders']
             budget = budget * 100
-            created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name, budget=budget, max_age = max_age,
+            created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name, adset_start_time=adset_start_time, budget=budget, max_age = max_age,
                                                        min_age = min_age, interest_id=audience_id, interest_name=audience_name)
             created_adset_id = created_adset['id']
             for ad in adset['ads']:
