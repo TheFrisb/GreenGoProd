@@ -14,6 +14,7 @@ import requests, json
 import random 
 from decouple import config
 import logging
+logger = logging.getLogger(__file__)
 
 
 def create_facebook_campaign(campaign_name):
