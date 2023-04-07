@@ -113,7 +113,24 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 });
 
 $(document).ready(function () {
+    
+    var date = new Date();
+    var currentDate = new Date();
+    currentDate.setTime(currentDate.getTime() + 30 * 60 * 1000); 
+    currentDate.setHours(currentDate.getHours() + 2); 
+    var formattedDate = currentDate.toISOString().slice(0, 16); 
+    $(".adset_start_time_input").val(formattedDate); // Set the value of the input field as 2 hrs ahead
 
+    function get_real_date(iso_date){
+    var date = new Date(iso_date);
+    date.setHours(date.getHours() - 2);
+    return date;
+    }
+    function get_iso_date(date){
+    var return_date = new Date(date);
+    return return_date.toISOString().slice(0, 16); 
+    }
+    
     $.ajax({
         url: 'https://greengoshop.mk/analytics/get-open-audience',
         method: 'GET',
@@ -480,50 +497,104 @@ $(document).ready(function () {
 
 
 
+    function scrolltoelement_validation(is_scrolling, element){
+        if(is_scrolling == false){
+            $(element).focus();
+            $('html, body').animate({
+                scrollTop: $(element).offset().top - 250
+              }, 200);
+              return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+
     function validate_all_inputs(){
+        var is_scrolling = false;
         var form_is_valid = true;
         if($("#campaign_name").val().length == 0){
             $("#campaign_name").removeClass('border-primary')
             $("#campaign_name").addClass('border-danger')
             form_is_valid = false;
+            is_scrolling = scrolltoelement_validation(is_scrolling, "#campaign_name")
         }
         if($("#chosen_product").val().length == 0){
             $("#product_dropdown_search").addClass('border-danger')
             form_is_valid = false;
+            is_scrolling = scrolltoelement_validation(is_scrolling, "#product_dropdown_search")
         }
         // loop over every adset and  log all inputs with class adset_budget_input
 
         var adsets_inputs = $(".adset_template");
+        
         $.each(adsets_inputs, function(index, adset){
+            
+            if($(adset).find('.adset_start_time_input').val().length == 0){
+                $(adset).find('.adset_start_time_input').removeClass('border-dark')
+                $(adset).find('.adset_start_time_input').addClass('border-danger')
+                form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_start_time_input'))
+            }
+            if($(adset).find('.adset_start_time_input').val().length != 0){
+                var iso_date = $(adset).find('.adset_start_time_input').val();
+                var input_date = get_real_date(iso_date);
+                var current_date = new Date();
+                current_date.setHours(current_date.getHours() - 2);
+                if(input_date < current_date){
+                    console.log(input_date, current_date)
+                    $(adset).find('.adset_start_time_input').removeClass('border-dark')
+                    $(adset).find('.adset_start_time_input').addClass('border-danger')
+                    form_is_valid = false;
+                    is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_start_time_input'))
+                }
+                if(input_date > current_date){
+                    // check if minutes difference is bigger than 10
+                    var minutes_difference = (input_date - current_date) / 1000 / 60;
+                    if(minutes_difference < 20){
+                        $(adset).find('.adset_start_time_input').removeClass('border-dark')
+                        $(adset).find('.adset_start_time_input').addClass('border-danger')
+                        form_is_valid = false;
+                        is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_start_time_input'))
+                    }
+                }
+            }
             if($(adset).find('.adset_budget_input').val().length == 0){
                 $(adset).find('.adset_budget_input').removeClass('border-dark')
                 $(adset).find('.adset_budget_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_budget_input'))
             }
             if($(adset).find('.adset_minage_input').val().length == 0){
                 $(adset).find('.adset_minage_input').removeClass('border-dark')
                 $(adset).find('.adset_minage_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_minage_input'))
             }
             if($(adset).find('.adset_maxage_input').val().length == 0){
                 $(adset).find('.adset_maxage_input').removeClass('border-dark')
                 $(adset).find('.adset_maxage_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_maxage_input'))
             }
             if($(adset).find('.adset_name_input').val().length == 0){
                 $(adset).find('.adset_name_input').removeClass('border-dark')
                 $(adset).find('.adset_name_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_name_input'))
             }
             if($(adset).find('.adset_audience_id_input').val().length == 0){
                 $(adset).find('.adset_audience_input').removeClass('border-dark')
                 $(adset).find('.adset_audience_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_audience_input'))
             }
             if($(adset).find('.adset_audience_name_input').val().length == 0){
                 $(adset).find('.adset_audience_input').removeClass('border-dark')
                 $(adset).find('.adset_audience_input').addClass('border-danger')
                 form_is_valid = false;
+                is_scrolling = scrolltoelement_validation(is_scrolling, $(adset).find('.adset_audience_input'))
             }
             var adset_ads = $(adset).find('.adset_ad_input');
             $.each(adset_ads, function(index, ad){
@@ -531,23 +602,27 @@ $(document).ready(function () {
                     $(ad).find('.ad_primary_text_input').removeClass('border-primary')
                     $(ad).find('.ad_primary_text_input').addClass('border-danger')
                     form_is_valid = false;
+                    is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.ad_primary_text_input'))
                 }
                 if($(ad).find('.ad_headline_input').val().length == 0){
                     $(ad).find('.ad_headline_input').removeClass('border-primary')
                     $(ad).find('.ad_headline_input').addClass('border-danger')
                     form_is_valid = false;
+                    is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.ad_headline_input'))
                 }
 
                 if($(ad).find('.ad_description_input').val().length == 0){
                     $(ad).find('.ad_description_input').removeClass('border-primary')
                     $(ad).find('.ad_description_input').addClass('border-danger')
                     form_is_valid = false;
+                    is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.ad_description_input'))
                 }
                 if($(ad).find('.media_type_photo_btn').hasClass('btn-success')){
                     if($(ad).find(".ad_type_photo_input").attr('src') == ''){
                         $(ad).find('.media_input_photo').removeClass('border-primary')
                         $(ad).find('.media_input_photo').addClass('border-danger')
                         form_is_valid = false;
+                        is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.media_input_photo'))
                     }
                 }
                 if($(ad).find('.media_type_video_btn').hasClass('btn-success')){
@@ -555,11 +630,13 @@ $(document).ready(function () {
                         $(ad).find('.media_input_video').removeClass('border-primary')
                         $(ad).find('.media_input_video').addClass('border-danger')
                         form_is_valid = false;
+                        is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.media_input_video'))
                     }
                     if($(ad).find(".ad_type_video_thumbnail_input").attr('src') == ''){
                         $(ad).find('.video_generate_thumbnail_btn').removeClass("btn-primary")
                         $(ad).find('.video_generate_thumbnail_btn').addClass("btn-danger")
                         form_is_valid = false;
+                        is_scrolling = scrolltoelement_validation(is_scrolling, $(ad).find('.video_generate_thumbnail_btn'))
                     }
                 }
             })
@@ -592,6 +669,7 @@ $(document).ready(function () {
                 var adset_ads = [];
                 var adset_ads_inputs = $(adset).find('.adset_ad_input');
                 var genders = [];
+                var adset_start_time = get_iso_date($(adset).find('.adset_start_time_input').val());
                 var adset_budget = $(adset).find('.adset_budget_input').val();
                 var adset_minage = $(adset).find('.adset_minage_input').val();
                 var adset_maxage = $(adset).find('.adset_maxage_input').val();
@@ -599,6 +677,7 @@ $(document).ready(function () {
                 var adset_audience_name = $(adset).find('.adset_audience_name_input').val();
                 var adset_name = $(adset).find('.adset_name_input').val();
                 var adset_dict = {
+                    'adset_start_time': adset_start_time,
                     'adset_budget': adset_budget,
                     'adset_minage': adset_minage,
                     'adset_maxage': adset_maxage,
