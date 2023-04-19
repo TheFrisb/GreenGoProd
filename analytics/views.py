@@ -433,60 +433,65 @@ def search_ad_audiences(request):
 
 def create_campaign(request):
     if request.method == 'POST':
-        campaign_name = request.POST.get('campaign_name')
-        product_id = request.POST.get('product_id')
-        link_url = 'https://greengoshop.mk' + Product.objects.get(id=product_id).get_absolute_url()
-        print(link_url)
-        adsets = json.loads(request.POST.get('adsets'))
-        campaign = ad_campaigns.create_facebook_campaign(campaign_name=campaign_name)
-        campaign_id = campaign['id']
-        print(campaign)
+        try:
+            campaign_name = request.POST.get('campaign_name')
+            product_id = request.POST.get('product_id')
+            link_url = 'https://greengoshop.mk' + Product.objects.get(id=product_id).get_absolute_url()
+            print(link_url)
+            adsets = json.loads(request.POST.get('adsets'))
+            campaign = ad_campaigns.create_facebook_campaign(campaign_name=campaign_name)
+            campaign_id = campaign['id']
+            print(campaign)
 
 
 
-        for adset in adsets:
-            adset_name = adset['adset_name']
-            adset_start_time = adset['adset_start_time']
-            budget = int(adset['adset_budget'])
-            min_age = int(adset['adset_minage'])
-            max_age = int(adset['adset_maxage'])
-            audience_id = adset['adset_audience_id']
-            audience_name = adset['adset_audience_name']
+            for adset in adsets:
+                adset_name = adset['adset_name']
+                adset_start_time = adset['adset_start_time']
+                budget = int(adset['adset_budget'])
+                min_age = int(adset['adset_minage'])
+                max_age = int(adset['adset_maxage'])
+                audience_id = adset['adset_audience_id']
+                audience_name = adset['adset_audience_name']
 
-            if "genders" in adset:
-                genders = adset['genders']
-            budget = budget * 100
-            created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name, adset_start_time=adset_start_time, budget=budget, max_age = max_age,
-                                                       min_age = min_age, interest_id=audience_id, interest_name=audience_name)
-            created_adset_id = created_adset['id']
-            for ad in adset['ads']:
+                if "genders" in adset:
+                    genders = adset['genders']
+                budget = budget * 100
+                created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name, adset_start_time=adset_start_time, budget=budget, max_age = max_age,
+                                                           min_age = min_age, interest_id=audience_id, interest_name=audience_name)
+                created_adset_id = created_adset['id']
+                for ad in adset['ads']:
 
-                ad_image = ''
-                ad_video = ''
-                ad_thumbnail = ''
-                ad_name = ad['ad_name']
-                ad_primary = ad['ad_primary_text']
-                ad_headline = ad['ad_headline']
-                ad_description = ad['ad_description']
-                ad_type = ad['ad_type']
+                    ad_image = ''
+                    ad_video = ''
+                    ad_thumbnail = ''
+                    ad_name = ad['ad_name']
+                    ad_primary = ad['ad_primary_text']
+                    ad_headline = ad['ad_headline']
+                    ad_description = ad['ad_description']
+                    ad_type = ad['ad_type']
 
-                if ad_type == 'photo':
-                    ad_image = ad['ad_image_path']
-                    created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='image', ad_name=ad_name,ad_primary_text=ad_primary,
-                                                                 ad_description_text=ad_description, ad_headline_text=ad_headline, ad_image=ad_image, ad_link_url=link_url)
+                    if ad_type == 'photo':
+                        ad_image = ad['ad_image_path']
+                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='image', ad_name=ad_name,ad_primary_text=ad_primary,
+                                                                     ad_description_text=ad_description, ad_headline_text=ad_headline, ad_image=ad_image, ad_link_url=link_url)
 
-                elif ad_type == 'video':
-                    ad_video = ad['ad_video_path']
-                    ad_thumbnail = ad['thumbnail_path']
-                    print(ad_video, ad_thumbnail)
-                    print('CREEATE AD CALLED')
-                    created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='video', ad_name=ad_name,ad_primary_text=ad_primary,
-                                                                 ad_description_text=ad_description, ad_headline_text=ad_headline, ad_video = ad_video, ad_thumbnail = ad_thumbnail, ad_link_url=link_url)
+                    elif ad_type == 'video':
+                        ad_video = ad['ad_video_path']
+                        ad_thumbnail = ad['thumbnail_path']
+                        print(ad_video, ad_thumbnail)
+                        print('CREEATE AD CALLED')
+                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='video', ad_name=ad_name,ad_primary_text=ad_primary,
+                                                                     ad_description_text=ad_description, ad_headline_text=ad_headline, ad_video = ad_video, ad_thumbnail = ad_thumbnail, ad_link_url=link_url)
 
 
 
-        return JsonResponse({ 'campaign_id': campaign_id })
-
+            return JsonResponse({ 'campaign_id': campaign_id })
+        except Exception as e:
+            error_message = str(e)
+            print('WAA', error_message)   
+            return JsonResponse({ 'status': 'error', 'error': error_message }, status=500)
+      
     else:
         return redirect('/')
         
