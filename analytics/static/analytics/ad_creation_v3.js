@@ -773,7 +773,7 @@ $(document).ready(function () {
                 
             })
             console.log(adsets, product_id, campaign_name)
-            /$(button).addClass('disabled')
+            $(button).addClass('disabled')
             $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
            
             $.ajax({
@@ -806,7 +806,7 @@ $(document).ready(function () {
                     }) 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR.responseJSON.error);
+                    // console.log(jqXHR.responseJSON.error);
                     $("#error_alert").html(jqXHR.responseJSON.error);
                     $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
                     $(button).removeClass('disabled')
