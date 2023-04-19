@@ -13,7 +13,7 @@ import datetime
 import requests, json
 import random 
 from decouple import config
-
+from shop.models import product_campaigns
 
 
 def create_facebook_campaign(campaign_name):
@@ -389,3 +389,39 @@ def get_open_audience(request):
 
 
         return result
+
+    
+def hehe():
+    access_token = config('CAMPAIGNS_SECRET')
+    ad_account_id = config('MARKETING_AD_ACCOUNT')
+
+    FacebookAdsApi.init(access_token=access_token)
+    campaigns = []
+    ad_account = AdAccount(fbid=ad_account_id)
+    fields = [
+        Campaign.Field.id,
+        Campaign.Field.name,
+        Campaign.Field.status,
+    ]
+
+    params = {
+
+    }
+
+    for campaign in ad_account.get_campaigns(fields=fields, params=params):
+        campaigns.append({
+            'id': campaign[Campaign.Field.id],
+            'name': campaign[Campaign.Field.name],
+        })
+
+    for retrieved in campaigns:
+        cmp_id = retrieved['id']
+        try:
+            ob = product_campaigns.objects.get(campaign_id=cmp_id)
+            ob.campaign_name = retrieved['name']
+            ob.save()
+            print('Found')
+        except:
+            pass
+            
+    print(campaigns)
