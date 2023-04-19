@@ -208,7 +208,10 @@ select:not(.form-select) {
 <div class="container-fluid text-center border py-3">
   <div class="row">
     <h3 class="col-8">Креири кампања</h3>
-    <a href="{% url 'daily_ad_spend' %}" class="col-4">Ad analytics</a>
+    <div class="col-4">
+        <a href="{% url 'daily_ad_spend' %}" class="link-secondary" >Ad analytics</a>
+        <a href="{% url 'create_already_existing_campaign_ad' %}" class="ms-5 link-primary">Креири ad на веке постоечка Кампања</a>
+    </div>
   </div>
 </div>
 
