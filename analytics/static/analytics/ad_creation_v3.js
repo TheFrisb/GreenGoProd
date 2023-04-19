@@ -805,19 +805,13 @@ $(document).ready(function () {
                         }
                     }) 
                 },
-                error: function(xhr, textStatus, errorThrown) {
-
-                    console.log('Error:', textStatus, errorThrown);
-                    if (xhr.responseJSON && xhr.responseJSON.error) {
-                      console.log('Error message:', xhr.responseJSON.error);
-                        
-                    }
-                    $("#error_alert").text("Неуспешно креирана реклама пиши на Беџо");
-                        $("#error_alert").fadeIn(100).delay(15000).fadeOut(100);
-                        $(button).removeClass('disabled')
-                        $(button).html('Креирај кампања')
-                    
-                  },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseJSON.error);
+                    $("#error_alert").html(jqXHR.responseJSON.error);
+                    $("#error_alert").fadeIn(100).delay(7000).fadeOut(100);
+                    $(button).removeClass('disabled')
+                    $(button).html('Креирај кампања')
+                }
                 
 
                 
