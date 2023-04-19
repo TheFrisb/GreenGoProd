@@ -1,0 +1,458 @@
+{% extends "analytics/base_analytics.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .dropdownsearch{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .options{
+    width:100%;  
+  }
+select:not(.form-select) {
+      display: none !important;
+  }
+  
+  .dropdown-select {
+      background-color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      font-size: 14px;
+      font-weight: normal;
+      height: 38px;
+      line-height: 35px;
+      outline: none;
+      padding-left: 16px;
+      padding-right: 30px;
+      position: relative;
+      text-align: left !important;
+      transition: all 0.2s ease-in-out;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      white-space: nowrap;
+      width: auto;
+  
+  }
+  
+  .dropdown-select:focus {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:hover {
+      background-color: #fff;
+  }
+  
+  .dropdown-select:active,
+  .dropdown-select.open {
+      background-color: #fff !important;
+      border-color: #0d6efd;;
+  }
+  
+  .dropdown-select:after {
+      height: 0;
+      width: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #abaeb4;
+      -webkit-transform: origin(50% 20%);
+      transform: origin(50% 20%);
+      transition: all 0.125s ease-in-out;
+      content: '';
+      display: block;
+      margin-top: -2px;
+      pointer-events: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+  }
+  
+  .dropdown-select.open:after {
+      -webkit-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+  }
+  
+  .dropdown-select.open .list {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  .dropdown-select.open .option {
+      cursor: pointer;
+  }
+  
+  .dropdown-select.wide {
+      width: 100%;
+  }
+  
+  .dropdown-select.wide .list {
+      left: 0 !important;
+      right: 0 !important;
+  }
+  
+  .dropdown-select .list {
+      box-sizing: border-box;
+      transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+      -webkit-transform: scale(0.75);
+      transform: scale(0.75);
+      -webkit-transform-origin: 50% 0;
+      transform-origin: 50% 0;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09);
+      background-color: #fff;
+      border-radius: 6px;
+      margin-top: 4px;
+      padding: 3px 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 999;
+      max-height: 250px;
+      overflow: auto;
+      border: 1px solid #0d6efd;
+  }
+  
+  .dropdown-select .list:hover .option:not(:hover) {
+      background-color: transparent !important;
+  }
+  .dropdown-select .dd-search{
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0.5rem;
+  }
+  
+  .dropdown-select .dd-searchbox{
+    width:90%;
+    padding:0.5rem;
+    border:1px solid #abaeb4;
+    border-color:#abaeb4;
+    border-radius:4px;
+    outline:none;
+  }
+  .dropdown-select .dd-searchbox:focus{
+    border-color: #0d6efd!important;
+  }
+  
+  .dropdown-select .list ul {
+      padding: 0;
+  }
+  
+  .dropdown-select .option {
+      cursor: default;
+      font-weight: 400;
+      line-height: 40px;
+      outline: none;
+      padding-left: 18px;
+      padding-right: 29px;
+      text-align: left;
+      transition: all 0.2s;
+      list-style: none;
+  }
+  
+  .dropdown-select .option:hover,
+  .dropdown-select .option:focus {
+      background-color: #212529!important;
+      color: white!important;
+      font-weight: 600!important;
+      font-size: 16px!important;
+  }
+  
+  .dropdown-select .option.selected {
+      font-weight: 600;
+      color: #0d6efd;
+  }
+  
+  .dropdown-select .option.selected:focus {
+        background-color: #f6f6f6 !important;
+  }
+  
+  .dropdown-select a {
+      color: #aaa;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+  }
+  
+  .dropdown-select a:hover {
+      color: #666;
+  }
+  #campaign-list a:hover{
+    transform: scale(1.05);
+    transition: transform 0s;
+    color: #0d6efd!important;
+  }
+  .big-input{
+    height:37px!important;
+  }
+  @media(max-width: 768px){
+    .desktop{
+        display:none;
+    }
+  }
+
+</style>
+<div class="alert alert-danger fixed-top text-center fw-bolder" role="alert" id="error_alert" style="display:none;"></div>
+<div class="alert alert-success fixed-top text-center fw-bolder" role="alert" style="display:none;" id="success_alert"></div>
+<div class="container-fluid text-center border py-3">
+  <div class="row">
+    <h3 class="col-8">Веќе постоечка Кампања</h3>
+    <div class="col-4">
+        <a href="{% url 'daily_ad_spend' %}" class="link-secondary" >Ad analytics</a>
+        <a href="{% url 'create_new_ad' %}" class="ms-5 link-primary">Креири нова Кампања</a>
+    </div>
+  </div>
+</div>
+
+<div class="container-md p-4">
+    <div class="row">
+        <form action="" class="col-md-8" id="main_form">
+            {% csrf_token %}
+            <div class="row" style="margin-bottom:0.5rem!important">
+                <label for="product-search">Одбери кампања</label>
+                <input type="hidden" required name="city" placeholder="Одбери кампања" value="" id="chosen_campaign">
+                <input type="hidden" required value="" id="chosen_product">
+                          <div class="dropdownsearch border border-primary rounded" style="padding-left:0!important;padding-right:0!important;" data-toggle="tooltip" data-placement="top" title="Одбери Продукт" id="product_dropdown_search">
+                              <div class="options">
+                                <select name="" id="dynamic_select">
+                                    <option value="" fake-name="" data-url="#">Одбери кампања</option>
+                                    {% for option in campaigns %}                               
+                                    <option value="{{ option.campaign_name }}" fake-name="{{ option.campaign_id }}" data-id="{{  option.campaign_id }}">{{ option.campaign_name }}</option>
+                                    {% endfor %}     
+                                </select>
+                              </div>
+                          </div>
+            </div>
+
+            <div class="row  border border-dark rounded adset_template my-2" id="adset_template">
+                <div class="col-12">
+                        <h5 class="text-center text-dark mt-2 adset_name"><strong>ADSET 1</strong></h4>
+                </div>
+                
+                <div class="col-md-6 my-1">     
+                    <label for="adset_budget">Буџет ($)</label>    
+                    <input type="number" name="adset_budget" data-toggle="tooltip" data-placement="top" title="Внеси буџет за Ad Set" class=" border border-dark rounded adset_budget_input" value="5" style="width:100px!important" min="5">
+                    
+                </div>
+                <div class="col-md-6 my-1">
+                    <label for="adset_name">Име на AdSet</label>    
+                    <input type="text" name="adset_name" data-toggle="tooltip" data-placement="top" title="Сам се потполнува од публиката, ама можаш да внесаш име" class="border border-dark rounded adset_name_input adset_name_input" style="width:74%!important;">
+                </div>
+                <div class="row my-2">
+                    <div class="col-md-2">
+                        <label for="minimum_age">Min age</label>
+                        <input type="number" name="minimum_age" value="18" style="width:100%!important" class="rounded border border-dark adset_minage_input" min="18" max="65">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="minimum_age">Max age</label>
+                        <input type="number" name="minimum_age" value="65" style="width:100%!important" class="rounded border border-dark adset_maxage_input" min="19" max="65">
+                    </div>
+                    <div class="col-md-4" style="display:flex;justify-content: center;align-items: flex-end; flex-wrap:wrap">
+                        <div class="form-check form-check-inline checkbox-place">
+                            <input class="form-check-input adset_male_input" type="checkbox" value="gender_male" name="gender_male" checked value="1" >
+                            <label class="form-check-label " for="gender_male">Машко</label>
+                        </div>
+                        <div class="form-check form-check-inline checkbox-place">
+                            <input class="form-check-input adset_female_input" type="checkbox" value="gender_female" name="gender_female" checked value="2">
+                            <label class="form-check-label" for="gender_female">Женско</label>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <label for="start_time">Start Time:</label>
+                        <input type="datetime-local" class="adset_start_time_input border border-dark rounded" name="start_time" data-toggle="tooltip" data-placement="top" title="Секојпат 20 минути понапред од сега">
+                    </div>
+                </div>
+                
+
+                <div class="input-group mt-4">
+                    <input type="text" class="form-control border border-dark search_audience_input" placeholder="Пребарај публики" aria-label="Пребарај публики" data-toggle="tooltip" data-placement="top" title="Напиши публика шо сакаш да га пребараш и стисни Барај">
+                    <div class="input-group-append search_audiences_btn_container">
+                      <button class="btn btn-dark search_audiences_btn" type="button" style="border-top-left-radius:0px!important;border-bottom-left-radius:0px!important">Барај</button>
+                    </div>
+                  </div>
+                  
+                <div class="row mt-2 audience_selecting_place">
+                    <input type="hidden" name="audience_id" class="adset_audience_id_input">
+                    <input type="hidden" name="audience_name" class="adset_audience_name_input">
+                    <div class="col-md-3">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Одбери публика
+                            </button>
+                            <ul class="dropdown-menu">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-9 ">
+                        <label for="chosen_ad_audience">Одберана публика</label>
+                        <input type="text" name="chosen_ad_audience" class="border border-dark rounded chosen_ad_audience adset_audience_input" style="width:76.4%!important">
+                    </div>
+                </div>
+    
+                <div class="col-11 my-2 mx-auto border border-primary rounded ad adset_ad_input" style="margin-bottom:2.5rem!important" id="ad_template">
+                    <div class="col-12">
+                        <h6 class="text-center text-primary pt-2 ad_name">РЕКЛАМА 1</h6>
+                        <input type="hidden" name="adset_ad_name" class="adset_ad_name_input">
+                    </div>
+                
+                    <div class="row ad_copy_row" style="padding:0.5rem">
+                        <div class="row">
+                            <label for="ad_primary_text">Primary text</label>
+                            <textarea name="ad_primary_text" class="border border-primary rounded ad_primary_text ad_primary_text_input" cols="40" rows="6" data-toggle="tooltip" data-placement="top" title="Тај е големио текст шо излева над рекламата"></textarea>
+                        </div>
+                        <div class="row">
+                            <label for="ad_headline">Headline</label>
+                            <input type="text" name="ad_headline" class="border border-primary rounded big-input ad_headline ad_headline_input" data-toggle="tooltip" data-placement="top" title="Тај текст е болдиранио текст на рекламата, обично име на производо">
+                        </div>
+                        <div class="row">
+                            <label for="ad_description">Description</label>
+                            <input type="text" name="ad_description" class="border border-primary rounded big-input ad_description ad_description_input" data-toggle="tooltip" data-placement="top" title="Тај текст е шо излева под болдиранио текст на рекламата">
+                        </div>
+                    </div>
+                    <div class="row ad_media_selector">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-primary btn-sm btn-success select_ad_media_type_btn media_type_photo media_type_photo_btn">Слика</button>
+                            <button type="button" class="btn btn-primary btn-sm select_ad_media_type_btn media_type_video media_type_video_btn">Видео</button>
+                        </div>    
+                    </div>
+                    <div class="my-2 ad_media_photo">
+                        <div class="col-12 media_input">
+                            <label for="formFile" class="form-label">Внеси слика (креатив)</label>
+                            <input class="form-control big-input media_input_photo" type="file" accept=".jpg, .jpeg, .png">
+                            <button type="button" class="btn btn-primary btn-sm mt-2 submit_media_photo" >Прикачи слика</button>
+                        </div>
+                        <div class="col-12 my-2 media_holder" >
+                            <img src="" alt="" class="img-thumbnail media_preview ad_type_photo_input">
+                        </div>
+                        <button class="btn btn-dark btn-sm my-2 create_ad_preview ad_type_is_photo" type="button">Види Preview</button>
+                    </div>
+                    <div class="my-2 ad_media_video" style="display:none;">
+                        <div class="col-12 media_input">
+                            <label for="formFile" class="form-label">Внеси видео (креатив)</label>
+                            <input class="form-control big-input media_input_video" type="file" accept="video/*">
+                            <button type="button" class="btn btn-primary btn-sm mt-2 submit_media_video">Прикачи видео</button>
+                        </div>
+                        <div class="col-12 my-2 media_input">
+                            <label for="video_thumbnail" class="form-label">Внеси thumbnail</label>
+                            <input class="form-control big-input media_input_video_thumbnail" name="video_thumbnail" type="file" accept=".jpg, .jpeg, .png">
+                            <button type="button" class="btn btn-primary btn-sm mt-2 submit_media_video_thumnail">Прикачи Thumbnail</button>
+                        </div>
+                        <div class="col-12 my-2 media_holder">
+                            <div class="row main-thumbnail-row">
+                                <div class="col-md-6">
+                                    <video controls autoplay="autoplay" loop="loop" muted="true" playsinline="true" src=""  class="img-thumbnail video_media_preview ad_type_video_input">&nbsp;</video>
+                                </div>
+                                <div class="col-md-6"><img src="" alt="" class="img-thumbnail thumbnail_media_preview ad_type_video_thumbnail_input"></div>
+                            </div>
+                            
+                            
+                            <div class="row thumbnail_bundles" style="padding:0 0.5rem!important">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="hidden" name="ad_media_video_id" value="none" class="ad_media_video_id">
+                                        <button type="button" class="btn btn-primary btn-sm video_generate_thumbnail_btn" >Направи thumbnail</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <button class="btn btn-dark btn-sm my-2 create_ad_preview ad_type_is_video" type="button">Види Preview</button>
+                        </div>
+                        <div class="col-12 mx-auto border-top border-dark ad-button-holder">
+                            <div class="form-check form-check-inline checkbox-place">
+                                <input class="form-check-input ad_text_copied_checkbox" type="checkbox" value="ad_text_copied" name="ad_text_copied_checkbox" checked>
+                                <label class="form-check-label" for="ad_text_copied_checkbox">Копири текст</label>
+                            </div>
+                            <button class="btn btn-primary btn-sm my-2 add_ad" type="Button">Додади нов AD</button>
+                            <button class="btn btn-danger btn-sm my-2 remove_ad">Отстрани Ad</button>
+                            
+                        </div>
+                    </div>
+                        <div class="col-12 mx-auto border-top border-dark adset-button-holder" style="margin-bottom:20px!important">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input adset_ad_copied_checkbox" type="checkbox" value="adset_ad_copied" name="adset_ad_copied_checkbox" checked>
+                                <label class="form-check-label" for="adset_ad_copied_checkbox">Копири реклами</label>
+                            </div>
+                            
+                            <button class="btn btn-primary my-2 add_adset" id="add_adset" data-bs-toggle="modal" data-bs-target="#exampleModal">Додади нов Ad Set</button>
+                            <button class="btn btn-danger my-2 remove_adset align-self-end">Отстрани Ad Set</button>
+                        </div>
+                </div>
+                
+            </form>
+            <div class="col-md-4" style="position:sticky!important; height:100%!important;top:5%">
+
+                <div class="row">
+                    <div class="card text-center sticky-top"  >
+                        <h5 class="card-title" id="campaign-card-title"></h5>
+                        <ul class="list-group list-group-flush" id="campaign_card_list">
+                        </ul>
+                    </div>
+                </div>
+                <div class="row my-4 iframe_holder">
+                    
+                </div>
+            </div>
+            </div>
+
+           
+            
+        <!--aria-hidden="true"-->
+    </div>
+    
+    <div class="btn btn-success fixed-bottom" style="border-radius:0!important" id="create_campaign">Креири кампања</div>
+    
+</div>
+<div class="row desktop" style="position:absolute;top:5%;left:1%;height:100%!important">
+    <div style="position:sticky">
+    <ul class="list-group" style="max-width:250px;position:sticky!important" id="stored_audiences_list">
+        <li class="list-group-item bg-primary text-white default-list-item" aria-current="true">Публики бирани во AdSets</li>
+        {% for audience in stored_audiences %}
+        <li class="list-group-item" style="padding:4px 16px; position:relative">
+            <span>{{audience.name}}</span>
+            <span style="position:absolute; right:16px;cursor:pointer;background-color: white;padding-left:4px;" class="remove_stored_audience">&#10005;</span>
+            <input type="hidden" name="stored_audience_id" class="stored_audience_id_input" value="{{ audience.id }}">
+        </li>
+        {% endfor %}
+        <li class="list-group-item">
+            <button class="btn btn-outline-primary btn-sm" role="button" data-bs-toggle="modal" data-bs-target="#store_new_audience_modal">
+                Додади нов Audience
+            </button>
+        </li>
+    </ul>
+    </div>
+
+</div>
+<div class="modal fade" id="store_new_audience_modal" tabindex="-1" aria-labelledby="store_new_audienceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Додај нов Audience</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="border border-primary rounder big-input rounded" id="store_new_audience_name_input" style="width:100%">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="store_new_audience_btn" data-bs-dismiss="modal">Додади</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block scripts %}
+
+<script src="{% static 'analytics/old_campaign_ad_creation.js' %}"></script>
+{% endblock scripts %}
