@@ -3,6 +3,8 @@ from . import views
 
 
 urlpatterns = [
+    path('create-already-existing-campaign-ad/', views.create_already_existing_campaign_ad, name='create_already_existing_campaign_ad'),
+    path('get-campaign-adsets', views.get_campaign_adsets, name='get_campaign_adsets'),
     path('remove-stored-audience', views.remove_stored_audience, name='remove_stored_audience'),
     path('store-new-audience', views.store_new_audience, name='store_new_audience'),
     path('get-open-audience', views.get_open_audience, name='get_open_audience'),
