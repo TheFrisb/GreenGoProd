@@ -9,7 +9,6 @@ import json
 from django.http import HttpResponse, JsonResponse
 from .facebook_api import daily_spend, ad_campaigns
 from datetime import datetime, timedelta
-from shop.models import Product
 import requests
 import logging
 from decouple import config
@@ -286,6 +285,16 @@ def create_new_ad(request):
     return render(request, 'analytics/create_new_ad.html', context)
 
 
+@login_required(login_url='/analytics/login/')
+def create_already_existing_campaign_ad(request):
+    context={
+        'campaigns': product_campaigns.objects.all(),
+        'stored_audiences': Stored_Audience.objects.all().order_by('-created_at'),
+    }
+
+    return render(request, 'analytics/create_already_existing_campaign_ad.html', context)
+
+
 def get_product(request):
     if request.method == 'GET':
         #get product id from request
@@ -551,3 +560,27 @@ def remove_stored_audience(request):
     else:
         return redirect('/')
     
+
+def get_campaign_adsets(request):
+    if request.method == 'GET':
+        campaign_id = request.GET.get('campaign_id')
+        campaign = product_campaigns.objects.get(campaign_id=campaign_id)
+        adsets = Ad_Set.objects.filter(campaign_parent=campaign)
+        adsets_list = []
+        for adset in adsets:
+            adset_dict = {}
+            adset_dict['adset_name'] = adset.name
+            adset_dict['adset_audience_id'] = adset.audience_id
+            adset_dict['adset_audience_name'] = adset.audience_name
+            adsets_list.append(adset_dict)
+        
+
+        return JsonResponse(
+            {
+            'adsets': adsets_list,
+            'product_id': campaign.product.id,
+            }
+            )
+    
+    else:
+        return redirect('/')
