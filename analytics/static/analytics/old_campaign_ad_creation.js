@@ -133,7 +133,7 @@ $(document).ready(function () {
 
 
     $.ajax({
-        url: 'http://127.0.0.1:8000/analytics/get-open-audience',
+        url: 'https://greengoshop.mk/analytics/get-open-audience',
         method: 'GET',
         data: {
             'csrfmiddlewaretoken': token
@@ -258,7 +258,7 @@ $(document).ready(function () {
         var campaign_id = $(this).attr('data-id')
         var campaign_name = $(this).attr('data-value')
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/get-campaign-adsets',
+            url: 'https://greengoshop.mk/analytics/get-campaign-adsets',
             method: 'GET',
             data: {
                 'campaign_id': campaign_id,
@@ -324,7 +324,7 @@ $(document).ready(function () {
             data.append('ad_image', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'http://127.0.0.1:8000/analytics/upload-campaign-photo',
+                url: 'https://greengoshop.mk/analytics/upload-campaign-photo',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -357,7 +357,7 @@ $(document).ready(function () {
             data.append('ad_video', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'http://127.0.0.1:8000/analytics/upload-campaign-video',
+                url: 'https://greengoshop.mk/analytics/upload-campaign-video',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -370,7 +370,7 @@ $(document).ready(function () {
                     $(button).closest('.media_input').siblings('.media_holder').find('.ad_media_video_id').val(ad_id)
                     
                     $.ajax({
-                        url: 'http://127.0.0.1:8000/analytics/get-video-thumbnails',
+                        url: 'https://greengoshop.mk/analytics/get-video-thumbnails',
                         method: 'GET',
                         data: {
                             'ad_id': ad_id,
@@ -409,7 +409,7 @@ $(document).ready(function () {
             data.append('ad_image', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'http://127.0.0.1:8000/analytics/upload-campaign-photo',
+                url: 'https://greengoshop.mk/analytics/upload-campaign-photo',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -446,7 +446,7 @@ $(document).ready(function () {
         }
         else{
             $.ajax({
-                url: 'http://127.0.0.1:8000/analytics/search-ad-audiences',
+                url: 'https://greengoshop.mk/analytics/search-ad-audiences',
                 method: 'GET',
                 data: {
                     'search_term': search_term,
@@ -482,7 +482,7 @@ $(document).ready(function () {
         var current_time = video[0].currentTime;
         var ad_id = $(button).siblings('.ad_media_video_id').val();
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/generate-ad-video-thumbnail',
+            url: 'https://greengoshop.mk/analytics/generate-ad-video-thumbnail',
             method: 'GET',
             data: {
                 'ad_id': ad_id,
@@ -790,11 +790,11 @@ $(document).ready(function () {
                 
             })
             console.log(adsets, product_id, campaign_name)
-          //  $(button).addClass('disabled')
-          //  $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
+            $(button).addClass('disabled')
+            $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
            
             $.ajax({
-                url: 'http://127.0.0.1:8000/analytics/create-campaign',
+                url: 'https://greengoshop.mk/analytics/create-campaign',
                 type: 'POST',
                 data: {
                     'csrfmiddlewaretoken': token,
@@ -803,10 +803,10 @@ $(document).ready(function () {
                     'adsets': JSON.stringify(adsets),
                 },
                 success: function(response){
-                    $("#success_alert").text("Успешно креирана кампања!");
+                    $("#success_alert").text("Успешно креиран adset!");
                     $("#success_alert").fadeIn(100);
-                    $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Додавање на Campaign ID на продуктот...')
-                    console.log(response.campaign_id)
+                    //$(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Додавање на Campaign ID на продуктот...')
+                    //console.log(response.campaign_id)
                     // $.ajax({
                     //     url: 'https://greengoshop.mk/analytics/save-new-campaign-id',
                     //     type: 'POST',
@@ -877,7 +877,7 @@ $(document).ready(function () {
         console.log(photo_url)
         console.log('ad_prev')
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/get-ad-previews',
+            url: 'https://greengoshop.mk/analytics/get-ad-previews',
             type: 'GET',
             data: {
                 'csrfmiddlewaretoken': token,
@@ -905,7 +905,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_name = $("#store_new_audience_name_input").val();
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/store-new-audience',
+            url: 'https://greengoshop.mk/analytics/store-new-audience',
             type: 'POST',
             data: {
 
@@ -927,7 +927,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_id = $(this).siblings(".stored_audience_id_input").val();
         $.ajax({
-            url: 'http://127.0.0.1:8000/analytics/remove-stored-audience',
+            url: 'https://greengoshop.mk/analytics/remove-stored-audience',
             type: 'POST',
             data: {
                 'csrfmiddlewaretoken': token,
