@@ -432,7 +432,7 @@ def search_ad_audiences(request):
 
 
 def create_campaign(request):
-   if request.method == 'POST':
+    if request.method == 'POST':
         campaign_name = request.POST.get('campaign_name')
         product_id = request.POST.get('product_id')
         link_url = 'https://greengoshop.mk' + Product.objects.get(id=product_id).get_absolute_url()
