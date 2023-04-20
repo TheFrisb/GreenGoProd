@@ -1,5 +1,5 @@
 from django.db import models
-from shop.models import Product, OrderItem
+from shop.models import Product, OrderItem, product_campaigns
 import datetime
 from django.urls import reverse
 from django.utils import timezone
@@ -82,3 +82,13 @@ class Stored_Audience(models.Model):
     def __str__(self):
         return self.name
     
+
+class Ad_Set(models.Model):
+    campaign_parent = models.ForeignKey(product_campaigns, on_delete=models.SET_NULL, null=True, verbose_name='Кампања')
+    name = models.CharField(max_length=250, verbose_name='Име на адсет')
+    audience_name = models.CharField(max_length=250, verbose_name='Име на audience')
+    audience_id = models.CharField(max_length=250, verbose_name='ID на audience')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Креиран во')
+
+    def __str__(self):
+        return self.name
