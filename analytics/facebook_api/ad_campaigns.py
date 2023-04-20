@@ -393,13 +393,12 @@ def get_open_audience(request):
         return result
 
     
-def hehe(campaign):
+def hehe(campaign_id):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
 
     FacebookAdsApi.init(access_token=access_token)
 
-    campaign_id = campaign.campaign_id
 
     # Get the campaign object using the ID
     campaign = Campaign(campaign_id)
