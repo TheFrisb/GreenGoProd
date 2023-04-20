@@ -392,7 +392,7 @@ def get_open_audience(request):
         return result
 
     
-def hehe():
+def hehe(campaign):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
 
