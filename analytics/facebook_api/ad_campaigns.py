@@ -14,6 +14,7 @@ import requests, json
 import random 
 from decouple import config
 from shop.models import product_campaigns
+from analytics.models import Ad_Set
 
 
 def create_facebook_campaign(campaign_name):
@@ -396,32 +397,24 @@ def hehe():
     ad_account_id = config('MARKETING_AD_ACCOUNT')
 
     FacebookAdsApi.init(access_token=access_token)
-    campaigns = []
-    ad_account = AdAccount(fbid=ad_account_id)
-    fields = [
-        Campaign.Field.id,
-        Campaign.Field.name,
-        Campaign.Field.status,
-    ]
 
-    params = {
+    campaign_id = campaign.campaign_id
 
-    }
+    # Get the campaign object using the ID
+    campaign = Campaign(campaign_id)
+    campaign.remote_read(fields=[Campaign.Field.name])
 
-    for campaign in ad_account.get_campaigns(fields=fields, params=params):
-        campaigns.append({
-            'id': campaign[Campaign.Field.id],
-            'name': campaign[Campaign.Field.name],
-        })
+    # Get all the ad sets for the campaign
+    ad_sets = campaign.get_ad_sets(fields=[AdSet.Field.name, AdSet.Field.targeting])
 
-    for retrieved in campaigns:
-        cmp_id = retrieved['id']
-        try:
-            ob = product_campaigns.objects.get(campaign_id=cmp_id)
-            ob.campaign_name = retrieved['name']
-            ob.save()
-            print('Found')
-        except:
+    # Print the ad sets with their names, audience IDs, and audience names
+    for ad_set in ad_sets:
+        targeting = ad_set[AdSet.Field.targeting]
+        if 'flexible_spec' in targeting:
+            audience_id = targeting['flexible_spec'][0]['interests'][0]['id']
+            audience_name = targeting['flexible_spec'][0]['interests'][0]['name']
+            ad_set_name = ad_set[AdSet.Field.name]
+            Ad_Set.objects.create(campaign_parent=campaign, name=ad_set_name, audience_name=audience_name, audience_id=audience_id)
+            print('Ad Set Name: {}, Audience ID: {}, Audience Name: {}'.format(ad_set[AdSet.Field.name], audience_id, audience_name))
+        else:
             pass
-            
-    print(campaigns)
