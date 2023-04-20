@@ -55,10 +55,11 @@ def create_facebook_adset(campaign_id, name, adset_start_time, budget, max_age, 
     FacebookAdsApi.init(access_token=access_token)
 
     if interest_id != 'OPEN_AUDIENCE':
+        random_number = random.randint(1, 10000)
         ad_set = AdAccount(ad_account_id).create_ad_set(
         fields=[],
         params={
-            'name': name,
+            'name': name + ' -  ' + str(random_number),
             'optimization_goal': 'OFFSITE_CONVERSIONS',
             'billing_event': 'IMPRESSIONS',
             'promoted_object': {
@@ -94,10 +95,11 @@ def create_facebook_adset(campaign_id, name, adset_start_time, budget, max_age, 
         )
         return ad_set
     else:
+        random_number = random.randint(1, 10000)
         ad_set = AdAccount(ad_account_id).create_ad_set(
         fields=[],
         params={
-            'name': name,
+            'name': name + ' - ' + str(random_number),
             'optimization_goal': 'OFFSITE_CONVERSIONS',
             'billing_event': 'IMPRESSIONS',
             'promoted_object': {
@@ -172,10 +174,11 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
             'action.type': ['offsite_conversion'],
             'offsite_pixel': [pixel_id],
         }]
+        random_number = random.randint(1, 10000)
         ad = AdAccount(ad_account_id).create_ad(
             fields=[],
             params={
-                'name': ad_name,
+                'name': ad_name + ' - ' + str(random_number),
                 'adset_id': ad_set_id,
                 'conversion_domain': 'greengoshop.mk',
                 'creative': {'creative_id': creative['id']},
@@ -233,7 +236,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         ad = AdAccount(ad_account_id).create_ad(
             fields=[],
             params={
-                'name': ad_name,
+                'name': ad_name + ' - ' + str(random_number), # fix
                 'adset_id': ad_set_id, # change
                 'conversion_domain': 'greengoshop.mk',
                 'creative': {'creative_id': creative['id']},
