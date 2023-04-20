@@ -14,6 +14,7 @@ import requests, json
 import random 
 from decouple import config
 from shop.models import product_campaigns
+from facebook_business.adobjects.adset import AdSet
 from analytics.models import Ad_Set
 
 
