@@ -393,12 +393,12 @@ def get_open_audience(request):
         return result
 
     
-def hehe(campaign_id):
+def hehe(parent_campaign):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
 
     FacebookAdsApi.init(access_token=access_token)
-
+    campaign_id = parent_campaign.campaign_id
 
     # Get the campaign object using the ID
     campaign = Campaign(campaign_id)
@@ -414,7 +414,7 @@ def hehe(campaign_id):
             audience_id = targeting['flexible_spec'][0]['interests'][0]['id']
             audience_name = targeting['flexible_spec'][0]['interests'][0]['name']
             ad_set_name = ad_set[AdSet.Field.name]
-            Ad_Set.objects.create(campaign_parent=campaign, name=ad_set_name, audience_name=audience_name, audience_id=audience_id)
+            Ad_Set.objects.create(campaign_parent=parent_campaign, name=ad_set_name, audience_name=audience_name, audience_id=audience_id)
             print('Ad Set Name: {}, Audience ID: {}, Audience Name: {}'.format(ad_set[AdSet.Field.name], audience_id, audience_name))
         else:
             pass
