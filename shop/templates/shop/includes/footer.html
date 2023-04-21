@@ -105,13 +105,16 @@
                         {% endif %}
                         
                     </div>
-                    <div class="order-total order-row" style="border-top: 1px solid #afafaf">
-                        <p style="font-weight:900">Вкупно за плаќање на курирот</p>
-                        {% if free_shipping %}
-                        <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
-                        {% else %}
-                        <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
-                        {% endif %}
+                    <div class="order-total order-row" style="border-top: 1px solid #afafaf;">
+                        <p style="font-weight:900; flex-basis:52%">Вкупно за плаќање на курирот</p>
+                        <span style="display:flex;flex-direction: column-reverse;" style="flex-basis:48%">
+                            <p style="font-size:12px;text-align:right;">Вклучувајќи 18% ДДВ</p>
+                            {% if free_shipping %}
+                            <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                            {% else %}
+                            <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
                 
