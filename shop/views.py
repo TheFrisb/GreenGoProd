@@ -211,18 +211,19 @@ def CheckoutView(request):
 
 
 def ThankYouView(request, slug):
-    order = Order.objects.filter(tracking_no=slug).first
-    if(order):   
-        orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
-        offerproduct = orderItems.reverse()[0]
-        if offerproduct.attribute_price is not None:
-            offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
-        else:
-            offerproduct.price = offerproduct.price - offerproduct.price * 20 // 100 
-        orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
-        feetotal = 0
-        for fee in orderFees:
-            feetotal += fee.price
+    order = get_object_or_404(Order, tracking_no=slug)
+    name = order.name.split(" ")[0]
+    orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
+    offerproduct = orderItems.reverse()[0]
+    if offerproduct.attribute_price is not None:
+        offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
+    else:
+        offerproduct.price = offerproduct.price - offerproduct.price * 20 // 100 
+    orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
+    feetotal = 0
+    for fee in orderFees:
+        feetotal += fee.price
+        
     title = 'Ви благодариме!'
     context = {
         'order': order,
@@ -231,8 +232,9 @@ def ThankYouView(request, slug):
         'orderFees': orderFees,
         'feetotal': feetotal,
         'title': title,
+        'name': name,
     }
-
+   
     return render(request, 'shop/thank-you.html', context)
 
 
