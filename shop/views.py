@@ -398,6 +398,7 @@ def export_excel(request):
             cart_offers_dict = {}
             upsell_offers_dict = {}
             thankyou_offers_dict = {}
+            fee_offers_dict = {}
             workbook = Workbook()
             worksheet = workbook.active
             row_num = 1
@@ -441,9 +442,13 @@ def export_excel(request):
 
                 for fee in order_fees:
                     order_fees_total += str(fee.title) + '\n'
-                    if(str(fee.title) == 'Приоритетна достава'):
+                    if str(fee.title) == 'Приоритетна достава' or str(fee.title) == 'Приоритетна Достава + Осигурување на Пакет':
                         priority = True
                     height2 +=15
+                    if str(fee.title) in fee_offers_dict:
+                        fee_offers_dict[str(fee.title)] += 1
+                    else:
+                        fee_offers_dict[str(fee.title)] = 1
                     
                 for item in order_items:
                     quantity += item.quantity
@@ -572,6 +577,20 @@ def export_excel(request):
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
                 cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
+                
+            row_num += 2
+            worksheet.cell(row=row_num, column=9).font = Font(bold=True)
+            cell = worksheet.cell(row=row_num, column=9).value = 'CHECKOUT FEES'
+            for key, value in fee_offers_dict.items():
+                row_num += 1
+                i = 0
+                
+                worksheet.cell(row=row_num, column=9).alignment = Alignment(wrapText=True,  vertical='top', horizontal='left')
+                worksheet.cell(row=row_num, column=10).alignment = Alignment(wrapText=True,  vertical='top',horizontal='left')
+                cell = worksheet.cell(row=row_num, column=9).value = str(key)
+                cell = worksheet.cell(row=row_num, column = 10).value = value
+                i += 1
+                
             nabavki_dict = {}
             nabavki_list = []
             rows2 = OrderItem.objects.filter(Q(order__created_at__range = [date_from, date_to], order__status = 'Confirmed',) | Q(order__created_at__range = [date_from, date_to], order__status = 'Pending')).all()
