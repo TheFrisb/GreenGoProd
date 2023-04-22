@@ -781,7 +781,7 @@ def accept_checkout_offer(request):
             current_cart = Cart.objects.get(session = request.session['nonuser'])
             current_cart.has_accepted_checkout_offer = True
             current_cart.save()
-            CartFees.objects.create(cart=current_cart,fee_id =  2, title = 'Бесплатна приоритетна достава', price = 0, is_free = True)
+            CartFees.objects.create(cart=current_cart,fee_id =  6, title = 'Бесплатна приоритетна достава', price = 0, is_free = True)
             return JsonResponse({'status': "Success"})
         except:
             return JsonResponse({'status': "Cart not found"}, status=400)
