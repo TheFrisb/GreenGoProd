@@ -170,7 +170,7 @@ def addtoorder(request):
                     order.total_price = order.total_price + ((orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100) * product_qty)
 
             order.save()
-        return JsonResponse({'status': "Product added successfully"})
+        return JsonResponse({'status': "Product added successfully", 'product_id': new_item.id})
 
     return redirect('/')
     
