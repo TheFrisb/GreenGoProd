@@ -37,6 +37,8 @@ def extras(request):
             if(orderfee == cartfee.fee):
                 orderfee.is_added = True
                 feetotal += cartfee.price
+                if(cartfee.is_free):
+                    orderfee.is_free = True
                 
     if cartItems:
         for item in cartItems:
