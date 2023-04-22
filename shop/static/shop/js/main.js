@@ -974,6 +974,7 @@ $(document).ready(function () {
             error: function(response){
                 $("#checkout_form_overlay").toggle();
                 $('body').toggleClass("checkout-is-active");
+                $("#checkout_form_use_offer_overlay").toggle();
             }
         })
     })
