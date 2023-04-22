@@ -443,7 +443,7 @@ def export_excel(request):
 
                 for fee in order_fees:
                     order_fees_total += str(fee.title) + '\n'
-                    if str(fee.title) == 'Приоритетна достава' or str(fee.title) == 'Приоритетна Достава + Осигурување на Пакет':
+                    if str(fee.title) == 'Приоритетна достава' or str(fee.title) == 'Приоритетна Достава + Осигурување на Пакет' or str(fee.title) == 'Бесплатна приоритетна достава':
                         priority = True
                     height2 +=15
                     if str(fee.title) in fee_offers_dict:
