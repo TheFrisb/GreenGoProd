@@ -131,7 +131,7 @@ def addtoorder(request):
         if(orderItem):
             if orderItem.attribute_price is not None:
                 
-                OrderItem.objects.create(
+                new_item = OrderItem.objects.create(
                     order = orderItem.order,
                     product = orderItem.product,
                     price = orderItem.attribute_price - orderItem.attribute_price * 20 // 100,
@@ -151,7 +151,7 @@ def addtoorder(request):
                     order.total_price = order.total_price + ((orderItem.attribute_price - orderItem.attribute_price * 20 // 100) * product_qty)
 
             else:
-                OrderItem.objects.create(
+                new_item = OrderItem.objects.create(
                     order = orderItem.order,
                     product = orderItem.product,
                     price = orderItem.product.sale_price - orderItem.product.sale_price * 20 // 100,
