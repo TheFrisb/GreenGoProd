@@ -28,6 +28,7 @@
     </div>
     <div class="thank-you-offer">
         {% csrf_token %}
+        <input type="hidden" value="" name="offer_ordered_product_id" id="offer_ordered_product_id">
         <h3>СПЕЦИЈАЛНА ПОНУДА САМО ДЕНЕС</h3>
         <h5>Нарачај го истиот производ и заштеди дополнителни 20%</h5>
         <div class="offer-box">
@@ -44,9 +45,9 @@
         <p class="sl_price">{{ offerproduct.attribute_price }} ден</p>
         <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
         <div class="quantity product_data" style="margin-bottom:10px!important">
-            <button class="decrement-btn">-</button>
+            <button class="decrement-btn offerbox">-</button>
             <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
-            <button class="increment-btn">+</button>
+            <button class="increment-btn offerbox">+</button>
         </div>
         <button class="offer-button">НАРАЧАЈ</button>
         {% else %}
@@ -55,9 +56,9 @@
         <p class="sl_price">{{ offerproduct.price }} ден</p>
         <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
         <div class="quantity product_data" style="margin-bottom:10px!important">
-            <button class="decrement-btn">-</button>
+            <button class="decrement-btn offerbox">-</button>
             <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
-            <button class="increment-btn">+</button>
+            <button class="increment-btn offerbox">+</button>
         </div>
         <button class="offer-button">НАРАЧАЈ</button>
         {% endif %}
