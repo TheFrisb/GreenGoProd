@@ -461,7 +461,7 @@ $(document).ready(function() {
             success: function (response){
                     $(button).addClass("addedBtn").html("ДОДАДЕН")
                     $('.cart-data').load(location.href + " .cart-data");
-
+                    $("#offer_ordered_product_id").val(response.product_id);
                 
             }
         })
