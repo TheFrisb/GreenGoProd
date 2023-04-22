@@ -216,7 +216,11 @@ def ThankYouView(request, slug):
     order = get_object_or_404(Order, tracking_no=slug)
     name = order.name.split(" ")[0]
     orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
-    offerproduct = orderItems.reverse()[0]
+    orderItems.reverse()
+    for item in orderItems:
+        if item.is_cart_offer == False and item.is_upsell_offer == False:
+            offerproduct = item
+            break
     if offerproduct.attribute_price is not None:
         offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
     else:
