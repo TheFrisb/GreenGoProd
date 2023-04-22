@@ -224,9 +224,9 @@ def ThankYouView(request, slug):
             break
     if offerproduct is not None:
         if offerproduct.attribute_price is not None:
-            offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
+            #offerproduct.attribute_price = offerproduct.attribute_price - offerproduct.attribute_price * 20 // 100 
         else:
-            offerproduct.price = offerproduct.price - offerproduct.price * 20 // 100 
+            #offerproduct.price = offerproduct.price - offerproduct.price * 20 // 100 
     orderFees = OrderFeesItem.objects.filter(order__tracking_no=slug)
     feetotal = 0
     for fee in orderFees:
