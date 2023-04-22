@@ -11,7 +11,7 @@ urlpatterns = [
     path('export-csv/', views.export_products_csv),
     path('product/<str:slug>/', views.ProductView, name='product-page'),
     path('call-pixel-checkout', views.call_pixel_checkout, name='call_pixel_checkout'),
-
+    
     path('add-to-cart', cart.addtocart, name="addtocart" ),
     path('variable-add-to-cart', cart.variableaddtocart, name="variableaddtocart"),
     path('offer-add-to-cart', cart.offeraddtocart, name="offeraddtocart"),
@@ -19,6 +19,8 @@ urlpatterns = [
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
     path('add-upsell-to-cart', cart.add_upsell_to_cart, name="addupselltocart"),
 
+    path('accept-checkout-offer', views.accept_checkout_offer, name='accept_checkout_offer'),
+    path('get-checkout-offer-status', views.get_checkout_offer_status, name='get_checkout_offer_status'),
     path('checkout/', CheckoutView, name='checkout'),
     path('check-abandoned-carts', views.create_or_check_abandoned_cart, name="create_or_check_abandoned_cart"),
     path('remove-abandoned-cart', views.remove_abandoned_cart, name='removeabandonedcart'),
