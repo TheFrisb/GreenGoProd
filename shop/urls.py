@@ -18,7 +18,8 @@ urlpatterns = [
     path('update-cart', cart.updatecart, name="updatecart"),
     path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
     path('add-upsell-to-cart', cart.add_upsell_to_cart, name="addupselltocart"),
-
+    
+     
     path('accept-checkout-offer', views.accept_checkout_offer, name='accept_checkout_offer'),
     path('get-checkout-offer-status', views.get_checkout_offer_status, name='get_checkout_offer_status'),
     path('checkout/', CheckoutView, name='checkout'),
@@ -30,7 +31,8 @@ urlpatterns = [
 
     path('place-order', checkout.placeorder, name="placeorder"),
     path('add-to-order', checkout.addtoorder, name="addtoorder"),
-    
+    path('change-offer-checkout-qty', views.change_offer_checkout_qty, name='change_offer_checkout_qty'),
+     
     path('thank-you/<str:slug>/', views.ThankYouView, name='thank-you-view'),
 
     path('shopmanager/login', views.login_shopmanager, name='login'),
