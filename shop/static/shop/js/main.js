@@ -563,6 +563,9 @@ $(document).ready(function() {
 
     $(document).on('click', '.fee-item', function(e){
         e.preventDefault();
+        if($(this).hasClass('is_free')){
+            return;
+        }
         fee = $(this);
         fee_action = 'add';
         if($(this).hasClass('checked')){
@@ -879,9 +882,45 @@ $(document).ready(function () {
     })
     $(document).on("click", "#close-checkout", function(e){
         e.preventDefault();
+        var filled_input = false;
+        if($("#checkout_input_name").val() != ""){
+            filled_input = true;
+        };
+        if($("#checkout_input_phone").val() != ""){
+            filled_input = true;
+        };
+        if($("#checkout_input_address").val() != ""){
+            filled_input = true;
+        };
+
+        
         if($('body').hasClass('checkout-is-active')){
-            $("#checkout_form_overlay").toggle();
-            $('body').toggleClass("checkout-is-active");
+            if(filled_input){
+                $.ajax({
+                    method: "POST",
+                    url: "/get-checkout-offer-status",
+                    data: {
+                        csrfmiddlewaretoken: token,
+                    },
+                    success: function(response){
+                        if(response.status == 'True'){
+                            $("#checkout_form_overlay").toggle();
+                            $('body').toggleClass("checkout-is-active");
+                        }else{
+                            $("#checkout_form_use_offer_overlay").toggle();
+                        }
+                    },
+                    error: function(response){
+                        console.log(response)
+                        $("#checkout_form_overlay").toggle();
+                        $('body').toggleClass("checkout-is-active");
+                    }
+                });
+            }else{
+                $("#checkout_form_overlay").toggle();
+                $('body').toggleClass("checkout-is-active");
+            }
+            
         }
     })
     $(document).on("click", ".product-page-upsell", function(){
@@ -919,6 +958,30 @@ $(document).ready(function () {
                       
         }
     }
+    $(document).on("click", "#accept_checkout_onClose_offer", function(e){
+        e.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "/accept-checkout-offer",
+            data: {
+                csrfmiddlewaretoken: token,
+            },
+            success: function(response){
+                $('.checkout-form-inner').load(location.href + " .checkout-form-inner");
+                $('.upsell-fees').load(location.href + " .upsell-fees");
+                $("#checkout_form_use_offer_overlay").toggle();
+            },
+            error: function(response){
+                $("#checkout_form_overlay").toggle();
+                $('body').toggleClass("checkout-is-active");
+            }
+        })
+    })
+    $(document).on("click", "#decline_checkout_onClose_offer", function(e){
+        e.preventDefault();
+        $("#checkout_form_overlay").toggle();
+        $('body').toggleClass("checkout-is-active");
+    })
 });
 
 
