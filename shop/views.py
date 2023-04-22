@@ -792,3 +792,27 @@ def accept_checkout_offer(request):
 
     else:
         return JsonResponse({'status': "Bad Request.."}, status=400)
+    
+    
+def change_offer_checkout_qty(request):
+    if request.method == 'POST':
+        orderItem_id = int(request.POST.get('orderItem_id'))
+        item = OrderItem.objects.filter(pk=orderItem_id).first()
+        
+        if item:
+            order = item.order
+            subtotal = order.subtotal_price - item.get_product_total
+            total = order.total_price - item.get_product_total
+
+            item.quantity = int(request.POST.get('quantity'))
+            item.save()
+            order.subtotal_price = subtotal + item.get_product_total
+            order.total_price = total + item.get_product_total
+            order.save()
+            return JsonResponse({'status': "Success"})
+        else:
+            return JsonResponse({'status': "Bad Request.."}, status=400)
+  
+    else:
+        return JsonResponse({'status': "Bad Request.."}, status=400)
+    
