@@ -111,6 +111,22 @@ $(document).ready(function() {
         
         value++;
         $(this).closest('.product_data').find('.qty-input').val(value);
+        if($(this).hasClass('offerbox')){
+            if($("#offer_ordered_product_id").val()!=""){
+                $.ajax({
+                    method: "POST",
+                    url: "/change-offer-checkout-qty",
+                    data: {
+                        'orderItem_id': $("#offer_ordered_product_id").val(),
+                        'quantity': value,
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function (data){
+                        $('.cart-data').load(location.href + " .cart-data");
+                    }
+                })
+            }
+        }
         
     })
 
@@ -122,6 +138,22 @@ $(document).ready(function() {
         if( value > 1){
             value--;
             $(this).closest('.product_data').find('.qty-input').val(value);
+        }
+        if($(this).hasClass('offerbox')){
+            if($("#offer_ordered_product_id").val()!=""){
+                $.ajax({
+                    method: "POST",
+                    url: "/change-offer-checkout-qty",
+                    data: {
+                        'orderItem_id': $("#offer_ordered_product_id").val(),
+                        'quantity': value,
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function (data){
+                        $('.cart-data').load(location.href + " .cart-data");
+                    }
+                })
+            }
         }
     })
     $(document).on('click', '.add-to-cartBtn',function (e){
