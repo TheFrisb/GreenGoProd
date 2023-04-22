@@ -217,6 +217,7 @@ def ThankYouView(request, slug):
     name = order.name.split(" ")[0]
     orderItems = OrderItem.objects.filter(order__tracking_no=slug) # Sql join ?
     orderItems.reverse()
+    offerproduct = None
     for item in orderItems:
         if item.is_cart_offer == False and item.is_upsell_offer == False:
             offerproduct = item
