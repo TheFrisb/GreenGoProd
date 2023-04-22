@@ -26,6 +26,7 @@ import openpyxl
 from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 # Create your views here.
 
 
@@ -753,3 +754,37 @@ def call_pixel_checkout(request):
         return JsonResponse({'status': "Success"})
     except:
         return JsonResponse({'status': "error"})
+    
+
+def get_checkout_offer_status(request):
+    if request.method == 'POST':
+        try:
+            current_cart = Cart.objects.get(session = request.session['nonuser'])
+            print(current_cart)
+            offer_status = current_cart.has_viewed_checkout_offer
+            if offer_status == True:
+                return JsonResponse({'status': "True"})
+            else:
+                current_cart.has_viewed_checkout_offer = True
+                current_cart.has_viewed_checkout_offer_time = timezone.now()
+                current_cart.save()
+                return JsonResponse({'status': "False"})
+        except:
+            return JsonResponse({'status': "Cart not found"}, status=400)
+    else:
+        print('ahh')
+        return JsonResponse({'status': "Bad Request.."}, status=400)
+
+def accept_checkout_offer(request):
+    if request.method == 'POST':
+        try:
+            current_cart = Cart.objects.get(session = request.session['nonuser'])
+            current_cart.has_accepted_checkout_offer = True
+            current_cart.save()
+            CartFees.objects.create(cart=current_cart,fee_id =  2, title = 'Бесплатна приоритетна достава', price = 0, is_free = True)
+            return JsonResponse({'status': "Success"})
+        except:
+            return JsonResponse({'status': "Cart not found"}, status=400)
+
+    else:
+        return JsonResponse({'status': "Bad Request.."}, status=400)
