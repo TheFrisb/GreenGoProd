@@ -2528,7 +2528,7 @@ section#ordered_items_notice_wrapper {
 }
 @media (max-width: 767px){
     #checkout_form_use_offer{
-        width: 85%;
+        width: 85%!important;
     }
     .quantity-flex{
         flex-direction: column-reverse;
