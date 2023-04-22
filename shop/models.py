@@ -277,6 +277,10 @@ class Cart(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=100, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креирана во:')
+    has_viewed_checkout_offer = models.BooleanField(default=False)
+    has_viewed_checkout_offer_time = models.DateTimeField(null=True, blank=True)
+    has_accepted_checkout_offer = models.BooleanField(default=False)
+    
     @property
     def session_id(self):
         return self.session
@@ -435,7 +439,7 @@ class CheckoutFees(models.Model):
     price = models.IntegerField(verbose_name='Цена', null = False)
     is_added = models.BooleanField(default = False)
     emoji = models.CharField(max_length=30, null=True, blank=True)
-
+    is_free = models.BooleanField(default=False)
     def __str__(self):
         return 'Order fee: {} ({} ден)'.format(self.title, self.price)
 
@@ -445,7 +449,8 @@ class CartFees(models.Model):
     fee = models.ForeignKey(CheckoutFees, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, verbose_name='Име')
     price = models.IntegerField(verbose_name='Цена')
-
+    is_free = models.BooleanField(default=False)
+    
 
 class OrderFeesItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
