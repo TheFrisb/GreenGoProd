@@ -26,45 +26,47 @@
             <p class="order-info-content">Плаќање при достава (+20 ден. провизија)</p>
         </div>
     </div>
-    <div class="thank-you-offer">
-        {% csrf_token %}
-        <input type="hidden" value="" name="offer_ordered_product_id" id="offer_ordered_product_id">
-        <h3>СПЕЦИЈАЛНА ПОНУДА САМО ДЕНЕС</h3>
-        <h5>Нарачај го истиот производ и заштеди дополнителни 20%</h5>
-        <div class="offer-box">
-        <p class="offer-timer" style="font-weight: 600;">ПОНУДАТА ИСТЕКУВА ЗА <br><span id="timer" style="font-size: 24px">03:00</span></p>
-        <input type="hidden" class="order_id" value="{{ order.id }}">
-        <input type="hidden" class="prod_id" value="{{ offerproduct.product.id }}">
-        <picture>
-            <source src="{{ offerproduct.product.thumbnail }}" type="image/webp">
-            <img src="{{ offerproduct.product.thumbnail_as_jpeg.url }}" alt="" width="250" height="250">
-        </picture>
-        {% if offerproduct.attribute_name  %}
-        <p class="offer-ttl">{{ offerproduct.product.title }} - {{offerproduct.attribute_name}}</p>
-        <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
-        <p class="sl_price">{{ offerproduct.attribute_price }} ден</p>
-        <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
-        <div class="quantity product_data" style="margin-bottom:10px!important">
-            <button class="decrement-btn offerbox">-</button>
-            <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
-            <button class="increment-btn offerbox">+</button>
+    {% if offerproduct %}
+        <div class="thank-you-offer">
+            {% csrf_token %}
+            <input type="hidden" value="" name="offer_ordered_product_id" id="offer_ordered_product_id">
+            <h3>СПЕЦИЈАЛНА ПОНУДА САМО ДЕНЕС</h3>
+            <h5>Нарачај го истиот производ и заштеди дополнителни 20%</h5>
+            <div class="offer-box">
+            <p class="offer-timer" style="font-weight: 600;">ПОНУДАТА ИСТЕКУВА ЗА <br><span id="timer" style="font-size: 24px">03:00</span></p>
+            <input type="hidden" class="order_id" value="{{ order.id }}">
+            <input type="hidden" class="prod_id" value="{{ offerproduct.product.id }}">
+            <picture>
+                <source src="{{ offerproduct.product.thumbnail }}" type="image/webp">
+                <img src="{{ offerproduct.product.thumbnail_as_jpeg.url }}" alt="" width="250" height="250">
+            </picture>
+            {% if offerproduct.attribute_name  %}
+            <p class="offer-ttl">{{ offerproduct.product.title }} - {{offerproduct.attribute_name}}</p>
+            <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
+            <p class="sl_price">{{ offerproduct.attribute_price }} ден</p>
+            <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
+            <div class="quantity product_data" style="margin-bottom:10px!important">
+                <button class="decrement-btn offerbox">-</button>
+                <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
+                <button class="increment-btn offerbox">+</button>
+            </div>
+            <button class="offer-button">НАРАЧАЈ</button>
+            {% else %}
+            <p class="offer-ttl">{{ offerproduct.product.title }}</p>
+            <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
+            <p class="sl_price">{{ offerproduct.price }} ден</p>
+            <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
+            <div class="quantity product_data" style="margin-bottom:10px!important">
+                <button class="decrement-btn offerbox">-</button>
+                <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
+                <button class="increment-btn offerbox">+</button>
+            </div>
+            <button class="offer-button">НАРАЧАЈ</button>
+            {% endif %}
+            </div class="offer-box">
+            <p class="notice">Горенаведениот производ доколку нарачате ќе ви биде доставен со истата нарачка</p>
         </div>
-        <button class="offer-button">НАРАЧАЈ</button>
-        {% else %}
-        <p class="offer-ttl">{{ offerproduct.product.title }}</p>
-        <p class="rgl_price">{{ offerproduct.product.sale_price }} ден</p>
-        <p class="sl_price">{{ offerproduct.price }} ден</p>
-        <p class="offer-save">ДОПОЛНИТЕЛНИ 20% ЗАШТЕДА</p>
-        <div class="quantity product_data" style="margin-bottom:10px!important">
-            <button class="decrement-btn offerbox">-</button>
-            <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
-            <button class="increment-btn offerbox">+</button>
-        </div>
-        <button class="offer-button">НАРАЧАЈ</button>
-        {% endif %}
-        </div class="offer-box">
-        <p class="notice">Горенаведениот производ доколку нарачате ќе ви биде доставен со истата нарачка</p>
-    </div>
+    {% endif %}
     
     <p class="thank-you-info">ТВОЈАТА НАРАЧКА</p>
     <div id="thank-you-order-review">
