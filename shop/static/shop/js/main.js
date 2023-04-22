@@ -980,6 +980,7 @@ $(document).ready(function () {
     })
     $(document).on("click", "#decline_checkout_onClose_offer", function(e){
         e.preventDefault();
+        $("#checkout_form_use_offer_overlay").toggle();
         $("#checkout_form_overlay").toggle();
         $('body').toggleClass("checkout-is-active");
     })
