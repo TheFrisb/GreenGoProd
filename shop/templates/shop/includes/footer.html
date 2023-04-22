@@ -258,7 +258,11 @@
                     
                         {% for fee in orderFees %}
                             {% if fee.is_added == True %}
-                                <div class="fee-item checked">
+                                {% if fee.is_free %}
+                                    <div class="fee-item checked is_free">
+                                {% else %}
+                                    <div class="fee-item checked">
+                                {% endif %}
                             {% else %}
                                 <div class="fee-item">
                             {% endif %}
