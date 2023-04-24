@@ -783,11 +783,11 @@ def accept_checkout_offer(request):
             current_cart = Cart.objects.get(session = request.session['nonuser'])
             current_cart.has_accepted_checkout_offer = True
             current_cart.save()
-            cart_priority_fee = CartFees.objects.filter(cart=current_cart, fee_id = 6).first()
+            cart_priority_fee = CartFees.objects.filter(cart=current_cart, fee_id = 7).first()
             if cart_priority_fee:
                 cart_priority_fee.delete()
                 
-            CartFees.objects.create(cart=current_cart,fee_id =  6, title = 'Бесплатна приоритетна достава', price = 0, is_free = True)
+            CartFees.objects.create(cart=current_cart,fee_id =  7, title = 'Бесплатна приоритетна достава', price = 0, is_free = True)
             return JsonResponse({'status': "Success"})
         except:
             return JsonResponse({'status': "Cart not found"}, status=400)
