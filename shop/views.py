@@ -563,7 +563,26 @@ def export_excel(request):
                 
                 for row in duplicate_orders:
                     row_num += 1
-                    print(row)
+                    order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                    for item in order_items:
+                        occurence = 0
+                        
+                        for item_check in order_items:
+                            if item_check.full_product_title == item.full_product_title:
+                                occurence += 1
+                                if occurence > 1:
+                                    item_check.full_product_title = ''
+                                    item_check.label = ''
+
+                        if item.full_product_title!='':
+                            if priority is True:
+                                order_items_total_name += 'PRIORITETNA ' + str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1)
+                                order_items_total_label += 'PRIORITETNA ' + str(item.label) + ' x ' + str(item.quantity + occurence - 1)
+                            else:
+                                order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1)
+                                order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1)
+                            height += 15
+                            
                     for col_num in range(1, len(row)+1):
                         worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
 
