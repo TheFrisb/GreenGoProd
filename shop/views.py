@@ -400,6 +400,7 @@ def export_excel(request):
             date_to = form.cleaned_data["date_to"]
             date_from_week_before = date_from - timedelta(days=7)
             duplicate_orders = []
+            duplicate_orders_tracking_id = []
             total_ordered_dict = {}
             cart_offers_dict = {}
             upsell_offers_dict = {}
