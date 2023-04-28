@@ -554,6 +554,37 @@ def export_excel(request):
                         cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
 
             print(total_ordered_dict)
+            row_num +=2
+            if duplicate_orders:
+                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
+                cell = worksheet.cell(row=row_num, column=2).value = 'DUPLI NARACKI'
+                
+                for row in duplicate_orders:
+                    row_num += 1
+                    print(row)
+                    for col_num in range(1, len(row)+1):
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
+
+                        if(col_num == 1):
+                            date = row[col_num-1].astimezone(timezone)      
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
+                        elif(col_num == 6):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_fees_total
+                        elif(col_num == 9):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_name
+                        elif(col_num == 10):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_label
+                        elif(col_num == 11):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
+                        elif(col_num == 12):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = quantity
+                                
+                        else:
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
+                
+            else:
+                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
+                cell = worksheet.cell(row=row_num, column=2).value = 'NEMA DUPLI NARACKI'
             row_num += 4
             worksheet.cell(row=row_num, column=9).font = Font(bold=True)
             cell = worksheet.cell(row=row_num, column=9).value = 'VKUPNA KOLICINA'
@@ -622,36 +653,7 @@ def export_excel(request):
                 cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
             
-            if duplicate_orders:
-                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
-                cell = worksheet.cell(row=row_num, column=2).value = 'DUPLI NARACKI'
-                
-                for row in duplicate_orders:
-                    row_num += 1
-                    print(row)
-                    for col_num in range(1, len(row)+1):
-                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
-
-                        if(col_num == 1):
-                            date = row[col_num-1].astimezone(timezone)      
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
-                        elif(col_num == 6):
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_fees_total
-                        elif(col_num == 9):
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_name
-                        elif(col_num == 10):
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_label
-                        elif(col_num == 11):
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
-                        elif(col_num == 12):
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = quantity
-                                
-                        else:
-                            cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
-                
-            else:
-                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
-                cell = worksheet.cell(row=row_num, column=2).value = 'NEMA DUPLI NARACKI'
+            
                 
             nabavki_dict = {}
             nabavki_list = []
