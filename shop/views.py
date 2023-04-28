@@ -450,7 +450,6 @@ def export_excel(request):
                 for row2 in rows[fake_index:]:
                     if row[1] == row2[1] or row[4] == row2[4]:
                         row_2_order_items = OrderItem.objects.filter(order__tracking_no = row2[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
-                        fake_index2 += 1
                         for item in order_items:
                             for item2 in row_2_order_items:
                                 if item.product.sku == item2.product.sku:
