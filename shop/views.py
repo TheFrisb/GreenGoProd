@@ -397,6 +397,8 @@ def export_excel(request):
             timezone = get_current_timezone()
             date_from = form.cleaned_data["date_from"]
             date_to = form.cleaned_data["date_to"]
+            date_from_week_before = date_from - timedelta(days=7)
+            duplicate_orders = []
             total_ordered_dict = {}
             cart_offers_dict = {}
             upsell_offers_dict = {}
@@ -430,6 +432,13 @@ def export_excel(request):
                 ),
             ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'number', 'number', 'message')
             print(rows)
+            check_rows_2 = Order.objects.filter(Q(created_at__range = [date_from_week_before, date_from], status = 'Confirmed',) | Q(created_at__range = [date_from_week_before, date_from], status = 'Pending')).annotate(
+                shippingann = Case(
+                    When(shipping = True, then=Value('do vrata 130 den')),
+                    When(shipping = False, then=Value('besplatna dostava'))
+                ),
+            ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no', 'total_price', 'shippingann', 'number', 'number', 'number', 'number', 'message')
+            
             total_ordered_stock_price = {}
             for row in rows:
                 row_num += 1
@@ -442,6 +451,23 @@ def export_excel(request):
                 order_fees_total = ''
                 quantity = 0
                 priority = False
+                if check_rows_2:
+                    for row2 in check_rows_2:
+                        #check if they have the same name, or number
+                        if row[1] == row2[1] or row[4] == row2[4]:
+                            row_2_order_items = OrderItem.objects.filter(order__tracking_no = row2[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                            #check if they have an order item with the same label
+                            for item in order_items:
+                                for item2 in row_2_order_items:
+                                    if item.product.sku == item2.product.sku:
+                                        #check if their tracking id is stored
+                                        if row[5] not in duplicate_orders_tracking_id:
+                                            duplicate_orders_tracking_id.append(row[5])
+                                            duplicate_orders.append(row)
+                                        if row2[5] not in duplicate_orders_tracking_id:
+                                            duplicate_orders_tracking_id.append(row2[5])
+                                            duplicate_orders.append(row2)
+                                            
 
                 for fee in order_fees:
                     order_fees_total += str(fee.title) + '\n'
@@ -593,6 +619,37 @@ def export_excel(request):
                 cell = worksheet.cell(row=row_num, column=9).value = str(key)
                 cell = worksheet.cell(row=row_num, column = 10).value = value
                 i += 1
+            
+            if duplicate_orders:
+                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
+                cell = worksheet.cell(row=row_num, column=2).value = 'DUPLI NARACKI'
+                
+                for row in duplicate_orders:
+                    row_num += 1
+                    print(row)
+                    for col_num in range(1, len(row)+1):
+                        worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
+
+                        if(col_num == 1):
+                            date = row[col_num-1].astimezone(timezone)      
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = (date.strftime("%d.%m.%Y, %H:%M"))
+                        elif(col_num == 6):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_fees_total
+                        elif(col_num == 9):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_name
+                        elif(col_num == 10):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = order_items_total_label
+                        elif(col_num == 11):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = 'x' + str(quantity)
+                        elif(col_num == 12):
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = quantity
+                                
+                        else:
+                            cell =  worksheet.cell(row=row_num, column=col_num).value = str(row[col_num-1])
+                
+            else:
+                worksheet.cell(row=row_num, column=2).font = Font(bold=True)
+                cell = worksheet.cell(row=row_num, column=2).value = 'NEMA DUPLI NARACKI'
                 
             nabavki_dict = {}
             nabavki_list = []
