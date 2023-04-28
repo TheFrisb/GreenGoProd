@@ -563,6 +563,7 @@ def export_excel(request):
                 
                 for row in duplicate_orders:
                     row_num += 1
+                    height = 10
                     order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
                     for item in order_items:
                         occurence = 0
@@ -582,7 +583,7 @@ def export_excel(request):
                                 order_items_total_name += str(item.full_product_title) + ' x ' + str(item.quantity + occurence - 1)
                                 order_items_total_label += str(item.label) + ' x ' + str(item.quantity + occurence - 1)
                             height += 15
-                            
+                    worksheet.row_dimensions[row_num].height = height     
                     for col_num in range(1, len(row)+1):
                         worksheet.cell(row=row_num, column=col_num).alignment = Alignment(wrapText=True,  vertical='top')
 
