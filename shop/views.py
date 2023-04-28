@@ -565,6 +565,8 @@ def export_excel(request):
                     row_num += 1
                     height = 10
                     order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                    order_items_total_name = ''
+                    order_items_total_label = ''
                     for item in order_items:
                         occurence = 0
                         
