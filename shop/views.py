@@ -443,21 +443,25 @@ def export_excel(request):
             
             total_ordered_stock_price = {}
             for row in rows:
-                row_num += 1
-                height = 10
-                height2 = 10
                 order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
-                order_fees = OrderFeesItem.objects.filter(order__tracking_no = row[5])
-                order_items_total_name = ''
-                order_items_total_label = ''
-                order_fees_total = ''
-                quantity = 0
-                priority = False
+                for row2 in rows:
+                    if row[1] == row2[1] or row[4] == row2[4]:
+                        row_2_order_items = OrderItem.objects.filter(order__tracking_no = row2[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                        for item in order_items:
+                            for item2 in row_2_order_items:
+                                if item.product.sku == item2.product.sku:
+                                    if row[5] not in duplicate_orders_tracking_id:
+                                        duplicate_orders_tracking_id.append(row[5])
+                                        duplicate_orders.append(row)
+                                    if row2[5] not in duplicate_orders_tracking_id:
+                                        duplicate_orders_tracking_id.append(row2[5])
+                                        duplicate_orders.append(row2)
                 if check_rows_2:
                     for row2 in check_rows_2:
                         #check if they have the same name, or number
                         if row[1] == row2[1] or row[4] == row2[4]:
                             row_2_order_items = OrderItem.objects.filter(order__tracking_no = row2[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                            print('FOUND')
                             #check if they have an order item with the same label
                             for item in order_items:
                                 for item2 in row_2_order_items:
@@ -469,6 +473,17 @@ def export_excel(request):
                                         if row2[5] not in duplicate_orders_tracking_id:
                                             duplicate_orders_tracking_id.append(row2[5])
                                             duplicate_orders.append(row2)
+            for row in rows:
+                row_num += 1
+                height = 10
+                height2 = 10
+                order_items = OrderItem.objects.filter(order__tracking_no = row[5]).annotate(full_product_title = Concat('product__title', Value(' '), 'attribute_name' ))
+                order_fees = OrderFeesItem.objects.filter(order__tracking_no = row[5])
+                order_items_total_name = ''
+                order_items_total_label = ''
+                order_fees_total = ''
+                quantity = 0
+                priority = False
                                             
 
                 for fee in order_fees:
