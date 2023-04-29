@@ -28,6 +28,7 @@ from openpyxl.styles import PatternFill
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
