@@ -293,7 +293,7 @@ def logout_shopmanager(request):
     return redirect("/")
     
 
-
+@login_required(login_url='/shopmanager/login')
 def shopmanager_dashboard(request):
     orders = Order.objects.filter(status='Pending').order_by('-id')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Pending').order_by('-id')
@@ -311,6 +311,7 @@ def shopmanager_dashboard(request):
     return render(request, "shop/shopmanager/dashboard.html", context)
 
 
+@login_required(login_url='/shopmanager/login')
 def shopmanager_confirmed(request):
     orders = Order.objects.filter(status='Confirmed').order_by('-updated_at')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Confirmed').order_by('-id')
@@ -326,6 +327,7 @@ def shopmanager_confirmed(request):
     return render(request, "shop/shopmanager/dashboard.html", context)
 
 
+@login_required(login_url='/shopmanager/login')
 def shopmanager_abandoned_carts(request):
     abandoned_carts = Abandoned_Carts.objects.all().order_by('-id')
     abandoned_cartItems = Abandoned_Carts.objects.all().order_by('-id')
@@ -341,7 +343,7 @@ def shopmanager_abandoned_carts(request):
     return render(request, "shop/shopmanager/abandoned_carts.html", context)
 
 
-
+@login_required(login_url='/shopmanager/login')
 def shopmanager_deleted(request):
     orders = Order.objects.filter(status='Deleted').order_by('-updated_at')[:50]
     orderItems = OrderItem.objects.filter(order__status = 'Deleted').order_by('-id')
@@ -357,6 +359,7 @@ def shopmanager_deleted(request):
     return render(request, "shop/shopmanager/dashboard.html", context)
 
 
+@login_required(login_url='/shopmanager/login')
 def shopmanager_create_order(request):
     context = {
         'heading': 'Креири нарачка'
