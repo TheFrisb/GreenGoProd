@@ -5,7 +5,6 @@
 {% endblock metatags %}
 {% block content %}
 <div class="content-container thank-you">
-    <a href="{% url 'shop-home' %}" class="thankyou-proceed-to-home">ПРОДОЛЖИ СО КУПУВАЊЕ</a>
     <div class="thank-you-icon">
     <i class="fas fa-check-circle"></i>
     <h2 class="thank-you-heading">Направивте вистински избор.</h2>
@@ -30,8 +29,8 @@
         <div class="thank-you-offer">
             {% csrf_token %}
             <input type="hidden" value="" name="offer_ordered_product_id" id="offer_ordered_product_id">
-            <h3>СПЕЦИЈАЛНА ПОНУДА САМО ДЕНЕС</h3>
-            <h5>Нарачај го истиот производ и заштеди дополнителни 20%</h5>
+            <h5>специјална понуда само денес</h3>
+            <h3>ЗА ВТОР КУПЕН ПРОИЗВОД 20% ПОПУСТ</h5>
             <div class="offer-box">
             <p class="offer-timer" style="font-weight: 600;">ПОНУДАТА ИСТЕКУВА ЗА <br><span id="timer" style="font-size: 24px">03:00</span></p>
             <input type="hidden" class="order_id" value="{{ order.id }}">
