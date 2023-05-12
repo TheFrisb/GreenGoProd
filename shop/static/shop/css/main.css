@@ -748,7 +748,7 @@ select {
     display:block;
     transform: scaleY(1);
     transition : 150ms transform ease-in; 
-    z-index: 10000000000;
+    z-index: 1000000000;
 }
 .navigation-item{
     padding: 10px 20px;
