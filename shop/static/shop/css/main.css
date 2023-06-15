@@ -2584,7 +2584,7 @@ section#ordered_items_notice_wrapper {
         flex-grow: 0;
     }
     .header-logo-container{
-        flex-grow: 2
+        flex-grow: 2;
     }
     .header-logo-img{
         width: 150px;
@@ -3456,3 +3456,101 @@ section#ordered_items_notice_wrapper {
   .product-upsell-checkbox.checked{
     background-color: var(--green);
   }
+
+
+ @media (min-width: 1200px) and (max-width: 1440px) {
+    .product-feed-thumbnail{
+        aspect-ratio: 1 / 1!important;
+        width: 230px!important;
+        height:230px!important;
+    }
+
+  }
+  @media(min-width:768px) and (max-width:1200px){
+    .content-container{
+        width: 100%!important;
+    }
+    .product-feed-thumbnail{
+        aspect-ratio: 1 / 1!important;
+        width: 210px!important;
+        height:210px!important;
+    }
+    .slick-slide img{
+        width:100%!important;
+    }
+  }
+@media(min-width:900px) and (max-width:1000px){
+    .product{
+        width:30%!important;
+    }
+}
+@media(min-width:768px) and (max-width:900px){
+    .content-container{
+        width: 100%;
+        gap: 4vw;
+        justify-content: center;
+    }
+    .product{
+        width:100%!important;
+        flex-basis: fit-content!important;
+        margin: 0!important;
+    }
+
+}
+@media(min-width:768px) and (max-width:1000px){
+    #header{
+        justify-content: flex-start;
+        height: 12vh;
+    }
+    .inner-header{
+        width:100%;
+    }
+    .inner-header.checkout{
+        width: 100%;
+        justify-content: center;
+    }
+    .header-logo-container.checkout{
+        flex-grow: 0;
+    }
+    .header-logo-container{
+        flex-grow: 2;
+    }
+    .header-logo-img{
+        width: 150px;
+        height: auto;
+    }
+    .header-icon{
+        flex-grow: 0;
+        margin-right: 4px;
+    }
+    .header-search input[type=text]{
+        display: none;
+        
+    }
+    .header-info{
+	padding: 5px 0px;
+	font-size: 12px;
+    }
+    .header-search button{
+        display:none!important;
+    }
+    .mobile{
+        display:block!important;
+    }
+    .phone-sticky.mobile{
+        display:none!important;
+    }
+    .mobile.disabled{
+        display:none!important;
+    }
+}
+@media(min-width:768px) and (max-width:1440px){
+    .verified-product-image{
+        width:100%!important;
+        left: 50%!important;
+        transform: translateX(-50%)!important;
+    }
+    .slick-slide{
+        position:relative!important;
+    }
+}
