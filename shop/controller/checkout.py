@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 import datetime
 import random
 from . import facebook_pixel
+import uuid
 
 def placeorder(request):
     if request.method == 'POST':
@@ -21,7 +22,7 @@ def placeorder(request):
         neworderfees = CartFees.objects.filter(cart=CartHolder)
         cart_total_price = 0
         countProducts = 0
-        trackno = '#id-'+str(100 + neworder.id)
+        trackno = str(uuid.uuid4())
         for item in neworderitems:
             if item.has_attributes == True:
                 cart_total_price += item.attributeprice * item.product_qty
