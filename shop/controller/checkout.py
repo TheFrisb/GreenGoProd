@@ -21,7 +21,7 @@ def placeorder(request):
         neworderfees = CartFees.objects.filter(cart=CartHolder)
         cart_total_price = 0
         countProducts = 0
-        trackno = 'id-'+str(random.randint(1111111,9999999))
+        trackno = '#id-'+str(100 + neworder.id)
         for item in neworderitems:
             if item.has_attributes == True:
                 cart_total_price += item.attributeprice * item.product_qty
