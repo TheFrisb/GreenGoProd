@@ -193,7 +193,7 @@ def testing_get_campaign_id():
 
             campaign_id = campaign['id']
             print(campaign_id, ' - ', name_of_campaign)
-            populate_daily_rows(campaign_id, ad_spend)
+            #populate_daily_rows(campaign_id, ad_spend)
 
                 
 
