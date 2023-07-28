@@ -366,7 +366,8 @@ class Order(models.Model):
         ('Pending', 'Pending'),
         ('Confirmed', 'Confirmed'),
         ('Refunded', 'Refunded'),
-        ('Deleted', 'Deleted')
+        ('Deleted', 'Deleted'),
+        ('Archived', 'Archived')
     )
     status = models.CharField(max_length=50, choices=orderstatuses, default='Pending', verbose_name='Статус', db_index=True)
     message = models.TextField(null=True, blank=True, verbose_name='Коментар на муштерија')
