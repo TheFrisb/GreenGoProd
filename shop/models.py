@@ -368,11 +368,11 @@ class Order(models.Model):
         ('Refunded', 'Refunded'),
         ('Deleted', 'Deleted')
     )
-    status = models.CharField(max_length=50, choices=orderstatuses, default='Pending', verbose_name='Статус')
-    message = models.TextField(null=True, blank=True, verbose_name='Коментар на муштеријја')
+    status = models.CharField(max_length=50, choices=orderstatuses, default='Pending', verbose_name='Статус', db_index=True)
+    message = models.TextField(null=True, blank=True, verbose_name='Коментар на муштерија')
     tracking_no = models.CharField(max_length = 150, null=True, verbose_name='Tracking number')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креирана во:')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Променет статус:')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Променет статус:', db_index=True)
     
    
     @property
