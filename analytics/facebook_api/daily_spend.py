@@ -3,7 +3,7 @@ import datetime
 from facebook_business.api import FacebookAdsApi
 from facebook_business.adobjects.adaccount import AdAccount
 from facebook_business.adobjects.campaign import Campaign
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from analytics.models import *
 from datetime import datetime
 from shop.models import product_campaigns, Product, ProductUpsells
@@ -66,11 +66,12 @@ def populate_daily_rows(campaign_id, ad_spend):
                     
         fixed_cost = 0
         quantity = 0
-        yesterday = timezone.now() - timezone.timedelta(days=1)
-        start_time = yesterday.replace(hour=0, minute=0, second=0)
-        end_time = yesterday.replace(hour=23, minute=59, second=59)
+
+        start_time = date.today() - timedelta(days=1)
+        end_time = date.today()
         print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+        print(ordered_products)
         for product in ordered_products:
             quantity = quantity + product.quantity
 
@@ -125,11 +126,11 @@ def populate_daily_rows(campaign_id, ad_spend):
             fixed_cost = 0
             quantity = 0
             
-            yesterday = timezone.now() - timezone.timedelta(days=1)
-            start_time = yesterday.replace(hour=0, minute=0, second=0)
-            end_time = yesterday.replace(hour=23, minute=59, second=59)
+            start_time = date.today() - timedelta(days=1)
+            end_time = date.today()
             print(owner_of_campaign)
             ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+            print(ordered_products)
             for product in ordered_products:
                 print(product, ' - ', product.quantity, ' - ', product.created_at)
                 quantity = quantity + product.quantity
@@ -166,6 +167,118 @@ def populate_daily_rows(campaign_id, ad_spend):
 
 
 
+def testing_populate_daily_rows(campaign_id, ad_spend):
+    try:
+        product_campaign_ob = product_campaigns.objects.get(campaign_id=campaign_id)
+        campaigns_product = product_campaign_ob.product
+        product_campaign = product_campaigns.objects.filter(product=campaigns_product)
+
+
+    except:
+        return 1
+    if product_campaign.count() == 1:
+        
+        product = product_campaign[0].product
+        owner_of_campaign = daily_items.objects.filter(product=product).first()
+        product_price = product.sale_price - 130
+        stock_price = product.supplier_stock_price
+        related_upsells = ProductUpsells.objects.filter(parent_product=product)
+        if related_upsells:
+            for upsell in related_upsells:
+                if upsell.is_free:
+                    stock_price += upsell.product.supplier_stock_price
+                    
+        fixed_cost = 0
+        quantity = 0
+
+        start_time = date.today() - timedelta(days=1)
+        end_time = date.today()
+        
+        print(owner_of_campaign)
+        ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+        print(ordered_products)
+        for product in ordered_products:
+            quantity = quantity + product.quantity
+
+
+        neto_price = product_price - stock_price
+        yesterdays_ad_spend = ad_spend * 56.59
+        neto_total = quantity * neto_price
+        profit = neto_total - yesterdays_ad_spend
+        if quantity != 0:
+            cost_per_purchase = yesterdays_ad_spend / quantity
+        else:
+            cost_per_purchase = yesterdays_ad_spend
+        be_roas = product_price / neto_price
+        if yesterdays_ad_spend != 0:
+            roas = (quantity * product_price) / yesterdays_ad_spend
+            roi = (neto_price * quantity) / yesterdays_ad_spend
+        else:
+            roas = (quantity * product_price)
+            roi = (neto_price * quantity)
+
+        return 1
+    
+    elif product_campaign.count() > 1:
+        yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+        product = product_campaign[0].product
+        owner_of_campaign = daily_items.objects.filter(product=product).first()
+        row = daily_row.objects.filter(created_at__date=yesterday_row, owner=owner_of_campaign).first()
+
+        if(row):
+
+        
+
+            return JsonResponse({'status': "Updated existing row for yesterday's date"})
+        else:
+
+            product = product_campaign[0].product
+            owner_of_campaign = daily_items.objects.filter(product=product).first()
+            product_price = product.sale_price - 130
+            stock_price = product.supplier_stock_price
+            related_upsells = ProductUpsells.objects.filter(parent_product=product)
+            if related_upsells:
+                for upsell in related_upsells:
+                    if upsell.is_free:
+                        stock_price += upsell.product.supplier_stock_price
+                        
+            fixed_cost = 0
+            quantity = 0
+            
+            start_time = date.today() - timedelta(days=1)
+            end_time = date.today()
+            print(owner_of_campaign)
+            ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+            print(ordered_products)
+            for product in ordered_products:
+                print(product, ' - ', product.quantity, ' - ', product.created_at)
+                quantity = quantity + product.quantity
+
+
+            neto_price = product_price - stock_price
+
+            yesterdays_ad_spend = ad_spend * 56.59
+
+            neto_total = quantity * neto_price
+            profit = neto_total - yesterdays_ad_spend
+            if quantity != 0:
+                cost_per_purchase = yesterdays_ad_spend / quantity
+            else:
+                cost_per_purchase = yesterdays_ad_spend
+            be_roas = product_price / neto_price
+            if yesterdays_ad_spend != 0:
+                roas = (quantity * product_price) / yesterdays_ad_spend
+                roi = (neto_price * quantity) / yesterdays_ad_spend
+            else:
+                roas = (quantity * product_price)
+                roi = (neto_price * quantity)
+
+            return 1
+    else:
+        return 1
+    return 1
+
+
 def testing_get_campaign_id():
     # Initialize the Facebook Ads SDK with the access token
     FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
@@ -193,7 +306,7 @@ def testing_get_campaign_id():
 
             campaign_id = campaign['id']
             print(campaign_id, ' - ', name_of_campaign)
-            #populate_daily_rows(campaign_id, ad_spend)
+            testing_populate_daily_rows(campaign_id, ad_spend)
 
                 
 
