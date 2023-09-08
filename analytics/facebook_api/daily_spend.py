@@ -69,6 +69,7 @@ def populate_daily_rows(campaign_id, ad_spend):
 
         start_time = date.today() - timedelta(days=1)
         end_time = date.today()
+        yesterday = start_time
         print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
         print(ordered_products)
@@ -127,6 +128,7 @@ def populate_daily_rows(campaign_id, ad_spend):
             quantity = 0
             
             start_time = date.today() - timedelta(days=1)
+            yesterday = start_time
             end_time = date.today()
             print(owner_of_campaign)
             ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
@@ -193,7 +195,7 @@ def testing_populate_daily_rows(campaign_id, ad_spend):
 
         start_time = date.today() - timedelta(days=1)
         end_time = date.today()
-        
+        yesterday = start_time
         print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
         print(ordered_products)
@@ -248,6 +250,7 @@ def testing_populate_daily_rows(campaign_id, ad_spend):
             start_time = date.today() - timedelta(days=1)
             end_time = date.today()
             print(owner_of_campaign)
+            yesterday = start_time
             ordered_products = OrderItem.objects.filter(Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
             print(ordered_products)
             for product in ordered_products:
