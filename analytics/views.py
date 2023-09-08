@@ -32,7 +32,7 @@ def daily_ad_spend(request):
     total_roi = 0
     yesterday_row = date.today() - timedelta(days=1)
     yesterday_row_2 = date.today() - timedelta(days=2)
-    search_options = daily_row.objects.filter(created_at__date = yesterday_row).order_by('-owner__id')
+    search_options = daily_row.objects.filter(created_at = yesterday_row).order_by('-owner__id')
     search_options2 = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
@@ -72,9 +72,9 @@ def daily_ad_spend_by_id(request, pk):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-    yesterday_row_2 = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
-    search_options = daily_row.objects.filter(created_at__date = yesterday_row).order_by('-owner__id')
+    yesterday_row = date.today() - timedelta(days=1)
+    yesterday_row_2 = date.today() - timedelta(days=2)
+    search_options = daily_row.objects.filter(created_at = yesterday_row).order_by('-owner__id')
     search_options2 = daily_items.objects.all().order_by('-id')
     if(daily_rows):
         for row in daily_rows:
