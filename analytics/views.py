@@ -8,7 +8,7 @@ from shop.models import Product, product_campaigns
 import json
 from django.http import HttpResponse, JsonResponse
 from .facebook_api import daily_spend, ad_campaigns
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import requests
 import logging
 from decouple import config
@@ -30,8 +30,8 @@ def daily_ad_spend(request):
     total_cpp = 0
     total_roas = 0
     total_roi = 0
-    yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-    yesterday_row_2 = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
+    yesterday_row = date.today() - timedelta(days=1)
+    yesterday_row_2 = date.today() - timedelta(days=2)
     search_options = daily_row.objects.filter(created_at__date = yesterday_row).order_by('-owner__id')
     search_options2 = daily_items.objects.all().order_by('-id')
     if(daily_rows):
