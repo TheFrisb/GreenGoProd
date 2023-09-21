@@ -1,8 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Review, Product, ProductAttribute, product_campaigns
+from .models import Review, Product, ProductAttribute, ProductCampaigns
 from analytics.models import *
-
 
 
 @receiver(post_save, sender=Review)
@@ -18,22 +17,21 @@ def update_review_average(sender, instance, **kwargs):
     else:
         product.review_average = 0
     product.save()
-    
-    
+
+
 @receiver(post_save, sender=ProductAttribute)
 def update_product_woocommerce(sender, instance, created, **kwargs):
     if created:
         instance.product.status = 'VARIABLE'
         instance.product.attributes_type = instance.check_type_of_attribute()
         instance.product.save()
-        
 
-@receiver(post_save, sender=product_campaigns)
+
+@receiver(post_save, sender=ProductCampaigns)
 def create_campaign_owner(sender, instance, created, **kwargs):
     if created:
-        if daily_items.objects.filter(product=instance.product).exists():
+        if DailyItems.objects.filter(product=instance.product).exists():
             pass
         else:
-            new_daily_item = daily_items(product=instance.product)
+            new_daily_item = DailyItems(product=instance.product)
             new_daily_item.save()
-            

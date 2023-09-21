@@ -13,9 +13,9 @@ import datetime
 import requests, json
 import random 
 from decouple import config
-from shop.models import product_campaigns
+from shop.models import ProductCampaigns
 from facebook_business.adobjects.adset import AdSet
-from analytics.models import Ad_Set
+from analytics.models import FacebookAdSet
 
 
 def create_facebook_campaign(campaign_name):
@@ -43,7 +43,7 @@ def create_facebook_campaign(campaign_name):
 def create_facebook_adset(campaign_id, name, adset_start_time, budget, max_age, min_age, interest_id, interest_name, genders=None):
     access_token = config('CAMPAIGNS_SECRET')
     ad_account_id = config('MARKETING_AD_ACCOUNT')
-    instagram_account_id = '5225011497548175'
+    instagram_account_id = config('FB_INSTAGRAM_ACCOUNT_ID')
     pixel_id = config('PIXEL_ID')
     selected_genders = []
     if genders is None:
@@ -417,7 +417,7 @@ def hehe(parent_campaign):
             audience_id = targeting['flexible_spec'][0]['interests'][0]['id']
             audience_name = targeting['flexible_spec'][0]['interests'][0]['name']
             ad_set_name = ad_set[AdSet.Field.name]
-            Ad_Set.objects.create(campaign_parent=parent_campaign, name=ad_set_name, audience_name=audience_name, audience_id=audience_id)
+            FacebookAdSet.objects.create(campaign_parent=parent_campaign, name=ad_set_name, audience_name=audience_name, audience_id=audience_id)
             print('Ad Set Name: {}, Audience ID: {}, Audience Name: {}'.format(ad_set[AdSet.Field.name], audience_id, audience_name))
         else:
             pass

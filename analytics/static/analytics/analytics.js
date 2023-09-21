@@ -145,13 +145,36 @@ $(document).ready(function () {
             
             success: function (response){
                 $('#addCommentModal').modal('hide');
+                let remove_comment_btn = `<button class="btn btn-outline-danger btn-sm delete_comment_button" data-row-id="${id}" >ОТСТРАНИ</button>`;
                 row.html(comment);
+                row.append("<br>")
+                row.append(remove_comment_btn);
                 $('.alert').fadeToggle();
                 $('.alert').delay(5000).fadeToggle();
 
             }
         })
     })
+
+    $(document).on('click', '.delete_comment_button', function(e){
+        let button = $(this);
+        let current_row = button.closest('td');
+        let row_id = button.data('row-id');
+        $.ajax({
+            method: "POST",
+            url: "/analytics/delete-comment",
+            data: {
+                'id': row_id,
+                csrfmiddlewaretoken: token,
+            },
+
+            success: function (response){
+                let add_comment_btn = `<button class="btn btn-outline-primary btn-sm add_comment_button" data-row-id="${row_id}" >ДОДАДИ</button>`;
+                current_row.html(add_comment_btn);
+            }
+        })
+    })
+
 
     $(document).on('click', '#enter_old_row', function(e){
         e.preventDefault();

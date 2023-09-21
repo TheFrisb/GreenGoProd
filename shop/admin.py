@@ -21,7 +21,7 @@ class ProductUpsellsInline(admin.StackedInline):
     
     
 class CampaignItems(admin.StackedInline):
-    model = product_campaigns
+    model = ProductCampaigns
     
     
 class InformationInline2(admin.StackedInline):
@@ -103,10 +103,10 @@ admin.site.register(CartOffers, CartOfferAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Offer)
 admin.site.register(Size)
-admin.site.register(Dobavuvac)
+admin.site.register(Supplier)
 admin.site.register(Category)
 admin.site.register(Cart, CartAdmin)
 admin.site.register(CheckoutFees)
-admin.site.register(product_campaigns)
-admin.site.register(Abandoned_CartItems)
-admin.site.register(Abandoned_Carts)
+admin.site.register(ProductCampaigns)
+admin.site.register(AbandonedCartItems)
+admin.site.register(AbandonedCarts)
