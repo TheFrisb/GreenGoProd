@@ -1,13 +1,12 @@
-import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import *
-from shop.models import Product, product_campaigns
+from shop.models import Product, ProductCampaigns
 import json
-from django.http import HttpResponse, JsonResponse
-from .facebook_api import daily_spend, ad_campaigns
+from django.http import JsonResponse
+from .facebook_api import ad_campaigns
 from datetime import datetime, timedelta, date
 import requests
 import logging
@@ -16,14 +15,15 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 import random
 from django.conf import settings
 from PIL import Image
-from io import BytesIO
+
+
 logger = logging.getLogger(__name__)
 
 
 @login_required(login_url='/analytics/login/')
 def daily_ad_spend(request):
-    daily_item = daily_items.objects.filter().first()
-    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
+    daily_item = DailyItems.objects.filter().first()
+    daily_rows = DailyRow.objects.filter(owner=daily_item).order_by('created_at')
     total_quantity = 0
     total_ad_spend = 0
     total_profit = 0
@@ -32,9 +32,9 @@ def daily_ad_spend(request):
     total_roi = 0
     yesterday_row = date.today() - timedelta(days=1)
     yesterday_row_2 = date.today() - timedelta(days=2)
-    search_options = daily_row.objects.filter(created_at = yesterday_row).order_by('-owner__id')
-    search_options2 = daily_items.objects.all().order_by('-id')
-    if(daily_rows):
+    search_options = DailyRow.objects.filter(created_at=yesterday_row).order_by('-owner__id')
+    search_options2 = DailyItems.objects.all().order_by('-id')
+    if (daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
             total_ad_spend += row.ad_cost
@@ -46,7 +46,6 @@ def daily_ad_spend(request):
         total_cpp = total_cpp / number_of_rows
         total_roas = total_roas / number_of_rows
         total_roi = total_roi / number_of_rows
-    
 
     context = {
         'daily_item': daily_item,
@@ -54,18 +53,18 @@ def daily_ad_spend(request):
         'search_options': search_options,
         'search_options2': search_options2,
         'total_quantity': total_quantity,
-        'total_ad_spend':  total_ad_spend,
-        'total_profit':  total_profit,
-        'total_cpp':  total_cpp,
-        'total_roas':  total_roas,
-        'total_roi':  total_roi,
+        'total_ad_spend': total_ad_spend,
+        'total_profit': total_profit,
+        'total_cpp': total_cpp,
+        'total_roas': total_roas,
+        'total_roi': total_roi,
     }
     return render(request, 'analytics/daily_ad_spend.html', context)
 
 
 def daily_ad_spend_by_id(request, pk):
-    daily_item = daily_items.objects.get(slug=pk)
-    daily_rows = daily_row.objects.filter(owner=daily_item).order_by('created_at')
+    daily_item = DailyItems.objects.get(slug=pk)
+    daily_rows = DailyRow.objects.filter(owner=daily_item).order_by('created_at')
     total_quantity = 0
     total_ad_spend = 0
     total_profit = 0
@@ -74,9 +73,9 @@ def daily_ad_spend_by_id(request, pk):
     total_roi = 0
     yesterday_row = date.today() - timedelta(days=1)
     yesterday_row_2 = date.today() - timedelta(days=2)
-    search_options = daily_row.objects.filter(created_at = yesterday_row).order_by('-owner__id')
-    search_options2 = daily_items.objects.all().order_by('-id')
-    if(daily_rows):
+    search_options = DailyRow.objects.filter(created_at=yesterday_row).order_by('-owner__id')
+    search_options2 = DailyItems.objects.all().order_by('-id')
+    if (daily_rows):
         for row in daily_rows:
             total_quantity += row.quantity
             total_ad_spend += row.ad_cost
@@ -88,7 +87,6 @@ def daily_ad_spend_by_id(request, pk):
         total_cpp = total_cpp / number_of_rows
         total_roas = total_roas / number_of_rows
         total_roi = total_roi / number_of_rows
-    
 
     context = {
         'daily_item': daily_item,
@@ -96,14 +94,13 @@ def daily_ad_spend_by_id(request, pk):
         'search_options': search_options,
         'search_options2': search_options2,
         'total_quantity': total_quantity,
-        'total_ad_spend':  total_ad_spend,
-        'total_profit':  total_profit,
-        'total_cpp':  total_cpp,
-        'total_roas':  total_roas,
-        'total_roi':  total_roi,
+        'total_ad_spend': total_ad_spend,
+        'total_profit': total_profit,
+        'total_cpp': total_cpp,
+        'total_roas': total_roas,
+        'total_roi': total_roi,
     }
     return render(request, 'analytics/daily_ad_spend.html', context)
-
 
 
 def user_login(request):
@@ -111,10 +108,10 @@ def user_login(request):
         messages.warning(request, "You are already logged in")
         return redirect("daily_ad_spend")
     else:
-        if request.method =='POST':
+        if request.method == 'POST':
             name = request.POST.get('username')
             password = request.POST.get('password')
-            
+
             user = authenticate(request, username=name, password=password)
 
             if user is not None:
@@ -123,15 +120,13 @@ def user_login(request):
                 messages.error(request, "Invalid username or Password")
                 return redirect('/')
         return render(request, "analytics/login.html")
-        
-    
+
 
 def index(request):
     if request.user.is_authenticated:
         return redirect('daily_ad_spend')
     else:
         return redirect('login')
-    
 
 
 def add_comment(request):
@@ -139,7 +134,7 @@ def add_comment(request):
         comment = request.POST.get('comment')
         id = request.POST.get('id')
         print(comment, id)
-        daily_rw = daily_row.objects.get(id = id)
+        daily_rw = DailyRow.objects.get(id=id)
 
         daily_rw.comment = comment
         daily_rw.save()
@@ -149,17 +144,29 @@ def add_comment(request):
         pass
 
 
-
+def remove_comment(request):
+    if request.method == 'POST':
+        input_id = request.POST.get('id')
+        try:
+            daily_row = DailyRow.objects.get(id=input_id)
+        except:
+            return JsonResponse({
+                'success': 'false',
+                'message': 'Removed comment unsuccessfully'
+            }, status=400)
+        daily_row.comment = None
+        daily_row.save()
+        return JsonResponse({'status': 'Removed comment successfully'}, status=200)
 def add_old_row(request):
     if request.method == 'POST':
         owner_id = int(request.POST.get('owner'))
         ad_spend = float(request.POST.get('ad_spend'))
-        date = request.POST.get('date')
+        input_date = request.POST.get('date')
         quantity = int(request.POST.get('quantity'))
         print(owner_id)
-        owner = daily_items.objects.get(id=owner_id)
+        owner = DailyItems.objects.get(id=owner_id)
         product = owner.product
-        
+
         product_price = product.sale_price - 100
         stock_price = product.supplier_stock_price
         fixed_cost = 0
@@ -181,63 +188,16 @@ def add_old_row(request):
         else:
             roas = (quantity * product_price)
             roi = (neto_price * quantity)
-        daily_row_new = daily_row(owner=owner, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-                                ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-                                be_roas = be_roas, roas=roas, roi=roi, created_at=date)
+        daily_row_new = DailyRow(owner=owner, quantity=quantity, price=product_price, stock_price=stock_price,
+                                 fixed_cost=fixed_cost,
+                                 ad_cost=yesterdays_ad_spend, neto_price=neto_price, neto_total=neto_total,
+                                 profit=profit, cost_per_purchase=cost_per_purchase,
+                                 be_roas=be_roas, roas=roas, roi=roi, created_at=input_date)
         daily_row_new.save()
         print('Created')
         return JsonResponse({'status': "Created older row successfuly"})
-    else: 
+    else:
         return JsonResponse({'status': "Unsuccessful older row creation"})
-
-
-# def add_old_row(request):
-#     if request.method == 'POST':
-#         owner_id = int(request.POST.get('owner'))
-#         ad_spend = float(request.POST.get('ad_spend'))
-#         date = request.POST.get('date')
-#         quantity = int(request.POST.get('quantity'))
-#         owner = daily_items.objects.get(id=owner_id)
-#         product = owner.product
-        
-#         row = daily_row.objects.filter(created_at__date=date).first()
-#         if(row):
-#             print('Row found!')
-#             row.ad_cost = ad_spend
-#             row.save()
-#             return JsonResponse({'status': "Created older row successfuly"})
-
-#         else:
-#             print('Row not found!')
-#             product_price = product.sale_price
-#             stock_price = product.supplier_stock_price
-#             fixed_cost = 84
-
-#             neto_price = product_price - stock_price - fixed_cost
-#             yesterdays_ad_spend = ad_spend
-#             neto_total = quantity * neto_price
-#             print(neto_total, quantity, yesterdays_ad_spend)
-#             profit = neto_total - yesterdays_ad_spend
-
-#             if quantity != 0:
-#                 cost_per_purchase = yesterdays_ad_spend / quantity
-#             else:
-#                 cost_per_purchase = yesterdays_ad_spend
-#             be_roas = product_price / neto_price
-#             if yesterdays_ad_spend != 0:
-#                 roas = (quantity * product_price) / yesterdays_ad_spend
-#                 roi = (neto_price * quantity) / yesterdays_ad_spend
-#             else:
-#                 roas = (quantity * product_price)
-#                 roi = (neto_price * quantity)
-#             daily_row_new = daily_row(owner=owner, quantity=quantity, price=product_price, stock_price=stock_price, fixed_cost=fixed_cost,
-#                                     ad_cost=yesterdays_ad_spend,neto_price=neto_price, neto_total=neto_total, profit=profit, cost_per_purchase = cost_per_purchase,
-#                                     be_roas = be_roas, roas=roas, roi=roi, created_at=date)
-#             daily_row_new.save()
-#             print('Created')
-#             return JsonResponse({'status': "Created older row successfuly"})
-#     else: 
-#         return JsonResponse({'status': "Unsuccessful older row creation"})
 
 
 def retrieve_adspend(request):
@@ -246,40 +206,37 @@ def retrieve_adspend(request):
         date_2 = request.GET.get('date_till'),
         date_from = date_1[0]
         date_till = date_2[0]
-        
+
         print(date_from, date_till)
 
         access_token = config('MARKETING_API_SECRET_KEY')
         ad_account_id = config('MARKETING_AD_ACCOUNT')
 
-        url = f'https://graph.facebook.com/v16.0/{ad_account_id}/insights'
+        url = f'https://graph.facebook.com/v18.0/{ad_account_id}/insights'
         params = {
             'level': 'account',
             'time_range': f"{{'since':'{date_from}','until':'{date_till}'}}",
             'fields': 'spend',
             'access_token': access_token,
             'filtering': '[{"field":"campaign.name","operator":"CONTAIN", "value":"(MK"}]'
-            
-        }   
+
+        }
         response = requests.get(url, params=params)
         response_json = response.json()
         total_spend = float(response_json['data'][0]['spend'])
-        
-        
 
         return JsonResponse({'USD_Val': str(total_spend)})
-        print(date_from, ' ', date_till)
+
 
     else:
         return JsonResponse({'status': 'Wrong request!'})
 
-    
+
 @login_required(login_url='/analytics/login/')
 def create_new_ad(request):
-
-    context={
+    context = {
         'products': Product.objects.filter(status__in=['PUBLISHED', 'VARIABLE']),
-        'stored_audiences': Stored_Audience.objects.all().order_by('-created_at'),
+        'stored_audiences': StoredAudience.objects.all().order_by('-created_at'),
     }
 
     return render(request, 'analytics/create_new_ad.html', context)
@@ -287,9 +244,9 @@ def create_new_ad(request):
 
 @login_required(login_url='/analytics/login/')
 def create_already_existing_campaign_ad(request):
-    context={
-        'campaigns': product_campaigns.objects.all(),
-        'stored_audiences': Stored_Audience.objects.all().order_by('-created_at'),
+    context = {
+        'campaigns': ProductCampaigns.objects.all(),
+        'stored_audiences': StoredAudience.objects.all().order_by('-created_at'),
     }
 
     return render(request, 'analytics/create_already_existing_campaign_ad.html', context)
@@ -297,9 +254,9 @@ def create_already_existing_campaign_ad(request):
 
 def get_product(request):
     if request.method == 'GET':
-        #get product id from request
+        # get product id from request
         product_id = request.GET.get('product_id')
-        
+
         product = Product.objects.get(id=product_id)
         return JsonResponse({
             'url': product.get_absolute_url(),
@@ -308,18 +265,17 @@ def get_product(request):
             'regular_price': product.regular_price,
             'sale_price': product.sale_price,
             'label': product.sku
-            })
+        })
     else:
         print('whoops')
         return redirect('/')
-
 
 
 def upload_campaign_photo(request):
     if request.method == 'POST':
         ad_image = request.FILES['ad_image']
         ad_image_name = ad_image.name
-        
+
         # date_today = datetime.now().strftime('%Y/%m/%d')
         # print(date_today)
         # check_path = os.path.join(settings.MEDIA_ROOT, 'campaigns/ads/ad_images/{date_today}/{ad_image_name}'.format(
@@ -337,10 +293,10 @@ def upload_campaign_photo(request):
         current_time = datetime.now().strftime('%H%M%S')
         new_file_name = ad_image_name + '_' + current_time + '.' + file_extension
         # save the image to the media folder
-        new_ad = ad.objects.create(main_image=ad_image)
+        new_ad = FacebookAd.objects.create(main_image=ad_image)
         new_ad.save()
         print(new_ad.main_image.url)
-        return JsonResponse({ 'image_url': new_ad.main_image.url, 'image_id': new_ad.id })
+        return JsonResponse({'image_url': new_ad.main_image.url, 'image_id': new_ad.id})
     else:
         return redirect('/')
 
@@ -354,22 +310,21 @@ def upload_campaign_video(request):
         current_time = datetime.now().strftime('%H%M%S')
         new_file_name = ad_video_name + '_' + current_time + '.' + file_extension
         # save the image to the media folder
-        new_ad = ad.objects.create(main_video=ad_video)
+        new_ad = FacebookAd.objects.create(main_video=ad_video)
         new_ad.save()
-        
 
         return JsonResponse({
-             'video_url': new_ad.main_video.url, 
-             'video_id': new_ad.id,})
+            'video_url': new_ad.main_video.url,
+            'video_id': new_ad.id, })
     else:
         return redirect('/')
-    
+
 
 def get_video_thumbnails(request):
     if request.method == 'GET':
         thumbnail_urls = []
         ad_id = int(request.GET.get('ad_id'))
-        old_ad = ad.objects.get(id=ad_id)
+        old_ad = FacebookAd.objects.get(id=ad_id)
         video_file_path = old_ad.main_video.path
         new_file_name = old_ad.video_filename.split('.')[0]
         with VideoFileClip(video_file_path) as video:
@@ -378,25 +333,27 @@ def get_video_thumbnails(request):
                 thumbnail = video.get_frame(random.uniform(0, video.duration))
                 thumbnail = Image.fromarray(thumbnail)
                 thumbnail = thumbnail.resize((video_width, video_height))
-                thumbnail_name = new_file_name + '_thumbnail_' + str(i+1) + '.png'
-                thumbnail_dir = os.path.join(settings.MEDIA_ROOT, 'campaigns', 'ads', 'ad_videos', 'thumbnails', datetime.now().strftime('%Y/%m/%d'))
+                thumbnail_name = new_file_name + '_thumbnail_' + str(i + 1) + '.png'
+                thumbnail_dir = os.path.join(settings.MEDIA_ROOT, 'campaigns', 'ads', 'ad_videos', 'thumbnails',
+                                             datetime.now().strftime('%Y/%m/%d'))
                 thumbnail_path = os.path.join(thumbnail_dir, thumbnail_name)
                 os.makedirs(thumbnail_dir, exist_ok=True)
                 thumbnail.save(thumbnail_path, 'PNG')
-                thumbnail_url = os.path.join(settings.MEDIA_URL, 'campaigns', 'ads', 'ad_videos', 'thumbnails', datetime.now().strftime('%Y/%m/%d'), thumbnail_name)
+                thumbnail_url = os.path.join(settings.MEDIA_URL, 'campaigns', 'ads', 'ad_videos', 'thumbnails',
+                                             datetime.now().strftime('%Y/%m/%d'), thumbnail_name)
                 thumbnail_urls.append(thumbnail_url)
         return JsonResponse({
-                'thumbnail_urls': thumbnail_urls,
+            'thumbnail_urls': thumbnail_urls,
         })
     else:
         return redirect('/')
 
-    
+
 def generate_ad_video_thumbnail(request):
     if request.method == 'GET':
         ad_id = int(request.GET.get('ad_id'))
         current_time = float(request.GET.get('current_time'))
-        old_ad = ad.objects.get(id=ad_id)
+        old_ad = FacebookAd.objects.get(id=ad_id)
         video_file_path = old_ad.main_video.path
         new_file_name = old_ad.video_filename.split('.')[0]
         with VideoFileClip(video_file_path) as video:
@@ -405,13 +362,15 @@ def generate_ad_video_thumbnail(request):
             thumbnail = Image.fromarray(thumbnail)
             thumbnail = thumbnail.resize((video_width, video_height))
             thumbnail_name = new_file_name + '_thumbnail' + str(int(current_time)) + '.png'
-            thumbnail_dir = os.path.join(settings.MEDIA_ROOT, 'campaigns', 'ads', 'ad_videos', 'thumbnails', datetime.now().strftime('%Y/%m/%d'))
+            thumbnail_dir = os.path.join(settings.MEDIA_ROOT, 'campaigns', 'ads', 'ad_videos', 'thumbnails',
+                                         datetime.now().strftime('%Y/%m/%d'))
             thumbnail_path = os.path.join(thumbnail_dir, thumbnail_name)
             os.makedirs(thumbnail_dir, exist_ok=True)
             thumbnail.save(thumbnail_path, 'PNG')
-            thumbnail_url = os.path.join(settings.MEDIA_URL, 'campaigns', 'ads', 'ad_videos', 'thumbnails', datetime.now().strftime('%Y/%m/%d'), thumbnail_name)
+            thumbnail_url = os.path.join(settings.MEDIA_URL, 'campaigns', 'ads', 'ad_videos', 'thumbnails',
+                                         datetime.now().strftime('%Y/%m/%d'), thumbnail_name)
         return JsonResponse({
-                'thumbnail_url': thumbnail_url
+            'thumbnail_url': thumbnail_url
         })
     else:
         return redirect('/')
@@ -420,24 +379,22 @@ def generate_ad_video_thumbnail(request):
 def upload_video_thumbnail(request):
     if request.method == 'POST':
         ad_image = request.FILES['ad_image']
-        new_ad = ad.objects.create(video_thumbnail=ad_image)
+        new_ad = FacebookAd.objects.create(video_thumbnail=ad_image)
         new_ad.save()
-        return JsonResponse({ 'image_url': new_ad.video_thumbnail.url})
+        return JsonResponse({'image_url': new_ad.video_thumbnail.url})
     else:
         return redirect('/')
-
 
 
 def search_ad_audiences(request):
     if request.method == 'GET':
         search_term = str(request.GET.get('search_term'))
         audiences = ad_campaigns.search_ad_interests(request, search_term)
-        return JsonResponse({ 'audiences': audiences })
-        
+        return JsonResponse({'audiences': audiences})
+
 
     else:
         return redirect('/')
-
 
 
 def create_campaign(request):
@@ -452,8 +409,6 @@ def create_campaign(request):
             campaign_id = campaign['id']
             print(campaign)
 
-
-
             for adset in adsets:
                 adset_name = adset['adset_name']
                 adset_start_time = adset['adset_start_time']
@@ -466,8 +421,11 @@ def create_campaign(request):
                 if "genders" in adset:
                     genders = adset['genders']
                 budget = budget * 100
-                created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name, adset_start_time=adset_start_time, budget=budget, max_age = max_age,
-                                                           min_age = min_age, interest_id=audience_id, interest_name=audience_name)
+                created_adset = ad_campaigns.create_facebook_adset(campaign_id=campaign_id, name=adset_name,
+                                                                   adset_start_time=adset_start_time, budget=budget,
+                                                                   max_age=max_age,
+                                                                   min_age=min_age, interest_id=audience_id,
+                                                                   interest_name=audience_name)
                 created_adset_id = created_adset['id']
                 for ad in adset['ads']:
 
@@ -482,28 +440,31 @@ def create_campaign(request):
 
                     if ad_type == 'photo':
                         ad_image = ad['ad_image_path']
-                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='image', ad_name=ad_name,ad_primary_text=ad_primary,
-                                                                     ad_description_text=ad_description, ad_headline_text=ad_headline, ad_image=ad_image, ad_link_url=link_url)
+                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='image',
+                                                                     ad_name=ad_name, ad_primary_text=ad_primary,
+                                                                     ad_description_text=ad_description,
+                                                                     ad_headline_text=ad_headline, ad_image=ad_image,
+                                                                     ad_link_url=link_url)
 
                     elif ad_type == 'video':
                         ad_video = ad['ad_video_path']
                         ad_thumbnail = ad['thumbnail_path']
                         print(ad_video, ad_thumbnail)
                         print('CREEATE AD CALLED')
-                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='video', ad_name=ad_name,ad_primary_text=ad_primary,
-                                                                     ad_description_text=ad_description, ad_headline_text=ad_headline, ad_video = ad_video, ad_thumbnail = ad_thumbnail, ad_link_url=link_url)
+                        created_ad = ad_campaigns.create_facebook_ad(ad_set_id=created_adset_id, ad_type='video',
+                                                                     ad_name=ad_name, ad_primary_text=ad_primary,
+                                                                     ad_description_text=ad_description,
+                                                                     ad_headline_text=ad_headline, ad_video=ad_video,
+                                                                     ad_thumbnail=ad_thumbnail, ad_link_url=link_url)
 
-
-
-            return JsonResponse({ 'campaign_id': campaign_id })
+            return JsonResponse({'campaign_id': campaign_id})
         except Exception as e:
             error_message = str(e)
-            print('WAA', error_message)   
-            return JsonResponse({ 'status': 'error', 'error': error_message }, status=500)
-      
+            print('WAA', error_message)
+            return JsonResponse({'status': 'error', 'error': error_message}, status=500)
+
     else:
         return redirect('/')
-        
 
 
 def save_new_campaign_id(request):
@@ -511,7 +472,7 @@ def save_new_campaign_id(request):
         campaign_id = str(request.POST.get('campaign_id'))
         prod_id = request.POST.get('product_id')
         product = Product.objects.get(id=prod_id)
-        product_campaigns.objects.create(product=product, campaign_id=campaign_id)
+        ProductCampaigns.objects.create(product=product, campaign_id=campaign_id)
 
         return JsonResponse({'success': 'success'})
 
@@ -526,7 +487,9 @@ def get_ad_preview(request):
         ad_headline_text = request.GET.get('ad_headline_text')
         photo_url = 'https://greengoshop.mk' + str(request.GET.get('photo_url'))
 
-        result = ad_campaigns.create_ad_preview(ad_primary_text=ad_primary_text, ad_description_text=ad_description_text, ad_headline_text=ad_headline_text, photo_url=photo_url)
+        result = ad_campaigns.create_ad_preview(ad_primary_text=ad_primary_text,
+                                                ad_description_text=ad_description_text,
+                                                ad_headline_text=ad_headline_text, photo_url=photo_url)
         return JsonResponse({'ad_preview': result})
     else:
         return JsonResponse({'status': 'Wrong request!'})
@@ -536,36 +499,36 @@ def get_open_audience(request):
     if request.method == 'GET':
         result = ad_campaigns.get_open_audience(request)
         return JsonResponse({'audience': result})
-    
+
     else:
         return redirect('/')
-    
-    
+
+
 def store_new_audience(request):
     if request.method == 'POST':
         audience_name = request.POST.get('audience_name')
-        new_audience = Stored_Audience.objects.create(name=audience_name)
+        new_audience = StoredAudience.objects.create(name=audience_name)
         return JsonResponse({'success': 'success', 'audience_id': new_audience.id})
-    
+
     else:
         return redirect('/')
-    
+
 
 def remove_stored_audience(request):
     if request.method == 'POST':
         audience_id = request.POST.get('audience_id')
-        Stored_Audience.objects.get(id=audience_id).delete()
+        StoredAudience.objects.get(id=audience_id).delete()
         return JsonResponse({'success': 'success'})
-    
+
     else:
         return redirect('/')
-    
+
 
 def get_campaign_adsets(request):
     if request.method == 'GET':
         campaign_id = request.GET.get('campaign_id')
-        campaign = product_campaigns.objects.get(campaign_id=campaign_id)
-        adsets = Ad_Set.objects.filter(campaign_parent=campaign)
+        campaign = ProductCampaigns.objects.get(campaign_id=campaign_id)
+        adsets = FacebookAdSet.objects.filter(campaign_parent=campaign)
         adsets_list = []
         for adset in adsets:
             adset_dict = {}
@@ -573,14 +536,13 @@ def get_campaign_adsets(request):
             adset_dict['adset_audience_id'] = adset.audience_id
             adset_dict['adset_audience_name'] = adset.audience_name
             adsets_list.append(adset_dict)
-        
 
         return JsonResponse(
             {
-            'adsets': adsets_list,
-            'product_id': campaign.product.id,
+                'adsets': adsets_list,
+                'product_id': campaign.product.id,
             }
-            )
-    
+        )
+
     else:
         return redirect('/')

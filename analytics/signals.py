@@ -4,6 +4,6 @@ from .models import *
 from shop.models import Product
 
 
-@receiver(post_save, sender=daily_items)
+@receiver(post_save, sender=DailyItems)
 def update_daily_item_slug(sender, instance, created, **kwargs):
-    daily_items.objects.filter(id=instance.pk).update(slug=instance.id)
+    DailyItems.objects.filter(id=instance.pk).update(slug=instance.id)
