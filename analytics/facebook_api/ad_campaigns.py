@@ -151,7 +151,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         link_data[AdCreativeLinkData.Field.message] = ad_primary_text #Primary text
         link_data[AdCreativeLinkData.Field.description] = ad_description_text #Description
         link_data[AdCreativeLinkData.Field.name] = ad_headline_text #Headline
-        link_data[AdCreativeLinkData.Field.caption] = 'www.greengoshop.mk'
+        link_data[AdCreativeLinkData.Field.caption] = 'greengoshop.mk'
 
         link_data[AdCreativeLinkData.Field.image_hash] = image.get_hash()
         link_data[AdCreativeLinkData.Field.call_to_action] = {
