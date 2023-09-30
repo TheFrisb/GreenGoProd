@@ -33,6 +33,9 @@ class Category(models.Model):
         verbose_name_plural = "Категории"
 
 
+    def get_absolute_url(self):
+        return reverse('category-page', kwargs={'slug': self.slug})
+
 class Supplier(models.Model):
     name = models.CharField(max_length=150, null=False, blank=False, verbose_name='Име на добавувач')
 
