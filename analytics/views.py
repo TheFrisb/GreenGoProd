@@ -33,6 +33,9 @@ def daily_ad_spend(request):
     yesterday_row = date.today() - timedelta(days=1)
     yesterday_row_2 = date.today() - timedelta(days=2)
     search_options = DailyRow.objects.filter(created_at=yesterday_row).order_by('-owner__id')
+    if not search_options.exists():
+        before_yesterday = yesterday_row - timedelta(days=1)
+        search_options = DailyRow.objects.filter(created_at=before_yesterday).order_by('-owner__id')
     search_options2 = DailyItems.objects.all().order_by('-id')
     if (daily_rows):
         for row in daily_rows:
@@ -50,6 +53,7 @@ def daily_ad_spend(request):
     context = {
         'daily_item': daily_item,
         'daily_rows': daily_rows,
+        'search_options': search_options,
         'search_options2': search_options2,
         'total_quantity': total_quantity,
         'total_ad_spend': total_ad_spend,
@@ -58,10 +62,7 @@ def daily_ad_spend(request):
         'total_roas': total_roas,
         'total_roi': total_roi,
     }
-    if search_options:
-        context['search_options']= search_options
-    else:
-        context['search_options']= search_options2
+
     return render(request, 'analytics/daily_ad_spend.html', context)
 
 
@@ -77,6 +78,9 @@ def daily_ad_spend_by_id(request, pk):
     yesterday_row = date.today() - timedelta(days=1)
     yesterday_row_2 = date.today() - timedelta(days=2)
     search_options = DailyRow.objects.filter(created_at=yesterday_row).order_by('-owner__id')
+    if not search_options.exists():
+        before_yesterday = yesterday_row - timedelta(days=1)
+        search_options = DailyRow.objects.filter(created_at=before_yesterday).order_by('-owner__id')
     search_options2 = DailyItems.objects.all().order_by('-id')
     if (daily_rows):
         for row in daily_rows:
@@ -94,6 +98,7 @@ def daily_ad_spend_by_id(request, pk):
     context = {
         'daily_item': daily_item,
         'daily_rows': daily_rows,
+        'search_options': search_options,
         'search_options2': search_options2,
         'total_quantity': total_quantity,
         'total_ad_spend': total_ad_spend,
@@ -102,10 +107,7 @@ def daily_ad_spend_by_id(request, pk):
         'total_roas': total_roas,
         'total_roi': total_roi,
     }
-    if search_options:
-        context['search_options']= search_options
-    else:
-        context['search_options']= search_options2
+
     return render(request, 'analytics/daily_ad_spend.html', context)
 
 
