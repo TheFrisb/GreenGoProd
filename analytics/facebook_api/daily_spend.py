@@ -133,7 +133,6 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
 
             start_time = date.today() - timedelta(days=2)
             end_time = date.today() - timedelta(days=1)
-            end_time = date.today()
             print(owner_of_campaign)
             ordered_products = OrderItem.objects.filter(
                 Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(
