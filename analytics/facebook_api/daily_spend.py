@@ -28,8 +28,8 @@ def get_campaign_id(save_to_db=True):
         campaign_id = campaign['id']
         campaign_obj = Campaign(campaign_id)
 
-        yesterday = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
-        today = (datetime.now()-timedelta(days=1)).strftime('%Y-%m-%d')
+        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+        today = datetime.now().strftime('%Y-%m-%d')
 
         insights = campaign_obj.get_insights(fields=['spend'], params={'date_preset': 'yesterday'})
         if insights:
@@ -67,8 +67,8 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
         fixed_cost = 0
         quantity = 0
 
-        start_time = date.today() - timedelta(days=2)
-        end_time = date.today() - timedelta(days=1)
+        start_time = date.today() - timedelta(days=1)
+        end_time = date.today()
         yesterday = start_time
         print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(
@@ -104,7 +104,7 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
 
 
     elif product_campaign.count() > 1:
-        yesterday_row = (datetime.now() - timedelta(days=2)).strftime('%Y-%m-%d')
+        yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
         product = product_campaign[0].product
         owner_of_campaign = DailyItems.objects.filter(product=product).first()
         row = DailyRow.objects.filter(created_at__date=yesterday_row, owner=owner_of_campaign).first()
@@ -131,8 +131,8 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
             fixed_cost = 0
             quantity = 0
 
-            start_time = date.today() - timedelta(days=2)
-            end_time = date.today() - timedelta(days=1)
+            start_time = date.today() - timedelta(days=1)
+            end_time = date.today()
             yesterday = start_time
             
             print(owner_of_campaign)
