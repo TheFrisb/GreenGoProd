@@ -43,8 +43,8 @@
                     </td>
                     
                     <td>
-                        {% for item in orderItems %}
-                        {% if order == item.order %}  
+                        {% for item in order.order.all %}
+                  
                         {% if item.attribute_name %}
                         <p class="table-content"><span class="table-strong">{{ item.product.title }} - {{ item.attribute_name }}</span>
                         {% else %}
@@ -55,7 +55,7 @@
                             {% endif %}
                         {% endif %}
                         x <span class="table-strong">{{ item.quantity }}</span> - {{item.price}} ден</p>
-                        {% endif %}
+                
                         {% endfor %}
                         {% for fee in orderFees %}
                         {% if order == fee.order %}
