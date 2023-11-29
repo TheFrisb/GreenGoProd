@@ -298,14 +298,12 @@ def logout_shopmanager(request):
 
 @login_required(login_url='/shopmanager/login')
 def shopmanager_dashboard(request):
-    orders = Order.objects.filter(status='Pending').order_by('-id')[:50]
-    orderItems = OrderItem.objects.filter(order__status='Pending').order_by('-id')
+    orders = Order.objects.filter(status="Pending").prefetch_related('order').order_by('-id')[:50]
     orderfees = OrderFeesItem.objects.filter(order__status='Pending').order_by('-id')
     title = 'НЕПОТВРДЕНИ НАРАЧКИ'
     form = ExportOrder()
     context = {
         'orders': orders,
-        'orderItems': orderItems,
         'orderFees': orderfees,
         'heading': title,
         'order_status': 'Непотврдена',
@@ -316,13 +314,11 @@ def shopmanager_dashboard(request):
 
 @login_required(login_url='/shopmanager/login')
 def shopmanager_confirmed(request):
-    orders = Order.objects.filter(status='Confirmed').order_by('-updated_at')[:50]
-    orderItems = OrderItem.objects.filter(order__status='Confirmed').order_by('-id')
+    orders = Order.objects.filter(status="Confirmed").prefetch_related('order').order_by('-updated_at')[:50]
     orderfees = OrderFeesItem.objects.filter(order__status='Confirmed').order_by('-id')
     title = 'ПОТВРДЕНИ НАРАЧКИ'
     context = {
         'orders': orders,
-        'orderItems': orderItems,
         'orderFees': orderfees,
         'heading': title,
         'order_status': 'Потврдена',
@@ -348,13 +344,11 @@ def shopmanager_abandoned_carts(request):
 
 @login_required(login_url='/shopmanager/login')
 def shopmanager_deleted(request):
-    orders = Order.objects.filter(status='Deleted').order_by('-updated_at')[:50]
-    orderItems = OrderItem.objects.filter(order__status='Deleted').order_by('-id')
+    orders = Order.objects.filter(status="Deleted").prefetch_related('order').order_by('-updated_at')[:50]
     orderfees = OrderFeesItem.objects.filter(order__status='Deleted').order_by('-id')
     title = 'ИЗБРИШЕНИ НАРАЧКИ'
     context = {
         'orders': orders,
-        'orderItems': orderItems,
         'orderFees': orderfees,
         'heading': title,
         'order_status': 'Избришена',
