@@ -225,8 +225,7 @@ def retrieve_adspend(request):
             'level': 'account',
             'time_range': f"{{'since':'{date_from}','until':'{date_till}'}}",
             'fields': 'spend',
-            'access_token': access_token,
-            'filtering': '[{"field":"campaign.name","operator":"CONTAIN", "value":"(MK"}]'
+            'access_token': access_token
 
         }
         response = requests.get(url, params=params)
