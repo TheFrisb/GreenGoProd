@@ -872,7 +872,6 @@ select {
 }
 .product-feed-title{
     font-size: 1em;
-    padding: 8px 0px;
     word-break: break-word;
     max-width:240px;
 }
