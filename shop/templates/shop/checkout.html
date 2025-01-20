@@ -268,7 +268,7 @@
                             <p>Провизија</p>
                         </td>
                         <td>
-                            <p class="cart-provision-sum">20 ден</p>
+                            <p class="cart-provision-sum">30 ден</p>
                         </td>
                     </tr>
                     <tr class="cart-total">
@@ -277,9 +277,9 @@
                         </td>
                         <td>
                             {% if free_shipping %}
-                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'20' }}</span> ден</p>
+                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'30' }}</span> ден</p>
                             {% else %}
-                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'130'|add:'20' }}</span> ден</p>
+                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'130'|add:'30' }}</span> ден</p>
                             {% endif %}
                         </td>
                     </tr>
@@ -290,7 +290,7 @@
         
         <div id="payment">
             <div class="payment-text">
-                <p class="payment-info">Плаќање при достава (+20 ден. провизија)</p>
+                <p class="payment-info">Плаќање при достава (+30 ден. провизија)</p>
                 <p class="payment-method">Плати на врата при подигање на нарачката</p>
             </div>
             <div class="place_order-section">

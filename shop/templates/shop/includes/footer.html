@@ -94,7 +94,7 @@
                         {% endfor %}
                     <div class="order-row">
                         <p>Провизија за готовинско работење</p>
-                        <p>20 ден</p>
+                        <p>30 ден</p>
                     </div>
                     <div class="order-row">
                         <p>Достава</p>
@@ -110,9 +110,9 @@
                         <span style="display:flex;flex-direction: column-reverse;" style="flex-basis:48%">
                             <p style="font-size:12px;text-align:right;">Вклучувајќи 18% ДДВ</p>
                             {% if free_shipping %}
-                            <p>{{ cart_total|add:feetotal|add:'20' }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'30' }} ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'130'|add:'20' }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'130'|add:'30' }} ден</p>
                             {% endif %}
                         </span>
                     </div>
