@@ -78,7 +78,11 @@
                             <p>Достава до врата</p>
                         </div>
                     </div>
+                    {% if free_shipping %}
+                        <p style="font-weight:700;text-align:right;">бесплатна достава</p>
+                    {% else %}
                     <p style="font-weight:700;text-align:right;">180 ден</p>
+                    {% endif %}
                 </div>
 
                 <div class="checkout-order-review margin-bottom">

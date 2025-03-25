@@ -126,7 +126,7 @@ class ProductCampaigns(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Креирана во:')
 
     def __str__(self):
-        return self.product.title
+        return self.product.title 
 
 
 class ProductFAQ(models.Model):
