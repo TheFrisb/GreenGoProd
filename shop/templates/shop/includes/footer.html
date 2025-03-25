@@ -78,7 +78,7 @@
                             <p>Достава до врата</p>
                         </div>
                     </div>
-                    <p style="font-weight:700;text-align:right;">бесплатна достава</p>
+                    <p style="font-weight:700;text-align:right;">180 ден</p>
                 </div>
 
                 <div class="checkout-order-review margin-bottom">
@@ -101,7 +101,7 @@
                         {% if free_shipping %}
                         <p>бесплатна достава</p>
                         {% else %}
-                        <p>До врата - 130 ден</p>
+                        <p>До врата - 180 ден</p>
                         {% endif %}
                         
                     </div>
@@ -112,7 +112,7 @@
                             {% if free_shipping %}
                             <p>{{ cart_total|add:feetotal|add:'30' }} ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'130'|add:'30' }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'180'|add:'30' }} ден</p>
                             {% endif %}
                         </span>
                     </div>

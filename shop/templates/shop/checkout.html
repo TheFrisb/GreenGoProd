@@ -259,7 +259,7 @@
                             {% if free_shipping %}
                             <p class="cart-shipping-method">Бесплатна достава</p>
                             {% else %}
-                            <p class="cart-shipping-method">До врата - 130ден</p>
+                            <p class="cart-shipping-method">До врата - 180ден</p>
                             {% endif %}
                         </td>
                     </tr>
@@ -279,7 +279,7 @@
                             {% if free_shipping %}
                             <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'30' }}</span> ден</p>
                             {% else %}
-                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'130'|add:'30' }}</span> ден</p>
+                            <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'180'|add:'30' }}</span> ден</p>
                             {% endif %}
                         </td>
                     </tr>

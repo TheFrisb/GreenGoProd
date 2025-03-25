@@ -57,7 +57,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Задолжителни:', {
             'fields': ('status', 'category', 'title', 'slug', 'thumbnail',  'content', 'regular_price', 'sale_price',
-            'free_shipping', 'supplier', 'sku', 'supplier_stock_price', 'date_posted',),
+            'supplier', 'sku', 'supplier_stock_price', 'date_posted',),
         }),
         ('Widgets:', {
             'fields': ('gallery_is_verified', 'is_best_seller',),

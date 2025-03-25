@@ -361,7 +361,7 @@ class Order(models.Model):
     subtotal_price = models.IntegerField(null=False, verbose_name='Вкупна цена без достава')
     total_price = models.IntegerField(null=False, verbose_name='Вкупна цена')
     shipping = models.BooleanField(default=True, verbose_name='Достава')
-    shipping_price = models.IntegerField(default=130, blank=True)
+    shipping_price = models.IntegerField(default=180, blank=True)
     orderstatuses = (
         ('Pending', 'Pending'),
         ('Confirmed', 'Confirmed'),
@@ -379,7 +379,7 @@ class Order(models.Model):
     @property
     def get_shipping(self):
         if self.shipping == True:
-            return 'До врата: 130 ден'
+            return 'До врата: 180 ден'
         else:
             return 'Бесплатна достава'
 
