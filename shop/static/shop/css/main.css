@@ -1,8 +1,8 @@
 
 :root{
-    --green: #00703D;
+    --brand-primary: #0A192F;
     --black: #0f0f0f;
-    --red: #FF8C01;
+    --brand-action: #32CD32;
     --regular-price: #808080;
     --footer-gray: #2b2b2b;
 }
@@ -70,7 +70,7 @@ input[type=number] {
 }
 
 #header-banner{
-    background: var(--green);
+    background: var(--brand-primary);
     width: 100%;
     overflow-x: hidden;
     position: relative;
@@ -133,7 +133,9 @@ input[type=number] {
 */
 
 .header-logo-img{
-    width:280px;
+    width:250px;
+    height: auto;
+    padding-right: 12px;
 }
 
 .header-search input[type=text]{
@@ -162,7 +164,7 @@ input[type=number] {
 }
 
 .header-search button:hover{
-    background: var(--green);
+    background: var(--brand-primary);
 }
 
 .material-symbols-outlined{
@@ -239,14 +241,14 @@ input[type=number] {
 .progress {
     padding: 2px;
     max-width: 500px;
-    border: 3px solid var(--green);
+    border: 3px solid var(--brand-primary);
     height: 20px;
     margin: 0px 20px;
   }
   
   .progress .progress__bar {
     height: 100%;
-    background-color: var(--green);
+    background-color: var(--brand-primary);
     
   }
   .progress .progress_bar-half{
@@ -413,7 +415,7 @@ input[type=number] {
     font-size: 12px;
     padding: 3px 5px;
     font-weight: 600;
-    background-color: var(--red);
+    background-color: var(--brand-action);
     color: white;
     border-radius: 5px;
     animation: nudge 4s linear infinite;
@@ -446,10 +448,10 @@ input[type=number] {
     margin-top: auto!important;
     cursor: pointer;
     background-color: white;
-    color: var(--red);
+    color: var(--brand-action);
     border-radius: 30px;
     font-weight: 600;
-    border: 1px solid var(--red);
+    border: 1px solid var(--brand-action);
 
 }
 
@@ -493,7 +495,7 @@ input[type=number] {
     font-size: 12px;
     padding: 3px 5px;
     font-weight: 600;
-    background-color: var(--red);
+    background-color: var(--brand-action);
     border-radius: 5px;
     color: white;
     display:block;
@@ -509,8 +511,8 @@ input[type=number] {
     margin-left: auto!important;
     margin-top: auto!important;
     background-color: white;
-    border: 1px solid var(--red);
-    color: var(--red)!important;
+    border: 1px solid var(--brand-action);
+    color: var(--brand-action)!important;
     font-weight: 600!important;
     border-radius: 30px;
 }
@@ -655,7 +657,7 @@ select {
     outline:none;
   }
   .dropdown-select .dd-searchbox:focus{
-    border-color: #00703d!important;
+    border-color: var(--brand-primary)!important;
   }
   
   .dropdown-select .list ul {
@@ -681,7 +683,7 @@ select {
   
   .dropdown-select .option.selected {
       font-weight: 600;
-      color: #00703d;
+      color: var(--brand-primary);
   }
   
   .dropdown-select .option.selected:focus {
@@ -698,7 +700,7 @@ select {
       color: #666;
   }
 .red{
-    color: var(--red);
+    color: var(--brand-action);
 }
 .strong{
     font-weight: 900;
@@ -719,7 +721,7 @@ select {
     font-weight: 600;
 }
 .green{
-    color:var(--red);
+    color:var(--brand-action);
 }
 
 #navigation{
@@ -744,7 +746,7 @@ select {
     list-style: none;
 }
 #navigation.active{
-    color: var(--green);
+    color: var(--brand-primary);
     display:block;
     transform: scaleY(1);
     transition : 150ms transform ease-in; 
@@ -753,12 +755,15 @@ select {
 .navigation-item{
     padding: 10px 20px;
 }
+.navigation-item > a:hover{
+    color: var(--brand-action);
+}
 .navigation-title{
     color: black;
     text-decoration: none;   
 }
 .navigation-title:hover{
-    color: var(--green);
+    color: var(--brand-primary);
 }
 
 
@@ -890,7 +895,7 @@ select {
     display:inline-block;
     font-size: 18px;
     font-weight: 600;
-    color: var(--red);
+    color: var(--brand-action);
 
 }
 .badges-wrapper{
@@ -965,7 +970,7 @@ select {
 
 .product-savings{
     padding: 5px 10px;
-    background: var(--green);
+    background: var(--brand-primary);
     border-radius: 30px;
     color: white;
     font-size: 12px;
@@ -1112,14 +1117,14 @@ select {
     border-radius: 30px;
 
     background: white;
-    color:var(--red);
-    border: 1px solid var(--red);
+    color:var(--brand-action);
+    border: 1px solid var(--brand-action);
     font-weight:600;
 	margin-left:10px;
     cursor: pointer;
 }
 .fee-add:hover{
-    background-color: var(--red);
+    background-color: var(--brand-action);
 }
 .fee-icon{
     display: inline-block;
@@ -1141,7 +1146,7 @@ select {
     margin: 0;
 }
 .fee-price{
-    color: var(--red);
+    color: var(--brand-action);
     font-size: 16px;
     margin: 0;
     display: inline-block;
@@ -1207,7 +1212,7 @@ select {
 
 }
 .stock-number{
-    color: var(--red)
+    color: var(--brand-action)
 }
 
 .remove-item{
@@ -1270,7 +1275,7 @@ select {
 }
 
 .checkout-dostava.active, .checkout-garancija.active{
-    color:var(--green);
+    color:var(--brand-primary);
 }
 .checkout-dostava-content, .checkout-garancija-content{
     padding-top: 16px;
@@ -1294,14 +1299,14 @@ select {
     font-weight: 600;
     padding: 16px 40px;
     background-color: #f7f6f7;
-    border-top: 3px solid var(--green);
+    border-top: 3px solid var(--brand-primary);
 }
 .no-cartBtn{
     margin-top: 15px;
     padding: 15px;
     border-radius: 30px;
     display:block;
-    background-color:#00703d;
+    background-color:var(--brand-primary);
     color:white;
     font-weight: 600;
 }
@@ -1627,14 +1632,14 @@ select {
     color: black;
 }
 .slick-next::before{
-    background: url(https://greengoshop.mk/static/icons/chevron-right.svg) no-repeat;
+    background: url(https://promotivno.mk/static/icons/chevron-right.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;
     width: 20px;
 }
 .slick-prev::before{
-    background: url(https://greengoshop.mk/static/icons/chevron-left.svg) no-repeat;
+    background: url(https://promotivno.mk/static/icons/chevron-left.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;
@@ -1739,7 +1744,7 @@ select {
     right: -10%;
     width: 64px;
     height: 64px;
-    background-color: #00703d;
+    background-color: var(--brand-primary);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -1762,7 +1767,7 @@ select {
     bottom: 3px;
 }
 .review-count:hover{
-    color: var(--green);
+    color: var(--brand-primary);
 }
 .product-title.product-page{
     font-size: 35px;
@@ -1780,7 +1785,7 @@ select {
 .product-sale-price{
     font-size: 22px;
     display: inline-block;
-    color: var(--red);
+    color: var(--brand-action);
     font-weight: 600;
 }
 .free-shipping{
@@ -1789,7 +1794,7 @@ select {
 }
 .delivery-calculator{
     background: #eceeef;
-    border: 2px dashed var(--green);
+    border: 2px dashed var(--brand-primary);
     color: var(--black);
     padding: 20px;
     margin-top: 10px;
@@ -1842,7 +1847,7 @@ select {
 }
 
 .offer-price{
-    color:var(--red);
+    color:var(--brand-action);
     font-weight: 600;
 }
 .offer-title{
@@ -1979,9 +1984,9 @@ select {
     width: 100%;
     padding: 0px 16px;
     height: 43px;
-    border: 1px solid var(--red);
+    border: 1px solid var(--brand-action);
     border-radius: 30px;
-    color: var(--red);
+    color: var(--brand-action);
     font-weight: 600;
     margin-bottom: 10px;
     background-color: white;
@@ -1994,7 +1999,7 @@ select {
 	display: none;
 	width: 20px;
 	height: 20px;
-	border: 5px solid var(--red);
+	border: 5px solid var(--brand-action);
 	border-radius: 100%;
     
 }
@@ -2016,7 +2021,7 @@ select {
     }
 }
 .addedBtn{
-    background-color: var(--red)!important;
+    background-color: var(--brand-action)!important;
     border: 0;
     color: white!important;
 }
@@ -2024,7 +2029,7 @@ select {
     width: 100%;
     padding: 0px 16px;
     height: 43px;
-    background: var(--red);
+    background: var(--brand-action);
     border: 0;
     color: white;
     border-radius: 30px;
@@ -2069,7 +2074,7 @@ select {
     text-decoration: underline;
 }
 .toggle-static-link:hover{
-    color:#00703d;
+    color:var(--brand-primary);
 }
 .main-toggle{
     display: block;
@@ -2121,7 +2126,7 @@ select {
         font-weight: 500;
     }
     .thank-you-offer h3{
-        color: var(--red);
+        color: var(--brand-action);
     }
     .thank-you-offer h5{
         text-decoration: underline;
@@ -2130,7 +2135,7 @@ select {
         font-weight: 600;
         padding: 10px;
         color: white;
-        background-color: var(--red);
+        background-color: var(--brand-action);
         margin: 0 15vw;
         border-radius: 30px;
     }
@@ -2156,13 +2161,13 @@ select {
         font-size: 24px;
         font-weight: 600;
         display: inline-block;
-        color: var(--red);
+        color: var(--brand-action);
         display: inline-block;
     }
     .offer-box .offer-save{
         font-weight: 600;
         font-size: 12px;
-        background-color: var(--green);
+        background-color: var(--brand-primary);
         padding: 10px 5px;
         border-radius: 5px;
         color: white;
@@ -2171,7 +2176,7 @@ select {
     .offer-button{
         border-radius: 30px;
         padding: 10px 20px;
-        background: var(--red);
+        background: var(--brand-action);
         font-weight: 600;
         color: white;
         border: 0;
@@ -2209,7 +2214,7 @@ select {
         font-size: 16px;
     }
     .order-info div:nth-child(2){
-        background-color: var(--green);
+        background-color: var(--brand-primary);
         color: white;
     }
     #thank-you-order-review{
@@ -2456,16 +2461,16 @@ section#ordered_items_notice_wrapper {
         transform: scale(1.05); 
     }
    .product-link:hover .product-feed-title{
-        color: var(--red)
+        color: var(--brand-action)
     }
     .slider-product-link{
         transform: none!important;
     }
     .footer-item a:hover{
-        color: var(--green);
+        color: var(--brand-action);
     }
     .offerBtn:hover{
-        background-color: var(--red);
+        background-color: var(--brand-action);
         color: white;
     }
     .thankyou-proceed-to-home{
@@ -2491,7 +2496,7 @@ section#ordered_items_notice_wrapper {
         font-weight: 700;
     }
     .faq-title:hover{
-    background: var(--green);
+    background: var(--brand-primary);
     color: white;
     cursor: pointer;
     }
@@ -2503,7 +2508,7 @@ section#ordered_items_notice_wrapper {
     }
     
     .fee-add:hover, .offer-button:hover, .checkout-offerBtn:hover{
-        background: var(--red)!important;
+        background: var(--brand-action)!important;
         color: white!important;
     }
     .fee-title{
@@ -2512,7 +2517,7 @@ section#ordered_items_notice_wrapper {
     }
     .fee-title:hover{
         transform: scale(1.02); 
-        color: var(--green)
+        color: var(--brand-primary)
     }
 	
 }
@@ -3062,15 +3067,15 @@ section#ordered_items_notice_wrapper {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 #checkout_form_use_offer h1{
-    color: var(--green);
+    color: var(--brand-primary);
 }
 #checkout_form_use_offer h3{
-    color: var(--red);
+    color: var(--brand-action);
 }
 #checkout_form_use_offer #accept_checkout_onClose_offer{
     padding: 10px 0px;
     font-size: 15px;
-    background-color: var(--red);
+    background-color: var(--brand-action);
     width: 100%;
     border-radius: 30px;
     border: none;
@@ -3101,7 +3106,7 @@ section#ordered_items_notice_wrapper {
 }
 #checkout_form h1{
     text-align: center;
-    color: var(--green);
+    color: var(--brand-primary);
     margin-bottom: 8px;
     font-size: 32px;
 }
@@ -3154,7 +3159,7 @@ section#ordered_items_notice_wrapper {
 }
 #checkout_form h4{
     text-align: center;
-    color: var(--green);
+    color: var(--brand-primary);
     margin-bottom: 16px;
     font-size: 20px;
 
@@ -3279,8 +3284,8 @@ section#ordered_items_notice_wrapper {
     padding: 10px;
     border-radius: 30px;
     background-color: white;
-    border: 1px solid var(--red);
-    color: var(--red);
+    border: 1px solid var(--brand-action);
+    color: var(--brand-action);
     cursor: pointer;
 }
 #checkout_form .fee-item{
@@ -3301,7 +3306,7 @@ section#ordered_items_notice_wrapper {
 .checkout-fees-checkbox {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--red);
+    border: 2px solid var(--brand-action);
     background-color: #fff;
     position: relative;
     border-radius: 5px;
@@ -3319,10 +3324,10 @@ section#ordered_items_notice_wrapper {
     display: none;
   }
   #checkout_form .fee-item.checked{
-    border-color: var(--green)!important;
+    border-color: var(--brand-primary)!important;
   }
   .fee-item.checked .checkout-fees-checkbox{
-    background-color: var(--red)!important;
+    background-color: var(--brand-action)!important;
   }
   .fee-item.checked .checkout-checkmark{
     border-color: white!important;
@@ -3331,7 +3336,7 @@ section#ordered_items_notice_wrapper {
 .pay-button{
     padding: 10px 0px;
     font-size: 15px;
-    background-color: var(--red);
+    background-color: var(--brand-action);
     width: 100%;
     border-radius: 30px;
     border: none;
@@ -3427,7 +3432,7 @@ section#ordered_items_notice_wrapper {
 .product-upsell-checkbox {
     width: 20px;
     height: 20px;
-    border: 1px solid var(--green);
+    border: 1px solid var(--brand-primary);
     background-color: #fff;
     position: relative;
     border-radius: 5px;
@@ -3446,14 +3451,14 @@ section#ordered_items_notice_wrapper {
     display: none;
   }
   .product-page-upsell.checked{
-    border-color: var(--green);
+    border-color: var(--brand-primary);
   }
   .product-upsell-checkbox.checked .checkmark {
     display: block;
     border-color: white;
   }
   .product-upsell-checkbox.checked{
-    background-color: var(--green);
+    background-color: var(--brand-primary);
   }
 
 

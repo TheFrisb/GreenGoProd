@@ -33,7 +33,7 @@ def ViewContentEvent(request, product):
                     fbp=request.COOKIES.get('_fbp'),                    
                     )
     content = Content(
-                    brand='GreenGoShop',
+                    brand='Promotivno',
                     product_id=product.id,
                     item_price = product.sale_price,
                     category=str(product.category.name),
@@ -86,7 +86,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                        
                     )
         content = Content(
-                        brand='GreenGoShop',
+                        brand='Promotivno',
                         product_id=product.id,
                         quantity=qty,
                         item_price = product.sale_price,
@@ -140,7 +140,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
                     
                 )
         content = Content(
-                    brand='GreenGoShop',
+                    brand='Promotivno',
                     product_id=product.id,
                     quantity=qty,
                     item_price = offer_price,
@@ -192,7 +192,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
             
         )
         content = Content(
-            brand='GreenGoShop',
+            brand='Promotivno',
             product_id=product.id, #fix
             quantity=qty,
             item_price = attribute_price,

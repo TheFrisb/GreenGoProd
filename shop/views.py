@@ -13,8 +13,8 @@ from uuid import uuid4
 import datetime
 import xlwt
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font
 from openpyxl.writer.excel import save_virtual_workbook
+from openpyxl.styles import Alignment, Font
 from django.db.models.functions import Concat
 from .forms import ExportOrder
 from django.utils.timezone import get_current_timezone, make_aware
@@ -61,13 +61,13 @@ def export_products_csv(request):
 
                 writer.writerow(
                     [str(product.id) + '_' + attribute.label, product.title + ' - ' + attribute_name, content,
-                     'https://greengoshop.mk' + product.get_absolute_url(),
-                     'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
-                     'New', 'GreenGoShopMK'])
+                     'https://promotivno.mk' + product.get_absolute_url(),
+                     'https://promotivno.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
+                     'New', 'PromotivnoMK'])
 
-        writer.writerow([product.id, product.title, content, 'https://greengoshop.mk' + product.get_absolute_url(),
-                         'https://greengoshop.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
-                         'New', 'GreenGoShopMK'])
+        writer.writerow([product.id, product.title, content, 'https://promotivno.mk' + product.get_absolute_url(),
+                         'https://promotivno.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
+                         'New', 'PromotivnoMK'])
 
     return response
 
