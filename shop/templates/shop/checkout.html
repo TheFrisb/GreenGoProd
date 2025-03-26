@@ -24,7 +24,7 @@
                         <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
                         <span class="green"><span>{{ item.price }}</span> ден</span>
                         </div>
-                        <p class="checkoutOffer-text">{{ item.offer_text }}</p>
+                        <p class="checkoutOffer-text">{{ item.offer_text|safe }}</p>
                         
                     </span>
                     {% if item.is_added == True %}
@@ -139,7 +139,7 @@
                             <p class="sidecart-item-quantity checkout-item-before-price">{{ item.product.regular_price }} ден</p>
                             <span class="green"><span>{{ item.price }}</span> ден</span>
                             </div>
-                            <p class="checkoutOffer-text">{{ item.offer_text }}</p>
+                            <p class="checkoutOffer-text">{{ item.offer_text|safe }}</p>
                             
                         </span>
                         {% if item.is_added == True %}
@@ -275,7 +275,7 @@
                             <p><span class="cart-total-span">{{ cart_total|add:feetotal|add:'180'|add:'30'|intcomma }}</span> ден</p>
                             {% endif %}
                         </td>
-                    </tr> 
+                    </tr>
                 </tfoot>
                 
             </table>

@@ -124,7 +124,7 @@
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                     <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
-                    <p class="sidecartOffer-text">{{ item.offer_text }}</p>
+                    <p class="sidecartOffer-text">{{ item.offer_text|safe }}</p>
                     
                 </span>
                 {% if item.is_added == True %}
@@ -168,7 +168,7 @@
                 <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                     <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
-                    <p class="sidecartOffer-text">{{ item.offer_text }}</p>
+                    <p class="sidecartOffer-text">{{ item.offer_text|safe }}</p>
                     
                 </span>
                 {% if item.is_added == True %}
