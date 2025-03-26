@@ -33,11 +33,11 @@ def addtocart(request):
                     # if product.check .quantity >= prod_qty: Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
                     prod_qty = int(request.POST.get('product_qty'))
                     CartItems.objects.create(cart = CartHolder, product_id=prod_id, product_qty=prod_qty)
-                    print('woops')
                     try:
                         facebook_pixel.AddToCartPixelEvent(request, 'NORMAL', product_check, prod_qty)
-                    except:
-                        logger.exception("ADD TO CART(NORMAL) PIXEL EVENT EXCEPTION")
+                    except Exception as e:
+                        logger.exception("ADD TO CART(NORMAL) pixel event exception")
+                        logger.exception(e)
                         pass
                 
                     return JsonResponse({'status': "Product added successfuly"})

@@ -968,7 +968,7 @@ $(document).ready(function () {
     if($(".header-banner-for-product-page").length){
         if(window.matchMedia('(max-width: 768px)').matches){
             var text1 = '🔥 100% сигурно купување';
-            var text2 = '🚚 Бесплатна достава на сите производи';
+            var text2 = '🚚 Брза достава до дома';
             var counter = 1;
             text_holder = $("#header-banner-product-text");
             // rotate between both texts every 6 seconds with a fade effect
