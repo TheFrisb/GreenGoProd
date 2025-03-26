@@ -87,7 +87,7 @@
         {% if product.free_shipping == True %}
         <p class="free-shipping">бесплатна достава</p>
         {% endif %}
-        <p class="delivery-calculator"><span style="color:#FF8C01;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
+        <p class="delivery-calculator"><span style="color:#32CD32;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
     </div>
     {% if upsells %}
     <div class="product-page-upsells">
@@ -109,7 +109,7 @@
             {% endif %}
             <div class="product-page-upsell-info">
                 <p style="font-weight:600">{{ upsell.title }}</p>
-                <p><span style="font-size:14px;font-weight:600;color: #ff8c01;">вклучен со продуктот</span></p>   
+                <p><span style="font-size:14px;font-weight:600;color: #32CD32;">вклучен со продуктот</span></p>
             </div>
         </div>
         {% else %}
@@ -129,7 +129,7 @@
             {% endif %}
             <div class="product-page-upsell-info">
                 <p style="font-weight:600">{{ upsell.title }}</p>
-                <p><span style="font-size:12px;font-weight:500;color:#808080;text-decoration: line-through;">{{ upsell.regular_price }} ден</span> <span style="font-size:14px;font-weight:600;color: #ff8c01;">{{ upsell.sale_price }} ден</span></p>    
+                <p><span style="font-size:12px;font-weight:500;color:#808080;text-decoration: line-through;">{{ upsell.regular_price }} ден</span> <span style="font-size:14px;font-weight:600;color: #32CD32;">{{ upsell.sale_price }} ден</span></p>
             </div>
         </div>
         {% endif %}

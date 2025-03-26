@@ -235,7 +235,7 @@
                                     <a href="{% url 'product-page' item.product.slug %}">{{ item.product.title }}</a>
                                     <div class="upsell-price">
                                         <p>
-                                            <span style="text-decoration: line-through;font-size: 12px;color: #abaeb4;font-weight:600;">{{ item.product.regular_price }} ден</span> <span style="font-size: 14px;color: #ff8c01;font-weight:600;">{{ item.price }} ден</span></p>
+                                            <span style="text-decoration: line-through;font-size: 12px;color: #abaeb4;font-weight:600;">{{ item.product.regular_price }} ден</span> <span style="font-size: 14px;color: #32CD32;font-weight:600;">{{ item.price }} ден</span></p>
                                     </div>
                                     <p class="checkoutOffer-text" style="display:inline-block!important">{{ item.offer_text|safe }}</p>
                                 </div>
@@ -273,7 +273,7 @@
                                 {% if fee.emoji %}
                                     <div style="display:flex;justify-content: center; align-items: center;"><span style="font-size:22px">{{fee.emoji}}</span></div>
                                 {% endif %}
-                                <p>Додади <span style="color:red;font-weight:700">{{ fee.title }}</span> за само <span style="font-weight:700; color:#ff8c01">{{ fee.price }} ден</span></p>
+                                <p>Додади <span style="color:red;font-weight:700">{{ fee.title }}</span> за само <span style="font-weight:700; color:#32CD32">{{ fee.price }} ден</span></p>
                                 
                             </div>
                         {% endfor %}
