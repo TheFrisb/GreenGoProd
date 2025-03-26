@@ -24,14 +24,35 @@ pixel_id = config('PIXEL_ID')
 FacebookAdsApi.init(access_token=access_token)
 
 
+def get_ip_addr(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR", None)
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR", None)
+
+    if ip is None:
+        ip = ""
+    return ip
+
+
+def get_user_agent(request):
+    return request.META.get("HTTP_USER_AGENT", "")
+
+
+def get_user_data(request):
+    return UserData(
+        client_ip_address=get_ip_addr(request),
+        client_user_agent=get_user_agent(request),
+        fbc=request.COOKIES.get("_fbc", None),
+        fbp=request.COOKIES.get("_fbp", None),
+    )
+
 def ViewContentEvent(request, product):
 
-    user_data = UserData(
-                    client_ip_address=request.META.get('REMOTE_ADDR'),
-                    client_user_agent=request.headers['User-Agent'],
-                    fbc=request.COOKIES.get('_fbc'),
-                    fbp=request.COOKIES.get('_fbp'),                    
-                    )
+    user_data = get_user_data(request)
+
     content = Content(
                     brand='Promotivno',
                     product_id=product.id,
@@ -78,13 +99,8 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
 
     if(addtocart_type == 'NORMAL'):
         total_price = product.sale_price * qty
-        user_data = UserData(
-                        client_ip_address=request.META.get('REMOTE_ADDR'),
-                        client_user_agent=request.headers['User-Agent'],
-                        fbc=request.COOKIES.get('_fbc'),
-                        fbp=request.COOKIES.get('_fbp'),
-                       
-                    )
+        user_data = get_user_data(request)
+
         content = Content(
                         brand='Promotivno',
                         product_id=product.id,
@@ -132,13 +148,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
     if(addtocart_type == 'OFFER'):
 
         total_price = offer_price * qty
-        user_data = UserData(
-                    client_ip_address=request.META.get('REMOTE_ADDR'),
-                    client_user_agent=request.headers['User-Agent'],
-                    fbc=request.COOKIES.get('_fbc'),
-                    fbp=request.COOKIES.get('_fbp'),
-                    
-                )
+        user_data = get_user_data(request)
         content = Content(
                     brand='Promotivno',
                     product_id=product.id,
@@ -184,13 +194,7 @@ def AddToCartPixelEvent(request, addtocart_type, product, qty, offer_price = Non
     if(addtocart_type == 'VARIABLE'):
         catalogue_attribute_label = str(product.id) + '_' + attribute_label
         total_price = attribute_price * qty
-        user_data = UserData(
-            client_ip_address=request.META.get('REMOTE_ADDR'),
-            client_user_agent=request.headers['User-Agent'],
-            fbc=request.COOKIES.get('_fbc'),
-            fbp=request.COOKIES.get('_fbp'),
-            
-        )
+        user_data = get_user_data(request)
         content = Content(
             brand='Promotivno',
             product_id=product.id, #fix
@@ -282,13 +286,7 @@ def InitiateCheckoutEvent(request):
                     category=str(item.product.category.name),
                     delivery_category=DeliveryCategory.HOME_DELIVERY,))
 
-    user_data = UserData(
-                        client_ip_address=request.META.get('REMOTE_ADDR'),
-                        client_user_agent=request.headers['User-Agent'],
-                        fbc=request.COOKIES.get('_fbc'),
-                        fbp=request.COOKIES.get('_fbp'),
-                       
-                    )
+    user_data = get_user_data(request)
 
     custom_data = CustomData(
                     contents=custom_content_list,
@@ -393,15 +391,15 @@ def PurchaseEvent(request, order_items, order_total, number, city, name):
                 delivery_category=DeliveryCategory.HOME_DELIVERY,))
         
     user_data = UserData(
-                        client_ip_address=request.META.get('REMOTE_ADDR'),
-                        client_user_agent=request.headers['User-Agent'],
-                        fbc=request.COOKIES.get('_fbc'),
-                        fbp=request.COOKIES.get('_fbp'),
-                        first_name=sha256(user_name.encode('utf-8')).hexdigest(),
-                        last_name=sha256(user_lastname.encode('utf-8')).hexdigest(),
-                        city=sha256(user_city.encode('utf-8')).hexdigest(),
-                        country_code=sha256('mk'.encode('utf-8')).hexdigest(),
-                        phone=sha256(user_phone_number.encode('utf-8')).hexdigest(),    
+                        client_ip_address=get_ip_addr(request),
+                        client_user_agent=get_user_agent(request),
+                        fbc=request.COOKIES.get('_fbc', None),
+                        fbp=request.COOKIES.get('_fbp', None),
+                        first_name=sha256(user_name.encode()).hexdigest(),
+                        last_name=sha256(user_lastname.encode()).hexdigest(),
+                        city=sha256(user_city.encode()).hexdigest(),
+                        country_code=sha256('mk'.encode()).hexdigest(),
+                        phone=sha256(user_phone_number.encode()).hexdigest(),
                     )
 
 
