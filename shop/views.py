@@ -61,12 +61,12 @@ def export_products_csv(request):
 
                 writer.writerow(
                     [str(product.id) + '_' + attribute.label, product.title + ' - ' + attribute_name, content,
-                     'https://promotivno.mk' + product.get_absolute_url(),
-                     'https://promotivno.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
+                     'https://promotivno.com' + product.get_absolute_url(),
+                     'https://promotivno.com' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
                      'New', 'PromotivnoMK'])
 
-        writer.writerow([product.id, product.title, content, 'https://promotivno.mk' + product.get_absolute_url(),
-                         'https://promotivno.mk' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
+        writer.writerow([product.id, product.title, content, 'https://promotivno.com' + product.get_absolute_url(),
+                         'https://promotivno.com' + product.thumbnail.url, 'in stock', str(product.sale_price) + 'MKD',
                          'New', 'PromotivnoMK'])
 
     return response

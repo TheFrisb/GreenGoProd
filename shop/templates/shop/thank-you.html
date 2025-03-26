@@ -1,7 +1,7 @@
 {% extends 'shop/base.html' %}
 {% load static %}
 {% block metatags %}
-<meta property="og:image" content="https://promotivno.mk{% static 'icons/logo_meta_tag.webp' %}" />
+<meta property="og:image" content="https://promotivno.com{% static 'icons/logo_meta_tag.webp' %}" />
 {% endblock metatags %}
 {% block content %}
 <div class="content-container thank-you">
@@ -22,7 +22,7 @@
         </div>
         <div class="order-info-item">
             <p class="order-info-title">ПЛАЌАЊЕ:</p>
-            <p class="order-info-content">Плаќање при достава (+30 ден. провизија)</p>
+            <p class="order-info-content">Плаќање при достава</p>
         </div>
     </div>
     {% if offerproduct %}
@@ -143,14 +143,6 @@
                         {% else %}
                         <p class="cart-shipping-method">Бесплатна достава</p>
                         {% endif %}
-                    </td>
-                </tr>
-                <tr class="cart-provision">
-                    <td>
-                        <p>Провизија за готовинско работење</p>
-                    </td>
-                    <td>
-                        <p class="cart-provision-sum">30 ден</p>
                     </td>
                 </tr>
                 <tr class="cart-total">

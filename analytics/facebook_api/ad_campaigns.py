@@ -151,7 +151,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
         link_data[AdCreativeLinkData.Field.message] = ad_primary_text #Primary text
         link_data[AdCreativeLinkData.Field.description] = ad_description_text #Description
         link_data[AdCreativeLinkData.Field.name] = ad_headline_text #Headline
-        link_data[AdCreativeLinkData.Field.caption] = 'promotivno.mk'
+        link_data[AdCreativeLinkData.Field.caption] = 'promotivno.com'
 
         link_data[AdCreativeLinkData.Field.image_hash] = image.get_hash()
         link_data[AdCreativeLinkData.Field.call_to_action] = {
@@ -180,7 +180,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
             params={
                 'name': ad_name + ' - ' + str(random_number),
                 'adset_id': ad_set_id,
-                'conversion_domain': 'promotivno.mk',
+                'conversion_domain': 'promotivno.com',
                 'creative': {'creative_id': creative['id']},
                 'instagram_actor_id': instagram_account_id,
                 'status': 'PAUSED',
@@ -238,7 +238,7 @@ def create_facebook_ad(ad_set_id, ad_type, ad_name, ad_primary_text, ad_descript
             params={
                 'name': ad_name + ' - ' + str(random_number), # fix
                 'adset_id': ad_set_id, # change
-                'conversion_domain': 'promotivno.mk',
+                'conversion_domain': 'promotivno.com',
                 'creative': {'creative_id': creative['id']},
                 'instagram_actor_id': instagram_account_id,
                 'status': 'PAUSED',
@@ -344,7 +344,7 @@ def create_ad_preview(ad_primary_text, ad_description_text, ad_headline_text, ph
     fields = [
     ]
     params = {
-    'creative': {'object_story_spec':{'link_data':{'call_to_action':{'type':'SHOP_NOW','value':{'link':'https://promotivno.mk'}},'description':ad_description_text,'link':'https://promotivno.mk','message':ad_primary_text,'name':ad_headline_text,'picture':photo_url},'page_id':'110068238444042'}},
+    'creative': {'object_story_spec':{'link_data':{'call_to_action':{'type':'SHOP_NOW','value':{'link':'https://promotivno.com'}},'description':ad_description_text,'link':'https://promotivno.com','message':ad_primary_text,'name':ad_headline_text,'picture':photo_url},'page_id':'110068238444042'}},
     'ad_format': 'MOBILE_FEED_STANDARD',
     }
     ad_previews = AdAccount(ad_account_id).get_generate_pre_views(

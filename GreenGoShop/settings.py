@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'imagekit',
     'django.contrib.sitemaps',
+    # add humanize
+    'django.contrib.humanize',
 ]
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {

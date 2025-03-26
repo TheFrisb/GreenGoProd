@@ -409,7 +409,7 @@ def create_campaign(request):
         try:
             campaign_name = request.POST.get('campaign_name')
             product_id = request.POST.get('product_id')
-            link_url = 'https://promotivno.mk' + Product.objects.get(id=product_id).get_absolute_url()
+            link_url = 'https://promotivno.com' + Product.objects.get(id=product_id).get_absolute_url()
             print(link_url)
             adsets = json.loads(request.POST.get('adsets'))
             campaign = ad_campaigns.create_facebook_campaign(campaign_name=campaign_name)
@@ -492,7 +492,7 @@ def get_ad_preview(request):
         ad_primary_text = request.GET.get('ad_primary_text')
         ad_description_text = request.GET.get('ad_description_text')
         ad_headline_text = request.GET.get('ad_headline_text')
-        photo_url = 'https://promotivno.mk' + str(request.GET.get('photo_url'))
+        photo_url = 'https://promotivno.com' + str(request.GET.get('photo_url'))
 
         result = ad_campaigns.create_ad_preview(ad_primary_text=ad_primary_text,
                                                 ad_description_text=ad_description_text,

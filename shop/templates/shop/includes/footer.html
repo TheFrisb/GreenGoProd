@@ -1,4 +1,4 @@
-{% load static %}
+{% load static humanize %}
 <section id="ordered_items_notice_wrapper" style="display:none;position:relative;">
 <a href="#" id="ordered_items_notice">
     <img src="{{product.thumbnail_loop.url}}" alt="" class="product-img" id="ordered_product_thumbnail">
@@ -81,7 +81,7 @@
                     {% if free_shipping %}
                         <p style="font-weight:700;text-align:right;">бесплатна достава</p>
                     {% else %}
-                    <p style="font-weight:700;text-align:right;">180 ден</p>
+                    <p style="font-weight:700;text-align:right;">99 ден</p>
                     {% endif %}
                 </div>
 
@@ -97,15 +97,11 @@
                         </div>
                         {% endfor %}
                     <div class="order-row">
-                        <p>Провизија за готовинско работење</p>
-                        <p>30 ден</p>
-                    </div>
-                    <div class="order-row">
                         <p>Достава</p>
                         {% if free_shipping %}
                         <p>бесплатна достава</p>
                         {% else %}
-                        <p>До врата - 180 ден</p>
+                        <p>Достава до врата - 99 ден</p>
                         {% endif %}
                         
                     </div>
@@ -114,9 +110,9 @@
                         <span style="display:flex;flex-direction: column-reverse;" style="flex-basis:48%">
                             <p style="font-size:12px;text-align:right;">Вклучувајќи 18% ДДВ</p>
                             {% if free_shipping %}
-                            <p>{{ cart_total|add:feetotal|add:'30' }} ден</p>
+                            <p>{{ cart_total|add:feetotal|humanize }} ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'180'|add:'30' }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'99'|humanize }} ден</p>
                             {% endif %}
                         </span>
                     </div>
@@ -319,8 +315,7 @@
         </div>
         <div class="footer-item ">
             <h3>Контакт</h3>
-            <a href="tel:071321312" aria-label="Контакт телефон"><img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16">+389 71321312 (10:00 – 23:00)</a>
-            <a href="mailto:contact@promotivno.mk" aria-label="Контакт mail"><img src="{% static 'icons/envelope.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16">contact@promotivno.mk</a>
+            <a href="mailto:contact@promotivno.com" aria-label="Контакт mail"><img src="{% static 'icons/envelope.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16">contact@promotivno.com</a>
         </div>
         <div class="footer-item">
             <h3>Полиси</h3>
@@ -334,8 +329,8 @@
         </div>
     <hr class="horizontal-line">
     <div class="footer-social-icons">
-        <a href="https://www.facebook.com/promotivno.mk" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}" alt="" class="image-icon filter-white" width="24" height="24"></a>
-        <a href="https://www.instagram.com/promotivno.mk/" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" alt="" class="image-icon filter-white" width="24" height="24"></a>
+        <a href="https://www.facebook.com/promotivno.com" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}" alt="" class="image-icon filter-white" width="24" height="24"></a>
+        <a href="https://www.instagram.com/promotivno.com/" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" alt="" class="image-icon filter-white" width="24" height="24"></a>
     </div> 
 </div>
 </footer>

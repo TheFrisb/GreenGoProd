@@ -1,16 +1,16 @@
 {% extends 'shop/base.html' %}
 {% load static %}
 {% block metatags %}
-<meta property="og:image" content="https://promotivno.mk{{product.thumbnail.url}}" />
+<meta property="og:image" content="https://promotivno.com{{product.thumbnail.url}}" />
 {% endblock metatags %}
 {% block content %}
 <style>#overlay-loader{position:absolute;height:559px;width:550px;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center}@media (max-width:767px){#overlay-loader{width:100%;height:100vw}}#overlay-loader img{width:40px;height:40px}</style>
 <div class="content-container product-page">
-<a href="tel:071321312" class="phone-sticky mobile"><span>ЈАВИ СЕ И НАРАЧАЈ <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></span></a>
+{#<a href="tel:071321312" class="phone-sticky mobile"><span>ЈАВИ СЕ И НАРАЧАЈ <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></span></a>#}
 <div class="col-1 product-page">
         <div class="sticky-holder" style="position:relative">
         <div class="product-sale-badge"><p>-{{product.get_percentage_off}}%</p></div>
-        <div id="overlay-loader" style=""><img src="https://promotivno.mk/static/icons/5.svg" width="40" height="40"></div>
+        <div id="overlay-loader" style=""><img src="https://promotivno.com/static/icons/5.svg" width="40" height="40"></div>
         <div class="slider-holder">
                     <div>
                          <picture>
@@ -309,7 +309,7 @@
                 </span>
                 <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
             <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Доколку не сте задоволни од производот можете да побарате рефундација или да го замените производот со некој друг што го имаме на залиха моментално. Се што треба е да ни се јавите на телефонскиот број <a href="tel:+38971321312" style="display:inline-block; color:#00703d;font-weight:500;">071321312</a> и веднаш ќе добиете некој од нашите колеги кој ќе ви помогне да се реши проблемот.</p>
+                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Доколку не сте задоволни од производот можете да побарате рефундација или да го замените производот со некој друг што го имаме на залиха моментално. Се што треба е да не контактирате на <a href="mailto:contact@promotivno.com" style="display:inline-block; color:#00703d;font-weight:500;">contact@promotivno.com</a> и веднаш ќе добиете некој од нашите колеги кој ќе ви помогне да се реши проблемот.</p>
             </div>
         </div>
         <div class="faq-toggle">

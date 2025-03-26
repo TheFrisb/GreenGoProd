@@ -4,10 +4,9 @@
 {% if not product %}
 <section id="header-banner">
     <div class="banner-inner-header-1" style="display: flex;align-items:center;justify-content:center ">
-        <a href="tel:071321312" class="banner-text">071321312 (10:00 - 23:00)</a>
-        <a href="mailto:contact@promotivno.mk" class="banner-text">contact@promotivno.mk</a>
-        <a href="https://www.facebook.com/promotivno.mk" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}"  class="image-icon filter-white"  alt="" width="16" height="16"></a>
-        <a href="https://www.instagram.com/promotivno.mk" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16" height="16"></a>
+        <a href="mailto:contact@promotivno.com" class="banner-text">contact@promotivno.com</a>
+        <a href="https://www.facebook.com/promotivno.com" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}"  class="image-icon filter-white"  alt="" width="16" height="16"></a>
+        <a href="https://www.instagram.com/promotivno.com" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16" height="16"></a>
     </div>
 </section>
 {% else %}
@@ -24,9 +23,9 @@
             <img src="{% static 'icons/header-logo.png' %}" alt="default.jpg" class="header-logo-img" width="200"  >
         </a>
         </div>
-        <a href="tel:+38971321312" class="header-icon mobile above-small">
-            <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon" width="24" height="24" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);">
-        </a>
+{#        <a href="tel:+38971321312" class="header-icon mobile above-small">#}
+{#            <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon" width="24" height="24" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);">#}
+{#        </a>#}
         <div class="header-search">
             <form action="{% url 'search_results' %}" method="get" aria-label="Пребарај производи">
             <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи" aria-label="Копче за пребарување">

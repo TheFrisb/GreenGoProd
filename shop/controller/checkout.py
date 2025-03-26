@@ -44,10 +44,10 @@ def placeorder(request):
             neworder.shipping = False
 
         if(countProducts == 1):
-            neworder.total_price = cart_total_price + neworder.shipping_price + 30 #provizija
+            neworder.total_price = cart_total_price + neworder.shipping_price
             neworder.shipping = True
         else:
-            neworder.total_price = cart_total_price + 30 #provizija
+            neworder.total_price = cart_total_price
         neworder.tracking_no = trackno
         neworder.save()
         for item in neworderitems:
