@@ -237,7 +237,7 @@
                                         <p>
                                             <span style="text-decoration: line-through;font-size: 12px;color: #abaeb4;font-weight:600;">{{ item.product.regular_price }} ден</span> <span style="font-size: 14px;color: #ff8c01;font-weight:600;">{{ item.price }} ден</span></p>
                                     </div>
-                                    <p class="checkoutOffer-text" style="display:inline-block!important">{{ item.offer_text }}</p>
+                                    <p class="checkoutOffer-text" style="display:inline-block!important">{{ item.offer_text|safe }}</p>
                                 </div>
                             </div>
                             {% if item.is_added == True %}
