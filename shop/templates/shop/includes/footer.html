@@ -110,9 +110,9 @@
                         <span style="display:flex;flex-direction: column-reverse;" style="flex-basis:48%">
                             <p style="font-size:12px;text-align:right;">Вклучувајќи 18% ДДВ</p>
                             {% if free_shipping %}
-                            <p>{{ cart_total|add:feetotal|humanize }} ден</p>
+                            <p>{{ cart_total|add:feetotal|intcomma }} ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'99'|humanize }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'99'|intcomma }} ден</p>
                             {% endif %}
                         </span>
                     </div>
