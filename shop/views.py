@@ -433,7 +433,7 @@ def export_excel(request):
             rows = Order.objects.filter(Q(created_at__range=[date_from, date_to], status='Confirmed', ) | Q(
                 created_at__range=[date_from, date_to], status='Pending')).annotate(
                 shippingann=Case(
-                    When(shipping=True, then=Value('do vrata 180 den')),
+                    When(shipping=True, then=Value('do vrata 99 den')),
                     When(shipping=False, then=Value('besplatna dostava'))
                 ),
             ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no',
@@ -444,7 +444,7 @@ def export_excel(request):
                 Q(created_at__range=[date_from_week_before, date_from], status='Confirmed', ) | Q(
                     created_at__range=[date_from_week_before, date_from], status='Pending')).annotate(
                 shippingann=Case(
-                    When(shipping=True, then=Value('do vrata 180 den')),
+                    When(shipping=True, then=Value('do vrata 99 den')),
                     When(shipping=False, then=Value('besplatna dostava'))
                 ),
             ).order_by('-created_at').values_list('created_at', 'name', 'address', 'city', 'number', 'tracking_no',
