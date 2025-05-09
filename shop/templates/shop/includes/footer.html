@@ -81,7 +81,7 @@
                     {% if free_shipping %}
                         <p style="font-weight:700;text-align:right;">бесплатна достава</p>
                     {% else %}
-                    <p style="font-weight:700;text-align:right;">99 ден</p>
+                    <p style="font-weight:700;text-align:right;">130 ден</p>
                     {% endif %}
                 </div>
 
@@ -100,8 +100,8 @@
                         <p>Достава</p>
                         {% if free_shipping %}
                         <p>бесплатна достава</p>
-                        {% else %}
-                        <p>Достава до врата - 99 ден</p>
+                        {% else %} 
+                        <p>Достава до врата - 130 ден</p>
                         {% endif %}
                         
                     </div>
@@ -112,7 +112,7 @@
                             {% if free_shipping %}
                             <p>{{ cart_total|add:feetotal|intcomma }} ден</p>
                             {% else %}
-                            <p>{{ cart_total|add:feetotal|add:'99'|intcomma }} ден</p>
+                            <p>{{ cart_total|add:feetotal|add:'130'|intcomma }} ден</p>
                             {% endif %}
                         </span>
                     </div>
