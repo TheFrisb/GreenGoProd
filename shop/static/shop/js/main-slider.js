@@ -32,10 +32,13 @@ function initProductPageMainSlider() {
       controlsText: makeSliderButtons(28),
       mouseDrag: true,
       preventScrollOnTouch: 'auto',
+      
     });
 
     images.forEach((image) => {
-      image.style.visibility = 'visible';
+      // find closest div when ascending up the DOM
+      let parentDiv = image.closest('div');
+      parentDiv.style.visibility = 'visible';
     });
 
     // if tablet or desktop screen, make thumbnails
