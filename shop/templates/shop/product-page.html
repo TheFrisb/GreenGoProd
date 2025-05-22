@@ -1,338 +1,417 @@
 {% extends 'shop/base.html' %}
 {% load static %}
 {% block metatags %}
-<meta property="og:image" content="https://promotivno.com{{product.thumbnail.url}}" />
+    <meta property="og:image" content="https://promotivno.com{{ product.thumbnail.url }}"/>
 {% endblock metatags %}
 {% block content %}
-<style>#overlay-loader{position:absolute;height:559px;width:550px;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center}@media (max-width:767px){#overlay-loader{width:100%;height:100vw}}#overlay-loader img{width:40px;height:40px}</style>
-<div class="content-container product-page">
-{#<a href="tel:071321312" class="phone-sticky mobile"><span>ЈАВИ СЕ И НАРАЧАЈ <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></span></a>#}
-<div class="col-1 product-page">
+    <style>#overlay-loader {
+        position: absolute;
+        height: 559px;
+        width: 550px;
+        z-index: 100;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    @media (max-width: 767px){#overlay-loader {
+        width: 100%;
+        height: 100vw
+    }
+
+    }
+    #overlay-loader img {
+        width: 40px;
+        height: 40px
+    }</style>
+    <div class="content-container product-page">
+    {#<a href="tel:071321312" class="phone-sticky mobile"><span>ЈАВИ СЕ И НАРАЧАЈ <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon top-icon filter-white" width="16" height="16" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);"></span></a>#}
+    <div class="col-1 product-page">
         <div class="sticky-holder" style="position:relative">
-        <div class="product-sale-badge"><p>-{{product.get_percentage_off}}%</p></div>
-        <div id="overlay-loader" style=""><img src="https://promotivno.com/static/icons/5.svg" width="40" height="40"></div>
-        <div class="slider-holder">
-                    <div>
-                         <picture>
-                            <source srcset="{{product.thumbnail.url}}" type="image/webp">
-                            <img src="{{ product.thumbnail_as_jpeg.url }}" alt="slider image">
-                         </picture>
-                         
-                         {% if product.gallery_is_verified %}
-                         <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
+            <div class="product-sale-badge"><p>-{{ product.get_percentage_off }}%</p></div>
+            <div class="md:sticky md:top-4 relative" id="productGallery">
+                <div>
+                    <picture>
+                        <source srcset="{{ product.thumbnail.url }}" type="image/webp">
+                        <img src="{{ product.thumbnail_as_jpeg.url }}" alt="slider image" width="550" height="550">
+                    </picture>
+                    {% if product.gallery_is_verified %}
+                        <p class="verified-product-image"
+                           style="display:flex;justify-content:center;align-items:center;">
                             <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
                             производот е ист како на сликата</p>
-                         {% endif %}
-                    </div>
-                    
-                    {% for img in gallery %}
-                    <div>
+                    {% endif %}
+                </div>
+                {% for img in gallery %}
+                    <div style="visibility: hidden">
                         <picture>
                             <source srcset="{{ img.galleryimg.url }}" type="image/webp">
-                            <img src="{{ img.galleryimg_as_jpeg.url }}" alt="slider image">
-                         </picture>
-                         {% if product.gallery_is_verified %}
-                         <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
-                            <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
-                            производот е ист како на сликата</p>
-                         {% endif %}
-                    </div>
-                    {% endfor %}
-                    {% if attributes %}
-                        {% for attribute in attributes %}
-                        {% if attribute.thumbnail %}
-                        <div class="{{ attribute.id }}_variable">
-                            <picture>
-                                <source srcset="{{ attribute.thumbnail.url }}" type="image/webp">
-                                <img src="{{ attribute.thumbnail_as_jpeg.url }}" alt="slider image">
-                             </picture>
-                            {% if product.gallery_is_verified %}
-                            <p class="verified-product-image" style="display:flex;justify-content:center;align-items:center;">
-                            <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
-                            производот е ист како на сликата</p>
-                            {% endif %}
-                        </div>
+                            <img src="{{ img.galleryimg_as_jpeg.url }}" alt="slider image" width="550" height="550">
+                        </picture>
+                        {% if product.gallery_is_verified %}
+                            <p class="verified-product-image"
+                               style="display:flex;justify-content:center;align-items:center;">
+                                <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
+                                производот е ист како на сликата</p>
                         {% endif %}
-                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                {% if attributes %}
+                    {% for attribute in attributes %}
+                        {% if attribute.thumbnail %}
+                            <div class="{{ attribute.id }}_variable">
+                                <picture>
+                                    <source srcset="{{ attribute.thumbnail.url }}" type="image/webp">
+                                    <img src="{{ attribute.thumbnail_as_jpeg.url }}" alt="slider image" width="550"
+                                         height="550">
+                                </picture>
+                                {% if product.gallery_is_verified %}
+                                    <p class="verified-product-image"
+                                       style="display:flex;justify-content:center;align-items:center;">
+                                        <span style="width:24px;height:24px;background-image: url({% static 'icons/badge-check.svg' %});background-size:contain; filter: invert(27%) sepia(44%) saturate(2017%) hue-rotate(124deg) brightness(94%) contrast(101%);"></span>
+                                        производот е ист како на сликата</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class=""
+                 id="productGallery__Thumbnails">
+            </div>
+
+        </div>
+    </div>
+    <div class="col-2 product-page product_data">
+
+        <h3 class="product-title product-page prod_title_tracker" id="main-product-title">{{ product.title }}</h3>
+        {% if product.is_best_seller %}
+            <div class="best-seller">
+                <img src="{% static 'icons/rocket.svg' %}" alt=""
+                     style="filter: invert(56%) sepia(85%) saturate(2072%) hue-rotate(359deg) brightness(103%) contrast(105%); width:28px;height:28px">
+                <p style="font-weight:600;font-size:14px;">Голема побарувачка</p>
+            </div>
+        {% endif %}
+        {% if reviews %}
+            <div class="rating rating{{ product.review_average }}">
+                <span class="star1"></span>
+                <span class="star2"></span>
+                <span class="star3"></span>
+                <span class="star4"></span>
+                <span class="star5"></span>
+                <a href="#reviews" class="review-count">({{ reviewcount }} коментари)</a>
+            </div>
+        {% endif %}
+        <div class="product-page-price main-price">
+            <p class="product-regular-price">{{ product.regular_price }} ден</p>
+            <p class="product-sale-price"><span class="product-price-tracker"
+                                                id="main-product-price">{{ product.sale_price }}</span> ден</p>
+            <br class="mobile">
+            <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span
+                    class="percentage">-{{ product.get_percentage_off }}%</span>)</p></div>
+            {% if product.free_shipping == True %}
+                <p class="free-shipping">бесплатна достава</p>
+            {% endif %}
+            <p class="delivery-calculator"><span style="color:#32CD32;font-weight:600">Нарачај веднаш</span> и добиј
+                измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span
+                        class="delivery-day">{{ delivery_days.1 }}</span></p>
+        </div>
+        {% if upsells %}
+            <div class="product-page-upsells">
+                {% for upsell in upsells %}
+                    {% if upsell.is_free %}
+                        <div class="product-page-upsell checked free-upsell">
+                            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data"
+                                   value="0">
+                            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data"
+                                   value="{{ upsell.title }}">
+                            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id"
+                                   value="{{ upsell.product.id }}">
+                            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id"
+                                   value="{{ upsell.id }}">
+                            <div class="product-upsell-checkbox checked">
+                                <div class="checkmark"></div>
+                            </div>
+                            {% if upsell.thumbnail %}
+                                <picture>
+                                    <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
+                                    <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px"
+                                         style="border-radius: 5px" class="product-upsell-image">
+                                </picture>
+                            {% endif %}
+                            <div class="product-page-upsell-info">
+                                <p style="font-weight:600">{{ upsell.title }}</p>
+                                <p><span
+                                        style="font-size:14px;font-weight:600;color: #32CD32;">вклучен со продуктот</span>
+                                </p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="product-page-upsell">
+                            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data"
+                                   value="{{ upsell.sale_price }}">
+                            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data"
+                                   value="{{ upsell.title }}">
+                            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id"
+                                   value="{{ upsell.product.id }}">
+                            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id"
+                                   value="{{ upsell.id }}">
+                            <div class="product-upsell-checkbox">
+                                <div class="checkmark"></div>
+                            </div>
+                            {% if upsell.thumbnail %}
+                                <picture>
+                                    <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
+                                    <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px"
+                                         style="border-radius: 5px" class="product-upsell-image">
+                                </picture>
+                            {% endif %}
+                            <div class="product-page-upsell-info">
+                                <p style="font-weight:600">{{ upsell.title }}</p>
+                                <p><span
+                                        style="font-size:12px;font-weight:500;color:#808080;text-decoration: line-through;">{{ upsell.regular_price }} ден</span>
+                                    <span style="font-size:14px;font-weight:600;color: #32CD32;">{{ upsell.sale_price }} ден</span>
+                                </p>
+                            </div>
+                        </div>
                     {% endif %}
-        </div>
-        <div class="gallery-navigation desktop">
-        </div>
-        </div>
-</div>
-<div class="col-2 product-page product_data">
-    
-    <h3 class="product-title product-page prod_title_tracker" id="main-product-title">{{ product.title }}</h3>
-    {% if product.is_best_seller %}
-    <div class="best-seller">
-        <img src="{% static 'icons/rocket.svg' %}" alt="" style="filter: invert(56%) sepia(85%) saturate(2072%) hue-rotate(359deg) brightness(103%) contrast(105%); width:28px;height:28px">
-        <p style="font-weight:600;font-size:14px;">Голема побарувачка</p>
-    </div>
-    {% endif %}
-    {% if reviews %}
-    <div class="rating rating{{ product.review_average}}">
-        <span class="star1"></span>
-        <span class="star2"></span>
-        <span class="star3"></span>
-        <span class="star4"></span>
-        <span class="star5"></span>
-        <a href="#reviews" class="review-count">({{reviewcount}} коментари)</a>
-    </div>
-    {% endif %}
-    <div class="product-page-price main-price">  
-        <p class="product-regular-price">{{ product.regular_price }} ден</p>
-        <p class="product-sale-price"><span class="product-price-tracker" id="main-product-price">{{ product.sale_price }}</span> ден</p>
-        <br class="mobile">
-        <div class="product-savings"><p>заштедувате <span class="money_saved">{{ money_saved }}</span> ден (<span class="percentage">-{{ product.get_percentage_off }}%</span>)</p></div>
-        {% if product.free_shipping == True %}
-        <p class="free-shipping">бесплатна достава</p>
+
+                {% endfor %}
+            </div>
         {% endif %}
-        <p class="delivery-calculator"><span style="color:#32CD32;font-weight:600">Нарачај веднаш</span> и добиј измеѓу <br class="mobile"><span class="delivery-day">{{ delivery_days.0 }}</span> и <span class="delivery-day">{{ delivery_days.1 }}</span></p>
-    </div>
-    {% if upsells %}
-    <div class="product-page-upsells">
-        {% for upsell in upsells %}
-        {% if upsell.is_free %}
-        <div class="product-page-upsell checked free-upsell">
-            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data" value="0">
-            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data" value="{{ upsell.title }}">
-            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id" value="{{ upsell.product.id }}">
-            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id" value="{{ upsell.id }}">
-            <div class="product-upsell-checkbox checked">
-                <div class="checkmark"></div>
-            </div>
-            {% if upsell.thumbnail %}
-            <picture>
-                <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
-                <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
-            </picture>
+        {% if attributes %}
+            <div class="product-attributes">
+            {% if product.attributes_type == 'COLOR' %}
+                <p class="attribute-title">Одберена боја: <span
+                        class="attribute-changing-title">{{ default_attribute }}</span></p>
+                {% for attribute in attributes %}
+                    {% if attribute.is_disabled == False %}
+                        {% if attribute.is_checked %}
+                            <div class="attribute-item active">
+                        {% else %}
+                            <div class="attribute-item">
+                        {% endif %}
+                    <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
+                    <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
+                    <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
+                    <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
+                    </div>
+                    {% else %}
+                        <div class="attribute-item disabled" style="position:relative">
+                            <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
+                            <input type="hidden" class="attrib_price" name="atribute_price"
+                                   value="{{ attribute.price }}">
+                            <input type="hidden" class="attrib_title" name="atribute_title"
+                                   value="{{ attribute.color.title }}">
+                            <div class="attribute-inner"
+                                 style="background-color:{{ attribute.color.color_code }}; opacity:0.5"></div>
+                            <img src="{% static 'icons/disabled-x.png' %}" alt=""
+                                 style="position:absolute;width:24px;height:24px;top:10%;right:10%;">
+                        </div>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-            <div class="product-page-upsell-info">
-                <p style="font-weight:600">{{ upsell.title }}</p>
-                <p><span style="font-size:14px;font-weight:600;color: #32CD32;">вклучен со продуктот</span></p>
-            </div>
-        </div>
-        {% else %}
-        <div class="product-page-upsell">
-            <input type="hidden" name="product-upsell-price" class="product-upsell-price-data" value="{{ upsell.sale_price }}">
-            <input type="hidden" name="product-upsell-title-data" class="product-upsell-title-data" value="{{ upsell.title }}">
-            <input type="hidden" name="product-upsell-product-id" class="product-upsell-product-id" value="{{ upsell.product.id }}">
-            <input type="hidden" name="product-upsell-data-id" class="product-upsell-data-id" value="{{ upsell.id }}">
-            <div class="product-upsell-checkbox">
-                <div class="checkmark"></div>
-            </div>
-            {% if upsell.thumbnail %}
-            <picture>
-                <source srcset="{{ upsell.thumbnail.url }}" type="image/webp">
-                <img src="{{ upsell.thumbnail_as_jpeg.url }}" alt="" width="50px" height="50px" style="border-radius: 5px" class="product-upsell-image">
-            </picture>
-            {% endif %}
-            <div class="product-page-upsell-info">
-                <p style="font-weight:600">{{ upsell.title }}</p>
-                <p><span style="font-size:12px;font-weight:500;color:#808080;text-decoration: line-through;">{{ upsell.regular_price }} ден</span> <span style="font-size:14px;font-weight:600;color: #32CD32;">{{ upsell.sale_price }} ден</span></p>
-            </div>
-        </div>
-        {% endif %}
-        
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% if attributes %}
-    <div class="product-attributes">
-        {% if product.attributes_type == 'COLOR' %}
-            <p class="attribute-title">Одберена боја: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
-            {% for attribute in attributes %}
-            {% if attribute.is_disabled == False %}
-                {% if attribute.is_checked %}
+            {% if product.attributes_type == 'SIZE' %}
+                <p class="attribute-title">Одберена големина: <span
+                        class="attribute-changing-title">{{ default_attribute }}</span></p>
+                {% for attribute in attributes %}
+                    {% if attribute.is_checked %}
                         <div class="attribute-item active">
-                {% else %}  
-                        <div class="attribute-item">        
-                {% endif %}               
-                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
-                <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
-                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
-                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}"></div>
-            </div>
-            {% else %}
-            <div class="attribute-item disabled" style="position:relative" >
-                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
-                <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
-                <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.color.title }}">
-                <div class="attribute-inner" style="background-color:{{ attribute.color.color_code }}; opacity:0.5"></div>
-                <img src="{% static 'icons/disabled-x.png' %}" alt="" style="position:absolute;width:24px;height:24px;top:10%;right:10%;">
-            </div>
-            {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% if product.attributes_type == 'SIZE' %}
-            <p class="attribute-title">Одберена големина: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
-            {% for attribute in attributes %}
-            {% if attribute.is_checked %}
-                <div class="attribute-item active">
-            {% else %}
-                <div class="attribute-item">
-            {% endif %}
+                    {% else %}
+                        <div class="attribute-item">
+                    {% endif %}
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_price" name="atribute_price" value="{{ attribute.price }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.size.title }}">
                 <div class="attribute-inner size">{{ attribute.size.title }}</div>
-            </div>
-            {% endfor %}
-        {% endif %}
-        {% if product.attributes_type == 'OFFER' %}
-            <p class="attribute-title">Одберена понуда: <span class="attribute-changing-title">{{ default_attribute }}</span></p>
-            {% for attribute in attributes %}
-            {% if attribute.is_checked %}
-                <div class="attribute-item offer active">        
-            {% else %}        
-                <div class="attribute-item offer">
-            {% endif %}            
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if product.attributes_type == 'OFFER' %}
+                <p class="attribute-title">Одберена понуда: <span
+                        class="attribute-changing-title">{{ default_attribute }}</span></p>
+                {% for attribute in attributes %}
+                    {% if attribute.is_checked %}
+                        <div class="attribute-item offer active">
+                    {% else %}
+                        <div class="attribute-item offer">
+                    {% endif %}
                 <input type="hidden" class="attrib_id" name="atribute_id" value="{{ attribute.id }}">
                 <input type="hidden" class="attrib_title" name="atribute_title" value="{{ attribute.offer.title }}">
                 <p class="offer-title">{{ attribute.offer.title }}</p>
                 <p class="offer-price">{{ attribute.price }} ден</p>
                 <p class="offer-text">{{ attribute.offer.incentive }}</p>
-            </div>
-            {% endfor %}
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         {% endif %}
-    </div>
-    {% endif %}
         {% csrf_token %}
         <input type="hidden" value="{{ product.id }}" class="prod_id" id="main-product-id">
         <div class="quantity-flex">
             <div class="quantity">
                 <button class="decrement-btn">-</button>
-                <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина"> 
+                <input type="text" name="quantity" class="qty-input" value="1" aria-label="Количина">
                 <button class="increment-btn">+</button>
             </div>
-            <p class="stock-notice"><span style="font-size:16px">🔥</span>  Уштe <span class="stock-number">{{ product.fake_quantity }} парчиња</span> на залиха</p>
+            <p class="stock-notice"><span style="font-size:16px">🔥</span> Уштe <span
+                    class="stock-number">{{ product.fake_quantity }} парчиња</span> на залиха</p>
         </div>
         {% if attributes %}
-                {% if upsells %}
-                        <button class="variable-add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-                        <button class="proceed-to-checkout variable-add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
-                {% else %}
-                        <button class="variable-add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-                        <button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
-                {% endif %}
+            {% if upsells %}
+                <button class="variable-add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span
+                        class="load-spinner open-spinner"></span></button>
+                <button class="proceed-to-checkout variable-add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
+            {% else %}
+                <button class="variable-add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                        class="load-spinner open-spinner"></span></button>
+                <button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
+            {% endif %}
         {% else %}
-                {% if upsells %}
-                        <button class="add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-                        <button class="proceed-to-checkout add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
-                {% else %}
-                        <button class="add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-                        <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
-                {% endif %}
+            {% if upsells %}
+                <button class="add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span
+                        class="load-spinner open-spinner"></span></button>
+                <button class="proceed-to-checkout add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
+            {% else %}
+                <button class="add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                        class="load-spinner open-spinner"></span></button>
+                <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
+            {% endif %}
         {% endif %}
-    <div class="badges-wrapper">
-        <div class="badge-item">
-            <img src="{% static 'icons/delivery-badge.svg' %}" alt="" class="badge" width="50" height="50">
-            <p class="badge-text">2-4 дена достава</p>
-        </div>
-        <div class="badge-item">
-            <img src="{% static 'icons/exchange-badge.svg' %}" alt="" class="badge" width="50" height="50">
-            <p class="badge-text">15 дена рок на замена</p>
-        </div>
-        <div class="badge-item">
-            <img src="{% static 'icons/refundation-badge.svg' %}" alt="" class="badge" width="50" height="50">
-            <p class="badge-text">рефундација</p>
-        </div>
-    </div>
-        
-    
-    <div class="toggle">
-        <div class="toggle-item">
-            <div class="toggle-title"><p>ДЕТАЛЕН ОПИС</p> <i class="fa-solid fa-angle-down toggle-icon"></i></div>
-            <div class="toggle-content main-toggle" style="text-align:initial!important">
-                <p>{{  product.content| safe }}</p>
+        <div class="badges-wrapper">
+            <div class="badge-item">
+                <img src="{% static 'icons/delivery-badge.svg' %}" alt="" class="badge" width="50" height="50">
+                <p class="badge-text">2-4 дена достава</p>
+            </div>
+            <div class="badge-item">
+                <img src="{% static 'icons/exchange-badge.svg' %}" alt="" class="badge" width="50" height="50">
+                <p class="badge-text">15 дена рок на замена</p>
+            </div>
+            <div class="badge-item">
+                <img src="{% static 'icons/refundation-badge.svg' %}" alt="" class="badge" width="50" height="50">
+                <p class="badge-text">рефундација</p>
             </div>
         </div>
-    </div>
-    <div class="toggle">
-        <div class="toggle-item">
-            <div class="toggle-title"><p>ПОЛИТИКА НА ДОСТАВА</p> <i class="fa-solid fa-angle-down toggle-icon"></i></div>
-            <div class="toggle-content">
-                <a href="{% url 'dostava-page' %}" target="_blank" class="toggle-static-link">Погледни ја нашата поликита на достава</a>
+
+
+        <div class="toggle">
+            <div class="toggle-item">
+                <div class="toggle-title"><p>ДЕТАЛЕН ОПИС</p> <i class="fa-solid fa-angle-down toggle-icon"></i></div>
+                <div class="toggle-content main-toggle" style="text-align:initial!important">
+                    <p>{{ product.content| safe }}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="toggle">
-        <div class="toggle-item">
-            <div class="toggle-title"><p>ПОЛИТИКА НА РЕКЛАМАЦИЈА</p> <i class="fa-solid fa-angle-down toggle-icon"></i></div>
-            <div class="toggle-content">
-                <a href="{% url 'reklamacija-page' %}" target="_blank" class="toggle-static-link">Погледни ја нашата поликита на рекламација</a>
+        <div class="toggle">
+            <div class="toggle-item">
+                <div class="toggle-title"><p>ПОЛИТИКА НА ДОСТАВА</p> <i class="fa-solid fa-angle-down toggle-icon"></i>
+                </div>
+                <div class="toggle-content">
+                    <a href="{% url 'dostava-page' %}" target="_blank" class="toggle-static-link">Погледни ја нашата
+                        поликита на достава</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="frequently-asked-questions" style="padding: 15px 0px">
-        <p style="text-align: center; font-weight: 600; padding-bottom: 15px;">Често поставувани прашања</p>
-        {% for faq in faq_toggle %}
-        <div class="faq-toggle product-faq">
-            <div class="faq-title">
+        <div class="toggle">
+            <div class="toggle-item">
+                <div class="toggle-title"><p>ПОЛИТИКА НА РЕКЛАМАЦИЈА</p> <i
+                        class="fa-solid fa-angle-down toggle-icon"></i></div>
+                <div class="toggle-content">
+                    <a href="{% url 'reklamacija-page' %}" target="_blank" class="toggle-static-link">Погледни ја нашата
+                        поликита на рекламација</a>
+                </div>
+            </div>
+        </div>
+        <div class="frequently-asked-questions" style="padding: 15px 0px">
+            <p style="text-align: center; font-weight: 600; padding-bottom: 15px;">Често поставувани прашања</p>
+            {% for faq in faq_toggle %}
+                <div class="faq-toggle product-faq">
+                    <div class="faq-title">
                 <span style="display:flex; align-items:center;gap:10px">
-                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <img src="{% static 'icons/question1.svg' %}" alt=""
+                         style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
                     <p style="text-align:left;font-size:16px;">{{ faq.question }}</p>
                 </span>
-                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon vertical-flip"></div>
-            <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">{{ faq.content }}</p>
-            </div>
-        </div>
-        {% endfor %}
-        <div class="faq-toggle">
-            <div class="faq-title">
+                        <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;"
+                             class="faq-icon vertical-flip"></div>
+                    <div class="faq-content">
+                        <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">{{ faq.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="faq-toggle">
+                <div class="faq-title">
                 <span style="display:flex; align-items:center;gap:10px">
-                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <img src="{% static 'icons/question1.svg' %}" alt=""
+                         style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
                     <p style="text-align:left;font-size:16px;">Која е цената на доставата?</p>
                 </span>
-                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
-            <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Цената на доставата е 150 денари. Доколку нарачате 2 или повеќе од 2 производи, достава е беслпатна!</p>
+                    <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;"
+                         class="faq-icon"></div>
+                <div class="faq-content">
+                    <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Цената на доставата е 150
+                        денари. Доколку нарачате 2 или повеќе од 2 производи, достава е беслпатна!</p>
+                </div>
             </div>
-        </div>
-        <div class="faq-toggle">
-            <div class="faq-title">
+            <div class="faq-toggle">
+                <div class="faq-title">
                 <span style="display:flex; align-items:center;gap:10px">
-                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <img src="{% static 'icons/question1.svg' %}" alt=""
+                         style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
                     <p style="text-align:left;font-size:16px;">Кога ќе го добијам нарачаниот производ?</p>
                 </span>
-                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
-            <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Пратката ќе ја добиете во рок од 2-4 работни денови.</p>
+                    <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;"
+                         class="faq-icon"></div>
+                <div class="faq-content">
+                    <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Пратката ќе ја добиете во рок
+                        од 2-4 работни денови.</p>
+                </div>
             </div>
-        </div>
-        <div class="faq-toggle">
-            <div class="faq-title">
+            <div class="faq-toggle">
+                <div class="faq-title">
                 <span style="display:flex; align-items:center;gap:10px">
-                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <img src="{% static 'icons/question1.svg' %}" alt=""
+                         style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
                     <p style="text-align:left;font-size:16px;">Што ако добијам оштетен производ?</p>
                 </span>
-                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
-            <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Доколку не сте задоволни од производот можете да побарате рефундација или да го замените производот со некој друг што го имаме на залиха моментално. Се што треба е да не контактирате на <a href="mailto:contact@promotivno.com" style="display:inline-block; color:#00703d;font-weight:500;">contact@promotivno.com</a> и веднаш ќе добиете некој од нашите колеги кој ќе ви помогне да се реши проблемот.</p>
+                    <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;"
+                         class="faq-icon"></div>
+                <div class="faq-content">
+                    <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Доколку не сте задоволни од
+                        производот можете да побарате рефундација или да го замените производот со некој друг што го
+                        имаме на залиха моментално. Се што треба е да не контактирате на <a
+                                href="mailto:contact@promotivno.com"
+                                style="display:inline-block; color:#00703d;font-weight:500;">contact@promotivno.com</a>
+                        и веднаш ќе добиете некој од нашите колеги кој ќе ви помогне да се реши проблемот.</p>
+                </div>
             </div>
-        </div>
-        <div class="faq-toggle">
-            <div class="faq-title">
+            <div class="faq-toggle">
+                <div class="faq-title">
                 <span style="display:flex; align-items:center;gap:10px">
-                    <img src="{% static 'icons/question1.svg' %}" alt="" style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
+                    <img src="{% static 'icons/question1.svg' %}" alt=""
+                         style="width:24px;height:24px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);">
                     <p style="text-align:left;font-size:16px;">Дали можам да го вратам својот производ?</p>
                 </span>
-                <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;" class="faq-icon"></div>
-            <div class="faq-content">
-                <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Се разбира! Сите наши производи имаат гаранција за поврат до 15 дена од денот на подигање, што значи дека неискористените производи можете да ги вратите во рок од 15 дена.</p>
+                    <img src="{% static 'icons/arrow-down.svg' %}" alt="" style="width:16px;height:16px;"
+                         class="faq-icon"></div>
+                <div class="faq-content">
+                    <p style="padding:0px 10px 10px 10px;text-align:left;font-size:16px;">Се разбира! Сите наши
+                        производи имаат гаранција за поврат до 15 дена од денот на подигање, што значи дека
+                        неискористените производи можете да ги вратите во рок од 15 дена.</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-{% if reviews %}
+        </div>
+        {% if reviews %}
 
-<div id="reviews">
-    <div class="reviews-inner">
-        {% for review in reviews %}
-        <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
-                {% if review.image %}
-                <span style="position:relative;cursor: pointer;">
+            <div id="reviews">
+                <div class="reviews-inner">
+                    {% for review in reviews %}
+                        <div class="reviews-item"> <!-- CHANGE THIIIIIIIIIIIIIIIIS ZA RESIZE-->
+                            {% if review.image %}
+                                <span style="position:relative;cursor: pointer;">
                 <picture>
                     <source srcset="{{ review.image.url }}" type="image/webp">
                     <img src="{{ review.image_as_jpeg.url }}" alt="" width="360" height="auto" class="review-image">
@@ -342,115 +421,131 @@
                     <img src="{% static 'icons/camera.svg' %}" alt="" style="width:40px; height:40px;margin-right:8px;">1
                 </div>
                 </span>
-                {% endif %}
-            <div class="top-row">
-                <p class="reviewer-initials">{{review.avatar_name}}</p>
-                <p class="reviewer-name">{{ review.name }}</p>
-                <p class="reviewer-verified"><img src="{% static 'icons/user-check.svg' %}" style="display:inline;width:28px;height:28px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);position:relative;top:4px;"> верифициран купувач</p>
-            </div>
-            <div class="rating-row">
-                <div class="rating{{ review.rating }}">
-                    <span class="star1"></span>
-                    <span class="star2"></span>
-                    <span class="star3"></span>
-                    <span class="star4"></span>
-                    <span class="star5"></span>
+                            {% endif %}
+                            <div class="top-row">
+                                <p class="reviewer-initials">{{ review.avatar_name }}</p>
+                                <p class="reviewer-name">{{ review.name }}</p>
+                                <p class="reviewer-verified"><img src="{% static 'icons/user-check.svg' %}"
+                                                                  style="display:inline;width:28px;height:28px;filter: invert(67%) sepia(42%) saturate(4504%) hue-rotate(356deg) brightness(98%) contrast(108%);position:relative;top:4px;">
+                                    верифициран купувач</p>
+                            </div>
+                            <div class="rating-row">
+                                <div class="rating{{ review.rating }}">
+                                    <span class="star1"></span>
+                                    <span class="star2"></span>
+                                    <span class="star3"></span>
+                                    <span class="star4"></span>
+                                    <span class="star5"></span>
+
+                                </div>
+                                <div class="rating-label">
+                                    {{ review.rating }}/5
+                                </div>
+                            </div>
+                            <div class="middle-row">
+                                <div class="review-content">
+                                    <p>{{ review.content }}</p>
+                                </div>
+                                <div class="review-date">
+                                    {{ review.date_created }}
+                                </div>
+                            </div>
+                            <div class="review-product-end">
+                                <picture>
+                                    <source srcset="{{ product.thumbnail_loop.url }}" type="image/webp">
+                                    <img src="{{ product.thumbnail_loop_as_jpeg.url }}" alt="" width="50" height="50">
+                                </picture>
+
+                                <p>{{ product.title }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
 
                 </div>
-                <div class="rating-label">
-                    {{ review.rating }}/5
-                </div>
             </div>
-            <div class="middle-row">
-                <div class="review-content">
-                    <p>{{ review.content }}</p>
-                </div>
-                <div class="review-date">
-                    {{ review.date_created }}
-                </div>
-            </div>
-            <div class="review-product-end">
-                <picture>
-                    <source srcset="{{ product.thumbnail_loop.url }}" type="image/webp">
-                    <img src="{{ product.thumbnail_loop_as_jpeg.url }}" alt="" width="50" height="50">
-                </picture>
-                
-                <p>{{product.title}}</p>
-            </div>
+        {% endif %}
+
+
+        <section class="slider-wrapper slider-wrapper1" style="display:none">
+            <h3 class="slide-title">ПОСЛЕДНИ КОЛИЧИНИ</h3>
+            <div id="slider2">
+                {% for item in slider1 %}
+                    <div class="slide product_data">
+                        <input type="hidden" class="prod_id" value="{{ item.id }}">
+                        <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link"
+                           aria-label="Линк до продукт">
+                            <div class="last-stocks-sub-container">
+                                <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250"
+                                     height="250" class="product-feed-thumbnail"/>
+                                <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+                                {% if item.review_average > 0 %}
+                                    <div class="rating rating{{ item.review_average }} list-ratings">
+                                        <span class="star1"></span>
+                                        <span class="star2"></span>
+                                        <span class="star3"></span>
+                                        <span class="star4"></span>
+                                        <span class="star5"></span>
+                                    </div>
+                                {% endif %}
+                                <span class="product-feed-price"><p
+                                        class="product-feed-regular-price">{{ item.regular_price }} ден</p><p
+                                        class="product-feed-sale-price"><span
+                                        class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
+                        </a>
+                        <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                                class="load-spinner open-spinner"></span></button>
+                    </div>
+                    </div>
+                {% endfor %}
         </div>
-        {% endfor %}
-            
-        
+        </section>
+        <section class="slider-wrapper slider-wrapper2">
+            <h3 class="slide-title">СЛИЧНИ ПРОИЗВОДИ</h3>
+            <div id="slider3">
+                {% for item in slider2 %}
+                    <div class="slide product_data">
+                        <input type="hidden" class="prod_id" value="{{ item.id }}">
+                        <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link"
+                           aria-label="Линк до продукт">
+                            <div class="last-stocks-sub-container">
+                                <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250"
+                                     height="250" class="product-feed-thumbnail"/>
+                                <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
+                                {% if item.review_average > 0 %}
+                                    <div class="rating rating{{ item.review_average }} list-ratings">
+                                        <span class="star1"></span>
+                                        <span class="star2"></span>
+                                        <span class="star3"></span>
+                                        <span class="star4"></span>
+                                        <span class="star5"></span>
+                                    </div>
+                                {% endif %}
+                                <span class="product-feed-price"><p
+                                        class="product-feed-regular-price">{{ item.regular_price }} ден</p><p
+                                        class="product-feed-sale-price"><span
+                                        class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
+                        </a>
+                        <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                                class="load-spinner open-spinner"></span></button>
+                    </div>
+
+                    </div>
+                {% endfor %}
+        </div>
+        </section>
     </div>
-</div>
-{% endif %}
 
-    
-    <section class="slider-wrapper slider-wrapper1" style="display:none">
-        <h3 class="slide-title">ПОСЛЕДНИ КОЛИЧИНИ</h3>
-        <div id="slider2">
-        {% for item in slider1 %}
-          <div class="slide product_data">
-            <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
-            <div class="last-stocks-sub-container">
-              <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
-              <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
-              {% if item.review_average > 0 %}
-                <div class="rating rating{{ item.review_average}} list-ratings">
-                    <span class="star1"></span>
-                    <span class="star2"></span>
-                    <span class="star3"></span>
-                    <span class="star4"></span>
-                    <span class="star5"></span>
-                </div>
-                {% endif %}
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
-              </a>
-              <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-            </div>          
-          </div>
-        {% endfor %}  
-        </div>
-    </section>
-    <section class="slider-wrapper slider-wrapper2">
-        <h3 class="slide-title">СЛИЧНИ ПРОИЗВОДИ</h3>
-        <div id="slider3">
-        {% for item in slider2 %}
-          <div class="slide product_data">
-            <input type="hidden" class="prod_id" value="{{ item.id }}">
-            <a href="{% url 'product-page' item.slug %}" class="product-link slider-product-link" aria-label="Линк до продукт">
-            <div class="last-stocks-sub-container">
-              <img data-lazy="{{ item.thumbnail_loop_as_jpeg.url }}" alt="Product image" width="250" height="250" class="product-feed-thumbnail" />
-              <h2 class="product-feed-title slider-title prod_title_tracker">{{ item.title }}</h2>
-              {% if item.review_average > 0 %}
-                <div class="rating rating{{ item.review_average}} list-ratings">
-                    <span class="star1"></span>
-                    <span class="star2"></span>
-                    <span class="star3"></span>
-                    <span class="star4"></span>
-                    <span class="star5"></span>
-                </div>
-                {% endif %}
-              <span class="product-feed-price"><p class="product-feed-regular-price">{{ item.regular_price }} ден</p><p class="product-feed-sale-price"><span class="product-price-tracker">{{ item.sale_price }}</span> ден</p></span>
-              </a>
-              <button class="add-to-cartBtn sliderBtn"><span class="btn-text">ВО КОШНИЧКА</span><span class="load-spinner open-spinner"></span></button>
-            </div>
-            
-          </div>
-        {% endfor %}  
-        </div>
-    </section>
-</div>
-
-{% if attributes %}
-<button class="proceed-to-checkout variable-add-to-cartBtn stickyBtn mobile">НАРАЧАЈ ВЕДНАШ</button>
-{% else %}
-<button class="proceed-to-checkout add-to-cartBtn stickyBtn mobile">НАРАЧАЈ ВЕДНАШ</button>
-{% endif %}
+    {% if attributes %}
+        <button class="proceed-to-checkout variable-add-to-cartBtn stickyBtn mobile">НАРАЧАЈ ВЕДНАШ</button>
+    {% else %}
+        <button class="proceed-to-checkout add-to-cartBtn stickyBtn mobile">НАРАЧАЈ ВЕДНАШ</button>
+    {% endif %}
 
 {% endblock content %}
 {% block scripts %}
-<script src="{% static 'shop/js/slick.min.js' %}"></script>
-<script src="{%  static 'shop/js/slider_minified.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <script src="{% static 'shop/js/main-slider.js' %}"></script>
+    <script src="{% static 'shop/js/slick.min.js' %}"></script>
+    <script src="{% static 'shop/js/slider_minified.js' %}"></script>
 {% endblock scripts %}
