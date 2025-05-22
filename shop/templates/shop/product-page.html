@@ -61,7 +61,7 @@
                 {% if attributes %}
                     {% for attribute in attributes %}
                         {% if attribute.thumbnail %}
-                            <div class="{{ attribute.id }}_variable">
+                            <div class="{{ attribute.id }}_variable" style="visibility: hidden">
                                 <picture>
                                     <source srcset="{{ attribute.thumbnail.url }}" type="image/webp">
                                     <img src="{{ attribute.thumbnail_as_jpeg.url }}" alt="slider image" width="550"
@@ -545,7 +545,7 @@
 {% endblock content %}
 {% block scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script src="{% static 'shop/js/main-slider.js' %}"></script>
+    <script src="{% static 'shop/js/main-slider-1.js' %}"></script>
     <script src="{% static 'shop/js/slick.min.js' %}"></script>
     <script src="{% static 'shop/js/slider_minified.js' %}"></script>
 {% endblock scripts %}
