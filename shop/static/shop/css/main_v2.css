@@ -1900,6 +1900,7 @@ select {
     border-radius: 0 !important;
     display: none;
     z-index: 999;
+    height: 65px !important;
 }
 
 .product-page .product-sale-badge {
@@ -2235,7 +2236,7 @@ select {
     width: 100%;
     padding: 0px 16px;
     height: 43px;
-    background: var(--brand-action);
+    background: var(--brand-primary);
     border: 0;
     color: white;
     border-radius: 30px;
@@ -3710,6 +3711,10 @@ section#ordered_items_notice_wrapper {
     border: 1px solid var(--brand-action);
     color: var(--brand-action);
     cursor: pointer;
+}
+
+.checkout_form_payBtn {
+    background: var(--brand-primary) !important;
 }
 
 #checkout_form .fee-item {
