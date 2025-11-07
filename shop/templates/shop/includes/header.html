@@ -1,198 +1,220 @@
 {% if title != "Кон Нарачка" %}
-{% load static %}
+    {% load static %}
 
-{% if not product %}
-<section id="header-banner">
-    <div class="banner-inner-header-1" style="display: flex;align-items:center;justify-content:center ">
-        <a href="mailto:contact@promotivno.com" class="banner-text">contact@promotivno.com</a>
-        <a href="https://www.facebook.com/promotivno.com" aria-label="Facebook"><img src="{% static 'icons/facebook.svg' %}"  class="image-icon filter-white"  alt="" width="16" height="16"></a>
-        <a href="https://www.instagram.com/promotivno.com" aria-label="Instagram"><img src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16" height="16"></a>
-    </div>
-</section>
-{% else %}
-<section id="header-banner" style="display: flex;align-items:center; justify-content: center; gap: 10px; align-items: center;" class="header-banner-for-product-page">
-        <p id="header-banner-product-text">🔥 100% сигурно купување</p>
-        <p style="font-weight:500;text-align:center;font-size:15px;color:white" class="desktop">🚚 Бесплатна достава на купени 2 или повеќе производи!</p>
-</section>
-{% endif %}
-<header id="header">
-    <div class="inner-header">
+    {% if not product %}
+        <section id="header-banner">
+            <div class="banner-inner-header-1" style="display: flex;align-items:center;justify-content:center ">
+                <a href="mailto:contact@promotivno.com" class="banner-text">contact@promotivno.com</a>
+                <a href="https://www.facebook.com/promotivno.com" aria-label="Facebook"><img
+                        src="{% static 'icons/facebook.svg' %}" class="image-icon filter-white" alt="" width="16"
+                        height="16"></a>
+                <a href="https://www.instagram.com/promotivno.com" aria-label="Instagram"><img
+                        src="{% static 'icons/instagram.svg' %}" class="image-icon filter-white" alt="" width="16"
+                        height="16"></a>
+            </div>
+        </section>
+    {% else %}
+        <section id="header-banner"
+                 style="display: flex;align-items:center; justify-content: center; gap: 10px; align-items: center;"
+                 class="header-banner-for-product-page">
+            <p id="header-banner-product-text">🔥 100% сигурно купување</p>
+            <p style="font-weight:500;text-align:center;font-size:15px;color:white" class="desktop">🚚 Бесплатна достава
+                на купени 2 или повеќе производи!</p>
+        </section>
+    {% endif %}
+    <header id="header">
+        <div class="inner-header">
 
-        <div class="header-logo-container">
-        <a href="{% url 'shop-home' %}" class="header-logo-link" aria-label="Почетна">
-            <img src="{% static 'icons/header-logo.png' %}" alt="default.jpg" class="header-logo-img" width="200"  >
-        </a>
-        </div>
-{#        <a href="tel:+38971321312" class="header-icon mobile above-small">#}
-{#            <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon" width="24" height="24" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);">#}
-{#        </a>#}
-        <div class="header-search">
-            <form action="{% url 'search_results' %}" method="get" aria-label="Пребарај производи">
-            <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи" aria-label="Копче за пребарување">
-            <button class="search_button">
-            <img src="{% static 'icons/magnifying-glass.svg' %}" alt="" class="image-icon desktop filter-white" width="16" height="16">
-            </button>
-            <div class="header-icon mobile" id="search-mobile">
-            <img src="{% static 'icons/magnifying-glass.svg' %}" alt="" class="image-icon mobile" width="24" height="24">
-        </div>
-            </form>
-        </div>
+            <div class="header-logo-container">
+                <a href="{% url 'shop-home' %}" class="header-logo-link" aria-label="Почетна">
+                    <img src="{% static 'icons/header-logo.png' %}" alt="default.jpg" class="header-logo-img"
+                         width="200">
+                </a>
+            </div>
+            {#        <a href="tel:+38971321312" class="header-icon mobile above-small">#}
+            {#            <img src="{% static 'icons/phone.svg' %}" alt="" class="image-icon" width="24" height="24" style="-webkit-transform: scaleX(-1);transform: scaleX(-1);">#}
+            {#        </a>#}
+            <div class="header-search">
+                <form action="{% url 'search_results' %}" method="get" aria-label="Пребарај производи">
+                    <input type="text" name="q" id="Search_Bar" placeholder="Пребарај ги сите производи"
+                           aria-label="Копче за пребарување">
+                    <button class="search_button">
+                        <img src="{% static 'icons/magnifying-glass.svg' %}" alt=""
+                             class="image-icon desktop filter-white" width="16" height="16">
+                    </button>
+                    <div class="header-icon mobile" id="search-mobile">
+                        <img src="{% static 'icons/magnifying-glass.svg' %}" alt="" class="image-icon mobile" width="24"
+                             height="24">
+                    </div>
+                </form>
+            </div>
 
-        <div class="header-cart header-icon">
-            <img src="{% static 'icons/cart.svg' %}" alt="" class="image-icon" width="24" height="24">
-            <span id="cart-count">{{ itemscount }}</span>
-            
+            <div class="header-cart header-icon">
+                <img src="{% static 'icons/cart.svg' %}" alt="" class="image-icon" width="24" height="24">
+                <span id="cart-count">{{ itemscount }}</span>
+
+            </div>
+            <div class="header-menu header-icon">
+                <img src="{% static 'icons/bars.svg' %}" alt="" class="image-icon" width="24" height="24">
+            </div>
         </div>
-        <div class="header-menu header-icon">
-            <img src="{% static 'icons/bars.svg' %}" alt="" class="image-icon" width="24" height="24">
+    </header>
+    {#<section class="header-info"><p style="padding: 0px 2px;">Почитувани поради новогодишните празници вашите нарачки или рекламации направени помеѓу 30.12 - 07.01 ќе бидат процесирани и испратени на 08.01. Ви посакуваме убави празници!</p></section>#}
+    <div id="sidecart">
+        <div class="cart-close">
+            <span id="close-cart">&#10006</span>
         </div>
-    </div>
-</header>
-{#<section class="header-info"><p style="padding: 0px 2px;">Почитувани поради новогодишните празници вашите нарачки или рекламации направени помеѓу 30.12 - 07.01 ќе бидат процесирани и испратени на 08.01. Ви посакуваме убави празници!</p></section>#}
-<div id="sidecart">
-    <div class="cart-close">
-        <span id="close-cart">&#10006</span>
-    </div>
-    <div class="sidecart-inner">
-        {% csrf_token %}
-        {% if cart %}
-        
-        {% for item in cart %}
-        {% if item.is_upsell %}
-        <a href="#" class="sidecart-item basic-sidecart-item  product_data" style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
-        {% else %}
-        <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item basic-sidecart-item  product_data" style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
-        {% endif %}
-        
-            <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-            <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute.id }}">
-            {% if item.is_upsell %}
-            <img src="{{ item.upsell_thumbnail }}" alt="" width="70" height="70" class="cart-item-thumbnail">
-            {% else %}
-            <picture>
-                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
-                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="70" height="70" class="cart-item-thumbnail">
-            </picture>
-            {% endif %}
-            <span class="sidecart-item-content">
+        <div class="sidecart-inner">
+            {% csrf_token %}
+            {% if cart %}
+
+                {% for item in cart %}
+                    {% if item.is_upsell %}
+                        <a href="#" class="sidecart-item basic-sidecart-item  product_data"
+                           style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
+                    {% else %}
+                        <a href="{% url 'product-page' item.product.slug %}" target="_blank"
+                           class="sidecart-item basic-sidecart-item  product_data"
+                           style="padding: 20px 0px; margin:0px 20px;" aria-label="Продукт во кошничка">
+                    {% endif %}
+
+                <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                <input type="hidden" class="attrib_id" name="atribute_id" value="{{ item.attribute.id }}">
+                {% if item.is_upsell %}
+                    <img src="{{ item.upsell_thumbnail }}" alt="" width="70" height="70" class="cart-item-thumbnail">
+                {% else %}
+                    <picture>
+                        <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                        <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="70" height="70"
+                             class="cart-item-thumbnail">
+                    </picture>
+                {% endif %}
+                <span class="sidecart-item-content">
                 {% if item.has_attributes %}
-                <p class="sidecart-item-name">{{ item.product.title }}{{ item.attributename }}</p>
-                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.attributeprice }} ден</span></p>
+                    <p class="sidecart-item-name">{{ item.product.title }}{{ item.attributename }}</p>
+                    <p class="sidecart-item-quantity">{{ item.product_qty }} x <span
+                            class="green">{{ item.attributeprice }} ден</span></p>
                 {% elif item.has_offer %}
                     {% if item.is_upsell %}
                         <p class="sidecart-item-name">{{ item.upsell_title }}</p>
                         {% if item.offer_price == 0 %}
                             <p class="sidecart-item-quantity"><span class="green">вклучен со продуктот</span></p>
                         {% else %}
-                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
+                            <p class="sidecart-item-quantity">{{ item.product_qty }} x <span
+                                    class="green">{{ item.offer_price }} ден</span></p>
                         {% endif %}
                     {% else %}
                         <p class="sidecart-item-name">{{ item.product.title }}</p>
-                        <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.offer_price}} ден</span></p>
+                        <p class="sidecart-item-quantity">{{ item.product_qty }} x <span
+                                class="green">{{ item.offer_price }} ден</span></p>
                     {% endif %}
                 {% else %}
-                <p class="sidecart-item-name">{{ item.product.title }}</p>
-                <p class="sidecart-item-quantity">{{ item.product_qty }} x <span class="green">{{ item.product.sale_price }} ден</span></p>
+                    <p class="sidecart-item-name">{{ item.product.title }}</p>
+                    <p class="sidecart-item-quantity">{{ item.product_qty }} x <span
+                            class="green">{{ item.product.sale_price }} ден</span></p>
                 {% endif %}
-                {% if item.offer_price == 0  and item.is_upsell %}
-                {% else %}
-                <div class="quantity sidecart-qty-box">
+                    {% if item.offer_price == 0  and item.is_upsell %}
+                    {% else %}
+                        <div class="quantity sidecart-qty-box">
                     <button class="changeQuantity decrement-btn sidecart-qty">-</button>
                     <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
                     <button class="changeQuantity increment-btn sidecart-qty">+</button>         
                 </div>
-                {% endif %}
+                    {% endif %}
             </span>
-            <span class="sidecart-remove-item remove-item">&#10006;</span>
-        </a>
-        
-    
-        {% endfor %}
-        
-        
-        <div class="cart-offers">
-            <p class="cart-offers-text">Може да ви се допадне</p>
-            {% for item in cartOffers %}
-            
-            <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Понуди за кошничка">
-                <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-                <input type="hidden" class="offer_price" value="{{ item.price }}">
-                <picture>
-                    <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
-                    <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
-                </picture>           
-                <span class="sidecart-item-content sidecart-offer-content">
-                    <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
-                    <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
-                    <p class="sidecartOffer-text">{{ item.offer_text|safe }}</p>
-                    
-                </span>
-                {% if item.is_added == True %}
-                    <button class="offerBtn sidecartOfferBtn addedBtn">ДОДАДЕН</button>
-                {% else %}
-                    <button class="offerBtn sidecartOfferBtn">ДОДАДИ</button>
-                {% endif %}
-                
-                
-               
-                
-            </a>
-            {% endfor %}
-        </div>
-            <div class="sidecart-item sidecart-total">
-            <p class="sidecart-total"><span class="strong">Цена:</span> {{cart_total}} ден</p>
-            </div>
-            <div class="sidecart-item sidecart-Button">
-                   <button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button>
-            </div>
-        
-        
+                <span class="sidecart-remove-item remove-item">&#10006;</span>
+                </a>
 
-        {% else %}
-        <div class="sidecart-item notice">
-            <p class="cart-notice">Немате продукти во кошничка</p>
-        </div>
-        <div class="cart-offers">
-            
-            <p class="cart-offers-text">Може да ви се допадне</p>
-            {% for item in cartOffers %}
-            
-            <a href="{% url 'product-page' item.product.slug %}" target="_blank" class="sidecart-item sidecart-offer-item  product_data" aria-label="Кошничка понуди 2">
-                <input type="hidden" class="prod_id" value="{{ item.product.id }}">
-                <input type="hidden" class="offer_price" value="{{ item.price }}">
-                <picture>
-                    <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
-                    <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60" class="cart-item-thumbnail">
-                </picture>
-                
-                <span class="sidecart-item-content sidecart-offer-content">
+
+                {% endfor %}
+                <div class="sidecart-item sidecart-Button">
+                    <button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button>
+                </div>
+
+                <div class="cart-offers">
+                    <p class="cart-offers-text">Може да ви се допадне</p>
+                    {% for item in cartOffers %}
+
+                        <a href="{% url 'product-page' item.product.slug %}" target="_blank"
+                           class="sidecart-item sidecart-offer-item  product_data" aria-label="Понуди за кошничка">
+                            <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                            <input type="hidden" class="offer_price" value="{{ item.price }}">
+                            <picture>
+                                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60"
+                                     class="cart-item-thumbnail">
+                            </picture>
+                            <span class="sidecart-item-content sidecart-offer-content">
                     <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
                     <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
                     <p class="sidecartOffer-text">{{ item.offer_text|safe }}</p>
                     
                 </span>
-                {% if item.is_added == True %}
-                    <button class="offerBtn sidecartOfferBtn addedBtn">ДОДАДЕН</button>
-                {% else %}
-                    <button class="offerBtn sidecartOfferBtn">ДОДАДИ</button>
-                {% endif %}
-                
-                
-               
-                
-            </a>
-            {% endfor %}
+                            {% if item.is_added == True %}
+                                <button class="offerBtn sidecartOfferBtn addedBtn">ДОДАДЕН</button>
+                            {% else %}
+                                <button class="offerBtn sidecartOfferBtn">ДОДАДИ</button>
+                            {% endif %}
+
+
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="sidecart-item sidecart-total">
+                    <p class="sidecart-total"><span class="strong">Цена:</span> {{ cart_total }} ден</p>
+                </div>
+                <div class="sidecart-item sidecart-Button">
+                    <button class="proceed-to-checkout sidecartCheckout">НАРАЧАЈ ВЕДНАШ</button>
+                </div>
+
+
+
+            {% else %}
+                <div class="sidecart-item notice">
+                    <p class="cart-notice">Немате продукти во кошничка</p>
+                </div>
+                <div class="cart-offers">
+
+                    <p class="cart-offers-text">Може да ви се допадне</p>
+                    {% for item in cartOffers %}
+
+                        <a href="{% url 'product-page' item.product.slug %}" target="_blank"
+                           class="sidecart-item sidecart-offer-item  product_data" aria-label="Кошничка понуди 2">
+                            <input type="hidden" class="prod_id" value="{{ item.product.id }}">
+                            <input type="hidden" class="offer_price" value="{{ item.price }}">
+                            <picture>
+                                <source srcset="{{ item.product.thumbnail_loop.url }}" type="image/webp">
+                                <img src="{{ item.product.thumbnail_loop_as_jpeg.url }}" alt="" width="60" height="60"
+                                     class="cart-item-thumbnail">
+                            </picture>
+
+                            <span class="sidecart-item-content sidecart-offer-content">
+                    <p class="sidecart-item-name prod_title_tracker">{{ item.product.title }}</p>
+                    <p class="sidecart-item-quantity">1 x <span class="red">{{ item.price }} ден</span></p>
+                    <p class="sidecartOffer-text">{{ item.offer_text|safe }}</p>
+                    
+                </span>
+                            {% if item.is_added == True %}
+                                <button class="offerBtn sidecartOfferBtn addedBtn">ДОДАДЕН</button>
+                            {% else %}
+                                <button class="offerBtn sidecartOfferBtn">ДОДАДИ</button>
+                            {% endif %}
+
+
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-        {% endif %}
+
+
     </div>
-    
-    
-</div>
 {% else %}
-{% load static %}
+    {% load static %}
     <header id="header">
         <div class="inner-header checkout">
-            <div class="header-logo-container checkout"><img src={% static 'icons/header-logo.webp' %} alt="default.jpg" class="header-logo-img"></div>
+            <div class="header-logo-container checkout"><img src={% static 'icons/header-logo.webp' %} alt="default.jpg"
+                                                             class="header-logo-img"></div>
         </div>
     </header>
 {% endif %} 

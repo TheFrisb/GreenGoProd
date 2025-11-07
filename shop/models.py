@@ -1,13 +1,14 @@
-from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
-from django.utils.text import slugify
-from django.urls import reverse
-import datetime, os
+import datetime
+import os
 from ckeditor_uploader.fields import RichTextUploadingField
+from datetime import datetime
+from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.text import slugify
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
-from datetime import datetime
 from random import randint
 
 
@@ -32,9 +33,9 @@ class Category(models.Model):
         verbose_name = "Категорија"
         verbose_name_plural = "Категории"
 
-
     def get_absolute_url(self):
         return reverse('category-page', kwargs={'slug': self.slug})
+
 
 class Supplier(models.Model):
     name = models.CharField(max_length=150, null=False, blank=False, verbose_name='Име на добавувач')
@@ -131,7 +132,7 @@ class ProductCampaigns(models.Model):
 
 class ProductFAQ(models.Model):
     class Meta:
-        verbose_name = "Често поставувани прашања" 
+        verbose_name = "Често поставувани прашања"
         verbose_name_plural = "Често поставувани прашања"
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
@@ -361,7 +362,7 @@ class Order(models.Model):
     subtotal_price = models.IntegerField(null=False, verbose_name='Вкупна цена без достава')
     total_price = models.IntegerField(null=False, verbose_name='Вкупна цена')
     shipping = models.BooleanField(default=True, verbose_name='Достава')
-    shipping_price = models.IntegerField(default=150, blank=True)
+    shipping_price = models.IntegerField(default=170, blank=True)
     orderstatuses = (
         ('Pending', 'Pending'),
         ('Confirmed', 'Confirmed'),
@@ -379,7 +380,7 @@ class Order(models.Model):
     @property
     def get_shipping(self):
         if self.shipping == True:
-            return 'До врата: 150 ден'
+            return 'До врата: 170 ден'
         else:
             return 'Бесплатна достава'
 

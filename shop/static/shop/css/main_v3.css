@@ -516,10 +516,10 @@ input[type=number] {
     margin-top: auto !important;
     cursor: pointer;
     background-color: white;
-    color: var(--brand-action);
+    color: var(--brand-primary);
     border-radius: 30px;
     font-weight: 600;
-    border: 1px solid var(--brand-action);
+    border: 1px solid var(--brand-primary);
 
 }
 
@@ -2186,9 +2186,9 @@ select {
     width: 100%;
     padding: 0px 16px;
     height: 43px;
-    border: 1px solid var(--brand-action);
+    border: 1px solid var(--brand-primary);
     border-radius: 30px;
-    color: var(--brand-action);
+    color: var(--brand-primary);
     font-weight: 600;
     margin-bottom: 10px;
     background-color: white;
@@ -2196,6 +2196,11 @@ select {
     font-size: 14.5px;
     animation: button1 11s linear infinite;
     font-weight: 600
+}
+
+.add-to-cartBtn:hover, .variable-add-to-cartBtn:hover {
+    background: var(--brand-action)
+    color: white;
 }
 
 .load-spinner {
