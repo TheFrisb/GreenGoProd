@@ -2199,7 +2199,8 @@ select {
 }
 
 .add-to-cartBtn:hover, .variable-add-to-cartBtn:hover {
-    background: var(--brand-action)
+    background: var(--brand-action);
+    border: var(--brand-action);
     color: white;
 }
 
