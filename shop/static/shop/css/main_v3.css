@@ -2760,7 +2760,7 @@ section#ordered_items_notice_wrapper {
 
     .offerBtn:hover {
         background-color: var(--brand-action);
-        border-color: var(--brand-action)
+        border-color: var(--brand-action);
         color: white;
     }
 
