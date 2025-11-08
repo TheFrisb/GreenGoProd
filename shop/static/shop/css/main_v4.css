@@ -3720,6 +3720,10 @@ section#ordered_items_notice_wrapper {
     cursor: pointer;
 }
 
+.checkout-upsell .add-upsell .addedBtn {
+    border: 1px solid var(--brand-action);
+}
+
 .checkout_form_payBtn {
     background: var(--brand-primary) !important;
 }
