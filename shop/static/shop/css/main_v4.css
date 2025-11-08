@@ -2208,7 +2208,7 @@ select {
     display: none;
     width: 20px;
     height: 20px;
-    border: white;
+    border: 5px solid white !important;
     border-radius: 100%;
 
 }
