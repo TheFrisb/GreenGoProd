@@ -3730,6 +3730,7 @@ button.offerBtn.addedBtn.add-upsell.checkout-offer {
 
 .checkout-upsell .add-upsell:hover {
     background: var(--brand-action);
+    border: 1px solid var(--brand-action);
     color: white;
 }
 
