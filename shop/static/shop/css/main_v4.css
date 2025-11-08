@@ -2208,7 +2208,7 @@ select {
     display: none;
     width: 20px;
     height: 20px;
-    border: 5px solid var(--brand-action);
+    border: white;
     border-radius: 100%;
 
 }
@@ -3715,13 +3715,18 @@ section#ordered_items_notice_wrapper {
     padding: 10px;
     border-radius: 30px;
     background-color: white;
-    border: 1px solid var(--brand-action);
-    color: var(--brand-action);
+    border: 1px solid var(--brand-primary);
+    color: var(--brand-primary);
     cursor: pointer;
 }
 
 .checkout_form_payBtn {
     background: var(--brand-primary) !important;
+}
+
+.checkout-upsell .add-upsell:hover {
+    background: var(--brand-action);
+    color: white;
 }
 
 #checkout_form .fee-item {
