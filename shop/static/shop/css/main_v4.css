@@ -2253,7 +2253,8 @@ select {
 }
 
 .proceed-to-checkout:hover {
-    background-color: var(--black);
+    background-color: var(--brand-action);
+    color: white;
     transition: 0.3s ease;
 }
 
@@ -2804,7 +2805,8 @@ section#ordered_items_notice_wrapper {
     }
 
     .checkout-offerBtn:hover, .checkout_form_payBtn:hover, .thankyou-proceed-to-home:hover {
-        background: var(--black) !important;
+        background: var(--brand-action) !important;
+        color: white !important;
     }
 
     .fee-add:hover, .offer-button:hover, .checkout-offerBtn:hover {
