@@ -514,11 +514,13 @@ def export_excel(request):
 
                 for item in order_items:
                     quantity += item.quantity
-                    if item.label in total_ordered_dict:
-                        total_ordered_dict[item.label] += item.quantity
+                    # CHANGE 1: Use full_product_title as key instead of label for VKUPNA KOLICINA
+                    dict_key = item.full_product_title
+                    if dict_key in total_ordered_dict:
+                        total_ordered_dict[dict_key] += item.quantity
                     else:
-                        total_ordered_dict[item.label] = item.quantity
-                        total_ordered_stock_price[item.label] = item.product.supplier_stock_price
+                        total_ordered_dict[dict_key] = item.quantity
+                        total_ordered_stock_price[dict_key] = item.product.supplier_stock_price
 
                 for item in order_items:
                     if item.is_cart_offer is True:
@@ -730,8 +732,8 @@ def export_excel(request):
                     order__created_at__range=[date_from, date_to], order__status='Pending')).all()
 
             for row in rows2:
-
-                label = row.label
+                # CHANGE 2: Use product title + attribute instead of label for Nabavki sheet
+                label = f"{row.product.title} {row.attribute_name}"
                 quantity = row.quantity
                 stock_price = row.product.supplier_stock_price
                 thumbnail_url = row.product.export_image.path
