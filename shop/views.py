@@ -12,6 +12,7 @@ from django.db.models.functions import Concat
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
+from django.utils import timezone  # noqa
 from django.utils.html import strip_tags
 from django.utils.timezone import get_current_timezone
 from django.views.generic import ListView
@@ -21,7 +22,6 @@ from openpyxl.styles import Alignment, Font
 from openpyxl.styles import Border, Side
 from openpyxl.styles import PatternFill
 from openpyxl.writer.excel import save_virtual_workbook
-
 from .controller import facebook_pixel
 from .forms import ExportOrder
 from .models import *
@@ -102,7 +102,7 @@ def CategoryView(request, slug):
 
 
 def ProductView(request, slug):
-    now = datetime.datetime.now()
+    now = timezone.now()
     current_day = now.weekday()
     mapped_delivery_days = {
         0: ['Среда', 'Петок'],
