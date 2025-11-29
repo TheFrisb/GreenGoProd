@@ -42,7 +42,7 @@ urlpatterns = [
     path('shopmanager/deleted', views.shopmanager_deleted, name='shdeleted'),
     path('shopmanager/abandoned-carts', views.shopmanager_abandoned_carts, name='shabandonedcarts'),
     path('update-order', shopmanager.updateOrderStatus, name="updateorder"),
-    # path('export-excel', views.export_excel, name="export_excel"),
+    path('export-excel', views.export_excel, name="export_excel"),
 
     path('dostava/', views.Dostava, name='dostava-page'),
     path('reklamacija/', views.Reklamacija, name='reklamacija-page'),
