@@ -7,7 +7,7 @@
 {% block content %}
 <style>body #fb-root{display:none!important}#footer,.footer-section{display:none}.red{border-color:red}#ordered_items_notice_wrapper{visibility:hidden}</style>
 {% if cart %}
-    
+
     <form action="{% url 'placeorder' %}" method="POST" class="content-container checkout" aria-label="Комплетирај нарачка">
         {% csrf_token %}
         {% if cartOffers %}
@@ -37,9 +37,9 @@
             </div>
             {% endif %}
         <div class="col-1 checkoutform">
-            
+
             <h3 class="checkout-title">Податоци за испорака</h3>
-            
+
                 <ul id="FieldList">
                     <li><label for="name">Име и Презиме <abbr title="required" class="required">*</abbr></label>
                     <input type="text" required name="name" id="checkout_input_name"></li>
@@ -54,7 +54,7 @@
                     <input type="hidden" required name="city" placeholder="Одберете град" class="checkout-city" value="Undefined">
                     <div class="dropdownsearch">
                         <div class="options">
-                          <select name="" id="dynamic_select">              
+                          <select name="" id="dynamic_select">
                               <option value="Одбери град" fake-name="Одбери град">Одбери град</option>
                               <option value="Аеродром" fake-name="Aerodrom">Аеродром</option>
                               <option value="Арачиново" fake-name="Aracinovo">Арачиново</option>
@@ -117,7 +117,7 @@
                     <li><label for="number">Телефонски број <abbr title="required" class="required">*</abbr></label>
                         <input type="tel" placeholder="формат: 07X-XXX-XXX"required name="number" id="checkout_input_phone"></li>
                 </ul>
-            
+
         </div>
         <div class="col-2 offer-col">
             <div class="">
@@ -128,7 +128,7 @@
             <div class="checkout-offers desktop">
                 <p class="checkoutOffers-title">Често купувани заедно</p>
                 {% for item in cartOffers %}
-                
+
                     <div class="sidecart-item checkout-offerItem desktop product_data">
                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
                         <input type="hidden" class="offer_price" value="{{ item.price }}">
@@ -169,12 +169,12 @@
                     {% else %}
                     <button class="fee-add">ДОДАЈ</button>
                     {% endif %}
-                    <p class="fee-description">{{ fee.content }}</p>    
+                    <p class="fee-description">{{ fee.content }}</p>
                 </div>
             {% endfor %}
         {% endif %}
     </div>
-    
+
         <h3 id="order_review_heading">Вашата Нарачка</h3>
         <div id="order_review">
             <table class="order-review-table cart-data">
@@ -189,7 +189,7 @@
                 <tr class="cart-item-row product-row">
                     <td class="cart-item product_data" style="padding: 9px 12px;display:flex;justify-content:flex-start;align-items: center;">
                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
-                        
+
                         {% csrf_token %}
                         <div class="checkout-row-inline name">
                             <img src="{{ item.product.thumbnail.url }}" alt="" width="45" height="45">
@@ -202,18 +202,18 @@
                             <div>
                                 <strong class="product-quantity">x {{ item.product_qty }}</strong>
                                 <span class="remove-item">ОТСТРАНИ</span>
-                            </div>   
+                            </div>
                         </div>
                         <div class="quantity checkout-row-inline">
                             <button class="changeQuantity decrement-btn">-</button>
                             <input type="text" name="quantity" class="qty-input" value="{{ item.product_qty }}">
                             <button class="changeQuantity increment-btn">+</button>
-                            
+
                         </div>
-                                 
+
                     </td>
-                    
-                        
+
+
                     {% if item.has_attributes %}
                     <td class="cart-item-total-row">
                         <p class="item-total"><span>{{ item.attributeprice }}</span> ден</p>
@@ -233,10 +233,10 @@
                 <tfoot>
                     {% if cartFees %}
                         {% for fee in cartFees %}
-                        <tr class="cart-fees"> 
+                        <tr class="cart-fees">
                             <td>
                                 <p>{{ fee.title }}</p>
-                                
+
                             </td>
                             <td>
                                 <p>{{ fee.price }} ден</p>
@@ -244,7 +244,7 @@
                         </tr>
                         {% endfor %}
                     {% endif %}
-                    <tr class="cart-subtotal"> 
+                    <tr class="cart-subtotal">
                         <td>
                             <p>Вкупна цена</p>
                         </td>
@@ -277,10 +277,10 @@
                         </td>
                     </tr>
                 </tfoot>
-                
+
             </table>
         </div>
-        
+
         <div id="payment">
             <div class="payment-text">
                 <p class="payment-info">Плаќање при достава</p>
