@@ -732,8 +732,11 @@ def export_excel(request):
                     order__created_at__range=[date_from, date_to], order__status='Pending')).all()
 
             for row in rows2:
-                # CHANGE 2: Use product title + attribute instead of label for Nabavki sheet
-                label = f"{row.product.title} {row.attribute_name}"
+                if row.attribute_name:
+                    label = f"{row.product.title} {row.attribute_name}"
+                else:
+                    label = row.product.title
+
                 quantity = row.quantity
                 stock_price = row.product.supplier_stock_price
                 thumbnail_url = row.product.export_image.path
