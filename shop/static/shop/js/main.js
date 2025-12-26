@@ -179,6 +179,11 @@ $(document).ready(function() {
                     product_qty = 1;
                 }
             }
+
+            if ($(button).hasClass('mainaddedBtn') || $(button).hasClass('addedBtn')) {
+                toggleCart();
+                return;
+            }
             
             $.ajax({
                 method: "POST",
@@ -348,6 +353,7 @@ $(document).ready(function() {
              product_qty = 1;
          }
        }
+
       if($(selected_attribute).length){
         attribute_id = $(selected_attribute).find(".attrib_id").val();
         attribute_type = $(selected_attribute).find(".attrib_type").val();
