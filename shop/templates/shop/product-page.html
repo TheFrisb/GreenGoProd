@@ -261,21 +261,21 @@
         </div>
         {% if attributes %}
             {% if upsells %}
-                <button class="variable-add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span
+                <button class="variable-add-to-cartBtn hasUpsells baseAddToCartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
                         class="load-spinner open-spinner"></span></button>
                 <button class="proceed-to-checkout variable-add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
             {% else %}
-                <button class="variable-add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                <button class="variable-add-to-cartBtn baseAddToCartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
                         class="load-spinner open-spinner"></span></button>
                 <button class="proceed-to-checkout variable-add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
             {% endif %}
         {% else %}
             {% if upsells %}
-                <button class="add-to-cartBtn hasUpsells"><span class="btn-text">ВО КОШНИЧКА</span><span
+                <button class="add-to-cartBtn hasUpsells baseAddToCartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
                         class="load-spinner open-spinner"></span></button>
                 <button class="proceed-to-checkout add-to-cartBtn hasUpsells">НАРАЧАЈ ВЕДНАШ</button>
             {% else %}
-                <button class="add-to-cartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
+                <button class="add-to-cartBtn baseAddToCartBtn"><span class="btn-text">ВО КОШНИЧКА</span><span
                         class="load-spinner open-spinner"></span></button>
                 <button class="proceed-to-checkout add-to-cartBtn">НАРАЧАЈ ВЕДНАШ</button>
             {% endif %}

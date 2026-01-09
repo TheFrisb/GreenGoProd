@@ -4,12 +4,14 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.functions import Cast
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from random import randint
+from django.db.models import Avg, IntegerField
 
 
 # Create your models here.
@@ -99,14 +101,17 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.sku)
         self.fake_quantity = randint(2, 6)
-        reviews = Review.objects.filter(product=self)
-        total_rating = 0
-        for review in reviews:
-            total_rating += int(review.rating)
-        if reviews.count() > 0:
-            self.review_average = total_rating // reviews.count()
+
+        if self.pk:
+            # Cast 'rating' to an Integer before averaging
+            average = Review.objects.filter(product=self).aggregate(
+                rating_avg=Avg(Cast('rating', output_field=IntegerField()))
+            )['rating_avg']
+
+            self.review_average = int(average) if average else 0
         else:
             self.review_average = 0
+
         super(Product, self).save(*args, **kwargs)
         self.thumbnail2 = self.thumbnail
 

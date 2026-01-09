@@ -75,6 +75,9 @@
 
 </head>
 <body>
+    <input type="hidden" id="productIdsInCart" name="productIdsInCart"
+           value="{% for item in cart %}{{ item.product.id }}{% if item.attribute %}-{{ item.attribute.id }}{% endif %}{% if not forloop.last %},{% endif %}{% endfor %}">
+
 <!-- Messenger Chat Plugin Code -->
 <div id="fb-root"></div>
 
@@ -136,7 +139,7 @@
 </div>
 {% include "shop/includes/footer.html" %}
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="{% static 'shop/js/main_minified_v11.js' %}"></script>
+<script src="{% static 'shop/js/main_minified_v12' %}"></script>
 {% block scripts %}{% endblock scripts %}
 </body>
 </html>

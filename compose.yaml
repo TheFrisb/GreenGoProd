@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:latest
     volumes:
-      - greengo_postgres_data_volume:/var/lib/postgresql/data
+      - greengo_postgres_data_volume:/var/lib/postgresql
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: secret
