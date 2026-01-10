@@ -1,46 +1,52 @@
-from django.http import HttpResponse, JsonResponse
 import datetime
-from facebook_business.api import FacebookAdsApi
-from facebook_business.adobjects.adaccount import AdAccount
-from facebook_business.adobjects.campaign import Campaign
 from datetime import date, datetime, timedelta
-from analytics.models import *
-from datetime import datetime
-from shop.models import ProductCampaigns, Product, ProductUpsells
+
 from decouple import config
 from django.db.models import Q
+from django.http import JsonResponse
+from facebook_business.adobjects.adaccount import AdAccount
+from facebook_business.adobjects.campaign import Campaign
+from facebook_business.api import FacebookAdsApi
+
+from analytics.models import *
+from shop.models import ProductCampaigns, ProductUpsells
 
 
 def get_campaign_id(save_to_db=True):
     # Initialize the Facebook Ads SDK with the access token
-    FacebookAdsApi.init(access_token=config('MARKETING_API_SECRET_KEY'))
+    FacebookAdsApi.init(access_token=config("MARKETING_API_SECRET_KEY"))
     # Search for campaigns by string and ad account ID
-    account = AdAccount(config('MARKETING_AD_ACCOUNT'))
+    account = AdAccount(config("MARKETING_AD_ACCOUNT"))
 
-    campaigns = account.get_campaigns(fields=['name', 'id', 'effective_status'],
-                                      params={
-                                              'effective_status': ['ACTIVE'],
-                                              'date_preset': 'yesterday'}
-                                      )
+    campaigns = account.get_campaigns(
+        fields=["name", "id", "effective_status"],
+        params={"effective_status": ["ACTIVE"], "date_preset": "yesterday"},
+    )
     print(campaigns)
     # Iterate over all campaigns and find the first campaign that matches the search string
     for campaign in campaigns:
-        campaign_id = campaign['id']
+        campaign_id = campaign["id"]
         campaign_obj = Campaign(campaign_id)
 
-        yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-        today = datetime.now().strftime('%Y-%m-%d')
+        yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        today = datetime.now().strftime("%Y-%m-%d")
 
-        insights = campaign_obj.get_insights(fields=['spend'], params={'date_preset': 'yesterday'})
+        insights = campaign_obj.get_insights(
+            fields=["spend"], params={"date_preset": "yesterday"}
+        )
         if insights:
-            campaign_data = {'name': campaign['name'], 'id': campaign_id, 'spend': insights[0]['spend']}
-            ad_spend = float(campaign_data['spend'])
-            name_of_campaign = campaign['name']
+            campaign_data = {
+                "name": campaign["name"],
+                "id": campaign_id,
+                "spend": insights[0]["spend"],
+            }
+            ad_spend = float(campaign_data["spend"])
+            name_of_campaign = campaign["name"]
 
-            campaign_id = campaign['id']
+            campaign_id = campaign["id"]
             populate_daily_rows(campaign_id, ad_spend, save_to_db)
 
-    return 'Campaign not found'
+    return "Campaign not found"
 
 
 def populate_daily_rows(campaign_id, ad_spend, save_to_db):
@@ -48,7 +54,6 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
         product_campaign_ob = ProductCampaigns.objects.get(campaign_id=campaign_id)
         campaigns_product = product_campaign_ob.product
         product_campaign = ProductCampaigns.objects.filter(product=campaigns_product)
-
 
     except:
         return 1
@@ -72,8 +77,17 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
         yesterday = start_time
         print(owner_of_campaign)
         ordered_products = OrderItem.objects.filter(
-            Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(
-                order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+            Q(
+                order__status="Pending",
+                product=product,
+                created_at__range=(start_time, end_time),
+            )
+            | Q(
+                order__status="Confirmed",
+                product=product,
+                created_at__range=(start_time, end_time),
+            )
+        )
         print(ordered_products)
         for product in ordered_products:
             quantity = quantity + product.quantity
@@ -91,31 +105,43 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
             roas = (quantity * product_price) / yesterdays_ad_spend
             roi = (neto_price * quantity) / yesterdays_ad_spend
         else:
-            roas = (quantity * product_price)
-            roi = (neto_price * quantity)
+            roas = quantity * product_price
+            roi = neto_price * quantity
 
         if save_to_db:
-            daily_row_new = DailyRow(owner=owner_of_campaign, quantity=quantity, price=product_price,
-                                     stock_price=stock_price, fixed_cost=fixed_cost,
-                                     ad_cost=yesterdays_ad_spend, neto_price=neto_price, neto_total=neto_total,
-                                     profit=profit, cost_per_purchase=cost_per_purchase,
-                                     be_roas=be_roas, roas=roas, roi=roi, created_at=yesterday)
+            daily_row_new = DailyRow(
+                owner=owner_of_campaign,
+                quantity=quantity,
+                price=product_price,
+                stock_price=stock_price,
+                fixed_cost=fixed_cost,
+                ad_cost=yesterdays_ad_spend,
+                neto_price=neto_price,
+                neto_total=neto_total,
+                profit=profit,
+                cost_per_purchase=cost_per_purchase,
+                be_roas=be_roas,
+                roas=roas,
+                roi=roi,
+                created_at=yesterday,
+            )
             daily_row_new.save()
 
-
     elif product_campaign.count() > 1:
-        yesterday_row = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+        yesterday_row = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
         product = product_campaign[0].product
         owner_of_campaign = DailyItems.objects.filter(product=product).first()
-        row = DailyRow.objects.filter(created_at__date=yesterday_row, owner=owner_of_campaign).first()
+        row = DailyRow.objects.filter(
+            created_at__date=yesterday_row, owner=owner_of_campaign
+        ).first()
 
-        if (row):
+        if row:
 
             row.ad_cost += ad_spend * 56.59
 
             row.save()
 
-            return JsonResponse({'status': "Updated existing row for yesterday's date"})
+            return JsonResponse({"status": "Updated existing row for yesterday's date"})
         else:
 
             product = product_campaign[0].product
@@ -134,14 +160,23 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
             start_time = date.today() - timedelta(days=1)
             end_time = date.today()
             yesterday = start_time
-            
+
             print(owner_of_campaign)
             ordered_products = OrderItem.objects.filter(
-                Q(order__status='Pending', product=product, created_at__range=(start_time, end_time)) | Q(
-                    order__status='Confirmed', product=product, created_at__range=(start_time, end_time)))
+                Q(
+                    order__status="Pending",
+                    product=product,
+                    created_at__range=(start_time, end_time),
+                )
+                | Q(
+                    order__status="Confirmed",
+                    product=product,
+                    created_at__range=(start_time, end_time),
+                )
+            )
             print(ordered_products)
             for product in ordered_products:
-                print(product, ' - ', product.quantity, ' - ', product.created_at)
+                print(product, " - ", product.quantity, " - ", product.created_at)
                 quantity = quantity + product.quantity
 
             neto_price = product_price - stock_price
@@ -159,18 +194,28 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
                 roas = (quantity * product_price) / yesterdays_ad_spend
                 roi = (neto_price * quantity) / yesterdays_ad_spend
             else:
-                roas = (quantity * product_price)
-                roi = (neto_price * quantity)
+                roas = quantity * product_price
+                roi = neto_price * quantity
 
             if save_to_db:
-                daily_row_new = DailyRow(owner=owner_of_campaign, quantity=quantity, price=product_price,
-                                         stock_price=stock_price, fixed_cost=fixed_cost,
-                                         ad_cost=yesterdays_ad_spend, neto_price=neto_price, neto_total=neto_total,
-                                         profit=profit, cost_per_purchase=cost_per_purchase,
-                                         be_roas=be_roas, roas=roas, roi=roi, created_at=yesterday)
+                daily_row_new = DailyRow(
+                    owner=owner_of_campaign,
+                    quantity=quantity,
+                    price=product_price,
+                    stock_price=stock_price,
+                    fixed_cost=fixed_cost,
+                    ad_cost=yesterdays_ad_spend,
+                    neto_price=neto_price,
+                    neto_total=neto_total,
+                    profit=profit,
+                    cost_per_purchase=cost_per_purchase,
+                    be_roas=be_roas,
+                    roas=roas,
+                    roi=roi,
+                    created_at=yesterday,
+                )
 
                 daily_row_new.save()
-
 
     else:
         return 1

@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import Product, Category
+from .models import Category, Product
 
 
 class ProductSitemap(Sitemap):
@@ -9,7 +9,7 @@ class ProductSitemap(Sitemap):
     priority = 0.9
 
     def items(self):
-        return Product.objects.filter(status='PUBLISHED')
+        return Product.objects.filter(status="PUBLISHED")
 
     def lastmod(self, obj):
         return obj.date_posted
@@ -28,7 +28,12 @@ class StaticViewSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return ['dostava-page', 'reklamacija-page', 'rights-of-usage-page', 'cookies-page']
+        return [
+            "dostava-page",
+            "reklamacija-page",
+            "rights-of-usage-page",
+            "cookies-page",
+        ]
 
     def location(self, item):
         return reverse(item)
