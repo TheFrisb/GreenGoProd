@@ -1,3 +1,4 @@
+import mimetypes
 import os
 from collections import defaultdict
 from datetime import timedelta
@@ -13,7 +14,7 @@ from openpyxl.utils import get_column_letter
 
 from .models import Order, OrderItem, Supplier
 
-
+mimetypes.add_type("image/webp", ".webp")
 class OrderExcelExporter:
     def __init__(self, date_from, date_to):
         self.date_from = date_from
