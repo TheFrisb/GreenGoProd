@@ -1,0 +1,10 @@
+1. Ako e product in cart, proceedToCheckout da otvore samo checkout
+2. Ako e product in cart, baseAddCartBtn da otvore samo sidecart
+3. Ako e variable product in cart, baseAddCartBtn da otvore samo sidecart
+4. Ako se mene variabilen produkt, da se apdejtire button text
+
+
+-- Store Product IDs from cart
+-- Store Product Attributes from cart
+-- On proceedToCheckout, if product in cart, toggle cart
+-- On baseAddCartBtn, if product in cart, toggle cart

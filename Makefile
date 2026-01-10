@@ -6,3 +6,8 @@ down:
 
 clean-volumes:
 	sudo docker compose down -v
+
+
+format:
+	black .
+	ruff check . --select I,F401 --fix
