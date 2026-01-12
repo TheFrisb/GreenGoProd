@@ -325,7 +325,7 @@ def shopmanager_dashboard(request):
     orders = (
         Order.objects.filter(status="Pending")
         .prefetch_related("order")
-        .order_by("-id")[:50]
+        .order_by("-id")
     )
     orderfees = OrderFeesItem.objects.filter(order__status="Pending").order_by("-id")
     title = "НЕПОТВРДЕНИ НАРАЧКИ"
