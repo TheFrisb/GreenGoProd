@@ -465,7 +465,7 @@ def create_campaign(request):
             campaign_name = request.POST.get("campaign_name")
             product_id = request.POST.get("product_id")
             link_url = (
-                "https://promotivno.com"
+                "https://extrapopust.com"
                 + Product.objects.get(id=product_id).get_absolute_url()
             )
             print(link_url)
@@ -568,7 +568,7 @@ def get_ad_preview(request):
         ad_primary_text = request.GET.get("ad_primary_text")
         ad_description_text = request.GET.get("ad_description_text")
         ad_headline_text = request.GET.get("ad_headline_text")
-        photo_url = "https://promotivno.com" + str(request.GET.get("photo_url"))
+        photo_url = "https://extrapopust.com" + str(request.GET.get("photo_url"))
 
         result = ad_campaigns.create_ad_preview(
             ad_primary_text=ad_primary_text,

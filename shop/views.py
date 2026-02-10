@@ -62,12 +62,12 @@ def export_products_csv(request):
                         str(product.id) + "_" + attribute.label,
                         product.title + " - " + attribute_name,
                         content,
-                        "https://promotivno.com" + product.get_absolute_url(),
-                        "https://promotivno.com" + product.thumbnail.url,
+                        "https://extrapopust.com" + product.get_absolute_url(),
+                        "https://extrapopust.com" + product.thumbnail.url,
                         "in stock",
                         str(product.sale_price) + "MKD",
                         "New",
-                        "PromotivnoMK",
+                        "ExtraPopustMK",
                     ]
                 )
 
@@ -76,12 +76,12 @@ def export_products_csv(request):
                 product.id,
                 product.title,
                 content,
-                "https://promotivno.com" + product.get_absolute_url(),
-                "https://promotivno.com" + product.thumbnail.url,
+                "https://extrapopust.com" + product.get_absolute_url(),
+                "https://extrapopust.com" + product.thumbnail.url,
                 "in stock",
                 str(product.sale_price) + "MKD",
                 "New",
-                "PromotivnoMK",
+                "ExtraPopustMK",
             ]
         )
 

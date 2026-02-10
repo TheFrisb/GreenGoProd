@@ -133,7 +133,7 @@ $(document).ready(function () {
 
 
     $.ajax({
-        url: 'https://promotivno.com/analytics/get-open-audience',
+        url: 'https://extrapopust.com/analytics/get-open-audience',
         method: 'GET',
         data: {
             'csrfmiddlewaretoken': token
@@ -258,7 +258,7 @@ $(document).ready(function () {
         var campaign_id = $(this).attr('data-id')
         var campaign_name = $(this).attr('data-value')
         $.ajax({
-            url: 'https://promotivno.com/analytics/get-campaign-adsets',
+            url: 'https://extrapopust.com/analytics/get-campaign-adsets',
             method: 'GET',
             data: {
                 'campaign_id': campaign_id,
@@ -324,7 +324,7 @@ $(document).ready(function () {
             data.append('ad_image', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'https://promotivno.com/analytics/upload-campaign-photo',
+                url: 'https://extrapopust.com/analytics/upload-campaign-photo',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -357,7 +357,7 @@ $(document).ready(function () {
             data.append('ad_video', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'https://promotivno.com/analytics/upload-campaign-video',
+                url: 'https://extrapopust.com/analytics/upload-campaign-video',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -370,7 +370,7 @@ $(document).ready(function () {
                     $(button).closest('.media_input').siblings('.media_holder').find('.ad_media_video_id').val(ad_id)
                     
                     $.ajax({
-                        url: 'https://promotivno.com/analytics/get-video-thumbnails',
+                        url: 'https://extrapopust.com/analytics/get-video-thumbnails',
                         method: 'GET',
                         data: {
                             'ad_id': ad_id,
@@ -409,7 +409,7 @@ $(document).ready(function () {
             data.append('ad_image', file);
             data.append('csrfmiddlewaretoken', token);
             $.ajax({
-                url: 'https://promotivno.com/analytics/upload-campaign-photo',
+                url: 'https://extrapopust.com/analytics/upload-campaign-photo',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -446,7 +446,7 @@ $(document).ready(function () {
         }
         else{
             $.ajax({
-                url: 'https://promotivno.com/analytics/search-ad-audiences',
+                url: 'https://extrapopust.com/analytics/search-ad-audiences',
                 method: 'GET',
                 data: {
                     'search_term': search_term,
@@ -482,7 +482,7 @@ $(document).ready(function () {
         var current_time = video[0].currentTime;
         var ad_id = $(button).siblings('.ad_media_video_id').val();
         $.ajax({
-            url: 'https://promotivno.com/analytics/generate-ad-video-thumbnail',
+            url: 'https://extrapopust.com/analytics/generate-ad-video-thumbnail',
             method: 'GET',
             data: {
                 'ad_id': ad_id,
@@ -794,7 +794,7 @@ $(document).ready(function () {
             $(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Се креира...')
            
             $.ajax({
-                url: 'https://promotivno.com/analytics/create-campaign',
+                url: 'https://extrapopust.com/analytics/create-campaign',
                 type: 'POST',
                 data: {
                     'csrfmiddlewaretoken': token,
@@ -808,7 +808,7 @@ $(document).ready(function () {
                     //$(button).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Додавање на Campaign ID на продуктот...')
                     //console.log(response.campaign_id)
                     // $.ajax({
-                    //     url: 'https://promotivno.com/analytics/save-new-campaign-id',
+                    //     url: 'https://extrapopust.com/analytics/save-new-campaign-id',
                     //     type: 'POST',
                     //     data: {
                     //         'csrfmiddlewaretoken': token,
@@ -877,7 +877,7 @@ $(document).ready(function () {
         console.log(photo_url)
         console.log('ad_prev')
         $.ajax({
-            url: 'https://promotivno.com/analytics/get-ad-previews',
+            url: 'https://extrapopust.com/analytics/get-ad-previews',
             type: 'GET',
             data: {
                 'csrfmiddlewaretoken': token,
@@ -905,7 +905,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_name = $("#store_new_audience_name_input").val();
         $.ajax({
-            url: 'https://promotivno.com/analytics/store-new-audience',
+            url: 'https://extrapopust.com/analytics/store-new-audience',
             type: 'POST',
             data: {
 
@@ -927,7 +927,7 @@ $(document).ready(function () {
         var button = $(this);
         var audience_id = $(this).siblings(".stored_audience_id_input").val();
         $.ajax({
-            url: 'https://promotivno.com/analytics/remove-stored-audience',
+            url: 'https://extrapopust.com/analytics/remove-stored-audience',
             type: 'POST',
             data: {
                 'csrfmiddlewaretoken': token,

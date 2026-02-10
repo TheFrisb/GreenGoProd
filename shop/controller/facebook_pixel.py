@@ -55,7 +55,7 @@ def ViewContentEvent(request, product):
     user_data = get_user_data(request)
 
     content = Content(
-        brand="Promotivno",
+        brand="ExtraPopust",
         product_id=product.id,
         item_price=product.sale_price,
         category=str(product.category.name),
@@ -107,7 +107,7 @@ def AddToCartPixelEvent(
         user_data = get_user_data(request)
 
         content = Content(
-            brand="Promotivno",
+            brand="ExtraPopust",
             product_id=product.id,
             quantity=qty,
             item_price=product.sale_price,
@@ -152,7 +152,7 @@ def AddToCartPixelEvent(
         total_price = offer_price * qty
         user_data = get_user_data(request)
         content = Content(
-            brand="Promotivno",
+            brand="ExtraPopust",
             product_id=product.id,
             quantity=qty,
             item_price=offer_price,
@@ -195,7 +195,7 @@ def AddToCartPixelEvent(
         total_price = attribute_price * qty
         user_data = get_user_data(request)
         content = Content(
-            brand="Promotivno",
+            brand="ExtraPopust",
             product_id=product.id,  # fix
             quantity=qty,
             item_price=attribute_price,

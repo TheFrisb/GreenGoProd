@@ -169,7 +169,7 @@ def create_facebook_ad(
             ad_description_text  # Description
         )
         link_data[AdCreativeLinkData.Field.name] = ad_headline_text  # Headline
-        link_data[AdCreativeLinkData.Field.caption] = "promotivno.com"
+        link_data[AdCreativeLinkData.Field.caption] = "extrapopust.com"
 
         link_data[AdCreativeLinkData.Field.image_hash] = image.get_hash()
         link_data[AdCreativeLinkData.Field.call_to_action] = {
@@ -202,7 +202,7 @@ def create_facebook_ad(
             params={
                 "name": ad_name + " - " + str(random_number),
                 "adset_id": ad_set_id,
-                "conversion_domain": "promotivno.com",
+                "conversion_domain": "extrapopust.com",
                 "creative": {"creative_id": creative["id"]},
                 "instagram_actor_id": instagram_account_id,
                 "status": "PAUSED",
@@ -260,7 +260,7 @@ def create_facebook_ad(
             params={
                 "name": ad_name + " - " + str(random_number),  # fix
                 "adset_id": ad_set_id,  # change
-                "conversion_domain": "promotivno.com",
+                "conversion_domain": "extrapopust.com",
                 "creative": {"creative_id": creative["id"]},
                 "instagram_actor_id": instagram_account_id,
                 "status": "PAUSED",
@@ -379,10 +379,10 @@ def create_ad_preview(
                 "link_data": {
                     "call_to_action": {
                         "type": "SHOP_NOW",
-                        "value": {"link": "https://promotivno.com"},
+                        "value": {"link": "https://extrapopust.com"},
                     },
                     "description": ad_description_text,
-                    "link": "https://promotivno.com",
+                    "link": "https://extrapopust.com",
                     "message": ad_primary_text,
                     "name": ad_headline_text,
                     "picture": photo_url,
