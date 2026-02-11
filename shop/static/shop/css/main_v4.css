@@ -157,6 +157,10 @@ input[type=number] {
     padding-right: 24px;
 }
 
+#header .image-icon {
+    filter: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(608%) hue-rotate(265deg) brightness(119%) contrast(100%)!important;
+}
+
 .header-search input[type=text] {
     width: 480px;
     height: 50px;
