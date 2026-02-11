@@ -76,6 +76,7 @@ input[type=number] {
     flex-wrap: nowrap;
     box-shadow: 0px 2px 2px -2px rgb(0 0 0 / 50%);
     z-index: 1000;
+    background: var(--brand-primary);
 }
 
 #header-banner {
@@ -151,9 +152,9 @@ input[type=number] {
 */
 
 .header-logo-img {
-    width: 250px;
+    width: 200px;
     height: auto;
-    padding-right: 12px;
+    padding-right: 24px;
 }
 
 .header-search input[type=text] {
@@ -2922,6 +2923,7 @@ section#ordered_items_notice_wrapper {
     .header-logo-img {
         width: 150px;
         height: auto;
+        padding-left: 12px;
     }
 
     .header-icon {
@@ -4005,6 +4007,7 @@ button.offerBtn.addedBtn.add-upsell.checkout-offer {
     .header-logo-img {
         width: 150px;
         height: auto;
+        padding-left: 12px;
     }
 
     .header-icon {
