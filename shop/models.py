@@ -32,7 +32,7 @@ class Category(models.Model):
     sort_order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} (Order: {self.sort_order})"
 
     class Meta:
         verbose_name = "Категорија"

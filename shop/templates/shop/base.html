@@ -117,7 +117,7 @@
         </li>
         {% for category in categories %}
         <li class="navigation-item">
-            <a href="{% url category.slug %}" class="navigation-title">{{ category.name }}</a>
+            <a href="{% url 'category-page' category.slug %}" class="navigation-title">{{ category.name }}</a>
         </li>
         {% endfor %}
     </ul>
