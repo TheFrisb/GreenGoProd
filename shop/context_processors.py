@@ -1,6 +1,6 @@
 import uuid
 
-from .models import Cart, CartFees, CartItems, CartOffers, CheckoutFees
+from .models import Cart, CartFees, CartItems, CartOffers, CheckoutFees, Category
 
 
 def cart_renderer(request):
@@ -69,4 +69,5 @@ def extras(request):
         "orderFees": orderFees,
         "cartFees": cartFees,
         "feetotal": feetotal,
+        "categories": Category.objects.filter(published=True).order_by("sort_order")
     }
