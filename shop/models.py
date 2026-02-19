@@ -29,9 +29,10 @@ class Category(models.Model):
         max_length=150, null=False, blank=False, verbose_name="Име на категорија"
     )
     published = models.BooleanField(default=True, verbose_name="Видливост:")
+    sort_order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} (Order: {self.sort_order})"
 
     class Meta:
         verbose_name = "Категорија"

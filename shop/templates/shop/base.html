@@ -39,25 +39,36 @@
     <!-- Meta Pixel Code -->
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1648580439508167');
-    fbq('track', 'PageView');
+      !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ?
+            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+      }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1648580439508167');
+      fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1648580439508167&ev=PageView&noscript=1"
+                   src="https://www.facebook.com/tr?id=1648580439508167&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
 </head>
 <body>
-    <input type="hidden" id="productIdsInCart" name="productIdsInCart"
-           value="{% for item in cart %}{{ item.product.id }}{% if item.attribute %}-{{ item.attribute.id }}{% endif %}{% if not forloop.last %},{% endif %}{% endfor %}">
+<input type="hidden" id="productIdsInCart" name="productIdsInCart"
+       value="
+               {% for item in cart %}{{ item.product.id }}{% if item.attribute %}-{{ item.attribute.id }}{% endif %}{% if not forloop.last %},{% endif %}{% endfor %}">
 
 <!-- Messenger Chat Plugin Code -->
 <div id="fb-root"></div>
@@ -93,19 +104,14 @@
 {% include "shop/includes/header.html" %}
 <nav id="navigation" style="z-index:1000000000!important">
     <ul>
-        <li class="navigation-item"><a href="https://extrapopust.com/" class="navigation-title">ПОЧЕТНА</a></li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/najprodavani/"
-                                       class="navigation-title">НАЈПРОДАВАНИ</a></li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/domakjinstvo/"
-                                       class="navigation-title">ДОМАЌИНСТВО</a></li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/gradina/" class="navigation-title">ГРАДИНА</a>
+        <li class="navigation-item">
+            <a href="https://extrapopust.com/" class="navigation-title">ПОЧЕТНА</a>
         </li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/zdravje-i-ubavina/"
-                                       class="navigation-title">ЗДРАВЈЕ И УБАВИНА</a></li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/kujnski-aparati/"
-                                       class="navigation-title">КУЈНСКИ АПАРАТИ</a></li>
-        <li class="navigation-item"><a href="https://extrapopust.com/product-category/avtomobil/"
-                                       class="navigation-title">АВТОМОБИЛ</a></li>
+        {% for category in categories %}
+        <li class="navigation-item">
+            <a href="{% url category.slug %}" class="navigation-title">{{ category.name }}</a>
+        </li>
+        {% endfor %}
     </ul>
 </nav>
 <div class="page-container">
