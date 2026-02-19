@@ -69,5 +69,5 @@ def extras(request):
         "orderFees": orderFees,
         "cartFees": cartFees,
         "feetotal": feetotal,
-        "categories": Category.objects.all().order_by("sort_order")
+        "categories": Category.objects.filter(published=True).order_by("sort_order")
     }
