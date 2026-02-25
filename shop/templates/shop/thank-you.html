@@ -164,9 +164,9 @@
         <p class="thank-you-message">{{ order.name }}</p>
         <p class="thank-you-message">{{ order.address }}</p>
         <p class="thank-you-message">{{ order.city }}</p>
-        <p class="thank-you-message">{{ order.number }}</p>
-        <p class="thank-you-message thankumessage-last">(доколку сакате да ја измените вашата нарачка или сакате да
-            промените некои од вашите податоци за достава ве молиме контактирајте не на 071/321-314)</p>
+        <p class="thank-you-message thankumessage-last">{{ order.number }}</p>
+{#        <p class="thank-you-message">(доколку сакате да ја измените вашата нарачка или сакате да#}
+{#            промените некои од вашите податоци за достава ве молиме контактирајте не на 071/321-314)</p>#}
         <a href="{% url 'shop-home' %}" class="thankyou-proceed-to-home">ПРОДОЛЖИ СО КУПУВАЊЕ</a>
     </div>
 {% endblock content %}
