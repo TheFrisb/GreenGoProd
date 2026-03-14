@@ -103,7 +103,7 @@ class OrderExcelExporter:
             Order.objects.filter(status__in=["Confirmed", "Pending"])
             .annotate(
                 shippingann=Case(
-                    When(shipping=True, then=Value("do vrata 180 den")),
+                    When(shipping=True, then=Value("do vrata 190 den")),
                     When(shipping=False, then=Value("besplatna dostava")),
                     output_field=CharField(),
                 )
