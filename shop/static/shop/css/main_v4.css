@@ -1791,7 +1791,7 @@ select {
 }
 
 .slick-next::before {
-    background: url(https://extrapopust.com/static/icons/chevron-right.svg) no-repeat;
+    background: url(https://korpaplus.com/static/icons/chevron-right.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;
@@ -1799,7 +1799,7 @@ select {
 }
 
 .slick-prev::before {
-    background: url(https://extrapopust.com/static/icons/chevron-left.svg) no-repeat;
+    background: url(https://korpaplus.com/static/icons/chevron-left.svg) no-repeat;
     content: "";
     display: block;
     height: 20px;

@@ -61,7 +61,7 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
 
         product = product_campaign[0].product
         owner_of_campaign = DailyItems.objects.filter(product=product).first()
-        product_price = product.sale_price - 180
+        product_price = product.sale_price - 190
         stock_price = product.supplier_stock_price
         related_upsells = ProductUpsells.objects.filter(parent_product=product)
         if related_upsells:
@@ -146,7 +146,7 @@ def populate_daily_rows(campaign_id, ad_spend, save_to_db):
 
             product = product_campaign[0].product
             owner_of_campaign = DailyItems.objects.filter(product=product).first()
-            product_price = product.sale_price - 180
+            product_price = product.sale_price - 190
             stock_price = product.supplier_stock_price
             related_upsells = ProductUpsells.objects.filter(parent_product=product)
             if related_upsells:

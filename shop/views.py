@@ -62,12 +62,12 @@ def export_products_csv(request):
                         str(product.id) + "_" + attribute.label,
                         product.title + " - " + attribute_name,
                         content,
-                        "https://extrapopust.com" + product.get_absolute_url(),
-                        "https://extrapopust.com" + product.thumbnail.url,
+                        "https://korpaplus.com" + product.get_absolute_url(),
+                        "https://korpaplus.com" + product.thumbnail.url,
                         "in stock",
                         str(product.sale_price) + "MKD",
                         "New",
-                        "ExtraPopustMK",
+                        "korpaplusMK",
                     ]
                 )
 
@@ -76,12 +76,12 @@ def export_products_csv(request):
                 product.id,
                 product.title,
                 content,
-                "https://extrapopust.com" + product.get_absolute_url(),
-                "https://extrapopust.com" + product.thumbnail.url,
+                "https://korpaplus.com" + product.get_absolute_url(),
+                "https://korpaplus.com" + product.thumbnail.url,
                 "in stock",
                 str(product.sale_price) + "MKD",
                 "New",
-                "ExtraPopustMK",
+                "korpaplusMK",
             ]
         )
 
