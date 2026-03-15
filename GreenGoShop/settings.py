@@ -174,7 +174,7 @@ CRONJOBS = [
 ]
 
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "CET"
+TIME_ZONE = "Europe/Skopje"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "/static/"
