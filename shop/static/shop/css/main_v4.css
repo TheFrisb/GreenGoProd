@@ -76,11 +76,9 @@ input[type=number] {
     flex-wrap: nowrap;
     box-shadow: 0px 2px 2px -2px rgb(0 0 0 / 50%);
     z-index: 1000;
-    background: var(--brand-primary);
 }
 
 #header-banner {
-    background: var(--brand-primary);
     width: 100%;
     overflow-x: hidden;
     position: relative;
@@ -157,9 +155,6 @@ input[type=number] {
     padding-right: 24px;
 }
 
-#header .image-icon {
-    filter: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(608%) hue-rotate(265deg) brightness(119%) contrast(100%)!important;
-}
 
 .header-search input[type=text] {
     width: 480px;
