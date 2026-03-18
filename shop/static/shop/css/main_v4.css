@@ -83,6 +83,7 @@ input[type=number] {
     overflow-x: hidden;
     position: relative;
     padding: 0.4em 0em;
+    background: var(--brand-primary);
 }
 
 #header-banner .banner-text {
