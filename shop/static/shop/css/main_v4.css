@@ -2838,6 +2838,9 @@ section#ordered_items_notice_wrapper {
 }
 
 @media (max-width: 767px) {
+    .header-logo-link {
+
+    }
     #productGallery__Thumbnails {
         display: none;
     }
@@ -2917,6 +2920,7 @@ section#ordered_items_notice_wrapper {
 
     .header-logo-container {
         flex-grow: 2;
+        margin-left: 14px;
     }
 
     .header-logo-img {
