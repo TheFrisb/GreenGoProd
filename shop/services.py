@@ -47,11 +47,24 @@ class OrderExcelExporter:
         """
         Parses text for pattern 'X [number]' (case insensitive).
         Example: 'Pack X 2' returns 2. 'Blue' returns 1.
+
+        Dimension patterns that involve 'cm' (e.g. '30cm x 60cm',
+        '30 X 60 cm', '30cm X 60') are stripped before parsing so they
+        are NOT treated as multipliers.
         """
         if not text:
             return 1
-        # Regex: Look for X followed by one or more spaces, then digits
-        match = re.search(r"[xX]\s+(\d+)", text)
+
+        # Strip dimension substrings where 'cm' appears on at least one side.
+        # Matches: "30cm x 60cm", "30 cm X 60 cm", "30 X 60cm", "30cm X 60", etc.
+        cleaned = re.sub(
+            r"\d+\s*(?:cm)?\s*[xX]\s*\d+\s*cm|\d+\s*cm\s*[xX]\s*\d+",
+            "",
+            text,
+            flags=re.IGNORECASE,
+        )
+
+        match = re.search(r"[xX]\s+(\d+)", cleaned)
         if match:
             try:
                 return int(match.group(1))
