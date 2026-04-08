@@ -89,13 +89,13 @@ class OrderExcelExporter:
 
     def generate(self):
         self._setup_main_sheet()
-        orders, duplicate_orders = self._get_orders_and_duplicates()
+        orders, duplicate_groups = self._get_orders_and_duplicates()
 
         for order in orders:
             self._write_order_row(order)
 
         self.row_num += 2
-        self._write_duplicates_section(duplicate_orders)
+        self._write_duplicates_section(duplicate_groups)
 
         self.row_num += 4
         self._write_summaries()
@@ -158,8 +158,9 @@ class OrderExcelExporter:
             ).order_by("created_at", "id")
         )
 
-        seen_originals = {}  # normalized phone -> first order id
+        seen_originals = {}  # normalized phone -> first Order object
         duplicate_order_ids = set()
+        dup_to_original = {}  # duplicate order id -> original Order object
 
         for order in extended_orders:
             norm = self._normalize_phone(order.number)
@@ -167,28 +168,50 @@ class OrderExcelExporter:
                 # No usable phone -> never collides with anything.
                 continue
             if norm not in seen_originals:
-                seen_originals[norm] = order.id
+                seen_originals[norm] = order
             else:
                 duplicate_order_ids.add(order.id)
+                dup_to_original[order.id] = seen_originals[norm]
 
         self.duplicate_order_ids = duplicate_order_ids
 
         # Display buckets are restricted to the user-selected range.
         current_orders = []
-        duplicate_orders = []
+        in_range_duplicates = []
         for order in extended_orders:
             order_date = order.created_at.date()
             if not (self.date_from <= order_date <= self.date_to):
                 continue
             if order.id in duplicate_order_ids:
-                duplicate_orders.append(order)
+                in_range_duplicates.append(order)
             else:
                 current_orders.append(order)
 
         current_orders.sort(key=lambda o: o.created_at, reverse=True)
-        duplicate_orders.sort(key=lambda o: o.created_at, reverse=True)
 
-        return current_orders, duplicate_orders
+        # Group each in-range duplicate under its first-encountered original
+        # so the DUPLI NARACKI section can print the original as a header
+        # before each cluster of duplicates (matches the pre-10-day-rewrite
+        # display, where both sides of a duplicate pair were visible
+        # together).
+        groups_by_original_id = {}
+        for dup in in_range_duplicates:
+            original = dup_to_original[dup.id]
+            if original.id not in groups_by_original_id:
+                groups_by_original_id[original.id] = (original, [])
+            groups_by_original_id[original.id][1].append(dup)
+
+        duplicate_groups = list(groups_by_original_id.values())
+        for _, dups in duplicate_groups:
+            dups.sort(key=lambda o: o.created_at, reverse=True)
+        duplicate_groups.sort(
+            key=lambda g: max(
+                [g[0].created_at] + [d.created_at for d in g[1]]
+            ),
+            reverse=True,
+        )
+
+        return current_orders, duplicate_groups
 
     def _write_order_row(self, order, count_in_summaries=True):
         self.row_num += 1
@@ -275,16 +298,22 @@ class OrderExcelExporter:
         w(12, total_quantity)
         w(13, order.message)
 
-    def _write_duplicates_section(self, duplicate_orders):
+    def _write_duplicates_section(self, duplicate_groups):
         cell = self.ws.cell(
             row=self.row_num,
             column=2,
-            value="DUPLI NARACKI" if duplicate_orders else "NEMA DUPLI NARACKI",
+            value="DUPLI NARACKI" if duplicate_groups else "NEMA DUPLI NARACKI",
         )
         cell.font = self.header_font
-        if duplicate_orders:
-            for order in duplicate_orders:
-                self._write_order_row(order, count_in_summaries=False)
+        for original, dups in duplicate_groups:
+            # Print the first-encountered order as the header row for this
+            # duplicate cluster, then each duplicate beneath it. Neither
+            # side mutates the Sheet 1 summary dicts: the original was
+            # already counted in the main section above, and duplicates
+            # must stay excluded from totals and Nabavki.
+            self._write_order_row(original, count_in_summaries=False)
+            for dup in dups:
+                self._write_order_row(dup, count_in_summaries=False)
 
     def _write_summaries(self):
         def write_table(title, data_dict, include_price=False):
