@@ -34,6 +34,7 @@ class OrderExcelExporter:
         self.thankyou_offers_dict = defaultdict(int)
         self.fee_offers_dict = defaultdict(int)
         self.duplicate_order_ids = set()
+        self.same_products_duplicate_ids = set()
 
         self.thin_border = Side(border_style="thin", color="151515")
         self.border_all = Border(
@@ -92,7 +93,8 @@ class OrderExcelExporter:
         orders, duplicate_groups = self._get_orders_and_duplicates()
 
         for order in orders:
-            self._write_order_row(order)
+            count = order.id not in self.same_products_duplicate_ids
+            self._write_order_row(order, count_in_summaries=count)
 
         self.row_num += 2
         self._write_duplicates_section(duplicate_groups)
@@ -158,9 +160,17 @@ class OrderExcelExporter:
             ).order_by("created_at", "id")
         )
 
+        def _skus_of(order):
+            return {
+                item.product.sku
+                for item in order.order.all()
+                if item.product is not None and item.product.sku
+            }
+
         seen_originals = {}  # normalized phone -> first Order object
         duplicate_order_ids = set()
         dup_to_original = {}  # duplicate order id -> original Order object
+        same_products_duplicate_ids = set()
 
         for order in extended_orders:
             norm = self._normalize_phone(order.number)
@@ -170,22 +180,27 @@ class OrderExcelExporter:
             if norm not in seen_originals:
                 seen_originals[norm] = order
             else:
+                original = seen_originals[norm]
                 duplicate_order_ids.add(order.id)
-                dup_to_original[order.id] = seen_originals[norm]
+                dup_to_original[order.id] = original
+                if _skus_of(order) == _skus_of(original):
+                    same_products_duplicate_ids.add(order.id)
 
         self.duplicate_order_ids = duplicate_order_ids
+        self.same_products_duplicate_ids = same_products_duplicate_ids
 
-        # Display buckets are restricted to the user-selected range.
+        # Main list: every in-range order (duplicates included). The
+        # DUPLI NARACKI audit section below still lists the duplicates
+        # grouped under their originals.
         current_orders = []
         in_range_duplicates = []
         for order in extended_orders:
             order_date = order.created_at.date()
             if not (self.date_from <= order_date <= self.date_to):
                 continue
+            current_orders.append(order)
             if order.id in duplicate_order_ids:
                 in_range_duplicates.append(order)
-            else:
-                current_orders.append(order)
 
         current_orders.sort(key=lambda o: o.created_at, reverse=True)
 
@@ -353,7 +368,7 @@ class OrderExcelExporter:
                 Q(order__created_at__range=[self.date_from, self.date_to]),
                 Q(order__status__in=["Confirmed", "Pending"]),
             )
-            .exclude(order_id__in=self.duplicate_order_ids)
+            .exclude(order_id__in=self.same_products_duplicate_ids)
             .select_related("product", "product__supplier")
         )
 
