@@ -33,6 +33,7 @@ class OrderExcelExporter:
         self.upsell_offers_dict = defaultdict(int)
         self.thankyou_offers_dict = defaultdict(int)
         self.fee_offers_dict = defaultdict(int)
+        self.duplicate_order_ids = set()
 
         self.thin_border = Side(border_style="thin", color="151515")
         self.border_all = Border(
@@ -71,6 +72,20 @@ class OrderExcelExporter:
             except ValueError:
                 return 1
         return 1
+
+    def _normalize_phone(self, phone):
+        """
+        Return the last 6 digits of `phone` (digits-only), or None if there
+        is nothing to match on. Bridges Macedonian formats so that
+        '+389 78 123 456', '078 123 456', '078-123-456', etc. all collapse
+        to '123456'.
+        """
+        if not phone:
+            return None
+        digits = re.sub(r"\D", "", phone)
+        if not digits:
+            return None
+        return digits[-6:]
 
     def generate(self):
         self._setup_main_sheet()
@@ -131,47 +146,51 @@ class OrderExcelExporter:
                 ),
                 "orderfeesitem_set",
             )
-            .order_by("-created_at")
         )
 
-        current_orders = list(
-            base_qs.filter(created_at__range=[self.date_from, self.date_to])
+        # Walk a 10-day extended window in chronological order so the first
+        # order from a given phone is always the "original" and any later
+        # order from the same phone is flagged as a duplicate.
+        lookback_start = self.date_from - timedelta(days=10)
+        extended_orders = list(
+            base_qs.filter(
+                created_at__range=[lookback_start, self.date_to]
+            ).order_by("created_at", "id")
         )
 
-        date_from_week_before = self.date_from - timedelta(days=7)
-        lookback_orders = list(
-            base_qs.filter(created_at__range=[date_from_week_before, self.date_from])
-        )
+        seen_originals = {}  # normalized phone -> first order id
+        duplicate_order_ids = set()
 
+        for order in extended_orders:
+            norm = self._normalize_phone(order.number)
+            if norm is None:
+                # No usable phone -> never collides with anything.
+                continue
+            if norm not in seen_originals:
+                seen_originals[norm] = order.id
+            else:
+                duplicate_order_ids.add(order.id)
+
+        self.duplicate_order_ids = duplicate_order_ids
+
+        # Display buckets are restricted to the user-selected range.
+        current_orders = []
         duplicate_orders = []
-        seen_tracking_ids = set()
+        for order in extended_orders:
+            order_date = order.created_at.date()
+            if not (self.date_from <= order_date <= self.date_to):
+                continue
+            if order.id in duplicate_order_ids:
+                duplicate_orders.append(order)
+            else:
+                current_orders.append(order)
 
-        def get_skus(ord_obj):
-            return {item.product.sku for item in ord_obj.order.all()}
-
-        def add_dup(ord_obj):
-            if ord_obj.tracking_no not in seen_tracking_ids:
-                seen_tracking_ids.add(ord_obj.tracking_no)
-                duplicate_orders.append(ord_obj)
-
-        for i, order_a in enumerate(current_orders):
-            skus_a = get_skus(order_a)
-            for order_b in current_orders[i + 1 :]:
-                if order_a.name == order_b.name or order_a.number == order_b.number:
-                    skus_b = get_skus(order_b)
-                    if not skus_a.isdisjoint(skus_b):
-                        add_dup(order_a)
-                        add_dup(order_b)
-            for order_b in lookback_orders:
-                if order_a.name == order_b.name or order_a.number == order_b.number:
-                    skus_b = get_skus(order_b)
-                    if not skus_a.isdisjoint(skus_b):
-                        add_dup(order_a)
-                        add_dup(order_b)
+        current_orders.sort(key=lambda o: o.created_at, reverse=True)
+        duplicate_orders.sort(key=lambda o: o.created_at, reverse=True)
 
         return current_orders, duplicate_orders
 
-    def _write_order_row(self, order):
+    def _write_order_row(self, order, count_in_summaries=True):
         self.row_num += 1
         order_items = order.order.all()
         order_fees = order.orderfeesitem_set.all()
@@ -184,7 +203,8 @@ class OrderExcelExporter:
 
         for fee in order_fees:
             fees_text += f"{fee.title}\n"
-            self.fee_offers_dict[str(fee.title)] += 1
+            if count_in_summaries:
+                self.fee_offers_dict[str(fee.title)] += 1
             if str(fee.title) in [
                 "Приоритетна достава",
                 "Приоритетна Достава + Осигурување на Пакет",
@@ -199,21 +219,23 @@ class OrderExcelExporter:
                 full_title += f" {item.attribute_name}"
 
             processed_items_list.append((full_title, item))
-            self.total_ordered_dict[full_title] += item.quantity
 
-            # --- STOCK PRICE LOGIC (SHEET 1) ---
-            multiplier = self._get_stock_multiplier(full_title)
-            base_price = item.product.supplier_stock_price or 0
-            self.total_ordered_stock_price[full_title] = base_price * multiplier
-            # -----------------------------------
+            if count_in_summaries:
+                self.total_ordered_dict[full_title] += item.quantity
 
-            if item.is_cart_offer:
-                if item.is_upsell_offer:
-                    self.upsell_offers_dict[item.label] += item.quantity
-                else:
-                    self.cart_offers_dict[item.label] += item.quantity
-            if item.is_thankyou_offer:
-                self.thankyou_offers_dict[item.label] += item.quantity
+                # --- STOCK PRICE LOGIC (SHEET 1) ---
+                multiplier = self._get_stock_multiplier(full_title)
+                base_price = item.product.supplier_stock_price or 0
+                self.total_ordered_stock_price[full_title] = base_price * multiplier
+                # -----------------------------------
+
+                if item.is_cart_offer:
+                    if item.is_upsell_offer:
+                        self.upsell_offers_dict[item.label] += item.quantity
+                    else:
+                        self.cart_offers_dict[item.label] += item.quantity
+                if item.is_thankyou_offer:
+                    self.thankyou_offers_dict[item.label] += item.quantity
 
             total_quantity += item.quantity
 
@@ -262,7 +284,7 @@ class OrderExcelExporter:
         cell.font = self.header_font
         if duplicate_orders:
             for order in duplicate_orders:
-                self._write_order_row(order)
+                self._write_order_row(order, count_in_summaries=False)
 
     def _write_summaries(self):
         def write_table(title, data_dict, include_price=False):
@@ -297,10 +319,14 @@ class OrderExcelExporter:
         ws2.column_dimensions["A"].width = 20.3
         ws2.column_dimensions["B"].width = 30
 
-        items = OrderItem.objects.filter(
-            Q(order__created_at__range=[self.date_from, self.date_to]),
-            Q(order__status__in=["Confirmed", "Pending"]),
-        ).select_related("product", "product__supplier")
+        items = (
+            OrderItem.objects.filter(
+                Q(order__created_at__range=[self.date_from, self.date_to]),
+                Q(order__status__in=["Confirmed", "Pending"]),
+            )
+            .exclude(order_id__in=self.duplicate_order_ids)
+            .select_related("product", "product__supplier")
+        )
 
         grouped_data = defaultdict(lambda: defaultdict(lambda: {"qty": 0, "obj": None}))
 
