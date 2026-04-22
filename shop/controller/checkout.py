@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 
 from shop.models import *
+from shop.utils import cart_item_offer_pieces
 
 from . import facebook_pixel
 
@@ -25,6 +26,7 @@ def placeorder(request):
         cart_total_price = 0
         countProducts = 0
         trackno = str(uuid.uuid4())
+        qualifies_via_offer = False
         for item in neworderitems:
             if item.has_attributes == True:
                 cart_total_price += item.attributeprice * item.product_qty
@@ -38,13 +40,17 @@ def placeorder(request):
             elif item.product.free_shipping == False:
                 countProducts += item.product_qty
 
+            pieces = cart_item_offer_pieces(item)
+            if pieces is not None and pieces >= 2:
+                qualifies_via_offer = True
+
         for fee in neworderfees:
             cart_total_price = cart_total_price + fee.price
         neworder.subtotal_price = cart_total_price
-        if countProducts >= 2:
+        if countProducts >= 2 or qualifies_via_offer:
             neworder.shipping = False
-
-        if countProducts == 1:
+            neworder.total_price = cart_total_price
+        elif countProducts == 1:
             neworder.total_price = cart_total_price + neworder.shipping_price
             neworder.shipping = True
         else:

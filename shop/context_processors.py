@@ -1,6 +1,7 @@
 import uuid
 
 from .models import Cart, CartFees, CartItems, CartOffers, CheckoutFees, Category
+from .utils import cart_item_offer_pieces
 
 
 def cart_renderer(request):
@@ -58,6 +59,10 @@ def extras(request):
                 itemscount = itemscount + item.product_qty
                 if item.product.free_shipping == True:
                     free_shipping = True
+
+            pieces = cart_item_offer_pieces(item)
+            if pieces is not None and pieces >= 2:
+                free_shipping = True
     if itemscount >= 2:
         free_shipping = True
     return {
