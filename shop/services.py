@@ -2,7 +2,7 @@ import mimetypes
 import os
 import re  # <--- NEW IMPORT
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import openpyxl
 from django.db.models import Case, CharField, Prefetch, Q, Value, When
@@ -135,10 +135,21 @@ class OrderExcelExporter:
         # order from a given phone is always the "original" and any later
         # order from the same phone is flagged as a duplicate.
         lookback_start = self.date_from - timedelta(days=10)
+        # Bound the query in the configured local timezone so the full local
+        # day of date_to is included. Passing bare dates to a DateTimeField
+        # range filter would interpret date_to as 00:00 local, dropping
+        # everything created during date_to.
+        start_dt = django_timezone.make_aware(
+            datetime.combine(lookback_start, datetime.min.time()),
+            self.timezone,
+        )
+        end_dt = django_timezone.make_aware(
+            datetime.combine(self.date_to + timedelta(days=1), datetime.min.time()),
+            self.timezone,
+        )
         extended_orders = list(
-            base_qs.filter(
-                created_at__range=[lookback_start, self.date_to]
-            ).order_by("created_at", "id")
+            base_qs.filter(created_at__gte=start_dt, created_at__lt=end_dt)
+            .order_by("created_at", "id")
         )
 
         def _skus_of(order):
@@ -176,7 +187,9 @@ class OrderExcelExporter:
         current_orders = []
         in_range_duplicates = []
         for order in extended_orders:
-            order_date = order.created_at.date()
+            # Bucket by local-time date so orders created shortly after
+            # local midnight aren't attributed to the previous UTC day.
+            order_date = order.created_at.astimezone(self.timezone).date()
             if not (self.date_from <= order_date <= self.date_to):
                 continue
             current_orders.append(order)
