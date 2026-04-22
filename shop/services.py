@@ -13,6 +13,7 @@ from openpyxl.utils import get_column_letter
 
 # Import your models
 from .models import Order, OrderItem
+from .utils import parse_offer_pieces
 
 mimetypes.add_type("image/webp", ".webp")
 
@@ -45,34 +46,14 @@ class OrderExcelExporter:
         )
         self.header_font = Font(bold=True)
 
-    def _get_stock_multiplier(self, text):
+    def _get_stock_multiplier(self, attribute_name):
         """
-        Parses text for pattern 'X [number]' (case insensitive).
-        Example: 'Pack X 2' returns 2. 'Blue' returns 1.
-
-        Dimension patterns that involve 'cm' (e.g. '30cm x 60cm',
-        '30 X 60 cm', '30cm X 60') are stripped before parsing so they
-        are NOT treated as multipliers.
+        Returns N when attribute_name is an offer label like 'X2', 'X 3' or
+        ' x4 ' (case-insensitive, whitespace-tolerant, full-string match).
+        Returns 1 for sizes ('3 x 4m', '30cm x 60cm'), colors, or empty.
         """
-        if not text:
-            return 1
-
-        # Strip dimension substrings where 'cm' appears on at least one side.
-        # Matches: "30cm x 60cm", "30 cm X 60 cm", "30 X 60cm", "30cm X 60", etc.
-        cleaned = re.sub(
-            r"\d+\s*(?:cm)?\s*[xX]\s*\d+\s*cm|\d+\s*cm\s*[xX]\s*\d+",
-            "",
-            text,
-            flags=re.IGNORECASE,
-        )
-
-        match = re.search(r"[xX]\s+(\d+)", cleaned)
-        if match:
-            try:
-                return int(match.group(1))
-            except ValueError:
-                return 1
-        return 1
+        pieces = parse_offer_pieces(attribute_name)
+        return pieces if pieces is not None else 1
 
     def _normalize_phone(self, phone):
         """
@@ -262,7 +243,7 @@ class OrderExcelExporter:
                 self.total_ordered_dict[full_title] += item.quantity
 
                 # --- STOCK PRICE LOGIC (SHEET 1) ---
-                multiplier = self._get_stock_multiplier(full_title)
+                multiplier = self._get_stock_multiplier(item.attribute_name)
                 base_price = item.product.supplier_stock_price or 0
                 self.total_ordered_stock_price[full_title] = base_price * multiplier
                 # -----------------------------------
@@ -434,7 +415,7 @@ class OrderExcelExporter:
                     return cl
 
                 # --- STOCK PRICE LOGIC (SHEET 2) ---
-                multiplier = self._get_stock_multiplier(label)
+                multiplier = self._get_stock_multiplier(item_obj.attribute_name)
                 base_price = product.supplier_stock_price or 0
                 final_stock_price = base_price * multiplier
                 # -----------------------------------
