@@ -1,7 +1,7 @@
 import uuid
 
 from .models import Cart, CartFees, CartItems, CartOffers, CheckoutFees, Category
-from .utils import cart_item_offer_pieces
+from .utils import cart_qualifies_for_free_shipping
 
 
 def cart_renderer(request):
@@ -47,24 +47,13 @@ def extras(request):
             if item.attributeprice is not None:
                 total = total + (item.attributeprice * item.product_qty)
                 itemscount = itemscount + item.product_qty
-                if item.product.free_shipping == True:
-                    free_shipping = True
             elif item.offer_price is not None:
                 total = total + (item.offer_price * item.product_qty)
                 itemscount = itemscount + item.product_qty
-                if item.product.free_shipping == True:
-                    free_shipping = True
             else:
                 total = total + (item.product.sale_price * item.product_qty)
                 itemscount = itemscount + item.product_qty
-                if item.product.free_shipping == True:
-                    free_shipping = True
-
-            pieces = cart_item_offer_pieces(item)
-            if pieces is not None and pieces >= 2:
-                free_shipping = True
-    if itemscount >= 2:
-        free_shipping = True
+    free_shipping = cart_qualifies_for_free_shipping(cartItems)
     return {
         "cart": cartItems,
         "cart_total": total,
