@@ -19,7 +19,6 @@ def extras(request):
         cart__session=request.session["nonuser"]
     ).order_by("-date_added")
     itemscount = 0
-    free_shipping = False
     cartOffers = CartOffers.objects.all()
     if cartOffers:
         for offer in cartOffers:
