@@ -12,19 +12,6 @@ def parse_offer_pieces(value):
     return int(match.group(1))
 
 
-def cart_item_offer_pieces(item):
-    attribute = getattr(item, "attribute", None)
-    if attribute is None:
-        return None
-    offer = getattr(attribute, "offer", None)
-    if offer is None:
-        return None
-    pieces = parse_offer_pieces(getattr(offer, "title", None))
-    if pieces is not None:
-        return pieces
-    return parse_offer_pieces(getattr(attribute, "label", None))
-
-
 def cart_qualifies_for_free_shipping(cart_items):
     """
     True if the cart earns free shipping.
