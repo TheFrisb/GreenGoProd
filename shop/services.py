@@ -69,6 +69,18 @@ class OrderExcelExporter:
             return None
         return digits[-6:]
 
+    def _local_day_bounds(self, date_from, date_to):
+        """Tz-aware half-open bounds covering local days [date_from, date_to]: use as gte/lt so the full local day of date_to is kept."""
+        start_dt = django_timezone.make_aware(
+            datetime.combine(date_from, datetime.min.time()),
+            self.timezone,
+        )
+        end_dt = django_timezone.make_aware(
+            datetime.combine(date_to + timedelta(days=1), datetime.min.time()),
+            self.timezone,
+        )
+        return start_dt, end_dt
+
     def generate(self):
         self._setup_main_sheet()
         orders, duplicate_groups = self._get_orders_and_duplicates()
@@ -135,18 +147,7 @@ class OrderExcelExporter:
         # order from a given phone is always the "original" and any later
         # order from the same phone is flagged as a duplicate.
         lookback_start = self.date_from - timedelta(days=10)
-        # Bound the query in the configured local timezone so the full local
-        # day of date_to is included. Passing bare dates to a DateTimeField
-        # range filter would interpret date_to as 00:00 local, dropping
-        # everything created during date_to.
-        start_dt = django_timezone.make_aware(
-            datetime.combine(lookback_start, datetime.min.time()),
-            self.timezone,
-        )
-        end_dt = django_timezone.make_aware(
-            datetime.combine(self.date_to + timedelta(days=1), datetime.min.time()),
-            self.timezone,
-        )
+        start_dt, end_dt = self._local_day_bounds(lookback_start, self.date_to)
         extended_orders = list(
             base_qs.filter(created_at__gte=start_dt, created_at__lt=end_dt)
             .order_by("created_at", "id")
@@ -357,9 +358,11 @@ class OrderExcelExporter:
         ws2.column_dimensions["A"].width = 20.3
         ws2.column_dimensions["B"].width = 30
 
+        start_dt, end_dt = self._local_day_bounds(self.date_from, self.date_to)
         items = (
             OrderItem.objects.filter(
-                Q(order__created_at__range=[self.date_from, self.date_to]),
+                Q(order__created_at__gte=start_dt),
+                Q(order__created_at__lt=end_dt),
                 Q(order__status__in=["Confirmed", "Pending"]),
             )
             .exclude(order_id__in=self.same_products_duplicate_ids)
